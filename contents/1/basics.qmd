@@ -1,0 +1,263 @@
+
+# Basics 
+
+
+{{< include ../math.qmd >}}
+
+
+## Quick overview
+
+Given a set of observations of variables, we would like to understand the relationships among these variables. 
+
+The standard procedure for developing a statistical model is as follows:
+
+1.  Proposing a model informed by exploratory data analysis and relevant domain knowledge.
+2.  Estimating the parameters of the proposed model using the available data.
+3.  Assessing the adequacy and quality of the fitted model.
+4.  Revising the model based on the assessment results.
+
+There are two primary goals and related ways to assess the model:
+
+1. **Prediction (Generalization):** We evaluate the fitted model on unseen data, using metrics like MSE or classification error. This assesses the model’s generalization ability, which is the primary focus of subjects like Statistical Learning or Machine Learning.
+2. **Explanation (Inference):** We use measures such as $R^2$ to assess the goodness-of-fit of the fitted model, and we use confidence intervals and p-values to perform statistical inference about population parameters. Although these calculations are based on the observed sample, they are interpreted as statements about the population. This approach focuses on understanding relationships among variables and is central to traditional Statistical Modeling, including Regression Analysis.
+
+Both Statistical Learning and specific methods like Regression Analysis may use both assessment strategies, but the emphasis differs. In this course, the focus is on the principles of modeling and statistical inference, with prediction discussed but not treated as the primary objective.
+
+
+
+## Population vs Sample
+
+- **Population**: the set of all elements of interest in a particular study.
+- **Sample**: is a subset of the population
+- **Statistical Inference**: The process of using data collected on a sample to draw conclusions about a population is called statistical inference. 
+
+A population is described by parameters (e.g., $\mu$, $\sigma$, $\beta$). A sample produces statistics (e.g., $\bar X$, $s$, $\hat\beta$), which vary across repeated samples. Statistical inference uses the sampling distribution of these statistics to draw conclusions about population parameters. This part will be revisited later in @sec-inference.
+
+
+
+::: {#exm-}
+## `gssr`
+
+<details>
+<summary>Click to expand.</summary>
+According to a previous national media report, the *average age* of U.S. adults who watch national TV news is 60 years. A data analyst hypothesizes that the average age of frequent TV-news watchers is greater than 60. To test this, she uses the General Social Survey (GSS), accessible via the `gssr` R package @gssr, to draw a sample of 500 respondents and record their ages.
+
+a. **Describe the population**: All U.S. adults who watch TV news several times a week or more often, as defined by the GSS survey question on TV-news frequency.
+b. **Describe the sample**: A random sample of 500 GSS respondents who meet the above criterion and have valid age data.
+c. **Sample size**: $n = 500$
+d. **Describe the statistical inference**: We want to determine whether the mean age of frequent TV-news watchers is greater than 60 based on the sampled data.
+
+</details>
+
+:::
+
+
+
+## Data structure
+A dataset is a collection of *values*. Values are organized in two ways. Every value belongs to a *variable* and an *observation*. 
+
+
+::: {#def-}
+# Variables and Observations @Wickham2014
+- A **variable** contains all values that measure the same underlying attribute (like height, temperature, duration) across units.
+- An **observation** contains all values measured on the same unit (like a person, or a day, or a race) across attributes.
+:::
+ 
+
+::: {#exm-}
+## `possum`
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+Researchers collected body measurements for bushtail possums in Eastern Australia. They trapped 104 possums and recorded location where possum was trapped, age, gender, head length, skull width, total length, tail length, etc. for each possum. For more details see @sec-app_possum.
+
+```{r}
+#| warning: false
+library(DAAG)
+data(possum)
+head(possum)
+```
+The dimension of the dataset is
+```{r}
+dim(possum)
+```
+
+In this example, there are 14 variables, and 104 observations. Each column is a variable. In R you can use the column name to get access to the variable.
+
+```{r}
+possum$hdlngth
+```
+
+</details>
+
+:::
+
+
+
+
+
+::: {#def-}
+# Quantitative and Qualitative @Men2020
+- **Quantitative data** are observations measured on a naturally occurring numerical scale. It is also called *numerical data*.
+- **Qualitative data** are nonnumerical data that can only be classified into one of a group of categories. It is also called *categorical data*.
+:::
+
+In regression, qualitative variables must be encoded using indicator (dummy) variables.
+
+::: {#def-}
+# Discrete and Continuous @Men2020
+- Discrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2...
+- Continuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals.
+:::
+
+```{mermaid}
+graph TD
+    A[All Variables] --> B[Numerical]
+    A --> C[Categorical]
+    B --> D[Continuous]
+    B --> E[Discrete]
+```
+
+
+::: {.callout-note}
+# Random variables
+A variable in a dataset can be modeled by a *random variable*. The probability density function / probability mass function of the random variable can describe the distribution of all possible values of the variable in a dataset. 
+
+Making a measurement is equivalent to taking a sample from the corresponding random variable. This will be discussed in detail in @sec-inference.
+
+:::
+
+
+
+
+
+## Data Visualization
+### Qualitative (categorical) data
+Usually the most important is the **class relative frequency**: 
+$$
+\text{class relative frequency}=\frac{\text{class frequency}}{n}.
+$$
+
+To display it, we could use table, bar chart or pie chart.
+
+
+::: {#exm-}
+## `possum`
+
+<details>
+<summary>Click to expand.</summary>
+
+Here we still consider the `possum` dataset. 
+
+```{r}
+library(DAAG)
+data(possum)
+head(possum)
+```
+The variable `Pop` (location where possum was trapped) is qualitative. We could use the following ways to display it. We first compute the frequency table of the variable `Pop`:
+
+```{r}
+table(possum$Pop)
+```
+or relative frequency table:
+```{r}
+table(possum$Pop)/length(possum$Pop)
+```
+
+Then we could draw the barplot of this variable:
+
+```{r}
+barplot(table(possum$Pop))
+```
+
+and the pie plot:
+```{r}
+pie(table(possum$Pop))
+```
+
+Note that `table` is handling the statistics, while `barplot` and `pie` draw on top of the result from `table`.
+
+</details>
+
+:::
+
+### Quantitative (numerical) data
+
+
+For quantitative data, we would like to see the histogram, as well as computing some statistics: min, max, quartiles, median and mean.
+
+- **Histogram** is an approximation of the distribution. In other words, we split the range into small segments (called *bins*), and count the frequency or relative frequency of data falling into these bins.
+- **Box plot** consists of a box, two lines and possibly some points:
+    - The box in the box plot extends from the lower quartile to the upper quartile. The difference between the upper quartile and the lower quartile is called the inter-quartile range (IQR).
+    - The lines, known as *whiskers*, extend to one and a half times the interquartile range, but they stop at the most extreme data points that fall within this range.
+    - The points, considered as *outliers*, are those which are not covered by the box and the lines.
+
+Histograms and boxplots help check normality and outliers before fitting regression. These summaries approximate the underlying distribution of the variable. In regression, we later apply similar tools to the residuals to check model assumptions.
+
+::: {#exm-}
+## `possum`
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+We still consider the `possum` dataset. We could use `summary` to compute the major statistics.
+
+```{r}
+library(DAAG)
+data(possum)
+summary(possum)
+```
+
+The variable `hdlngth` (head length) is quantitative. We first show the histogram. We could use `breaks` to control the number of bins. Note that the function `hist` does not only draw the histogram; it also provides many useful pieces of information.
+
+```{r}
+res <- hist(possum$hdlngth, breaks=10)
+res
+```
+
+Then we could show the box plot. You may compare the lines in the plot with the summary table and the histogram above.
+
+```{r}
+boxplot(possum$hdlngth)
+```
+
+
+</details>
+:::
+
+
+### Relations among multiple variables
+
+We could show the relation between two variables in a scatterplot. Scatterplots help us assess linearity, detect outliers, and decide whether transformation is needed.
+
+
+::: {#exm-}
+## `possum`
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+When both variables are numerical and continuous:
+```{r}
+plot(possum$hdlngth, possum$skullw)
+```
+
+When one variable is categorical:
+
+```{r}
+plot(as.factor(possum$Pop), possum$skullw)
+```
+
+Note that in this case, the categorical data has to be a factor. And once it is cast into a factor, the plot is multiple box plots for each category. This type of grouped boxplot corresponds to comparing group means and is directly related to one-way ANOVA and regression with dummy variables. It will be discussed in later sections.
+
+
+We can see pair plots for each pair of variables. Pair plots are very important because they help reveal relationships among predictors. Note that before creating the plot, we have to cast `pop` and `sex` into factors.
+
+```{r}
+possum$Pop <- as.factor(possum$Pop)
+possum$sex <- as.factor(possum$sex)
+pairs(possum)
+```
+</details>
+
+:::
+

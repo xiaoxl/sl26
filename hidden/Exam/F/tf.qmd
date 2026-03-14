@@ -1,0 +1,46 @@
+---
+title: "Final Exam"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:        
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
+        include-in-header:
+            - ../../math.tex
+            - text: |
+                \usepackage{xcolor} 
+                \usepackage{alltt}
+                \usepackage{enumitem}
+                \usepackage[letterpaper,top=1in,bottom=0.89in,left=1in,right=1in]{geometry}
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
+                \newcommand{\red}[1]{\textcolor{red}{\textbf{#1}}}
+                \newcommand{\mc}[1]{%
+                    \begin{enumerate}
+                    \setcounter{enumi}{0}
+                    \renewcommand{\labelenumi}{\Alph{enumi}.}
+                    #1
+                    \end{enumerate}
+                }
+        mainfont: Libertinus Serif
+        sansfont: Libertinus Sans
+        monofont: Latin Modern Mono
+        monofontoptions:
+            - Scale=0.95
+        mathfont: Libertinus Math
+        highlight-style: arrow
+params:
+    show_solution: false
+filters:
+    - ../../solution-filter.lua
+crossref:
+    chapters: false
+---
+
+
+# Problems
+
+

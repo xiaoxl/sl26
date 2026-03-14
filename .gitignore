@@ -1,0 +1,10 @@
+/env/
+/stats/
+/venv/
+/docs/
+/_freeze/
+/.quarto/
+/_extensions/
+fonts/
+**/*_files/
+**/*.quarto_ipynb
