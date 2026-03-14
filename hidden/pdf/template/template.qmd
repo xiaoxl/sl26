@@ -1,0 +1,123 @@
+---
+title: "Template"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:        
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
+        include-in-header:
+            - ../../math.tex
+            - text: |
+                \usepackage{xcolor}
+                \definecolor{AccessibleRed}{HTML}{8B0000}
+                \usepackage{alltt}
+                \usepackage{enumitem}
+                \usepackage[letterpaper,top=1in,bottom=0.89in,left=1in,right=1in]{geometry}
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
+                \newcommand{\red}[1]{\textcolor{red}{\textbf{#1}}}
+                \newcommand{\mc}[1]{%
+                    \begin{enumerate}
+                    \setcounter{enumi}{0}
+                    \renewcommand{\labelenumi}{\Alph{enumi}.}
+                    #1
+                    \end{enumerate}
+                }
+        mainfont: Libertinus Serif
+        sansfont: Libertinus Sans
+        monofont: Latin Modern Mono
+        monofontoptions:
+            - Scale=0.95
+        mathfont: Libertinus Math
+        highlight-style: arrow
+params:
+    show_solution: false
+filters:
+    - ../../solution-filter.lua
+crossref:
+    chapters: false
+---
+
+
+
+
+# Problems
+
+::: {#exr-1}
+## 1 point
+
+A variable that takes on the values of 0 or 1 and is used to incorporate the effect of categorical variables in a regression model is called
+\mc{
+\item a constant variable  
+\item an interaction   
+\item a dummy variable     
+\item None of these alternatives is correct.
+}
+:::
+
+
+
+```{r}
+#| echo: false
+dat <- data.frame(x=c(1,2,3), y=c(3,4,3))
+```
+
+
+```{r}
+#| echo: false
+knitr::kable(
+    dat,
+    col.names = c("XXX $x$", "YYY $y$"),
+     align = "cc"
+)
+```
+
+
+
+
+::: {.answer}
+1. $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\beta_4x_1^2+\beta_5x_2^2+\varepsilon$
+2. $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\varepsilon$
+:::
+
+
+
+```{r, echo=TRUE, results="hide"}
+#| echo: true
+#| output: false
+fit <- lm(y~x, data=dat)
+s <- capture.output(summary(fit))
+```
+
+
+```{r}
+#| echo: false
+#| output: asis
+
+# if (params$show_solution) {
+#   s_out <- s        #
+# } else {
+s_out <- gsub(
+    "Multiple R-squared:\\s*[e0-9\\.+-]+",
+    "Multiple R-squared:  \\\\red{1. _______}",
+    s
+)
+# }
+
+cat("\\begin{alltt}\n")
+cat(paste(s_out, collapse = "\n"))
+cat("\n\\end{alltt}\n")
+
+```
+
+
+```{r}
+#| echo: false
+#| results: asis
+if (!params$show_solution) {
+    cat("{{< pagebreak >}}")
+}
+```
