@@ -1,5 +1,5 @@
 
-# Basics 
+# Linear regression
 
 
 {{< include ../math.qmd >}}

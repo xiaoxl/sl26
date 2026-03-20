@@ -19,7 +19,7 @@ execute:
 knitr:
   opts_chunk:
     # comment: "#>"
-    collapse: true
+    collapse: false
 
 jupyter: stats
 
@@ -50,12 +50,12 @@ book:
   date: last-modified
   chapters: 
     - index.qmd
-    - part: "Review"
+    - part: "Regression"
       chapters:
-      - contents/1/basics.qmd
-    #   - contents/1/prob.qmd
-    #   - contents/1/inferences.qmd      
-    #   # - contents/0/statsmodels.qmd
+      - contents/1/basic.qmd
+      - contents/1/lr.qmd
+      - contents/1/ridge.qmd      
+      - contents/1/lasso.qmd
     # - part: "Simple Linear regression"
     #   chapters: 
     #   - contents/2/intro.qmd
@@ -94,5 +94,6 @@ book:
   #       - contents/index.qmd
   page-navigation: true
   bread-crumbs: false
- 
+  search: true
+  reader-mode: true
    
