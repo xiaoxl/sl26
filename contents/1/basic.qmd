@@ -320,3 +320,155 @@ This course should leave students with a clear picture of statistical learning a
 3. evaluate it using principled tools,
 4. improve it when needed,
 5. apply it carefully in practice.
+
+
+
+
+
+
+
+
+
+
+
+
+# Gemini
+
+This course plan integrates the theoretical depth of *The Elements of Statistical Learning* (ESL) and the computational focus of Ruoqing Zhu’s *SMLR* and *STAT 432* with the intuitive, application-based approach of *An Introduction to Statistical Learning* (ISLR).
+
+The curriculum is designed for a 15-week semester, prioritizing **numerical optimization** (as emphasized in SMLR) alongside standard statistical learning theory.
+
+### **Phase 1: Foundations & Optimization (Weeks 1–3)**
+*Focus: Setting the stage with R, Linear Algebra, and the "How" of algorithm fitting.*
+
+* **Week 1: Introduction & The Learning Framework**
+    * What is Statistical Learning? (ISLR Ch. 2; ESL Ch. 2).
+    * Supervised vs. Unsupervised Learning.
+    * The Bias-Variance Trade-off and MSE (SMLR Ch. 12.3).
+* **Week 2: Computational Toolkit**
+    * **R & RMarkdown:** Environment setup and reproducible workflows (SMLR Ch. 1-2).
+    * **Linear Algebra Refresher:** Matrix inversion, rank updates, and block matrices (SMLR Ch. 4).
+* **Week 3: Optimization Basics**
+    * First and Second-order properties (Gradient vs. Hessian).
+    * **Algorithms:** Gradient Descent, Newton’s Method, and Coordinate Descent (SMLR Ch. 5).
+    * *Lab:* Implementing Linear Regression using `optim()` from scratch.
+
+### **Phase 2: Linear Models & Regularization (Weeks 4–6)**
+*Focus: Moving beyond Ordinary Least Squares to handle high-dimensional data.*
+
+* **Week 4: Linear Regression & Model Selection**
+    * OLS properties and limitations.
+    * Criteria: $C_p$, AIC, BIC, and Adjusted $R^2$ (SMLR Ch. 6; ISLR Ch. 6).
+    * Search: Best subset vs. Stepwise methods.
+* **Week 5: Penalized Regression (Ridge & Lasso)**
+    * **Ridge Regression:** Motivation via correlated variables and convexity (SMLR Ch. 7).
+    * **Lasso:** The $L_1$ penalty, sparsity, and the soft-thresholding operator (SMLR Ch. 8).
+    * **Elastic Net:** Combining $L_1$ and $L_2$ penalties.
+* **Week 6: Path Algorithms & Cross-Validation**
+    * The Lasso solution path and Path-wise Coordinate Descent (SMLR Ch. 8.4).
+    * k-fold and Leave-one-out Cross-Validation (ISLR Ch. 5).
+    * *Lab:* The `glmnet` package in R.
+
+### **Phase 3: Classification & Smoothing (Weeks 7–9)**
+
+*Focus: Categorical outcomes and non-linear boundaries.*
+
+* **Week 7: Linear Classification**
+    * Logistic Regression: Parameters, interpretation, and Newton-Raphson for MLE (SMLR Ch. 10).
+    * Discriminant Analysis (LDA/QDA): Bayes’ Rule and decision boundaries (ISLR Ch. 4; SMLR Ch. 11).
+* **Week 8: Non-parametric Smoothing & Splines**
+    * Moving beyond linearity: Polynomials and Piecewise functions.
+    * **Splines:** Basis functions, Natural Cubic Splines, and Smoothing Splines (SMLR Ch. 9; ISLR Ch. 7).
+* **Week 9: Local Learning & Kernels**
+    * K-Nearest Neighbors (KNN) for regression and classification (SMLR Ch. 12).
+    * Kernel Density Estimation and Nadaraya-Watson (SMLR Ch. 13).
+    * The "Curse of Dimensionality."
+
+### **Phase 4: Support Vector Machines & Kernels (Weeks 10–11)**
+
+*Focus: The "Kernel Trick" and Maximal Margins.*
+
+* **Week 10: Support Vector Machines (SVM)**
+    * The Maximal Margin Classifier and Slack Variables (SMLR Ch. 17).
+    * Duality: From Primal to Dual formulations (ESL Ch. 12).
+* **Week 11: RKHS & Kernel Methods**
+    * Reproducing Kernel Hilbert Space (RKHS) basics (SMLR Ch. 15).
+    * Kernel Ridge Regression and the Kernel Trick (SMLR Ch. 16).
+
+### **Phase 5: Trees, Ensembles & Unsupervised Learning (Weeks 12–15)**
+
+*Focus: Modern "Black Box" winners and discovery without labels.*
+
+* **Week 12: Tree-Based Methods**
+    * Decision Trees: Gini index vs. Entropy (ISLR Ch. 8).
+    * Bagging and Random Forests (SMLR Ch. 19-20).
+* **Week 13: Boosting**
+    * AdaBoost and the Stagewise Additive Model.
+    * Gradient Boosting Machines (GBM) and XGBoost/LightGBM concepts (SMLR Ch. 22-23).
+* **Week 14: Unsupervised Learning I (Clustering)**
+    * K-means and Hierarchical Clustering (SMLR Ch. 24-25).
+    * Spectral Clustering and the Graph Laplacian (SMLR Ch. 28).
+* **Week 15: Unsupervised Learning II (Dimension Reduction)**
+    * Principal Component Analysis (PCA).
+    * Modern visualization: t-SNE and UMAP (SMLR Ch. 31).
+
+
+
+
+
+### **Required Reading List**
+1.  **SMLR:** Zhu, R. *Statistical Machine Learning with R*. (Primary for optimization/computation).
+2.  **ISLR:** James, G., et al. *An Introduction to Statistical Learning*. (Primary for intuition/labs).
+3.  **ESL:** Hastie, T., et al. *The Elements of Statistical Learning*. (Reference for theoretical derivations).
+
+
+
+
+
+
+
+
+# Statistical Learning: R to Python Translation Guide
+
+This guide provides the Python counterparts for common R functions used in **ISLR**, **ESL**, and **SMLR**. 
+
+## 1. Model Fitting & Inference
+While `scikit-learn` is the industry standard for prediction, **`statsmodels`** is the primary library for statistical inference ($p$-values, $R^2$, and $t$-tests) and matches the R `lm()` experience.
+
+| Feature | R Code | Python (`statsmodels.formula.api`) |
+| :--- | :--- | :--- |
+| **Linear Regression** | `fit <- lm(y ~ x1 + x2, data=df)` | `fit = smf.ols("y ~ x1 + x2", data=df).fit()` |
+| **Logistic Regression** | `glm(y ~ x, data=df, family="binomial")` | `smf.logit("y ~ x", data=df).fit()` |
+| **Model Summary** | `summary(fit)` | `print(fit.summary())` |
+| **ANOVA Table** | `anova(fit)` | `sm.stats.anova_lm(fit)` |
+| **Predictions** | `predict(fit, newdata)` | `fit.predict(new_data)` |
+| **Interaction Terms** | `lm(y ~ x1 * x2)` | `smf.ols("y ~ x1 * x2", data=df).fit()` |
+| **Polynomials** | `lm(y ~ poly(x, 2))` | `smf.ols("y ~ x + I(x**2)", data=df).fit()` |
+
+## 2. Model Selection & Regularization
+Python's **`scikit-learn`** (sklearn) is the powerhouse for cross-validation and penalized regression.
+
+| Feature | R Code (Package) | Python Library | Python Counterpart |
+| :--- | :--- | :--- | :--- |
+| **Lasso / Ridge** | `glmnet(x, y)` | `sklearn` | `LassoCV()` or `RidgeCV()` |
+| **Stepwise (AIC/BIC)** | `step(fit)` | `sklearn` | `SequentialFeatureSelector` |
+| **Best Subset** | `regsubsets()` (`leaps`) | `mlxtend` | `ExhaustiveFeatureSelector` |
+| **Validation Split** | `sample()` / `createDataPartition` | `sklearn` | `train_test_split()` |
+| **K-Fold CV** | `cv.glmnet()` | `sklearn` | `cross_val_score()` or `GridSearchCV()` |
+
+## 3. Diagnostics & Residuals
+In R, `plot(fit)` automatically generates four diagnostic plots. In Python, you access these via the `.resid` attribute or `statsmodels.graphics`.
+
+| Metric / Plot | R Code | Python Code |
+| :--- | :--- | :--- |
+| **Residuals** | `residuals(fit)` | `fit.resid` |
+| **Fitted Values** | `fitted(fit)` | `fit.fittedvalues` |
+| **Q-Q Plot** | `qqnorm(fit$resid)` | `sm.qqplot(fit.resid, line='s')` |
+| **Leverage Plot** | `plot(fit, which=4)` | `sm.graphics.influence_plot(fit)` |
+| **Residual Plot** | `plot(fit, which=1)` | `sns.residplot(x=fit.fittedvalues, y=df['y'])` |
+
+## 4. Required Libraries for the Course
+To set up a Python environment equivalent to the R statistical suite, run:
+
+```bash
+pip install numpy pandas matplotlib seaborn statsmodels scikit-learn mlxtend islp
