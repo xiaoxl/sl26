@@ -11,20 +11,34 @@ format:
             - ../../math.tex
             - text: |
                 \usepackage{xcolor}
-                \definecolor{AccessibleRed}{HTML}{8B0000}
+                \definecolor{AccessibleRed}{HTML}{BC4B00}
+                \newcommand{\red}[1]{\textcolor{AccessibleRed}{\textbf{#1}}}
                 \usepackage{alltt}
                 \usepackage{enumitem}
                 \usepackage[letterpaper,top=1in,bottom=0.89in,left=1in,right=1in]{geometry}
                 \AtBeginDocument{
                     \renewcommand{\theexercise}{\arabic{exercise}}
-                }
-                \newcommand{\red}[1]{\textcolor{red}{\textbf{#1}}}
-                \newcommand{\mc}[1]{%
+                }                
+                \newcommand{\mc}[1]{
                     \begin{enumerate}
-                    \setcounter{enumi}{0}
-                    \renewcommand{\labelenumi}{\Alph{enumi}.}
-                    #1
+                        \setcounter{enumi}{0}
+                        \renewcommand{\labelenumi}{\Alph{enumi}.}
+                        \setlength{\itemsep}{0pt}
+                        \setlength{\topsep}{2pt}
+                        #1
                     \end{enumerate}
+                }
+                \usepackage{multicol}
+                \newcommand{\mcc}[2][2]{
+                    \begin{multicols}{#1}
+                        \begin{enumerate}
+                            \setcounter{enumi}{0}
+                            \renewcommand{\labelenumi}{\Alph{enumi}.}
+                            \setlength{\itemsep}{0pt}
+                            \setlength{\topsep}{2pt}
+                            #2
+                        \end{enumerate}
+                    \end{multicols}
                 }
         mainfont: Libertinus Serif
         sansfont: Libertinus Sans
@@ -44,6 +58,7 @@ crossref:
 
 
 
+
 # Problems
 
 ::: {#exr-1}
@@ -59,6 +74,16 @@ A variable that takes on the values of 0 or 1 and is used to incorporate the eff
 :::
 
 
+::: {#exr-2}
+
+\mcc[2]{
+\item a constant variable  
+\item an interaction   
+\item a dummy variable     
+\item None of these alternatives is correct.
+}
+
+:::
 
 ```{r}
 #| echo: false
@@ -83,6 +108,8 @@ knitr::kable(
 2. $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\varepsilon$
 :::
 
+
+{{< include ../../_newpage.qmd >}} 
 
 
 ```{r, echo=TRUE, results="hide"}
@@ -110,14 +137,14 @@ s_out <- gsub(
 cat("\\begin{alltt}\n")
 cat(paste(s_out, collapse = "\n"))
 cat("\n\\end{alltt}\n")
-
 ```
+
 
 
 ```{r}
-#| echo: false
-#| results: asis
-if (!params$show_solution) {
-    cat("{{< pagebreak >}}")
+my_panel <- function(x, y, ...) {
+    panel.smooth(x, y, col.smooth = "#BC4B00", ...)
 }
+plot(fit, which = 5, panel = my_panel, cook.col = "black", cook.lty = 2)
 ```
+
