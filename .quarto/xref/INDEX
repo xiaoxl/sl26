@@ -1,0 +1,26 @@
+{
+  "contents/1/basics.qmd": {
+    "basics.html": "c33e45f2"
+  },
+  "index.qmd": {
+    "index.html": "e5ae7cde"
+  },
+  "contents/app/r.qmd": {
+    "r.html": "04612794"
+  },
+  "contents/1/basic.qmd": {
+    "basic.html": "1a27e909"
+  },
+  "contents/1/lr.qmd": {
+    "lr.html": "83c1a4a9"
+  },
+  "contents/1/ridge.qmd": {
+    "ridge.html": "1557719e"
+  },
+  "contents/1/lasso.qmd": {
+    "lasso.html": "84a6ef88"
+  },
+  "hidden/pdf/template/template.qmd": {
+    "template.html": "8d5ed35e"
+  }
+}

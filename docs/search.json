@@ -1,0 +1,638 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Statistical Learning",
+    "section": "",
+    "text": "Preface\nThese are notes for STAT 3113 Regression 2026 Summer at Arkansas Tech University. If you have any questions please contact me through email.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Statistical Learning",
+    "section": "References",
+    "text": "References\n\n\n[1] Wickham, H.\n(2014). Tidy data.\nJournal of Statistical Software 59.\n\n\n[2] Mendenhall, W.\nand Sincich, T. (2020). A second\ncourse in statistics: Regression analyisis. Pearson Education, Inc,\n[Hoboken, New Jersey].\n\n\n[3] Healy, K.\n(2025). Gssrdoc: General\nsocial survey documentation for use in r.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "contents/1/basics.html",
+    "href": "contents/1/basics.html",
+    "title": "1  Basics",
+    "section": "",
+    "text": "1.1 Quick overview\nGiven a set of observations of variables, we would like to understand the relationships among these variables.\nThe standard procedure for developing a statistical model is as follows:\nThere are two primary goals and related ways to assess the model:\nBoth Statistical Learning and specific methods like Regression Analysis may use both assessment strategies, but the emphasis differs. In this course, the focus is on the principles of modeling and statistical inference, with prediction discussed but not treated as the primary objective.",
+    "crumbs": [
+      "Review",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basics.html#quick-overview",
+    "href": "contents/1/basics.html#quick-overview",
+    "title": "1  Basics",
+    "section": "",
+    "text": "Proposing a model informed by exploratory data analysis and relevant domain knowledge.\nEstimating the parameters of the proposed model using the available data.\nAssessing the adequacy and quality of the fitted model.\nRevising the model based on the assessment results.\n\n\n\nPrediction (Generalization): We evaluate the fitted model on unseen data, using metrics like MSE or classification error. This assesses the model’s generalization ability, which is the primary focus of subjects like Statistical Learning or Machine Learning.\nExplanation (Inference): We use measures such as \\(R^2\\) to assess the goodness-of-fit of the fitted model, and we use confidence intervals and p-values to perform statistical inference about population parameters. Although these calculations are based on the observed sample, they are interpreted as statements about the population. This approach focuses on understanding relationships among variables and is central to traditional Statistical Modeling, including Regression Analysis.",
+    "crumbs": [
+      "Review",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basics.html#population-vs-sample",
+    "href": "contents/1/basics.html#population-vs-sample",
+    "title": "1  Basics",
+    "section": "1.2 Population vs Sample",
+    "text": "1.2 Population vs Sample\n\nPopulation: the set of all elements of interest in a particular study.\nSample: is a subset of the population\nStatistical Inference: The process of using data collected on a sample to draw conclusions about a population is called statistical inference.\n\nA population is described by parameters (e.g., \\(\\mu\\), \\(\\sigma\\), \\(\\beta\\)). A sample produces statistics (e.g., \\(\\bar X\\), \\(s\\), \\(\\hat\\beta\\)), which vary across repeated samples. Statistical inference uses the sampling distribution of these statistics to draw conclusions about population parameters. This part will be revisited later in ?sec-inference.\n\nExample 1.1 (gssr)  \n\n\nClick to expand.\n\nAccording to a previous national media report, the average age of U.S. adults who watch national TV news is 60 years. A data analyst hypothesizes that the average age of frequent TV-news watchers is greater than 60. To test this, she uses the General Social Survey (GSS), accessible via the gssr R package [1], to draw a sample of 500 respondents and record their ages.\n\nDescribe the population: All U.S. adults who watch TV news several times a week or more often, as defined by the GSS survey question on TV-news frequency.\nDescribe the sample: A random sample of 500 GSS respondents who meet the above criterion and have valid age data.\nSample size: \\(n = 500\\)\nDescribe the statistical inference: We want to determine whether the mean age of frequent TV-news watchers is greater than 60 based on the sampled data.",
+    "crumbs": [
+      "Review",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basics.html#data-structure",
+    "href": "contents/1/basics.html#data-structure",
+    "title": "1  Basics",
+    "section": "1.3 Data structure",
+    "text": "1.3 Data structure\nA dataset is a collection of values. Values are organized in two ways. Every value belongs to a variable and an observation.\n\nDefinition 1.1 (Variables and Observations [2])  \n\nA variable contains all values that measure the same underlying attribute (like height, temperature, duration) across units.\nAn observation contains all values measured on the same unit (like a person, or a day, or a race) across attributes.\n\n\n\nExample 1.2 (possum)  \n\n\nClick to expand.\n\nResearchers collected body measurements for bushtail possums in Eastern Australia. They trapped 104 possums and recorded location where possum was trapped, age, gender, head length, skull width, total length, tail length, etc. for each possum. For more details see ?sec-app_possum.\n\nlibrary(DAAG)\ndata(possum)\nhead(possum)\n##     case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye\n## C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2\n## C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0\n## C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5\n## C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2\n## C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1\n## C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2\n##     chest belly\n## C3   28.0    36\n## C5   28.5    33\n## C10  30.0    34\n## C15  28.0    34\n## C23  28.5    33\n## C24  30.0    32\n\nThe dimension of the dataset is\n\ndim(possum)\n## [1] 104  14\n\nIn this example, there are 14 variables, and 104 observations. Each column is a variable. In R you can use the column name to get access to the variable.\n\npossum$hdlngth\n##   [1]  94.1  92.5  94.0  93.2  91.5  93.1  95.3  94.8  93.4  91.8  93.3  94.9\n##  [13]  95.1  95.4  92.9  91.6  94.7  93.5  94.4  94.8  95.9  96.3  92.5  94.4\n##  [25]  95.8  96.0  90.5  93.8  92.8  92.1  92.8  94.3  91.4  90.6  94.4  93.3\n##  [37]  89.3  92.4  84.7  91.0  88.4  85.3  90.0  85.1  90.7  91.4  90.1  98.6\n##  [49]  95.4  91.6  95.6  97.6  93.1  96.9 103.1  99.9  95.1  94.5 102.5  91.3\n##  [61]  95.7  91.3  92.0  96.9  93.5  90.4  93.3  94.1  98.0  91.9  92.8  85.9\n##  [73]  82.5  88.7  93.8  92.4  93.6  86.5  85.8  86.7  90.6  86.0  90.0  88.4\n##  [85]  89.5  88.2  98.5  89.6  97.7  92.6  97.8  90.7  89.2  91.8  91.6  94.8\n##  [97]  91.0  93.2  93.3  89.5  88.6  92.4  91.5  93.6\n\n\n\n\nDefinition 1.2 (Quantitative and Qualitative [3])  \n\nQuantitative data are observations measured on a naturally occurring numerical scale. It is also called numerical data.\nQualitative data are nonnumerical data that can only be classified into one of a group of categories. It is also called categorical data.\n\n\nIn regression, qualitative variables must be encoded using indicator (dummy) variables.\n\nDefinition 1.3 (Discrete and Continuous [3])  \n\nDiscrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2…\nContinuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals.\n\n\n\n\n\n\n\ngraph TD\n    A[All Variables] --&gt; B[Numerical]\n    A --&gt; C[Categorical]\n    B --&gt; D[Continuous]\n    B --&gt; E[Discrete]\n\n\n\n\n\n\n\n\n\n\n\n\nNoteRandom variables\n\n\n\nA variable in a dataset can be modeled by a random variable. The probability density function / probability mass function of the random variable can describe the distribution of all possible values of the variable in a dataset.\nMaking a measurement is equivalent to taking a sample from the corresponding random variable. This will be discussed in detail in ?sec-inference.",
+    "crumbs": [
+      "Review",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basics.html#data-visualization",
+    "href": "contents/1/basics.html#data-visualization",
+    "title": "1  Basics",
+    "section": "1.4 Data Visualization",
+    "text": "1.4 Data Visualization\n\n1.4.1 Qualitative (categorical) data\nUsually the most important is the class relative frequency: \\[\n\\text{class relative frequency}=\\frac{\\text{class frequency}}{n}.\n\\]\nTo display it, we could use table, bar chart or pie chart.\n\nExample 1.3 (possum)  \n\n\nClick to expand.\n\nHere we still consider the possum dataset.\n\nlibrary(DAAG)\ndata(possum)\nhead(possum)\n##     case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye\n## C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2\n## C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0\n## C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5\n## C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2\n## C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1\n## C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2\n##     chest belly\n## C3   28.0    36\n## C5   28.5    33\n## C10  30.0    34\n## C15  28.0    34\n## C23  28.5    33\n## C24  30.0    32\n\nThe variable Pop (location where possum was trapped) is qualitative. We could use the following ways to display it. We first compute the frequency table of the variable Pop:\n\ntable(possum$Pop)\n## \n##   Vic other \n##    46    58\n\nor relative frequency table:\n\ntable(possum$Pop)/length(possum$Pop)\n## \n##       Vic     other \n## 0.4423077 0.5576923\n\nThen we could draw the barplot of this variable:\n\nbarplot(table(possum$Pop))\n\n\n\n\n\n\n\n\nand the pie plot:\n\npie(table(possum$Pop))\n\n\n\n\n\n\n\n\nNote that table is handling the statistics, while barplot and pie draw on top of the result from table.\n\n\n\n\n1.4.2 Quantitative (numerical) data\nFor quantitative data, we would like to see the histogram, as well as computing some statistics: min, max, quartiles, median and mean.\n\nHistogram is an approximation of the distribution. In other words, we split the range into small segments (called bins), and count the frequency or relative frequency of data falling into these bins.\nBox plot consists of a box, two lines and possibly some points:\n\nThe box in the box plot extends from the lower quartile to the upper quartile. The difference between the upper quartile and the lower quartile is called the inter-quartile range (IQR).\nThe lines, known as whiskers, extend to one and a half times the interquartile range, but they stop at the most extreme data points that fall within this range.\nThe points, considered as outliers, are those which are not covered by the box and the lines.\n\n\nHistograms and boxplots help check normality and outliers before fitting regression. These summaries approximate the underlying distribution of the variable. In regression, we later apply similar tools to the residuals to check model assumptions.\n\nExample 1.4 (possum)  \n\n\nClick to expand.\n\nWe still consider the possum dataset. We could use summary to compute the major statistics.\n\nlibrary(DAAG)\ndata(possum)\nsummary(possum)\n##       case             site          Pop     sex         age       \n##  Min.   :  1.00   Min.   :1.000   Vic  :46   f:43   Min.   :1.000  \n##  1st Qu.: 26.75   1st Qu.:1.000   other:58   m:61   1st Qu.:2.250  \n##  Median : 52.50   Median :3.000                     Median :3.000  \n##  Mean   : 52.50   Mean   :3.625                     Mean   :3.833  \n##  3rd Qu.: 78.25   3rd Qu.:6.000                     3rd Qu.:5.000  \n##  Max.   :104.00   Max.   :7.000                     Max.   :9.000  \n##                                                     NA's   :2      \n##     hdlngth           skullw         totlngth         taill      \n##  Min.   : 82.50   Min.   :50.00   Min.   :75.00   Min.   :32.00  \n##  1st Qu.: 90.67   1st Qu.:54.98   1st Qu.:84.00   1st Qu.:35.88  \n##  Median : 92.80   Median :56.35   Median :88.00   Median :37.00  \n##  Mean   : 92.60   Mean   :56.88   Mean   :87.09   Mean   :37.01  \n##  3rd Qu.: 94.72   3rd Qu.:58.10   3rd Qu.:90.00   3rd Qu.:38.00  \n##  Max.   :103.10   Max.   :68.60   Max.   :96.50   Max.   :43.00  \n##                                                                  \n##     footlgth        earconch          eye            chest          belly      \n##  Min.   :60.30   Min.   :40.30   Min.   :12.80   Min.   :22.0   Min.   :25.00  \n##  1st Qu.:64.60   1st Qu.:44.80   1st Qu.:14.40   1st Qu.:25.5   1st Qu.:31.00  \n##  Median :68.00   Median :46.80   Median :14.90   Median :27.0   Median :32.50  \n##  Mean   :68.46   Mean   :48.13   Mean   :15.05   Mean   :27.0   Mean   :32.59  \n##  3rd Qu.:72.50   3rd Qu.:52.00   3rd Qu.:15.72   3rd Qu.:28.0   3rd Qu.:34.12  \n##  Max.   :77.90   Max.   :56.20   Max.   :17.80   Max.   :32.0   Max.   :40.00  \n##  NA's   :1\n\nThe variable hdlngth (head length) is quantitative. We first show the histogram. We could use breaks to control the number of bins. Note that the function hist does not only draw the histogram; it also provides many useful pieces of information.\n\nres &lt;- hist(possum$hdlngth, breaks=10)\n\n\n\n\n\n\n\nres\n## $breaks\n##  [1]  82  84  86  88  90  92  94  96  98 100 102 104\n## \n## $counts\n##  [1]  1  6  2 12 22 27 22  7  3  0  2\n## \n## $density\n##  [1] 0.004807692 0.028846154 0.009615385 0.057692308 0.105769231 0.129807692\n##  [7] 0.105769231 0.033653846 0.014423077 0.000000000 0.009615385\n## \n## $mids\n##  [1]  83  85  87  89  91  93  95  97  99 101 103\n## \n## $xname\n## [1] \"possum$hdlngth\"\n## \n## $equidist\n## [1] TRUE\n## \n## attr(,\"class\")\n## [1] \"histogram\"\n\nThen we could show the box plot. You may compare the lines in the plot with the summary table and the histogram above.\n\nboxplot(possum$hdlngth)\n\n\n\n\n\n\n\n\n\n\n\n\n1.4.3 Relations among multiple variables\nWe could show the relation between two variables in a scatterplot. Scatterplots help us assess linearity, detect outliers, and decide whether transformation is needed.\n\nExample 1.5 (possum)  \n\n\nClick to expand.\n\nWhen both variables are numerical and continuous:\n\nplot(possum$hdlngth, possum$skullw)\n\n\n\n\n\n\n\n\nWhen one variable is categorical:\n\nplot(as.factor(possum$Pop), possum$skullw)\n\n\n\n\n\n\n\n\nNote that in this case, the categorical data has to be a factor. And once it is cast into a factor, the plot is multiple box plots for each category. This type of grouped boxplot corresponds to comparing group means and is directly related to one-way ANOVA and regression with dummy variables. It will be discussed in later sections.\nWe can see pair plots for each pair of variables. Pair plots are very important because they help reveal relationships among predictors. Note that before creating the plot, we have to cast pop and sex into factors.\n\npossum$Pop &lt;- as.factor(possum$Pop)\npossum$sex &lt;- as.factor(possum$sex)\npairs(possum)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[1] Healy, K. (2025). Gssrdoc: General social survey documentation for use in r.\n\n\n[2] Wickham, H. (2014). Tidy data. Journal of Statistical Software 59.\n\n\n[3] Mendenhall, W. and Sincich, T. (2020). A second course in statistics: Regression analyisis. Pearson Education, Inc, [Hoboken, New Jersey].",
+    "crumbs": [
+      "Review",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/app/r.html",
+    "href": "contents/app/r.html",
+    "title": "Appendix A — Quick intro to R",
+    "section": "",
+    "text": "A.1 For those who are from other languages, especially Python",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Quick intro to R</span>"
+    ]
+  },
+  {
+    "objectID": "contents/app/r.html#for-those-who-are-from-other-languages-especially-python",
+    "href": "contents/app/r.html#for-those-who-are-from-other-languages-especially-python",
+    "title": "Appendix A — Quick intro to R",
+    "section": "",
+    "text": "The character . is NOT special. It doesn’t mean packages or classes. It is just one of the characters that can be used as variable names.\nR recommends to use &lt;- to denote assigning values, although = is accepted. a &lt;- 1 and a = 1 are essentially the same. It has some benefits",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Quick intro to R</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html",
+    "href": "contents/1/basic.html",
+    "title": "1  Course Overview",
+    "section": "",
+    "text": "2 Course Narrative\nThis course is organized as an introduction to statistical learning from a statistical perspective.\nThe focus is on three recurring ideas:\nThe course moves from simple predictive models to more flexible methods, then to evaluation tools, regularization, ensemble methods, and practical workflow.\nThe course follows this progression:\nThis gives students a coherent view of statistical learning as a modeling pipeline rather than a disconnected list of techniques.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics",
+    "href": "contents/1/basic.html#main-topics",
+    "title": "1  Course Overview",
+    "section": "4.1 Main Topics",
+    "text": "4.1 Main Topics\n\nWhat is statistical learning?\nSupervised vs unsupervised learning\nParametric vs nonparametric methods\nPrediction vs explanation\nBias–variance tradeoff",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals",
+    "href": "contents/1/basic.html#teaching-goals",
+    "title": "1  Course Overview",
+    "section": "4.2 Teaching Goals",
+    "text": "4.2 Teaching Goals\nStudents should understand that the main goal of statistical learning is good prediction on new data, not simply fitting the observed sample as closely as possible.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis",
+    "href": "contents/1/basic.html#suggested-emphasis",
+    "title": "1  Course Overview",
+    "section": "4.3 Suggested Emphasis",
+    "text": "4.3 Suggested Emphasis\n\nIntroduce the overall modeling problem first.\nUse simple real-world examples such as house prices, medical diagnosis, or spam filtering.\nMake overfitting a central theme from the beginning.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics-1",
+    "href": "contents/1/basic.html#main-topics-1",
+    "title": "1  Course Overview",
+    "section": "5.1 Main Topics",
+    "text": "5.1 Main Topics\n\nLinear regression as a prediction tool\nInterpreting fitted relationships\nStrengths and weaknesses of linear models\nLinear models as a baseline for comparison",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals-1",
+    "href": "contents/1/basic.html#teaching-goals-1",
+    "title": "1  Course Overview",
+    "section": "5.2 Teaching Goals",
+    "text": "5.2 Teaching Goals\nStudents should see linear regression as the starting point of predictive modeling: simple, interpretable, and useful, but limited in flexibility.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis-1",
+    "href": "contents/1/basic.html#suggested-emphasis-1",
+    "title": "1  Course Overview",
+    "section": "5.3 Suggested Emphasis",
+    "text": "5.3 Suggested Emphasis\n\nPresent linear regression mainly as a predictive model.\nKeep inference light unless needed for context.\nHighlight when linear models fail to capture nonlinear structure.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics-2",
+    "href": "contents/1/basic.html#main-topics-2",
+    "title": "1  Course Overview",
+    "section": "6.1 Main Topics",
+    "text": "6.1 Main Topics\n\nFlexible regression methods\nK-nearest neighbors regression\nSmoothers and local fitting ideas\nModel flexibility and overfitting",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals-2",
+    "href": "contents/1/basic.html#teaching-goals-2",
+    "title": "1  Course Overview",
+    "section": "6.2 Teaching Goals",
+    "text": "6.2 Teaching Goals\nStudents should learn that more flexible models can better capture complicated patterns, but at the cost of increased variance.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis-2",
+    "href": "contents/1/basic.html#suggested-emphasis-2",
+    "title": "1  Course Overview",
+    "section": "6.3 Suggested Emphasis",
+    "text": "6.3 Suggested Emphasis\n\nConnect this unit directly to bias–variance tradeoff.\nCompare flexible and inflexible models visually.\nUse plots to show underfitting and overfitting.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics-3",
+    "href": "contents/1/basic.html#main-topics-3",
+    "title": "1  Course Overview",
+    "section": "7.1 Main Topics",
+    "text": "7.1 Main Topics\n\nClassification as a prediction problem\nLogistic regression\nDecision boundaries\nK-nearest neighbors classification",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals-3",
+    "href": "contents/1/basic.html#teaching-goals-3",
+    "title": "1  Course Overview",
+    "section": "7.2 Teaching Goals",
+    "text": "7.2 Teaching Goals\nStudents should understand that classification uses the same modeling logic as regression, but with categorical outcomes.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis-3",
+    "href": "contents/1/basic.html#suggested-emphasis-3",
+    "title": "1  Course Overview",
+    "section": "7.3 Suggested Emphasis",
+    "text": "7.3 Suggested Emphasis\n\nStress the difference between predicting a class and predicting a numeric response.\nIntroduce class probabilities early.\nUse confusion matrices and classification error as evaluation tools.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics-4",
+    "href": "contents/1/basic.html#main-topics-4",
+    "title": "1  Course Overview",
+    "section": "8.1 Main Topics",
+    "text": "8.1 Main Topics\n\nLogistic regression in more detail\nInterpreting probabilities\nThresholds and classification decisions\nComparing classifiers",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals-4",
+    "href": "contents/1/basic.html#teaching-goals-4",
+    "title": "1  Course Overview",
+    "section": "8.2 Teaching Goals",
+    "text": "8.2 Teaching Goals\nStudents should learn how binary classification models convert predictors into class probabilities and final decisions.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis-4",
+    "href": "contents/1/basic.html#suggested-emphasis-4",
+    "title": "1  Course Overview",
+    "section": "8.3 Suggested Emphasis",
+    "text": "8.3 Suggested Emphasis\n\nDistinguish between probability estimation and hard classification.\nDiscuss how different thresholds change predictions.\nUse practical examples such as disease detection or spam filtering.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics-5",
+    "href": "contents/1/basic.html#main-topics-5",
+    "title": "1  Course Overview",
+    "section": "9.1 Main Topics",
+    "text": "9.1 Main Topics\n\nLDA\nQDA\nNaive Bayes\nDiscriminative vs generative modeling",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals-5",
+    "href": "contents/1/basic.html#teaching-goals-5",
+    "title": "1  Course Overview",
+    "section": "9.2 Teaching Goals",
+    "text": "9.2 Teaching Goals\nStudents should understand the idea of modeling class distributions directly and then using Bayes’ rule for prediction.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis-5",
+    "href": "contents/1/basic.html#suggested-emphasis-5",
+    "title": "1  Course Overview",
+    "section": "9.3 Suggested Emphasis",
+    "text": "9.3 Suggested Emphasis\n\nCompare logistic regression with LDA and QDA conceptually.\nEmphasize assumptions and when they matter.\nUse side-by-side model comparisons.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics-6",
+    "href": "contents/1/basic.html#main-topics-6",
+    "title": "1  Course Overview",
+    "section": "10.1 Main Topics",
+    "text": "10.1 Main Topics\n\nValidation set approach\nCross-validation\nBootstrap\nEstimating test error",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals-6",
+    "href": "contents/1/basic.html#teaching-goals-6",
+    "title": "1  Course Overview",
+    "section": "10.2 Teaching Goals",
+    "text": "10.2 Teaching Goals\nThis unit is the conceptual center of the course. Students must understand that training error is not enough, and that model performance must be evaluated using principled estimates of test error.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis-6",
+    "href": "contents/1/basic.html#suggested-emphasis-6",
+    "title": "1  Course Overview",
+    "section": "10.3 Suggested Emphasis",
+    "text": "10.3 Suggested Emphasis\n\nMake cross-validation a central practical tool.\nShow why naive comparison by training error is misleading.\nUse repeated examples across multiple methods.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics-7",
+    "href": "contents/1/basic.html#main-topics-7",
+    "title": "1  Course Overview",
+    "section": "11.1 Main Topics",
+    "text": "11.1 Main Topics\n\nRidge regression\nLasso\nElastic net\nShrinkage and complexity control",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals-7",
+    "href": "contents/1/basic.html#teaching-goals-7",
+    "title": "1  Course Overview",
+    "section": "11.2 Teaching Goals",
+    "text": "11.2 Teaching Goals\nStudents should understand how regularization controls complexity and improves prediction without exhaustively searching across models.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis-7",
+    "href": "contents/1/basic.html#suggested-emphasis-7",
+    "title": "1  Course Overview",
+    "section": "11.3 Suggested Emphasis",
+    "text": "11.3 Suggested Emphasis\n\nPresent regularization as a modern answer to overfitting in linear models.\nCompare subset selection and shrinkage conceptually.\nUse coefficient path plots when possible.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics-8",
+    "href": "contents/1/basic.html#main-topics-8",
+    "title": "1  Course Overview",
+    "section": "12.1 Main Topics",
+    "text": "12.1 Main Topics\n\nDecision trees\nBagging\nRandom forests\nBoosting",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals-8",
+    "href": "contents/1/basic.html#teaching-goals-8",
+    "title": "1  Course Overview",
+    "section": "12.2 Teaching Goals",
+    "text": "12.2 Teaching Goals\nStudents should learn that combining many unstable or weak learners can create a stronger predictive model.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis-8",
+    "href": "contents/1/basic.html#suggested-emphasis-8",
+    "title": "1  Course Overview",
+    "section": "12.3 Suggested Emphasis",
+    "text": "12.3 Suggested Emphasis\n\nStart with a single tree and its limitations.\nThen motivate bagging as variance reduction.\nFinally introduce random forests and boosting as improved ensemble ideas.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#main-topics-9",
+    "href": "contents/1/basic.html#main-topics-9",
+    "title": "1  Course Overview",
+    "section": "13.1 Main Topics",
+    "text": "13.1 Main Topics\n\nEnd-to-end modeling workflow\nData preprocessing\nModel tuning\nModel comparison\nPractical considerations on real datasets",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#teaching-goals-9",
+    "href": "contents/1/basic.html#teaching-goals-9",
+    "title": "1  Course Overview",
+    "section": "13.2 Teaching Goals",
+    "text": "13.2 Teaching Goals\nStudents should be able to complete a full predictive analysis from data setup through final model comparison and interpretation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#suggested-emphasis-9",
+    "href": "contents/1/basic.html#suggested-emphasis-9",
+    "title": "1  Course Overview",
+    "section": "13.3 Suggested Emphasis",
+    "text": "13.3 Suggested Emphasis\n\nOrganize this unit around a full case study.\nShow how preprocessing, resampling, tuning, and comparison fit together.\nEmphasize reproducible workflow and communication.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#midterm-i",
+    "href": "contents/1/basic.html#midterm-i",
+    "title": "1  Course Overview",
+    "section": "14.1 Midterm I",
+    "text": "14.1 Midterm I\nSuggested coverage:\n\nfoundations of statistical learning,\nlinear regression,\nnonparametric regression,\nearly classification concepts.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#midterm-ii",
+    "href": "contents/1/basic.html#midterm-ii",
+    "title": "1  Course Overview",
+    "section": "14.2 Midterm II",
+    "text": "14.2 Midterm II\nSuggested coverage:\n\nclassification,\ngenerative models,\nresampling,\nregularization.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#final-assessment-or-project",
+    "href": "contents/1/basic.html#final-assessment-or-project",
+    "title": "1  Course Overview",
+    "section": "14.3 Final Assessment or Project",
+    "text": "14.3 Final Assessment or Project\nSuggested format:\n\na real dataset,\nseveral competing methods,\nmodel comparison using validation or cross-validation,\nwritten interpretation of results.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#lecture-1",
+    "href": "contents/1/basic.html#lecture-1",
+    "title": "1  Course Overview",
+    "section": "15.1 Lecture 1",
+    "text": "15.1 Lecture 1\n\nconcept and intuition,\nvisual explanation,\nstrengths and limitations of the method.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#lecture-2",
+    "href": "contents/1/basic.html#lecture-2",
+    "title": "1  Course Overview",
+    "section": "15.2 Lecture 2",
+    "text": "15.2 Lecture 2\n\nimplementation,\nmodel fitting,\ncomparison with earlier methods,\nshort applied example.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#theme-1-model-flexibility",
+    "href": "contents/1/basic.html#theme-1-model-flexibility",
+    "title": "1  Course Overview",
+    "section": "16.1 Theme 1: Model Flexibility",
+    "text": "16.1 Theme 1: Model Flexibility\nStudents should repeatedly ask:\n\nHow flexible is this model, and what does that flexibility buy us?",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#theme-2-generalization",
+    "href": "contents/1/basic.html#theme-2-generalization",
+    "title": "1  Course Overview",
+    "section": "16.2 Theme 2: Generalization",
+    "text": "16.2 Theme 2: Generalization\nStudents should repeatedly ask:\n\nHow do we know whether this model will work on new data?",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#theme-3-comparison",
+    "href": "contents/1/basic.html#theme-3-comparison",
+    "title": "1  Course Overview",
+    "section": "16.3 Theme 3: Comparison",
+    "text": "16.3 Theme 3: Comparison\nStudents should repeatedly ask:\n\nIs this method better than what we already had?",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html",
+    "href": "contents/1/lr.html",
+    "title": "2  Linear regression",
+    "section": "",
+    "text": "2.1 Quick overview\nGiven a set of observations of variables, we would like to understand the relationships among these variables.\nThe standard procedure for developing a statistical model is as follows:\nThere are two primary goals and related ways to assess the model:\nBoth Statistical Learning and specific methods like Regression Analysis may use both assessment strategies, but the emphasis differs. In this course, the focus is on the principles of modeling and statistical inference, with prediction discussed but not treated as the primary objective.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#quick-overview",
+    "href": "contents/1/lr.html#quick-overview",
+    "title": "2  Linear regression",
+    "section": "",
+    "text": "Proposing a model informed by exploratory data analysis and relevant domain knowledge.\nEstimating the parameters of the proposed model using the available data.\nAssessing the adequacy and quality of the fitted model.\nRevising the model based on the assessment results.\n\n\n\nPrediction (Generalization): We evaluate the fitted model on unseen data, using metrics like MSE or classification error. This assesses the model’s generalization ability, which is the primary focus of subjects like Statistical Learning or Machine Learning.\nExplanation (Inference): We use measures such as \\(R^2\\) to assess the goodness-of-fit of the fitted model, and we use confidence intervals and p-values to perform statistical inference about population parameters. Although these calculations are based on the observed sample, they are interpreted as statements about the population. This approach focuses on understanding relationships among variables and is central to traditional Statistical Modeling, including Regression Analysis.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#population-vs-sample",
+    "href": "contents/1/lr.html#population-vs-sample",
+    "title": "2  Linear regression",
+    "section": "2.2 Population vs Sample",
+    "text": "2.2 Population vs Sample\n\nPopulation: the set of all elements of interest in a particular study.\nSample: is a subset of the population\nStatistical Inference: The process of using data collected on a sample to draw conclusions about a population is called statistical inference.\n\nA population is described by parameters (e.g., \\(\\mu\\), \\(\\sigma\\), \\(\\beta\\)). A sample produces statistics (e.g., \\(\\bar X\\), \\(s\\), \\(\\hat\\beta\\)), which vary across repeated samples. Statistical inference uses the sampling distribution of these statistics to draw conclusions about population parameters. This part will be revisited later in ?sec-inference.\n\nExample 2.1 (gssr)  \n\n\nClick to expand.\n\nAccording to a previous national media report, the average age of U.S. adults who watch national TV news is 60 years. A data analyst hypothesizes that the average age of frequent TV-news watchers is greater than 60. To test this, she uses the General Social Survey (GSS), accessible via the gssr R package [1], to draw a sample of 500 respondents and record their ages.\n\nDescribe the population: All U.S. adults who watch TV news several times a week or more often, as defined by the GSS survey question on TV-news frequency.\nDescribe the sample: A random sample of 500 GSS respondents who meet the above criterion and have valid age data.\nSample size: \\(n = 500\\)\nDescribe the statistical inference: We want to determine whether the mean age of frequent TV-news watchers is greater than 60 based on the sampled data.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#data-structure",
+    "href": "contents/1/lr.html#data-structure",
+    "title": "2  Linear regression",
+    "section": "2.3 Data structure",
+    "text": "2.3 Data structure\nA dataset is a collection of values. Values are organized in two ways. Every value belongs to a variable and an observation.\n\nDefinition 2.1 (Variables and Observations [2])  \n\nA variable contains all values that measure the same underlying attribute (like height, temperature, duration) across units.\nAn observation contains all values measured on the same unit (like a person, or a day, or a race) across attributes.\n\n\n\nExample 2.2 (possum)  \n\n\nClick to expand.\n\nResearchers collected body measurements for bushtail possums in Eastern Australia. They trapped 104 possums and recorded location where possum was trapped, age, gender, head length, skull width, total length, tail length, etc. for each possum. For more details see ?sec-app_possum.\n\nlibrary(DAAG)\ndata(possum)\nhead(possum)\n\n    case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye\nC3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2\nC5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0\nC10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5\nC15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2\nC23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1\nC24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2\n    chest belly\nC3   28.0    36\nC5   28.5    33\nC10  30.0    34\nC15  28.0    34\nC23  28.5    33\nC24  30.0    32\n\n\nThe dimension of the dataset is\n\ndim(possum)\n\n[1] 104  14\n\n\nIn this example, there are 14 variables, and 104 observations. Each column is a variable. In R you can use the column name to get access to the variable.\n\npossum$hdlngth\n\n  [1]  94.1  92.5  94.0  93.2  91.5  93.1  95.3  94.8  93.4  91.8  93.3  94.9\n [13]  95.1  95.4  92.9  91.6  94.7  93.5  94.4  94.8  95.9  96.3  92.5  94.4\n [25]  95.8  96.0  90.5  93.8  92.8  92.1  92.8  94.3  91.4  90.6  94.4  93.3\n [37]  89.3  92.4  84.7  91.0  88.4  85.3  90.0  85.1  90.7  91.4  90.1  98.6\n [49]  95.4  91.6  95.6  97.6  93.1  96.9 103.1  99.9  95.1  94.5 102.5  91.3\n [61]  95.7  91.3  92.0  96.9  93.5  90.4  93.3  94.1  98.0  91.9  92.8  85.9\n [73]  82.5  88.7  93.8  92.4  93.6  86.5  85.8  86.7  90.6  86.0  90.0  88.4\n [85]  89.5  88.2  98.5  89.6  97.7  92.6  97.8  90.7  89.2  91.8  91.6  94.8\n [97]  91.0  93.2  93.3  89.5  88.6  92.4  91.5  93.6\n\n\n\n\n\nDefinition 2.2 (Quantitative and Qualitative [3])  \n\nQuantitative data are observations measured on a naturally occurring numerical scale. It is also called numerical data.\nQualitative data are nonnumerical data that can only be classified into one of a group of categories. It is also called categorical data.\n\n\nIn regression, qualitative variables must be encoded using indicator (dummy) variables.\n\nDefinition 2.3 (Discrete and Continuous [3])  \n\nDiscrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2…\nContinuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals.\n\n\n\n\n\n\n\ngraph TD\n    A[All Variables] --&gt; B[Numerical]\n    A --&gt; C[Categorical]\n    B --&gt; D[Continuous]\n    B --&gt; E[Discrete]\n\n\n\n\n\n\n\n\n\n\n\n\nNoteRandom variables\n\n\n\nA variable in a dataset can be modeled by a random variable. The probability density function / probability mass function of the random variable can describe the distribution of all possible values of the variable in a dataset.\nMaking a measurement is equivalent to taking a sample from the corresponding random variable. This will be discussed in detail in ?sec-inference.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#data-visualization",
+    "href": "contents/1/lr.html#data-visualization",
+    "title": "2  Linear regression",
+    "section": "2.4 Data Visualization",
+    "text": "2.4 Data Visualization\n\n2.4.1 Qualitative (categorical) data\nUsually the most important is the class relative frequency: \\[\n\\text{class relative frequency}=\\frac{\\text{class frequency}}{n}.\n\\]\nTo display it, we could use table, bar chart or pie chart.\n\nExample 2.3 (possum)  \n\n\nClick to expand.\n\nHere we still consider the possum dataset.\n\nlibrary(DAAG)\ndata(possum)\nhead(possum)\n\n    case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye\nC3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2\nC5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0\nC10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5\nC15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2\nC23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1\nC24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2\n    chest belly\nC3   28.0    36\nC5   28.5    33\nC10  30.0    34\nC15  28.0    34\nC23  28.5    33\nC24  30.0    32\n\n\nThe variable Pop (location where possum was trapped) is qualitative. We could use the following ways to display it. We first compute the frequency table of the variable Pop:\n\ntable(possum$Pop)\n\n\n  Vic other \n   46    58 \n\n\nor relative frequency table:\n\ntable(possum$Pop)/length(possum$Pop)\n\n\n      Vic     other \n0.4423077 0.5576923 \n\n\nThen we could draw the barplot of this variable:\n\nbarplot(table(possum$Pop))\n\n\n\n\n\n\n\n\nand the pie plot:\n\npie(table(possum$Pop))\n\n\n\n\n\n\n\n\nNote that table is handling the statistics, while barplot and pie draw on top of the result from table.\n\n\n\n\n2.4.2 Quantitative (numerical) data\nFor quantitative data, we would like to see the histogram, as well as computing some statistics: min, max, quartiles, median and mean.\n\nHistogram is an approximation of the distribution. In other words, we split the range into small segments (called bins), and count the frequency or relative frequency of data falling into these bins.\nBox plot consists of a box, two lines and possibly some points:\n\nThe box in the box plot extends from the lower quartile to the upper quartile. The difference between the upper quartile and the lower quartile is called the inter-quartile range (IQR).\nThe lines, known as whiskers, extend to one and a half times the interquartile range, but they stop at the most extreme data points that fall within this range.\nThe points, considered as outliers, are those which are not covered by the box and the lines.\n\n\nHistograms and boxplots help check normality and outliers before fitting regression. These summaries approximate the underlying distribution of the variable. In regression, we later apply similar tools to the residuals to check model assumptions.\n\nExample 2.4 (possum)  \n\n\nClick to expand.\n\nWe still consider the possum dataset. We could use summary to compute the major statistics.\n\nlibrary(DAAG)\ndata(possum)\nsummary(possum)\n\n      case             site          Pop     sex         age       \n Min.   :  1.00   Min.   :1.000   Vic  :46   f:43   Min.   :1.000  \n 1st Qu.: 26.75   1st Qu.:1.000   other:58   m:61   1st Qu.:2.250  \n Median : 52.50   Median :3.000                     Median :3.000  \n Mean   : 52.50   Mean   :3.625                     Mean   :3.833  \n 3rd Qu.: 78.25   3rd Qu.:6.000                     3rd Qu.:5.000  \n Max.   :104.00   Max.   :7.000                     Max.   :9.000  \n                                                    NA's   :2      \n    hdlngth           skullw         totlngth         taill      \n Min.   : 82.50   Min.   :50.00   Min.   :75.00   Min.   :32.00  \n 1st Qu.: 90.67   1st Qu.:54.98   1st Qu.:84.00   1st Qu.:35.88  \n Median : 92.80   Median :56.35   Median :88.00   Median :37.00  \n Mean   : 92.60   Mean   :56.88   Mean   :87.09   Mean   :37.01  \n 3rd Qu.: 94.72   3rd Qu.:58.10   3rd Qu.:90.00   3rd Qu.:38.00  \n Max.   :103.10   Max.   :68.60   Max.   :96.50   Max.   :43.00  \n                                                                 \n    footlgth        earconch          eye            chest          belly      \n Min.   :60.30   Min.   :40.30   Min.   :12.80   Min.   :22.0   Min.   :25.00  \n 1st Qu.:64.60   1st Qu.:44.80   1st Qu.:14.40   1st Qu.:25.5   1st Qu.:31.00  \n Median :68.00   Median :46.80   Median :14.90   Median :27.0   Median :32.50  \n Mean   :68.46   Mean   :48.13   Mean   :15.05   Mean   :27.0   Mean   :32.59  \n 3rd Qu.:72.50   3rd Qu.:52.00   3rd Qu.:15.72   3rd Qu.:28.0   3rd Qu.:34.12  \n Max.   :77.90   Max.   :56.20   Max.   :17.80   Max.   :32.0   Max.   :40.00  \n NA's   :1                                                                     \n\n\nThe variable hdlngth (head length) is quantitative. We first show the histogram. We could use breaks to control the number of bins. Note that the function hist does not only draw the histogram; it also provides many useful pieces of information.\n\nres &lt;- hist(possum$hdlngth, breaks=10)\n\n\n\n\n\n\n\nres\n\n$breaks\n [1]  82  84  86  88  90  92  94  96  98 100 102 104\n\n$counts\n [1]  1  6  2 12 22 27 22  7  3  0  2\n\n$density\n [1] 0.004807692 0.028846154 0.009615385 0.057692308 0.105769231 0.129807692\n [7] 0.105769231 0.033653846 0.014423077 0.000000000 0.009615385\n\n$mids\n [1]  83  85  87  89  91  93  95  97  99 101 103\n\n$xname\n[1] \"possum$hdlngth\"\n\n$equidist\n[1] TRUE\n\nattr(,\"class\")\n[1] \"histogram\"\n\n\nThen we could show the box plot. You may compare the lines in the plot with the summary table and the histogram above.\n\nboxplot(possum$hdlngth)\n\n\n\n\n\n\n\n\n\n\n\n\n2.4.3 Relations among multiple variables\nWe could show the relation between two variables in a scatterplot. Scatterplots help us assess linearity, detect outliers, and decide whether transformation is needed.\n\nExample 2.5 (possum)  \n\n\nClick to expand.\n\nWhen both variables are numerical and continuous:\n\nplot(possum$hdlngth, possum$skullw)\n\n\n\n\n\n\n\n\nWhen one variable is categorical:\n\nplot(as.factor(possum$Pop), possum$skullw)\n\n\n\n\n\n\n\n\nNote that in this case, the categorical data has to be a factor. And once it is cast into a factor, the plot is multiple box plots for each category. This type of grouped boxplot corresponds to comparing group means and is directly related to one-way ANOVA and regression with dummy variables. It will be discussed in later sections.\nWe can see pair plots for each pair of variables. Pair plots are very important because they help reveal relationships among predictors. Note that before creating the plot, we have to cast pop and sex into factors.\n\npossum$Pop &lt;- as.factor(possum$Pop)\npossum$sex &lt;- as.factor(possum$sex)\npairs(possum)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[1] Healy, K. (2025). Gssrdoc: General social survey documentation for use in r.\n\n\n[2] Wickham, H. (2014). Tidy data. Journal of Statistical Software 59.\n\n\n[3] Mendenhall, W. and Sincich, T. (2020). A second course in statistics: Regression analyisis. Pearson Education, Inc, [Hoboken, New Jersey].",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#gemini",
+    "href": "contents/1/basic.html#gemini",
+    "title": "1  Course Overview",
+    "section": "19.1 Gemini",
+    "text": "19.1 Gemini\nThis course plan integrates the theoretical depth of The Elements of Statistical Learning (ESL) and the computational focus of Ruoqing Zhu’s SMLR and STAT 432 with the intuitive, application-based approach of An Introduction to Statistical Learning (ISLR).\nThe curriculum is designed for a 15-week semester, prioritizing numerical optimization (as emphasized in SMLR) alongside standard statistical learning theory.\n\n19.1.1 Phase 1: Foundations & Optimization (Weeks 1–3)\nFocus: Setting the stage with R, Linear Algebra, and the “How” of algorithm fitting. * Week 1: Introduction & The Learning Framework * What is Statistical Learning? (ISLR Ch. 2; ESL Ch. 2). * Supervised vs. Unsupervised Learning. * The Bias-Variance Trade-off and MSE (SMLR Ch. 12.3). * Week 2: Computational Toolkit * R & RMarkdown: Environment setup and reproducible workflows (SMLR Ch. 1-2). * Linear Algebra Refresher: Matrix inversion, rank updates, and block matrices (SMLR Ch. 4). * Week 3: Optimization Basics * First and Second-order properties (Gradient vs. Hessian). * Algorithms: Gradient Descent, Newton’s Method, and Coordinate Descent (SMLR Ch. 5). * Lab: Implementing Linear Regression using optim() from scratch.\n\n\n19.1.2 Phase 2: Linear Models & Regularization (Weeks 4–6)\nFocus: Moving beyond Ordinary Least Squares to handle high-dimensional data. * Week 4: Linear Regression & Model Selection * OLS properties and limitations. * Criteria: \\(C_p\\), AIC, BIC, and Adjusted \\(R^2\\) (SMLR Ch. 6; ISLR Ch. 6). * Search: Best subset vs. Stepwise methods. * Week 5: Penalized Regression (Ridge & Lasso) * Ridge Regression: Motivation via correlated variables and convexity (SMLR Ch. 7). * Lasso: The \\(L_1\\) penalty, sparsity, and the soft-thresholding operator (SMLR Ch. 8). * Elastic Net: Combining \\(L_1\\) and \\(L_2\\) penalties. * Week 6: Path Algorithms & Cross-Validation * The Lasso solution path and Path-wise Coordinate Descent (SMLR Ch. 8.4). * k-fold and Leave-one-out Cross-Validation (ISLR Ch. 5). * Lab: The glmnet package in R.\n\n\n19.1.3 Phase 3: Classification & Smoothing (Weeks 7–9)\nFocus: Categorical outcomes and non-linear boundaries. * Week 7: Linear Classification * Logistic Regression: Parameters, interpretation, and Newton-Raphson for MLE (SMLR Ch. 10). * Discriminant Analysis (LDA/QDA): Bayes’ Rule and decision boundaries (ISLR Ch. 4; SMLR Ch. 11). * Week 8: Non-parametric Smoothing & Splines * Moving beyond linearity: Polynomials and Piecewise functions. * Splines: Basis functions, Natural Cubic Splines, and Smoothing Splines (SMLR Ch. 9; ISLR Ch. 7). * Week 9: Local Learning & Kernels * K-Nearest Neighbors (KNN) for regression and classification (SMLR Ch. 12). * Kernel Density Estimation and Nadaraya-Watson (SMLR Ch. 13). * The “Curse of Dimensionality.”\n\n\n19.1.4 Phase 4: Support Vector Machines & Kernels (Weeks 10–11)\nFocus: The “Kernel Trick” and Maximal Margins. * Week 10: Support Vector Machines (SVM) * The Maximal Margin Classifier and Slack Variables (SMLR Ch. 17). * Duality: From Primal to Dual formulations (ESL Ch. 12). * Week 11: RKHS & Kernel Methods * Reproducing Kernel Hilbert Space (RKHS) basics (SMLR Ch. 15). * Kernel Ridge Regression and the Kernel Trick (SMLR Ch. 16).\n\n\n19.1.5 Phase 5: Trees, Ensembles & Unsupervised Learning (Weeks 12–15)\nFocus: Modern “Black Box” winners and discovery without labels. * Week 12: Tree-Based Methods * Decision Trees: Gini index vs. Entropy (ISLR Ch. 8). * Bagging and Random Forests (SMLR Ch. 19-20). * Week 13: Boosting * AdaBoost and the Stagewise Additive Model. * Gradient Boosting Machines (GBM) and XGBoost/LightGBM concepts (SMLR Ch. 22-23). * Week 14: Unsupervised Learning I (Clustering) * K-means and Hierarchical Clustering (SMLR Ch. 24-25). * Spectral Clustering and the Graph Laplacian (SMLR Ch. 28). * Week 15: Unsupervised Learning II (Dimension Reduction) * Principal Component Analysis (PCA). * Modern visualization: t-SNE and UMAP (SMLR Ch. 31).\n\n\n19.1.6 Required Reading List\n\nSMLR: Zhu, R. Statistical Machine Learning with R. (Primary for optimization/computation).\nISLR: James, G., et al. An Introduction to Statistical Learning. (Primary for intuition/labs).\nESL: Hastie, T., et al. The Elements of Statistical Learning. (Reference for theoretical derivations).",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#model-fitting-inference",
+    "href": "contents/1/basic.html#model-fitting-inference",
+    "title": "1  Course Overview",
+    "section": "21.1 1. Model Fitting & Inference",
+    "text": "21.1 1. Model Fitting & Inference\nWhile scikit-learn is the industry standard for prediction, statsmodels is the primary library for statistical inference (\\(p\\)-values, \\(R^2\\), and \\(t\\)-tests) and matches the R lm() experience.\n\n\n\n\n\n\n\n\nFeature\nR Code\nPython (statsmodels.formula.api)\n\n\n\n\nLinear Regression\nfit &lt;- lm(y ~ x1 + x2, data=df)\nfit = smf.ols(\"y ~ x1 + x2\", data=df).fit()\n\n\nLogistic Regression\nglm(y ~ x, data=df, family=\"binomial\")\nsmf.logit(\"y ~ x\", data=df).fit()\n\n\nModel Summary\nsummary(fit)\nprint(fit.summary())\n\n\nANOVA Table\nanova(fit)\nsm.stats.anova_lm(fit)\n\n\nPredictions\npredict(fit, newdata)\nfit.predict(new_data)\n\n\nInteraction Terms\nlm(y ~ x1 * x2)\nsmf.ols(\"y ~ x1 * x2\", data=df).fit()\n\n\nPolynomials\nlm(y ~ poly(x, 2))\nsmf.ols(\"y ~ x + I(x**2)\", data=df).fit()",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#model-selection-regularization",
+    "href": "contents/1/basic.html#model-selection-regularization",
+    "title": "1  Course Overview",
+    "section": "21.2 2. Model Selection & Regularization",
+    "text": "21.2 2. Model Selection & Regularization\nPython’s scikit-learn (sklearn) is the powerhouse for cross-validation and penalized regression.\n\n\n\n\n\n\n\n\n\nFeature\nR Code (Package)\nPython Library\nPython Counterpart\n\n\n\n\nLasso / Ridge\nglmnet(x, y)\nsklearn\nLassoCV() or RidgeCV()\n\n\nStepwise (AIC/BIC)\nstep(fit)\nsklearn\nSequentialFeatureSelector\n\n\nBest Subset\nregsubsets() (leaps)\nmlxtend\nExhaustiveFeatureSelector\n\n\nValidation Split\nsample() / createDataPartition\nsklearn\ntrain_test_split()\n\n\nK-Fold CV\ncv.glmnet()\nsklearn\ncross_val_score() or GridSearchCV()",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#diagnostics-residuals",
+    "href": "contents/1/basic.html#diagnostics-residuals",
+    "title": "1  Course Overview",
+    "section": "21.3 3. Diagnostics & Residuals",
+    "text": "21.3 3. Diagnostics & Residuals\nIn R, plot(fit) automatically generates four diagnostic plots. In Python, you access these via the .resid attribute or statsmodels.graphics.\n\n\n\n\n\n\n\n\nMetric / Plot\nR Code\nPython Code\n\n\n\n\nResiduals\nresiduals(fit)\nfit.resid\n\n\nFitted Values\nfitted(fit)\nfit.fittedvalues\n\n\nQ-Q Plot\nqqnorm(fit$resid)\nsm.qqplot(fit.resid, line='s')\n\n\nLeverage Plot\nplot(fit, which=4)\nsm.graphics.influence_plot(fit)\n\n\nResidual Plot\nplot(fit, which=1)\nsns.residplot(x=fit.fittedvalues, y=df['y'])",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#required-libraries-for-the-course",
+    "href": "contents/1/basic.html#required-libraries-for-the-course",
+    "title": "1  Course Overview",
+    "section": "21.4 4. Required Libraries for the Course",
+    "text": "21.4 4. Required Libraries for the Course\nTo set up a Python environment equivalent to the R statistical suite, run:\n```bash pip install numpy pandas matplotlib seaborn statsmodels scikit-learn mlxtend islp",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+    ]
+  }
+]
