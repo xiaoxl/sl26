@@ -2,27 +2,8 @@
 title: "Homework 1"
 # author: "Type Your Name Here"
 # date: today
-format: 
-    pdf:        
-        pdf-engine: lualatex
-        template-partials:
-            - ../../doc-class.tex
-        include-in-header:
-            - ../../math.tex
-            - ../../pdfheader.tex
-        mainfont: Libertinus Serif
-        sansfont: Libertinus Sans
-        monofont: Latin Modern Mono
-        monofontoptions:
-            - Scale=0.95
-        mathfont: Libertinus Math
-        highlight-style: arrow
-params:
-    show_solution: false
-filters:
-    - ../../solution-filter.lua
-crossref:
-    chapters: false
+format: pdf
+show_solution: true
 ---
 
 
