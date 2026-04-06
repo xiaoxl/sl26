@@ -2,57 +2,8 @@
 title: "Template"
 # author: "Type Your Name Here"
 # date: today
-format: 
-    pdf:        
-        pdf-engine: lualatex
-        template-partials:
-            - ../../doc-class.tex
-        include-in-header:
-            - ../../math.tex
-            - text: |
-                \usepackage{xcolor}
-                \definecolor{AccessibleRed}{HTML}{BC4B00}
-                \newcommand{\red}[1]{\textcolor{AccessibleRed}{\textbf{#1}}}
-                \usepackage{alltt}
-                \usepackage{enumitem}
-                \usepackage[letterpaper,top=1in,bottom=0.89in,left=1in,right=1in]{geometry}
-                \AtBeginDocument{
-                    \renewcommand{\theexercise}{\arabic{exercise}}
-                }                
-                \newcommand{\mc}[1]{
-                    \begin{enumerate}
-                        \setcounter{enumi}{0}
-                        \renewcommand{\labelenumi}{\Alph{enumi}.}
-                        \setlength{\itemsep}{0pt}
-                        \setlength{\topsep}{2pt}
-                        #1
-                    \end{enumerate}
-                }
-                \usepackage{multicol}
-                \newcommand{\mcc}[2][2]{
-                    \begin{multicols}{#1}
-                        \begin{enumerate}
-                            \setcounter{enumi}{0}
-                            \renewcommand{\labelenumi}{\Alph{enumi}.}
-                            \setlength{\itemsep}{0pt}
-                            \setlength{\topsep}{2pt}
-                            #2
-                        \end{enumerate}
-                    \end{multicols}
-                }
-        mainfont: Libertinus Serif
-        sansfont: Libertinus Sans
-        monofont: Latin Modern Mono
-        monofontoptions:
-            - Scale=0.95
-        mathfont: Libertinus Math
-        highlight-style: arrow
-params:
-    show_solution: false
-filters:
-    - ../../solution-filter.lua
-crossref:
-    chapters: false
+show_solution: false
+format: pdf
 ---
 
 
@@ -109,10 +60,14 @@ knitr::kable(
 :::
 
 
-{{< include ../../_newpage.qmd >}} 
+
+::: {.content-hidden when-meta="show_solution"}
+{{< pagebreak >}} 
+:::
 
 
-```{r, echo=TRUE, results="hide"}
+
+```{r}
 #| echo: true
 #| output: false
 fit <- lm(y~x, data=dat)

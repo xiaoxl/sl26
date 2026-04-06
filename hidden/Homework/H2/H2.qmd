@@ -1,0 +1,205 @@
+
+
+
+
+
+# Week 2: Regularization Methods
+
+## Theory Problems
+
+
+
+::: {#exr-}
+## asdf
+dsf
+:::
+
+
+1. Explain why multicollinearity leads to unstable OLS estimates.
+
+2. Write the ridge regression optimization problem
+
+$$
+\min_\beta \{ RSS + \lambda \sum_{j=1}^p \beta_j^2 \}
+$$
+
+Explain how $\lambda$ affects coefficient shrinkage.
+
+3. Explain why ridge regression reduces variance but increases bias.
+
+4. Explain why the lasso penalty
+
+$$
+\sum_{j=1}^p |\beta_j|
+$$
+
+can produce sparse solutions.
+
+5. Compare ridge regression and lasso in terms of interpretability.
+
+6. Explain why predictors should be standardized before applying ridge or lasso.
+
+7. Describe how cross-validation selects $\lambda$.
+
+8. Explain the geometric difference between $L_1$ and $L_2$ penalties.
+
+9. Suppose $\lambda=0$. What model is obtained?
+
+10. Explain why lasso is useful when $p > n$.
+
+---
+
+
+
+
+
+
+
+
+
+# Week 2: Ridge Regression, Lasso, and Regularization
+
+## Problem 1: Ridge Regression Formula
+
+Ridge regression solves
+
+$$
+\hat{\boldsymbol\beta}^{ridge}
+=
+\arg\min_{\boldsymbol\beta}
+\left\{
+\|\mathbf y-\mathbf X\boldsymbol\beta\|_2^2
++
+n\lambda \|\boldsymbol\beta\|_2^2
+\right\}.
+$$
+
+1. Show that the ridge solution is
+
+   $$
+   \hat{\boldsymbol\beta}^{ridge}
+   =
+   (\mathbf X^\top \mathbf X + n\lambda \mathbf I)^{-1}\mathbf X^\top \mathbf y.
+   $$
+
+2. Explain why this always exists when $\lambda > 0$.
+
+---
+
+## Problem 2: Ridge Variance Reduction
+
+Assume the linear model from Week 1.
+
+1. Explain why adding $n\lambda \mathbf I$ increases the eigenvalues of $\mathbf X^\top \mathbf X$.
+2. Explain why this reduces estimator variance.
+3. Explain why this introduces bias.
+
+---
+
+## Problem 3: Bias-Variance Trade-off in Ridge
+
+1. Explain what happens when $\lambda = 0$.
+2. Explain what happens as $\lambda \to \infty$.
+3. Explain why an intermediate value of $\lambda$ may improve prediction.
+
+---
+
+## Problem 4: Geometric Interpretation
+
+1. Write the constrained form of ridge regression.
+2. Explain the geometry of the $L_2$ ball.
+3. Explain how this geometry leads to shrinkage but usually not exact zeros.
+
+---
+
+## Problem 5: Lasso Geometry
+
+The lasso solves
+
+$$
+\hat{\boldsymbol\beta}^{lasso}
+=
+\arg\min_{\boldsymbol\beta}
+\left\{
+\|\mathbf y-\mathbf X\boldsymbol\beta\|_2^2
++
+n\lambda \|\boldsymbol\beta\|_1
+\right\}.
+$$
+
+1. Write the constrained form of lasso.
+2. Explain the geometry of the $L_1$ ball.
+3. Explain why lasso can set coefficients exactly to zero.
+
+---
+
+## Problem 6: Standardization
+
+1. Explain why predictors should be standardized before applying ridge or lasso.
+2. Explain what could go wrong if they are not standardized.
+
+---
+
+## Problem 7: Manual Ridge Prediction
+
+Use the first 24 observations of `mtcars` as training data and the remaining observations as testing data.
+
+1. Fit a ridge regression model with $\lambda = 3$.
+2. Compute predictions on the test data manually using
+
+   $$
+   \hat y = \mathbf x^\top \hat{\boldsymbol\beta}.
+   $$
+
+3. Report the test MSE.
+
+```{r}
+library(MASS)
+traindata <- mtcars[1:24, ]
+testdata <- mtcars[-(1:24), ]
+# Your code here
+```
+
+---
+
+## Problem 8: Coefficient Paths in Ridge
+
+Using `mtcars` or `Hitters`:
+
+1. Fit ridge regression for a grid of $\lambda$ values.
+2. Plot the coefficient paths.
+3. Explain which coefficients shrink fastest and why that may happen.
+
+```{r}
+library(MASS)
+# Your code here
+```
+
+---
+
+## Problem 9: Cross-Validation for Ridge
+
+Using `Hitters` from `ISLR2`:
+
+1. Remove missing values.
+2. Use 10-fold cross-validation to select $\lambda$ for ridge regression.
+3. Report $\lambda_{min}$.
+4. Report the corresponding CV error.
+
+
+
+---
+
+## Problem 10: Ridge versus Lasso on Real Data
+
+Using the same dataset:
+
+1. Fit ridge regression and lasso with cross-validation.
+2. Compare their test errors using a train/test split.
+3. For lasso, report the selected variables.
+4. Write a brief discussion comparing prediction and interpretability.
+
+```{r}
+set.seed(432)
+# Your code here
+```

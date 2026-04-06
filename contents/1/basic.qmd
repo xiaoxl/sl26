@@ -1,3 +1,197 @@
+# 6-Week Course Plan (Simplified)
+
+This course introduces core statistical learning methods with an emphasis on intuition, interpretation, and practical implementation. Some advanced theoretical topics are omitted to keep the focus on applied understanding.
+
+Primary references:
+
+- **ISLR**: *An Introduction to Statistical Learning*  
+- **ESL**: *The Elements of Statistical Learning*  
+- **SMLR**: *Statistical Machine Learning with Math and R* (Ruoqing Zhu)
+
+---
+
+# Week 1: Introduction and Foundations
+
+Topics:
+- What is statistical learning?
+- Supervised vs unsupervised learning
+- Prediction vs inference
+- Review of linear regression
+- Training error vs test error
+- Bias–variance trade-off
+- Overfitting and underfitting
+
+Goal:  
+Build the conceptual foundation for understanding modern machine learning methods.
+
+References:
+
+- **ISLR**
+  - Chapter 1: Introduction
+  - Chapter 2.1–2.2: Statistical Learning
+  - Chapter 2.2.2: Bias–Variance Trade-off
+
+- **ESL**
+  - Chapter 1: Introduction
+  - Chapter 2: Overview of Supervised Learning
+
+- **SMLR**
+  - Chapter 1: Introduction to Statistical Learning
+  - Chapter 2: Linear Regression Review
+
+---
+
+# Week 2: Regularization Methods
+
+Topics:
+- Motivation for regularization
+- Multicollinearity and model instability
+- Ridge regression
+- Lasso regression
+- Geometry of regularization
+- Choosing tuning parameters using cross-validation
+
+Goal:  
+Learn how regularization improves prediction and performs variable selection.
+
+References:
+
+- **ISLR**
+  - Chapter 6.2: Ridge Regression
+  - Chapter 6.3: Lasso
+  - Chapter 5.1–5.2: Cross-Validation
+
+- **ESL**
+  - Chapter 3.4: Shrinkage Methods
+  - Chapter 7.10: Regularization and Model Selection
+
+- **SMLR**
+  - Chapter 4: Ridge Regression
+  - Chapter 5: Lasso and Variable Selection
+
+---
+
+# Week 3: Flexible and Nonparametric Models
+
+Topics:
+- K-nearest neighbors (KNN)
+- Nonparametric regression
+- Curse of dimensionality
+- Bias–variance trade-off in flexible models
+- Simple smoothing methods
+
+Goal:  
+Understand flexible models that can capture nonlinear relationships.
+
+References:
+
+- **ISLR**
+  - Chapter 2.2.3: KNN
+  - Chapter 7: Moving Beyond Linearity
+
+- **ESL**
+  - Chapter 6: Kernel Smoothing Methods
+  - Chapter 13.3: Nearest Neighbor Methods
+
+- **SMLR**
+  - Chapter 6: Nonparametric Methods
+  - Chapter 7: Kernel Methods
+
+---
+
+# Week 4: Classification Methods
+
+Topics:
+- Classification vs regression
+- Logistic regression
+- Discriminant analysis (LDA)
+- Decision trees
+- Basic model comparison
+
+Goal:  
+Introduce common classification algorithms and decision boundaries.
+
+References:
+
+- **ISLR**
+  - Chapter 4: Classification
+  - Chapter 8.1–8.2: Decision Trees
+
+- **ESL**
+  - Chapter 4: Linear Methods for Classification
+  - Chapter 9.2: Tree-Based Methods
+
+- **SMLR**
+  - Chapter 8: Classification Methods
+  - Chapter 9: Tree Models
+
+---
+
+# Week 5: Ensemble Methods
+
+Topics:
+- Motivation for ensemble learning
+- Bagging
+- Random forests
+- Boosting (conceptual overview)
+- Feature importance
+
+Goal:  
+Understand how combining models can improve predictive performance.
+
+References:
+
+- **ISLR**
+  - Chapter 8.2–8.3: Bagging and Random Forests
+  - Chapter 8.3: Boosting
+
+- **ESL**
+  - Chapter 10: Boosting and Additive Trees
+
+- **SMLR**
+  - Chapter 10: Ensemble Methods
+
+---
+
+# Week 6: Applications and Projects
+
+Topics:
+- Unsupervised learning overview (clustering, PCA)
+- Practical workflow for machine learning
+- Model evaluation and comparison
+- Student project presentations
+
+Goal:  
+Apply the learned methods to real datasets and communicate results.
+
+References:
+
+- **ISLR**
+  - Chapter 10: Unsupervised Learning
+
+- **ESL**
+  - Chapter 14: Unsupervised Learning
+
+- **SMLR**
+  - Chapter 11: Unsupervised Learning
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Course Overview

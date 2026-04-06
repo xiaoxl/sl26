@@ -1,0 +1,162 @@
+
+
+
+
+
+# Week 3: Flexible and Nonparametric Models
+
+## Theory Problems
+
+1. Describe the KNN regression algorithm.
+
+2. Explain how $K$ controls model flexibility.
+
+3. Discuss the bias–variance tradeoff in KNN.
+
+4. Explain the curse of dimensionality.
+
+5. Explain why KNN performs poorly in high dimensions.
+
+6. Compare parametric vs nonparametric regression.
+
+7. Explain how kernel smoothing works.
+
+8. Explain the role of distance metrics in KNN.
+
+9. Explain why larger datasets benefit KNN.
+
+10. Discuss advantages and disadvantages of KNN.
+
+---
+
+
+
+
+
+# Week 3: KNN, Flexible Regression, and Nonparametric Methods
+
+## Problem 1: KNN Regression Estimator
+
+The KNN regression estimator at $x_0$ is
+
+$$
+\hat f(x_0)
+=
+\frac{1}{K}
+\sum_{i \in N_K(x_0)} y_i,
+$$
+
+where $N_K(x_0)$ is the set of indices of the $K$ nearest training points.
+
+1. Explain how this estimator works.
+2. Explain why $K=1$ gives a very flexible fit.
+3. Explain why large $K$ gives a smoother fit.
+
+---
+
+## Problem 2: Bias-Variance in KNN
+
+1. Explain how increasing $K$ changes bias.
+2. Explain how increasing $K$ changes variance.
+3. Explain why there is usually an optimal value of $K$.
+
+---
+
+## Problem 3: Curse of Dimensionality
+
+1. Explain why nearest neighbors become less meaningful in high dimensions.
+2. Explain why nonparametric methods often require more data than parametric methods.
+
+---
+
+## Problem 4: Distance Metrics
+
+1. Explain why standardization matters in KNN.
+2. Explain how one predictor with a much larger scale can distort the neighborhood structure.
+
+---
+
+## Problem 5: Comparison with Linear Regression
+
+1. Give an example where linear regression is preferable to KNN.
+2. Give an example where KNN is preferable to linear regression.
+
+---
+
+## Problem 6: Simulated Nonlinear Regression
+
+Generate data from
+
+$$
+y = \sin(2\pi x) + \varepsilon,
+\qquad
+\varepsilon \sim N(0, 0.2^2).
+$$
+
+1. Fit linear regression.
+2. Fit polynomial regression of degree 5.
+3. Fit KNN regression for several values of $K$.
+4. Compare test MSE.
+
+```{r}
+set.seed(432)
+# Your code here
+```
+
+---
+
+## Problem 7: KNN on the Bike Sharing Data
+
+Use the Bike Sharing dataset.
+
+1. Select a response variable related to rental counts.
+2. Split the data into training and testing sets.
+3. Fit KNN regression for $K=1,3,5,10,20,50$.
+4. Plot test MSE versus $K$.
+5. Identify the best $K$.
+
+```{r}
+# Your code here
+```
+
+---
+
+## Problem 8: Effect of Standardization in KNN
+
+Using the same data:
+
+1. Fit KNN without standardization.
+2. Fit KNN with standardization.
+3. Compare the results and explain the difference.
+
+```{r}
+# Your code here
+```
+
+---
+
+## Problem 9: KNN versus Linear Regression
+
+Using the same train/test split:
+
+1. Fit a linear regression model.
+2. Compare its test MSE with the best KNN model.
+3. Explain which model appears more suitable and why.
+
+```{r}
+# Your code here
+```
+
+---
+
+## Problem 10: Smoothing Interpretation
+
+Use a one-dimensional predictor/response pair from any open dataset.
+
+1. Fit KNN or another smoother.
+2. Plot the fitted curve.
+3. Explain how the method captures nonlinearity.
+
+```{r}
+# Your code here
+```

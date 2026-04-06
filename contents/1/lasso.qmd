@@ -1,1 +1,26 @@
 # LASSO
+
+
+## what is
+
+
+## glmnet
+
+
+## on variable lasso and shrinkage
+
+
+## Variable Selection Property and Shrinkage
+
+
+## Constrained Optimization View
+
+
+## Bias-variance Trade-off
+
+
+## Forward-stagewise Regression and the Solution Path
+
+## Elastic-Net
+
+## Fused Lasso and ADMM
