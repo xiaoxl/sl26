@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Statistical Learning",
     "section": "",
-    "text": "Preface\nThese are notes for STAT 3113 Regression 2026 Summer at Arkansas Tech University. If you have any questions please contact me through email.",
+    "text": "Preface\nThese are notes for STAT 3113 Regression 2026 Summer at Arkansas Tech University. If you have any questions please contact me through email.\nArchived draft material from earlier notes",
     "crumbs": [
       "Preface"
     ]
@@ -14,7 +14,7 @@
     "href": "index.html#references",
     "title": "Statistical Learning",
     "section": "References",
-    "text": "References\n\n\n[1] Wickham, H.\n(2014). Tidy data.\nJournal of Statistical Software 59.\n\n\n[2] Mendenhall, W.\nand Sincich, T. (2020). A second\ncourse in statistics: Regression analyisis. Pearson Education, Inc,\n[Hoboken, New Jersey].\n\n\n[3] Healy, K.\n(2025). Gssrdoc: General\nsocial survey documentation for use in r.",
+    "text": "References",
     "crumbs": [
       "Preface"
     ]
@@ -99,452 +99,452 @@
   {
     "objectID": "contents/1/basic.html",
     "href": "contents/1/basic.html",
-    "title": "1  Course Overview",
+    "title": "1  Statistical Learning Basics",
     "section": "",
-    "text": "2 Course Narrative\nThis course is organized as an introduction to statistical learning from a statistical perspective.\nThe focus is on three recurring ideas:\nThe course moves from simple predictive models to more flexible methods, then to evaluation tools, regularization, ensemble methods, and practical workflow.\nThe course follows this progression:\nThis gives students a coherent view of statistical learning as a modeling pipeline rather than a disconnected list of techniques.",
+    "text": "1.1 What Is Statistical Learning?\nStatistical learning studies how to use data to understand relationships and make predictions. In most applications, we observe a response variable \\(Y\\) and a set of predictors \\(X = (X_1, \\dots, X_p)\\), and we want to learn how \\(Y\\) depends on \\(X\\).\nA common abstract representation is\n\\[\nY = f(X) + \\varepsilon,\n\\]\nwhere \\(f\\) is the systematic part of the relationship and \\(\\varepsilon\\) is random noise.\nThe main goals are usually:",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics",
     "href": "contents/1/basic.html#main-topics",
-    "title": "1  Course Overview",
-    "section": "4.1 Main Topics",
-    "text": "4.1 Main Topics\n\nWhat is statistical learning?\nSupervised vs unsupervised learning\nParametric vs nonparametric methods\nPrediction vs explanation\nBias–variance tradeoff",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "11.1 Main Topics",
+    "text": "11.1 Main Topics\n\nWhat is statistical learning?\nSupervised vs unsupervised learning\nParametric vs nonparametric methods\nPrediction vs explanation\nBias–variance tradeoff",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals",
     "href": "contents/1/basic.html#teaching-goals",
-    "title": "1  Course Overview",
-    "section": "4.2 Teaching Goals",
-    "text": "4.2 Teaching Goals\nStudents should understand that the main goal of statistical learning is good prediction on new data, not simply fitting the observed sample as closely as possible.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "11.2 Teaching Goals",
+    "text": "11.2 Teaching Goals\nStudents should understand that the main goal of statistical learning is good prediction on new data, not simply fitting the observed sample as closely as possible.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis",
     "href": "contents/1/basic.html#suggested-emphasis",
-    "title": "1  Course Overview",
-    "section": "4.3 Suggested Emphasis",
-    "text": "4.3 Suggested Emphasis\n\nIntroduce the overall modeling problem first.\nUse simple real-world examples such as house prices, medical diagnosis, or spam filtering.\nMake overfitting a central theme from the beginning.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "11.3 Suggested Emphasis",
+    "text": "11.3 Suggested Emphasis\n\nIntroduce the overall modeling problem first.\nUse simple real-world examples such as house prices, medical diagnosis, or spam filtering.\nMake overfitting a central theme from the beginning.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics-1",
     "href": "contents/1/basic.html#main-topics-1",
-    "title": "1  Course Overview",
-    "section": "5.1 Main Topics",
-    "text": "5.1 Main Topics\n\nLinear regression as a prediction tool\nInterpreting fitted relationships\nStrengths and weaknesses of linear models\nLinear models as a baseline for comparison",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "12.1 Main Topics",
+    "text": "12.1 Main Topics\n\nLinear regression as a prediction tool\nInterpreting fitted relationships\nStrengths and weaknesses of linear models\nLinear models as a baseline for comparison",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals-1",
     "href": "contents/1/basic.html#teaching-goals-1",
-    "title": "1  Course Overview",
-    "section": "5.2 Teaching Goals",
-    "text": "5.2 Teaching Goals\nStudents should see linear regression as the starting point of predictive modeling: simple, interpretable, and useful, but limited in flexibility.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "12.2 Teaching Goals",
+    "text": "12.2 Teaching Goals\nStudents should see linear regression as the starting point of predictive modeling: simple, interpretable, and useful, but limited in flexibility.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis-1",
     "href": "contents/1/basic.html#suggested-emphasis-1",
-    "title": "1  Course Overview",
-    "section": "5.3 Suggested Emphasis",
-    "text": "5.3 Suggested Emphasis\n\nPresent linear regression mainly as a predictive model.\nKeep inference light unless needed for context.\nHighlight when linear models fail to capture nonlinear structure.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "12.3 Suggested Emphasis",
+    "text": "12.3 Suggested Emphasis\n\nPresent linear regression mainly as a predictive model.\nKeep inference light unless needed for context.\nHighlight when linear models fail to capture nonlinear structure.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics-2",
     "href": "contents/1/basic.html#main-topics-2",
-    "title": "1  Course Overview",
-    "section": "6.1 Main Topics",
-    "text": "6.1 Main Topics\n\nFlexible regression methods\nK-nearest neighbors regression\nSmoothers and local fitting ideas\nModel flexibility and overfitting",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "13.1 Main Topics",
+    "text": "13.1 Main Topics\n\nFlexible regression methods\nK-nearest neighbors regression\nSmoothers and local fitting ideas\nModel flexibility and overfitting",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals-2",
     "href": "contents/1/basic.html#teaching-goals-2",
-    "title": "1  Course Overview",
-    "section": "6.2 Teaching Goals",
-    "text": "6.2 Teaching Goals\nStudents should learn that more flexible models can better capture complicated patterns, but at the cost of increased variance.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "13.2 Teaching Goals",
+    "text": "13.2 Teaching Goals\nStudents should learn that more flexible models can better capture complicated patterns, but at the cost of increased variance.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis-2",
     "href": "contents/1/basic.html#suggested-emphasis-2",
-    "title": "1  Course Overview",
-    "section": "6.3 Suggested Emphasis",
-    "text": "6.3 Suggested Emphasis\n\nConnect this unit directly to bias–variance tradeoff.\nCompare flexible and inflexible models visually.\nUse plots to show underfitting and overfitting.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "13.3 Suggested Emphasis",
+    "text": "13.3 Suggested Emphasis\n\nConnect this unit directly to bias–variance tradeoff.\nCompare flexible and inflexible models visually.\nUse plots to show underfitting and overfitting.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics-3",
     "href": "contents/1/basic.html#main-topics-3",
-    "title": "1  Course Overview",
-    "section": "7.1 Main Topics",
-    "text": "7.1 Main Topics\n\nClassification as a prediction problem\nLogistic regression\nDecision boundaries\nK-nearest neighbors classification",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "14.1 Main Topics",
+    "text": "14.1 Main Topics\n\nClassification as a prediction problem\nLogistic regression\nDecision boundaries\nK-nearest neighbors classification",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals-3",
     "href": "contents/1/basic.html#teaching-goals-3",
-    "title": "1  Course Overview",
-    "section": "7.2 Teaching Goals",
-    "text": "7.2 Teaching Goals\nStudents should understand that classification uses the same modeling logic as regression, but with categorical outcomes.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "14.2 Teaching Goals",
+    "text": "14.2 Teaching Goals\nStudents should understand that classification uses the same modeling logic as regression, but with categorical outcomes.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis-3",
     "href": "contents/1/basic.html#suggested-emphasis-3",
-    "title": "1  Course Overview",
-    "section": "7.3 Suggested Emphasis",
-    "text": "7.3 Suggested Emphasis\n\nStress the difference between predicting a class and predicting a numeric response.\nIntroduce class probabilities early.\nUse confusion matrices and classification error as evaluation tools.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "14.3 Suggested Emphasis",
+    "text": "14.3 Suggested Emphasis\n\nStress the difference between predicting a class and predicting a numeric response.\nIntroduce class probabilities early.\nUse confusion matrices and classification error as evaluation tools.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics-4",
     "href": "contents/1/basic.html#main-topics-4",
-    "title": "1  Course Overview",
-    "section": "8.1 Main Topics",
-    "text": "8.1 Main Topics\n\nLogistic regression in more detail\nInterpreting probabilities\nThresholds and classification decisions\nComparing classifiers",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "15.1 Main Topics",
+    "text": "15.1 Main Topics\n\nLogistic regression in more detail\nInterpreting probabilities\nThresholds and classification decisions\nComparing classifiers",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals-4",
     "href": "contents/1/basic.html#teaching-goals-4",
-    "title": "1  Course Overview",
-    "section": "8.2 Teaching Goals",
-    "text": "8.2 Teaching Goals\nStudents should learn how binary classification models convert predictors into class probabilities and final decisions.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "15.2 Teaching Goals",
+    "text": "15.2 Teaching Goals\nStudents should learn how binary classification models convert predictors into class probabilities and final decisions.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis-4",
     "href": "contents/1/basic.html#suggested-emphasis-4",
-    "title": "1  Course Overview",
-    "section": "8.3 Suggested Emphasis",
-    "text": "8.3 Suggested Emphasis\n\nDistinguish between probability estimation and hard classification.\nDiscuss how different thresholds change predictions.\nUse practical examples such as disease detection or spam filtering.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "15.3 Suggested Emphasis",
+    "text": "15.3 Suggested Emphasis\n\nDistinguish between probability estimation and hard classification.\nDiscuss how different thresholds change predictions.\nUse practical examples such as disease detection or spam filtering.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics-5",
     "href": "contents/1/basic.html#main-topics-5",
-    "title": "1  Course Overview",
-    "section": "9.1 Main Topics",
-    "text": "9.1 Main Topics\n\nLDA\nQDA\nNaive Bayes\nDiscriminative vs generative modeling",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "16.1 Main Topics",
+    "text": "16.1 Main Topics\n\nLDA\nQDA\nNaive Bayes\nDiscriminative vs generative modeling",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals-5",
     "href": "contents/1/basic.html#teaching-goals-5",
-    "title": "1  Course Overview",
-    "section": "9.2 Teaching Goals",
-    "text": "9.2 Teaching Goals\nStudents should understand the idea of modeling class distributions directly and then using Bayes’ rule for prediction.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "16.2 Teaching Goals",
+    "text": "16.2 Teaching Goals\nStudents should understand the idea of modeling class distributions directly and then using Bayes’ rule for prediction.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis-5",
     "href": "contents/1/basic.html#suggested-emphasis-5",
-    "title": "1  Course Overview",
-    "section": "9.3 Suggested Emphasis",
-    "text": "9.3 Suggested Emphasis\n\nCompare logistic regression with LDA and QDA conceptually.\nEmphasize assumptions and when they matter.\nUse side-by-side model comparisons.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "16.3 Suggested Emphasis",
+    "text": "16.3 Suggested Emphasis\n\nCompare logistic regression with LDA and QDA conceptually.\nEmphasize assumptions and when they matter.\nUse side-by-side model comparisons.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics-6",
     "href": "contents/1/basic.html#main-topics-6",
-    "title": "1  Course Overview",
-    "section": "10.1 Main Topics",
-    "text": "10.1 Main Topics\n\nValidation set approach\nCross-validation\nBootstrap\nEstimating test error",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "17.1 Main Topics",
+    "text": "17.1 Main Topics\n\nValidation set approach\nCross-validation\nBootstrap\nEstimating test error",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals-6",
     "href": "contents/1/basic.html#teaching-goals-6",
-    "title": "1  Course Overview",
-    "section": "10.2 Teaching Goals",
-    "text": "10.2 Teaching Goals\nThis unit is the conceptual center of the course. Students must understand that training error is not enough, and that model performance must be evaluated using principled estimates of test error.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "17.2 Teaching Goals",
+    "text": "17.2 Teaching Goals\nThis unit is the conceptual center of the course. Students must understand that training error is not enough, and that model performance must be evaluated using principled estimates of test error.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis-6",
     "href": "contents/1/basic.html#suggested-emphasis-6",
-    "title": "1  Course Overview",
-    "section": "10.3 Suggested Emphasis",
-    "text": "10.3 Suggested Emphasis\n\nMake cross-validation a central practical tool.\nShow why naive comparison by training error is misleading.\nUse repeated examples across multiple methods.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "17.3 Suggested Emphasis",
+    "text": "17.3 Suggested Emphasis\n\nMake cross-validation a central practical tool.\nShow why naive comparison by training error is misleading.\nUse repeated examples across multiple methods.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics-7",
     "href": "contents/1/basic.html#main-topics-7",
-    "title": "1  Course Overview",
-    "section": "11.1 Main Topics",
-    "text": "11.1 Main Topics\n\nRidge regression\nLasso\nElastic net\nShrinkage and complexity control",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "18.1 Main Topics",
+    "text": "18.1 Main Topics\n\nRidge regression\nLasso\nElastic net\nShrinkage and complexity control",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals-7",
     "href": "contents/1/basic.html#teaching-goals-7",
-    "title": "1  Course Overview",
-    "section": "11.2 Teaching Goals",
-    "text": "11.2 Teaching Goals\nStudents should understand how regularization controls complexity and improves prediction without exhaustively searching across models.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "18.2 Teaching Goals",
+    "text": "18.2 Teaching Goals\nStudents should understand how regularization controls complexity and improves prediction without exhaustively searching across models.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis-7",
     "href": "contents/1/basic.html#suggested-emphasis-7",
-    "title": "1  Course Overview",
-    "section": "11.3 Suggested Emphasis",
-    "text": "11.3 Suggested Emphasis\n\nPresent regularization as a modern answer to overfitting in linear models.\nCompare subset selection and shrinkage conceptually.\nUse coefficient path plots when possible.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "18.3 Suggested Emphasis",
+    "text": "18.3 Suggested Emphasis\n\nPresent regularization as a modern answer to overfitting in linear models.\nCompare subset selection and shrinkage conceptually.\nUse coefficient path plots when possible.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics-8",
     "href": "contents/1/basic.html#main-topics-8",
-    "title": "1  Course Overview",
-    "section": "12.1 Main Topics",
-    "text": "12.1 Main Topics\n\nDecision trees\nBagging\nRandom forests\nBoosting",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "19.1 Main Topics",
+    "text": "19.1 Main Topics\n\nDecision trees\nBagging\nRandom forests\nBoosting",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals-8",
     "href": "contents/1/basic.html#teaching-goals-8",
-    "title": "1  Course Overview",
-    "section": "12.2 Teaching Goals",
-    "text": "12.2 Teaching Goals\nStudents should learn that combining many unstable or weak learners can create a stronger predictive model.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "19.2 Teaching Goals",
+    "text": "19.2 Teaching Goals\nStudents should learn that combining many unstable or weak learners can create a stronger predictive model.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis-8",
     "href": "contents/1/basic.html#suggested-emphasis-8",
-    "title": "1  Course Overview",
-    "section": "12.3 Suggested Emphasis",
-    "text": "12.3 Suggested Emphasis\n\nStart with a single tree and its limitations.\nThen motivate bagging as variance reduction.\nFinally introduce random forests and boosting as improved ensemble ideas.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "19.3 Suggested Emphasis",
+    "text": "19.3 Suggested Emphasis\n\nStart with a single tree and its limitations.\nThen motivate bagging as variance reduction.\nFinally introduce random forests and boosting as improved ensemble ideas.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#main-topics-9",
     "href": "contents/1/basic.html#main-topics-9",
-    "title": "1  Course Overview",
-    "section": "13.1 Main Topics",
-    "text": "13.1 Main Topics\n\nEnd-to-end modeling workflow\nData preprocessing\nModel tuning\nModel comparison\nPractical considerations on real datasets",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "20.1 Main Topics",
+    "text": "20.1 Main Topics\n\nEnd-to-end modeling workflow\nData preprocessing\nModel tuning\nModel comparison\nPractical considerations on real datasets",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#teaching-goals-9",
     "href": "contents/1/basic.html#teaching-goals-9",
-    "title": "1  Course Overview",
-    "section": "13.2 Teaching Goals",
-    "text": "13.2 Teaching Goals\nStudents should be able to complete a full predictive analysis from data setup through final model comparison and interpretation.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "20.2 Teaching Goals",
+    "text": "20.2 Teaching Goals\nStudents should be able to complete a full predictive analysis from data setup through final model comparison and interpretation.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#suggested-emphasis-9",
     "href": "contents/1/basic.html#suggested-emphasis-9",
-    "title": "1  Course Overview",
-    "section": "13.3 Suggested Emphasis",
-    "text": "13.3 Suggested Emphasis\n\nOrganize this unit around a full case study.\nShow how preprocessing, resampling, tuning, and comparison fit together.\nEmphasize reproducible workflow and communication.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "20.3 Suggested Emphasis",
+    "text": "20.3 Suggested Emphasis\n\nOrganize this unit around a full case study.\nShow how preprocessing, resampling, tuning, and comparison fit together.\nEmphasize reproducible workflow and communication.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#midterm-i",
     "href": "contents/1/basic.html#midterm-i",
-    "title": "1  Course Overview",
-    "section": "14.1 Midterm I",
-    "text": "14.1 Midterm I\nSuggested coverage:\n\nfoundations of statistical learning,\nlinear regression,\nnonparametric regression,\nearly classification concepts.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "21.1 Midterm I",
+    "text": "21.1 Midterm I\nSuggested coverage:\n\nfoundations of statistical learning,\nlinear regression,\nnonparametric regression,\nearly classification concepts.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#midterm-ii",
     "href": "contents/1/basic.html#midterm-ii",
-    "title": "1  Course Overview",
-    "section": "14.2 Midterm II",
-    "text": "14.2 Midterm II\nSuggested coverage:\n\nclassification,\ngenerative models,\nresampling,\nregularization.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "21.2 Midterm II",
+    "text": "21.2 Midterm II\nSuggested coverage:\n\nclassification,\ngenerative models,\nresampling,\nregularization.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#final-assessment-or-project",
     "href": "contents/1/basic.html#final-assessment-or-project",
-    "title": "1  Course Overview",
-    "section": "14.3 Final Assessment or Project",
-    "text": "14.3 Final Assessment or Project\nSuggested format:\n\na real dataset,\nseveral competing methods,\nmodel comparison using validation or cross-validation,\nwritten interpretation of results.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "21.3 Final Assessment or Project",
+    "text": "21.3 Final Assessment or Project\nSuggested format:\n\na real dataset,\nseveral competing methods,\nmodel comparison using validation or cross-validation,\nwritten interpretation of results.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#lecture-1",
     "href": "contents/1/basic.html#lecture-1",
-    "title": "1  Course Overview",
-    "section": "15.1 Lecture 1",
-    "text": "15.1 Lecture 1\n\nconcept and intuition,\nvisual explanation,\nstrengths and limitations of the method.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "22.1 Lecture 1",
+    "text": "22.1 Lecture 1\n\nconcept and intuition,\nvisual explanation,\nstrengths and limitations of the method.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#lecture-2",
     "href": "contents/1/basic.html#lecture-2",
-    "title": "1  Course Overview",
-    "section": "15.2 Lecture 2",
-    "text": "15.2 Lecture 2\n\nimplementation,\nmodel fitting,\ncomparison with earlier methods,\nshort applied example.",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "22.2 Lecture 2",
+    "text": "22.2 Lecture 2\n\nimplementation,\nmodel fitting,\ncomparison with earlier methods,\nshort applied example.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#theme-1-model-flexibility",
     "href": "contents/1/basic.html#theme-1-model-flexibility",
-    "title": "1  Course Overview",
-    "section": "16.1 Theme 1: Model Flexibility",
-    "text": "16.1 Theme 1: Model Flexibility\nStudents should repeatedly ask:\n\nHow flexible is this model, and what does that flexibility buy us?",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "23.1 Theme 1: Model Flexibility",
+    "text": "23.1 Theme 1: Model Flexibility\nStudents should repeatedly ask:\n\nHow flexible is this model, and what does that flexibility buy us?",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#theme-2-generalization",
     "href": "contents/1/basic.html#theme-2-generalization",
-    "title": "1  Course Overview",
-    "section": "16.2 Theme 2: Generalization",
-    "text": "16.2 Theme 2: Generalization\nStudents should repeatedly ask:\n\nHow do we know whether this model will work on new data?",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "23.2 Theme 2: Generalization",
+    "text": "23.2 Theme 2: Generalization\nStudents should repeatedly ask:\n\nHow do we know whether this model will work on new data?",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#theme-3-comparison",
     "href": "contents/1/basic.html#theme-3-comparison",
-    "title": "1  Course Overview",
-    "section": "16.3 Theme 3: Comparison",
-    "text": "16.3 Theme 3: Comparison\nStudents should repeatedly ask:\n\nIs this method better than what we already had?",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "23.3 Theme 3: Comparison",
+    "text": "23.3 Theme 3: Comparison\nStudents should repeatedly ask:\n\nIs this method better than what we already had?",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/lr.html",
     "href": "contents/1/lr.html",
-    "title": "2  Linear regression",
+    "title": "2  Linear Regression",
     "section": "",
-    "text": "2.1 Quick overview\nGiven a set of observations of variables, we would like to understand the relationships among these variables.\nThe standard procedure for developing a statistical model is as follows:\nThere are two primary goals and related ways to assess the model:\nBoth Statistical Learning and specific methods like Regression Analysis may use both assessment strategies, but the emphasis differs. In this course, the focus is on the principles of modeling and statistical inference, with prediction discussed but not treated as the primary objective.",
+    "text": "2.1 Quick Overview\nLinear regression is the basic supervised learning method for a quantitative response. It models the mean of the response as a linear function of the predictors:\n\\[\nY = \\beta_0 + \\beta_1 X_1 + \\cdots + \\beta_p X_p + \\varepsilon.\n\\]\nEquivalently, in matrix form,\n\\[\ny = X\\beta + \\varepsilon.\n\\]\nLinear regression is popular because it is:",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
     ]
   },
   {
     "objectID": "contents/1/lr.html#quick-overview",
     "href": "contents/1/lr.html#quick-overview",
-    "title": "2  Linear regression",
+    "title": "2  Linear Regression",
     "section": "",
-    "text": "Proposing a model informed by exploratory data analysis and relevant domain knowledge.\nEstimating the parameters of the proposed model using the available data.\nAssessing the adequacy and quality of the fitted model.\nRevising the model based on the assessment results.\n\n\n\nPrediction (Generalization): We evaluate the fitted model on unseen data, using metrics like MSE or classification error. This assesses the model’s generalization ability, which is the primary focus of subjects like Statistical Learning or Machine Learning.\nExplanation (Inference): We use measures such as \\(R^2\\) to assess the goodness-of-fit of the fitted model, and we use confidence intervals and p-values to perform statistical inference about population parameters. Although these calculations are based on the observed sample, they are interpreted as statements about the population. This approach focuses on understanding relationships among variables and is central to traditional Statistical Modeling, including Regression Analysis.",
+    "text": "easy to fit;\neasy to interpret;\noften a strong baseline for more complex methods.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
     ]
   },
   {
@@ -594,45 +594,1302 @@
   {
     "objectID": "contents/1/basic.html#model-fitting-inference",
     "href": "contents/1/basic.html#model-fitting-inference",
-    "title": "1  Course Overview",
-    "section": "21.1 1. Model Fitting & Inference",
-    "text": "21.1 1. Model Fitting & Inference\nWhile scikit-learn is the industry standard for prediction, statsmodels is the primary library for statistical inference (\\(p\\)-values, \\(R^2\\), and \\(t\\)-tests) and matches the R lm() experience.\n\n\n\n\n\n\n\n\nFeature\nR Code\nPython (statsmodels.formula.api)\n\n\n\n\nLinear Regression\nfit &lt;- lm(y ~ x1 + x2, data=df)\nfit = smf.ols(\"y ~ x1 + x2\", data=df).fit()\n\n\nLogistic Regression\nglm(y ~ x, data=df, family=\"binomial\")\nsmf.logit(\"y ~ x\", data=df).fit()\n\n\nModel Summary\nsummary(fit)\nprint(fit.summary())\n\n\nANOVA Table\nanova(fit)\nsm.stats.anova_lm(fit)\n\n\nPredictions\npredict(fit, newdata)\nfit.predict(new_data)\n\n\nInteraction Terms\nlm(y ~ x1 * x2)\nsmf.ols(\"y ~ x1 * x2\", data=df).fit()\n\n\nPolynomials\nlm(y ~ poly(x, 2))\nsmf.ols(\"y ~ x + I(x**2)\", data=df).fit()",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "28.1 1. Model Fitting & Inference",
+    "text": "28.1 1. Model Fitting & Inference\nWhile scikit-learn is the industry standard for prediction, statsmodels is the primary library for statistical inference (\\(p\\)-values, \\(R^2\\), and \\(t\\)-tests) and matches the R lm() experience.\n\n\n\n\n\n\n\n\nFeature\nR Code\nPython (statsmodels.formula.api)\n\n\n\n\nLinear Regression\nfit &lt;- lm(y ~ x1 + x2, data=df)\nfit = smf.ols(\"y ~ x1 + x2\", data=df).fit()\n\n\nLogistic Regression\nglm(y ~ x, data=df, family=\"binomial\")\nsmf.logit(\"y ~ x\", data=df).fit()\n\n\nModel Summary\nsummary(fit)\nprint(fit.summary())\n\n\nANOVA Table\nanova(fit)\nsm.stats.anova_lm(fit)\n\n\nPredictions\npredict(fit, newdata)\nfit.predict(new_data)\n\n\nInteraction Terms\nlm(y ~ x1 * x2)\nsmf.ols(\"y ~ x1 * x2\", data=df).fit()\n\n\nPolynomials\nlm(y ~ poly(x, 2))\nsmf.ols(\"y ~ x + I(x**2)\", data=df).fit()",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#model-selection-regularization",
     "href": "contents/1/basic.html#model-selection-regularization",
-    "title": "1  Course Overview",
-    "section": "21.2 2. Model Selection & Regularization",
-    "text": "21.2 2. Model Selection & Regularization\nPython’s scikit-learn (sklearn) is the powerhouse for cross-validation and penalized regression.\n\n\n\n\n\n\n\n\n\nFeature\nR Code (Package)\nPython Library\nPython Counterpart\n\n\n\n\nLasso / Ridge\nglmnet(x, y)\nsklearn\nLassoCV() or RidgeCV()\n\n\nStepwise (AIC/BIC)\nstep(fit)\nsklearn\nSequentialFeatureSelector\n\n\nBest Subset\nregsubsets() (leaps)\nmlxtend\nExhaustiveFeatureSelector\n\n\nValidation Split\nsample() / createDataPartition\nsklearn\ntrain_test_split()\n\n\nK-Fold CV\ncv.glmnet()\nsklearn\ncross_val_score() or GridSearchCV()",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "28.2 2. Model Selection & Regularization",
+    "text": "28.2 2. Model Selection & Regularization\nPython’s scikit-learn (sklearn) is the powerhouse for cross-validation and penalized regression.\n\n\n\n\n\n\n\n\n\nFeature\nR Code (Package)\nPython Library\nPython Counterpart\n\n\n\n\nLasso / Ridge\nglmnet(x, y)\nsklearn\nLassoCV() or RidgeCV()\n\n\nStepwise (AIC/BIC)\nstep(fit)\nsklearn\nSequentialFeatureSelector\n\n\nBest Subset\nregsubsets() (leaps)\nmlxtend\nExhaustiveFeatureSelector\n\n\nValidation Split\nsample() / createDataPartition\nsklearn\ntrain_test_split()\n\n\nK-Fold CV\ncv.glmnet()\nsklearn\ncross_val_score() or GridSearchCV()",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#diagnostics-residuals",
     "href": "contents/1/basic.html#diagnostics-residuals",
-    "title": "1  Course Overview",
-    "section": "21.3 3. Diagnostics & Residuals",
-    "text": "21.3 3. Diagnostics & Residuals\nIn R, plot(fit) automatically generates four diagnostic plots. In Python, you access these via the .resid attribute or statsmodels.graphics.\n\n\n\n\n\n\n\n\nMetric / Plot\nR Code\nPython Code\n\n\n\n\nResiduals\nresiduals(fit)\nfit.resid\n\n\nFitted Values\nfitted(fit)\nfit.fittedvalues\n\n\nQ-Q Plot\nqqnorm(fit$resid)\nsm.qqplot(fit.resid, line='s')\n\n\nLeverage Plot\nplot(fit, which=4)\nsm.graphics.influence_plot(fit)\n\n\nResidual Plot\nplot(fit, which=1)\nsns.residplot(x=fit.fittedvalues, y=df['y'])",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "28.3 3. Diagnostics & Residuals",
+    "text": "28.3 3. Diagnostics & Residuals\nIn R, plot(fit) automatically generates four diagnostic plots. In Python, you access these via the .resid attribute or statsmodels.graphics.\n\n\n\n\n\n\n\n\nMetric / Plot\nR Code\nPython Code\n\n\n\n\nResiduals\nresiduals(fit)\nfit.resid\n\n\nFitted Values\nfitted(fit)\nfit.fittedvalues\n\n\nQ-Q Plot\nqqnorm(fit$resid)\nsm.qqplot(fit.resid, line='s')\n\n\nLeverage Plot\nplot(fit, which=4)\nsm.graphics.influence_plot(fit)\n\n\nResidual Plot\nplot(fit, which=1)\nsns.residplot(x=fit.fittedvalues, y=df['y'])",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
     ]
   },
   {
     "objectID": "contents/1/basic.html#required-libraries-for-the-course",
     "href": "contents/1/basic.html#required-libraries-for-the-course",
-    "title": "1  Course Overview",
-    "section": "21.4 4. Required Libraries for the Course",
-    "text": "21.4 4. Required Libraries for the Course\nTo set up a Python environment equivalent to the R statistical suite, run:\n```bash pip install numpy pandas matplotlib seaborn statsmodels scikit-learn mlxtend islp",
+    "title": "1  6-Week Course Plan (Simplified)",
+    "section": "28.4 4. Required Libraries for the Course",
+    "text": "28.4 4. Required Libraries for the Course\nTo set up a Python environment equivalent to the R statistical suite, run:\n```bash pip install numpy pandas matplotlib seaborn statsmodels scikit-learn mlxtend islp",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Overview</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>6-Week Course Plan (Simplified)</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html",
+    "href": "contents/1/ridge.html",
+    "title": "5  Ridge Regression",
+    "section": "",
+    "text": "5.1 A Short History of Ridge Regression\nRidge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from Tikhonov (1963) in numerical analysis, where a regularization term was added to ill-posed problems.\nIn statistics, Hoerl and Kennard (1970) formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#a-short-history-of-ridge-regression",
+    "href": "contents/1/ridge.html#a-short-history-of-ridge-regression",
+    "title": "3  Ridge regression",
+    "section": "3.2 A Short History of Ridge Regression",
+    "text": "3.2 A Short History of Ridge Regression\nRidge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from the work of Tikhonov (1963) in numerical analysis, where a regularization term was added to ill-posed problems.\nIn statistics, Hoerl and Kennard (1970) formally introduced ridge regression to address multicollinearity in linear regression. They proposed the estimator\n\\[\n\\hat{\\beta}_{ridge} = (X^TX + \\lambda I)^{-1}X^Ty,\n\\]\nwhich shrinks coefficient estimates toward zero to reduce variance.\nLater work connected ridge regression to several broader frameworks.\nMarquardt (1970) discussed its relationship to generalized inverses and biased estimation. Ridge regression was also recognized as equivalent to Bayesian linear regression with a Gaussian prior on the coefficients.\nIn modern statistics and machine learning, ridge regression is viewed as one of the earliest and most fundamental regularization methods, forming the basis for techniques such as kernel ridge regression and influencing later developments like the LASSO (Tibshirani, 1996).",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#references",
+    "href": "contents/1/ridge.html#references",
+    "title": "5  Ridge Regression",
+    "section": "5.9 References",
+    "text": "5.9 References\n\nHoerl, A. E., & Kennard, R. W. (1970). Ridge regression: Biased estimation for nonorthogonal problems. Technometrics, 12(1), 55-67.\nMarquardt, D. W. (1970). Generalized inverses, ridge regression, biased linear estimation, and nonlinear estimation. Technometrics, 12(3), 591-612.\nTibshirani, R. (1996). Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society Series B, 58(1), 267-288.\nTikhonov, A. N. (1963). Solution of incorrectly formulated problems and the regularization method. Soviet Mathematics Doklady, 4, 1035-1038.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#correlated-variables-convexity-and-variance",
+    "href": "contents/1/ridge.html#correlated-variables-convexity-and-variance",
+    "title": "5  Ridge regression",
+    "section": "5.4 Correlated Variables, Convexity and Variance",
+    "text": "5.4 Correlated Variables, Convexity and Variance",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#tradeoff",
+    "href": "contents/1/ridge.html#tradeoff",
+    "title": "5  Ridge regression",
+    "section": "5.5 tradeoff",
+    "text": "5.5 tradeoff",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#a-biased-estimator",
+    "href": "contents/1/ridge.html#a-biased-estimator",
+    "title": "5  Ridge regression",
+    "section": "5.6 A Biased Estimator",
+    "text": "5.6 A Biased Estimator",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#bias-caused-by-the-ridge-penalty",
+    "href": "contents/1/ridge.html#bias-caused-by-the-ridge-penalty",
+    "title": "5  Ridge regression",
+    "section": "5.7 Bias Caused by the Ridge Penalty",
+    "text": "5.7 Bias Caused by the Ridge Penalty",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#lm.ridge",
+    "href": "contents/1/ridge.html#lm.ridge",
+    "title": "5  Ridge regression",
+    "section": "5.8 lm.ridge()",
+    "text": "5.8 lm.ridge()",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#cross-validation",
+    "href": "contents/1/ridge.html#cross-validation",
+    "title": "5  Ridge regression",
+    "section": "5.9 cross-validation",
+    "text": "5.9 cross-validation",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#generalized-cross-validation",
+    "href": "contents/1/ridge.html#generalized-cross-validation",
+    "title": "5  Ridge regression",
+    "section": "5.10 Generalized cross-validation",
+    "text": "5.10 Generalized cross-validation",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#glmnet",
+    "href": "contents/1/ridge.html#glmnet",
+    "title": "5  Ridge regression",
+    "section": "5.11 glmnet",
+    "text": "5.11 glmnet",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#scaling-issues-of-ridge-regression",
+    "href": "contents/1/ridge.html#scaling-issues-of-ridge-regression",
+    "title": "5  Ridge Regression",
+    "section": "5.6 Scaling Issues of Ridge Regression",
+    "text": "5.6 Scaling Issues of Ridge Regression\nRidge regression is sensitive to the scale of the predictors, so the variables are usually standardized before fitting the model.\nThe usual standardization is\n\\[\nx_j^* = \\frac{x_j - \\bar{x}_j}{s_j},\n\\]\nso that each predictor has mean \\(0\\) and standard deviation \\(1\\).\nThis matters because the penalty acts directly on the coefficients. If predictors are measured on very different scales, then the penalty will not be applied fairly across variables.\nIn practice:\n\nthe predictors are standardized before fitting the model;\nthe intercept is typically left unpenalized;\nsoftware such as glmnet usually performs standardization automatically.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#pca",
+    "href": "contents/1/ridge.html#pca",
+    "title": "5  Ridge regression",
+    "section": "5.13 PCA",
+    "text": "5.13 PCA",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#motivation-why-regularization",
+    "href": "contents/1/ridge.html#motivation-why-regularization",
+    "title": "5  Ridge regression",
+    "section": "7.1 1.1 Motivation: Why Regularization",
+    "text": "7.1 1.1 Motivation: Why Regularization\nStudents should first understand the limitations of ordinary least squares.\nKey issues include:\n\nOverfitting\nHigh variance of coefficient estimates\nMulticollinearity\nPoor prediction performance when predictors are highly correlated\n\nIntroduce the bias–variance tradeoff.\nExplain that instead of minimizing only residual sum of squares\n\\[\nRSS = \\sum (y_i - \\hat{y}_i)^2\n\\]\nwe add a penalty term to control model complexity.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#ridge-regression",
+    "href": "contents/1/ridge.html#ridge-regression",
+    "title": "5  Ridge regression",
+    "section": "7.2 1.2 Ridge Regression",
+    "text": "7.2 1.2 Ridge Regression\nRidge regression solves\n\\[\n\\min_{\\beta}\nRSS + \\lambda \\sum_{j=1}^p \\beta_j^2\n\\]\nwhere\n\n\\(\\lambda \\ge 0\\) controls the strength of regularization.\n\nKey ideas students should understand:\n\ncoefficients are shrunk toward zero\nridge does not set coefficients exactly to zero\nuseful when predictors are highly correlated\nreduces variance of estimates\n\nImportant properties:\n\nWhen \\(\\lambda = 0\\), ridge reduces to OLS\nAs \\(\\lambda \\to \\infty\\), coefficients approach zero",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#lasso-regression",
+    "href": "contents/1/ridge.html#lasso-regression",
+    "title": "5  Ridge regression",
+    "section": "7.3 1.3 Lasso Regression",
+    "text": "7.3 1.3 Lasso Regression\nLasso regression solves\n\\[\n\\min_{\\beta}\nRSS + \\lambda \\sum_{j=1}^p |\\beta_j|\n\\]\nKey properties:\n\nsome coefficients become exactly zero\nperforms automatic variable selection\nproduces sparse models\n\nThis makes Lasso useful for interpretability and feature selection.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#geometric-interpretation",
+    "href": "contents/1/ridge.html#geometric-interpretation",
+    "title": "5  Ridge regression",
+    "section": "7.4 1.4 Geometric Interpretation",
+    "text": "7.4 1.4 Geometric Interpretation\nStudents should understand the geometry behind Ridge and Lasso.\nRidge constraint:\n\\[\n\\sum \\beta_j^2 \\le t\n\\]\nThis produces a circular constraint region.\nLasso constraint:\n\\[\n\\sum |\\beta_j| \\le t\n\\]\nThis produces a diamond-shaped region.\nBecause the diamond has corners, the solution often occurs at axes where coefficients equal zero. This explains why Lasso performs variable selection.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#standardizing-predictors",
+    "href": "contents/1/ridge.html#standardizing-predictors",
+    "title": "5  Ridge regression",
+    "section": "7.5 1.5 Standardizing Predictors",
+    "text": "7.5 1.5 Standardizing Predictors\nBefore applying Ridge or Lasso, predictors should be standardized.\nReason:\n\nthe penalty depends on coefficient magnitude\nvariables with large scale would otherwise be penalized differently\n\nTypical preprocessing:\n\\[\nx_j \\leftarrow \\frac{x_j - \\bar{x}_j}{sd(x_j)}\n\\]\nMost software automatically performs this step.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#choosing-the-tuning-parameter",
+    "href": "contents/1/ridge.html#choosing-the-tuning-parameter",
+    "title": "5  Ridge regression",
+    "section": "7.6 1.6 Choosing the Tuning Parameter",
+    "text": "7.6 1.6 Choosing the Tuning Parameter\nThe tuning parameter \\(\\lambda\\) determines the strength of regularization.\nA common method is K-fold cross-validation.\nProcedure:\n\nFit models across a grid of \\(\\lambda\\)\nCompute validation error\nChoose \\(\\lambda\\) minimizing CV error\n\nIn practice, two common choices are\n\n\\(\\lambda_{min}\\): minimum CV error\n\\(\\lambda_{1se}\\): simplest model within one standard error",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#practical-implementation",
+    "href": "contents/1/ridge.html#practical-implementation",
+    "title": "5  Ridge regression",
+    "section": "7.7 1.7 Practical Implementation",
+    "text": "7.7 1.7 Practical Implementation\nStudents should see how to fit these models in software.\nExample in R using glmnet:\nlibrary(glmnet)\n\nx &lt;- model.matrix(y ~ ., data)[,-1]\ny &lt;- data$y\n\nridge_fit &lt;- glmnet(x, y, alpha = 0)\nlasso_fit &lt;- glmnet(x, y, alpha = 1)\nCross-validation:\ncv_fit &lt;- cv.glmnet(x, y, alpha = 1)\nplot(cv_fit)\nCoefficient path:\nplot(lasso_fit)",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#elastic-net",
+    "href": "contents/1/ridge.html#elastic-net",
+    "title": "5  Ridge regression",
+    "section": "8.1 2.1 Elastic Net",
+    "text": "8.1 2.1 Elastic Net\nElastic Net combines Ridge and Lasso penalties:\n\\[\n\\lambda_1 \\sum |\\beta_j| + \\lambda_2 \\sum \\beta_j^2\n\\]\nPurpose:\n\nhandles groups of correlated predictors\nprovides a compromise between Ridge and Lasso",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#relation-to-subset-selection",
+    "href": "contents/1/ridge.html#relation-to-subset-selection",
+    "title": "5  Ridge regression",
+    "section": "8.2 2.2 Relation to Subset Selection",
+    "text": "8.2 2.2 Relation to Subset Selection\nExplain the relationship between regularization and model selection.\n\n\n\nMethod\nPenalty\n\n\n\n\nBest subset\n\\(||\\beta||_0\\)\n\n\nRidge\n\\(||\\beta||_2\\)\n\n\nLasso\n\\(||\\beta||_1\\)\n\n\n\nThis helps students understand different approaches to controlling model complexity.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#effective-degrees-of-freedom",
+    "href": "contents/1/ridge.html#effective-degrees-of-freedom",
+    "title": "5  Ridge regression",
+    "section": "8.3 2.3 Effective Degrees of Freedom",
+    "text": "8.3 2.3 Effective Degrees of Freedom\nFor ridge regression, the effective degrees of freedom can be written as\n\\[\ndf(\\lambda) = tr(S_\\lambda)\n\\]\nThis concept helps connect ridge regression with smoothing methods.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#bayesian-interpretation",
+    "href": "contents/1/ridge.html#bayesian-interpretation",
+    "title": "5  Ridge regression",
+    "section": "8.4 2.4 Bayesian Interpretation",
+    "text": "8.4 2.4 Bayesian Interpretation\nRegularization can also be viewed from a Bayesian perspective.\n\nRidge regression corresponds to a Gaussian prior on coefficients\nLasso corresponds to a Laplace prior\n\nThis connection is conceptually interesting but not required.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#optimization-algorithms",
+    "href": "contents/1/ridge.html#optimization-algorithms",
+    "title": "5  Ridge regression",
+    "section": "9.1 3.1 Optimization Algorithms",
+    "text": "9.1 3.1 Optimization Algorithms\nDetailed derivations of algorithms such as:\n\nCoordinate descent\nLeast Angle Regression (LARS)\nConvex optimization proofs\n\nStudents only need to know that efficient algorithms exist.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#high-dimensional-statistical-theory",
+    "href": "contents/1/ridge.html#high-dimensional-statistical-theory",
+    "title": "5  Ridge regression",
+    "section": "9.2 3.2 High-Dimensional Statistical Theory",
+    "text": "9.2 3.2 High-Dimensional Statistical Theory\nTopics such as:\n\nsparsistency\nirrepresentable conditions\noracle properties\n\nare usually covered only in advanced statistics courses.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#full-mathematical-derivation",
+    "href": "contents/1/ridge.html#full-mathematical-derivation",
+    "title": "5  Ridge regression",
+    "section": "9.3 3.3 Full Mathematical Derivation",
+    "text": "9.3 3.3 Full Mathematical Derivation\nThe ridge estimator\n\\[\n\\hat{\\beta} = (X^T X + \\lambda I)^{-1} X^T y\n\\]\ncan be shown, but a full derivation is not necessary for most students.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#lm",
+    "href": "contents/1/lr.html#lm",
+    "title": "2  Linear regression",
+    "section": "2.2 lm",
+    "text": "2.2 lm",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#higherinteractioncategorical",
+    "href": "contents/1/lr.html#higherinteractioncategorical",
+    "title": "2  Linear regression",
+    "section": "2.3 higher/interaction/categorical",
+    "text": "2.3 higher/interaction/categorical",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#interpreting",
+    "href": "contents/1/lr.html#interpreting",
+    "title": "2  Linear regression",
+    "section": "2.4 interpreting",
+    "text": "2.4 interpreting\n\nbeta\nmain effects\nconf.int\npredict.int",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#model-selection",
+    "href": "contents/1/lr.html#model-selection",
+    "title": "2  Linear Regression",
+    "section": "2.7 Model Selection",
+    "text": "2.7 Model Selection\nIn multiple regression, several competing predictor sets may be plausible. Model selection compares them using a criterion that balances fit and complexity.\n\n2.7.1 AIC, BIC, and Mallows’ \\(C_p\\)\nThese criteria reward good fit but penalize model complexity.\n\nAIC tends to prefer somewhat larger models.\nBIC penalizes complexity more strongly and often prefers smaller models.\nMallows’ \\(C_p\\) compares a candidate model to a larger reference model.\n\nThese tools are useful for comparing models, but they should not replace subject-matter reasoning.\n\n\n2.7.2 Best Subset Selection\nBest subset selection compares all models of a given size and then chooses the best one according to a criterion such as AIC, BIC, adjusted \\(R^2\\), or \\(C_p\\).\nIt is conceptually simple, but it becomes computationally expensive when the number of predictors is large.\n\n\n2.7.3 Stepwise Selection\nStepwise procedures add or remove variables sequentially rather than searching all possible models.\nCommon versions are:\n\nforward selection,\nbackward elimination,\nbidirectional stepwise selection.\n\nThese methods are faster than best subset selection, but they are greedy procedures and do not guarantee the globally best model.\n\n\n\n\n\n\nImportantCaution\n\n\n\nIf many models are tried and the final model is selected from the same data, p-values and confidence intervals from the final selected model should be interpreted cautiously.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html",
+    "href": "contents/1/lasso.html",
+    "title": "6  LASSO",
+    "section": "",
+    "text": "6.1 What Is LASSO?\nThe LASSO is a regularized version of linear regression that adds an \\(L_1\\) penalty to the least-squares criterion. Its name stands for least absolute shrinkage and selection operator.\nFor a linear model with response vector \\(y\\) and design matrix \\(X\\), the LASSO estimator is defined by\n\\[\n\\hat{\\beta}_{\\mathrm{lasso}}\n= \\arg\\min_{\\beta}\n\\left\\{\n\\lVert y - X\\beta \\rVert_2^2 + \\lambda \\sum_{j=1}^p |\\beta_j|\n\\right\\},\n\\]\nwhere \\(\\lambda \\ge 0\\) is a tuning parameter.\nWhen \\(\\lambda = 0\\), the method reduces to ordinary least squares. As \\(\\lambda\\) increases, the penalty becomes stronger and the coefficients are shrunk more aggressively.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#glmnet",
+    "href": "contents/1/lasso.html#glmnet",
+    "title": "4  LASSO",
+    "section": "4.2 glmnet",
+    "text": "4.2 glmnet",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#on-variable-lasso-and-shrinkage",
+    "href": "contents/1/lasso.html#on-variable-lasso-and-shrinkage",
+    "title": "4  LASSO",
+    "section": "4.3 on variable lasso and shrinkage",
+    "text": "4.3 on variable lasso and shrinkage",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#variable-selection-property-and-shrinkage",
+    "href": "contents/1/lasso.html#variable-selection-property-and-shrinkage",
+    "title": "4  LASSO",
+    "section": "4.4 Variable Selection Property and Shrinkage",
+    "text": "4.4 Variable Selection Property and Shrinkage",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#constrained-optimization-view",
+    "href": "contents/1/lasso.html#constrained-optimization-view",
+    "title": "4  LASSO",
+    "section": "4.5 Constrained Optimization View",
+    "text": "4.5 Constrained Optimization View",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#bias-variance-trade-off",
+    "href": "contents/1/lasso.html#bias-variance-trade-off",
+    "title": "4  LASSO",
+    "section": "4.6 Bias-variance Trade-off",
+    "text": "4.6 Bias-variance Trade-off",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#forward-stagewise-regression-and-the-solution-path",
+    "href": "contents/1/lasso.html#forward-stagewise-regression-and-the-solution-path",
+    "title": "4  LASSO",
+    "section": "4.7 Forward-stagewise Regression and the Solution Path",
+    "text": "4.7 Forward-stagewise Regression and the Solution Path",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#elastic-net",
+    "href": "contents/1/lasso.html#elastic-net",
+    "title": "4  LASSO",
+    "section": "4.8 Elastic-Net",
+    "text": "4.8 Elastic-Net",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#fused-lasso-and-admm",
+    "href": "contents/1/lasso.html#fused-lasso-and-admm",
+    "title": "4  LASSO",
+    "section": "4.9 Fused Lasso and ADMM",
+    "text": "4.9 Fused Lasso and ADMM",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#what-is-ridge-regression",
+    "href": "contents/1/ridge.html#what-is-ridge-regression",
+    "title": "5  Ridge Regression",
+    "section": "5.2 What Is Ridge Regression?",
+    "text": "5.2 What Is Ridge Regression?\nRidge regression is a regularized version of ordinary least squares (OLS). It is especially useful when predictors are highly correlated or when the matrix \\(X^\\top X\\) is nearly singular, because in such settings the OLS estimator can be unstable.\nRecall the linear model\n\\[\ny = X\\beta + \\varepsilon.\n\\]\nWhen \\(X^\\top X\\) is invertible, the OLS estimator is\n\\[\n\\hat{\\beta}_{\\mathrm{OLS}} = (X^\\top X)^{-1}X^\\top y.\n\\]\nRidge regression modifies the least-squares criterion by adding a quadratic penalty:\n\\[\n\\hat{\\beta}_{\\mathrm{ridge}}\n= \\arg\\min_{\\beta}\n\\left\\{\n\\lVert y - X\\beta \\rVert_2^2 + \\lambda \\lVert \\beta \\rVert_2^2\n\\right\\},\n\\]\nwhere \\(\\lambda \\ge 0\\) is a tuning parameter.\nEquivalently,\n\\[\n\\hat{\\beta}_{\\mathrm{ridge}} = (X^\\top X + \\lambda I)^{-1}X^\\top y.\n\\]\nThe penalty shrinks coefficients toward zero. Larger values of \\(\\lambda\\) produce stronger shrinkage.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#what-is-statistical-learning",
+    "href": "contents/1/basic.html#what-is-statistical-learning",
+    "title": "1  Statistical Learning Basics",
+    "section": "",
+    "text": "prediction: accurately predict the response for new observations;\ninference or explanation: understand how the predictors are related to the response.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#supervised-and-unsupervised-learning",
+    "href": "contents/1/basic.html#supervised-and-unsupervised-learning",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.2 Supervised and Unsupervised Learning",
+    "text": "1.2 Supervised and Unsupervised Learning\nIn supervised learning, we observe both predictors and a response. The goal is to predict or explain the response.\nExamples include:\n\npredicting house prices from size, location, and age;\npredicting whether an email is spam from its content;\npredicting a patient’s risk from clinical measurements.\n\nIn unsupervised learning, we observe predictors but no response. The goal is to discover structure in the data.\nExamples include:\n\nclustering similar observations;\nreducing dimension with principal component analysis;\nfinding latent groups or patterns.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#regression-and-classification",
+    "href": "contents/1/basic.html#regression-and-classification",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.3 Regression and Classification",
+    "text": "1.3 Regression and Classification\nWithin supervised learning, two major tasks are:\n\nregression, where the response is quantitative;\nclassification, where the response is categorical.\n\nFor example:\n\npredicting salary is a regression problem;\npredicting whether a tumor is benign or malignant is a classification problem.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#prediction-versus-inference",
+    "href": "contents/1/basic.html#prediction-versus-inference",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.4 Prediction Versus Inference",
+    "text": "1.4 Prediction Versus Inference\nPrediction and inference are related, but they are not the same.\nIf the goal is prediction, we care mainly about how well the model performs on new data. A more complex model may be acceptable if it improves predictive accuracy.\nIf the goal is inference, we care about understanding the role of each predictor. In this case, interpretability is often more important than pure predictive performance.\n\n\n\n\n\n\nNoteMain Point\n\n\n\nThe best predictive model is not always the best explanatory model. Statistical learning often requires choosing between interpretability and flexibility.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#parametric-and-nonparametric-methods",
+    "href": "contents/1/basic.html#parametric-and-nonparametric-methods",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.5 Parametric and Nonparametric Methods",
+    "text": "1.5 Parametric and Nonparametric Methods\nA parametric method assumes a specific functional form for \\(f\\). For example, linear regression assumes that\n\\[\nf(X) = \\beta_0 + \\beta_1 X_1 + \\cdots + \\beta_p X_p.\n\\]\nThis assumption simplifies estimation and interpretation, but it may be too restrictive.\nA nonparametric method does not assume a fixed functional form. It is more flexible, but it usually requires more data and may be harder to interpret.\nThus:\n\nparametric models are simpler and easier to interpret;\nnonparametric models are more flexible but may have higher variance.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#training-error-and-test-error",
+    "href": "contents/1/basic.html#training-error-and-test-error",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.6 Training Error and Test Error",
+    "text": "1.6 Training Error and Test Error\nWhen we fit a model, we can measure how well it matches the observed data. This is the training error.\nHowever, what really matters is performance on new observations. This is the test error.\nA model can have very small training error but still perform poorly on new data. This phenomenon is called overfitting.\n\nUnderfitting occurs when the model is too simple to capture the signal.\nOverfitting occurs when the model is too flexible and starts fitting noise.\n\nGood statistical learning aims to minimize test error, not merely training error.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#bias-variance-tradeoff",
+    "href": "contents/1/basic.html#bias-variance-tradeoff",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.7 Bias-Variance Tradeoff",
+    "text": "1.7 Bias-Variance Tradeoff\nA central idea in statistical learning is the bias-variance tradeoff.\n\nA simple model tends to have higher bias but lower variance.\nA flexible model tends to have lower bias but higher variance.\n\nAs model flexibility increases:\n\ntraining error usually decreases;\ntest error often decreases at first, then increases once overfitting begins.\n\nThe goal is to find a level of complexity that balances bias and variance well.\n\n\n\n\n\n\nImportantWhy This Matters\n\n\n\nMany modern methods can be understood as ways to manage the bias-variance tradeoff. Regularization, cross-validation, and model comparison are all tools for this purpose.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#a-typical-statistical-learning-workflow",
+    "href": "contents/1/basic.html#a-typical-statistical-learning-workflow",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.8 A Typical Statistical Learning Workflow",
+    "text": "1.8 A Typical Statistical Learning Workflow\nA practical workflow often looks like this:\n\nDefine the prediction or explanation goal.\nExplore and preprocess the data.\nChoose one or more candidate models.\nEstimate model performance using validation or cross-validation.\nCompare models and select an appropriate final model.\nInterpret results and communicate conclusions.\n\nThis course will revisit this workflow repeatedly with different methods.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#looking-ahead",
+    "href": "contents/1/basic.html#looking-ahead",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.9 Looking Ahead",
+    "text": "1.9 Looking Ahead\nThe early chapters focus on linear regression and its extensions. Later chapters introduce more flexible models, resampling methods, regularization, and practical machine learning workflow.\nThe broad progression is:\n\nstart with simple interpretable models;\nallow more flexible structure when needed;\nevaluate models using principled estimates of test error;\nimprove prediction through regularization and modern methods.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#the-ordinary-least-squares-estimator",
+    "href": "contents/1/lr.html#the-ordinary-least-squares-estimator",
+    "title": "2  Linear Regression",
+    "section": "2.2 The Ordinary Least Squares Estimator",
+    "text": "2.2 The Ordinary Least Squares Estimator\nThe most common fitting method is ordinary least squares (OLS). It chooses the coefficient vector \\(\\beta\\) that minimizes the residual sum of squares:\n\\[\n\\mathrm{RSS}(\\beta) = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\n= \\lVert y - X\\beta \\rVert_2^2.\n\\]\nThe OLS estimator is\n\\[\n\\hat{\\beta}_{\\mathrm{OLS}} = (X^\\top X)^{-1}X^\\top y,\n\\]\nprovided that \\(X^\\top X\\) is invertible.\nOnce the coefficients are estimated, the fitted value for observation \\(i\\) is\n\\[\n\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\cdots + \\hat{\\beta}_p x_{ip}.\n\\]",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#fitting-linear-regression-in-r",
+    "href": "contents/1/lr.html#fitting-linear-regression-in-r",
+    "title": "2  Linear Regression",
+    "section": "2.3 Fitting Linear Regression in R",
+    "text": "2.3 Fitting Linear Regression in R\nIn R, linear regression is fitted with lm():\nfit &lt;- lm(y ~ x1 + x2, data = dat)\nsummary(fit)\nThe formula syntax is convenient:\n\ny ~ x1 + x2 includes two predictors;\ny ~ . includes all available predictors;\ny ~ x1 * x2 includes main effects and the interaction;\ny ~ x + I(x^2) adds a quadratic term.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#categorical-variables-interactions-and-nonlinear-terms",
+    "href": "contents/1/lr.html#categorical-variables-interactions-and-nonlinear-terms",
+    "title": "2  Linear Regression",
+    "section": "2.4 Categorical Variables, Interactions, and Nonlinear Terms",
+    "text": "2.4 Categorical Variables, Interactions, and Nonlinear Terms\nLinear regression can handle more than purely numeric additive effects.\n\n2.4.1 Categorical Predictors\nCategorical predictors are represented through indicator variables. If a factor has \\(k\\) levels, the model usually includes \\(k-1\\) dummy variables.\nThus, linear regression can compare group means while adjusting for other predictors.\n\n\n2.4.2 Interaction Terms\nAn interaction allows the effect of one predictor to depend on another predictor. For example,\n\\[\nY = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\beta_3 x_1 x_2 + \\varepsilon.\n\\]\nIf \\(\\beta_3 \\neq 0\\), the effect of \\(x_1\\) depends on the value of \\(x_2\\).\n\n\n2.4.3 Polynomial and Transformed Terms\nWe may also include nonlinear transformations such as:\n\n\\(x^2\\),\n\\(\\log(x)\\),\n\\(\\sqrt{x}\\).\n\nThe model remains a linear model because it is still linear in the coefficients \\(\\beta\\).",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#interpreting-the-model",
+    "href": "contents/1/lr.html#interpreting-the-model",
+    "title": "2  Linear Regression",
+    "section": "2.5 Interpreting the Model",
+    "text": "2.5 Interpreting the Model\nInterpretation is one of the main strengths of linear regression.\n\n2.5.1 Coefficients\nThe coefficient \\(\\beta_j\\) represents the change in the mean response associated with a one-unit increase in \\(X_j\\), holding the other predictors fixed.\n\n\n2.5.2 Main Effects With Interactions\nWhen interactions are present, a main effect should not be interpreted in isolation. Its meaning depends on the interacting variables.\n\n\n2.5.3 Confidence Intervals\nA confidence interval gives a range of plausible values for a coefficient or for the mean response at a given predictor combination.\n\n\n2.5.4 Prediction Intervals\nA prediction interval is wider than a confidence interval because it must account for both:\n\nuncertainty in the estimated mean;\nrandom variation in a future observation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#assessing-model-fit",
+    "href": "contents/1/lr.html#assessing-model-fit",
+    "title": "2  Linear Regression",
+    "section": "2.6 Assessing Model Fit",
+    "text": "2.6 Assessing Model Fit\nSeveral tools are commonly used to assess a linear regression fit:\n\nresidual plots,\nQ-Q plots,\nleverage and influence diagnostics,\nmeasures such as \\(R^2\\), adjusted \\(R^2\\), and residual standard error.\n\nResidual plots help detect:\n\nnonlinearity,\nnonconstant variance,\noutliers,\ninfluential observations.\n\nThese diagnostics do not prove that a model is correct, but they help identify important problems.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#strengths-and-limitations",
+    "href": "contents/1/lr.html#strengths-and-limitations",
+    "title": "2  Linear Regression",
+    "section": "2.8 Strengths and Limitations",
+    "text": "2.8 Strengths and Limitations\nLinear regression is often the first model to try because it is transparent and effective in many settings. However, it has limits.\nStrengths:\n\nsimple interpretation;\nfast computation;\nuseful baseline;\nstrong connection to statistical inference.\n\nLimitations:\n\nassumes a linear mean structure unless we add transformed terms;\ncan be unstable under multicollinearity;\nmay overfit when many predictors are included;\nmay perform poorly when relationships are strongly nonlinear.\n\nThese limitations motivate later methods such as GLMs, GAMs, ridge regression, and LASSO.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html",
+    "href": "contents/1/glm.html",
+    "title": "3  Generalized linear models",
+    "section": "",
+    "text": "3.1 What Is a GLM?\nA generalized linear model (GLM) extends ordinary linear regression in two ways:\nA GLM has three components:\n\\[\n\\eta = X\\beta.\n\\]\n\\[\ng(\\mu) = \\eta = X\\beta.\n\\]\nThus, a GLM keeps the predictor linear in the coefficients, but it allows the response distribution and the mean-response relationship to be more flexible than in ordinary linear regression.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#what-is-a-glm",
+    "href": "contents/1/glm.html#what-is-a-glm",
+    "title": "3  Generalized linear models",
+    "section": "",
+    "text": "the response variable does not need to be normally distributed;\nthe mean of the response is connected to the predictors through a link function.\n\n\n\nA response distribution from the exponential family, such as Gaussian, Binomial, or Poisson.\nA linear predictor\n\n\n\nA link function relating the mean \\(\\mu = \\mathbb{E}(Y \\mid X)\\) to the linear predictor:\n\n\n\n\n\n\n\n\n\nNoteMain Idea\n\n\n\nLinear regression models the response directly under a Gaussian error assumption. A GLM models the mean of the response through a link function and can handle binary, count, and other non-Gaussian outcomes.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#why-do-we-need-glms",
+    "href": "contents/1/glm.html#why-do-we-need-glms",
+    "title": "3  Generalized linear models",
+    "section": "3.2 Why Do We Need GLMs?",
+    "text": "3.2 Why Do We Need GLMs?\nOrdinary linear regression is not always appropriate.\n\nFor binary outcomes, fitted values from linear regression may fall outside \\([0,1]\\).\nFor count data, the response is nonnegative and often right-skewed.\nThe variance may depend on the mean, which violates the constant-variance assumption of linear regression.\n\nGLMs address these issues by choosing a distribution and a link function suited to the data.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#common-examples",
+    "href": "contents/1/glm.html#common-examples",
+    "title": "3  Generalized linear models",
+    "section": "3.3 Common Examples",
+    "text": "3.3 Common Examples\n\n3.3.1 Linear Regression\nFor a Gaussian response with the identity link,\n\\[\n\\mu = X\\beta.\n\\]\nThis is the ordinary linear model.\n\n\n3.3.2 Logistic Regression\nFor binary data, logistic regression uses\n\\[\n\\log\\left(\\frac{\\mu}{1-\\mu}\\right) = X\\beta,\n\\]\nwhere \\(\\mu = \\mathbb{P}(Y=1 \\mid X)\\).\n\n\n3.3.3 Poisson Regression\nFor count data, Poisson regression uses\n\\[\n\\log(\\mu) = X\\beta,\n\\]\nwhere \\(\\mu = \\mathbb{E}(Y \\mid X)\\).",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#relation-to-linear-regression",
+    "href": "contents/1/glm.html#relation-to-linear-regression",
+    "title": "3  Generalized linear models",
+    "section": "3.4 Relation to Linear Regression",
+    "text": "3.4 Relation to Linear Regression\nA GLM is not the same as transforming the response and then applying ordinary least squares.\nFor example,\n\\[\n\\log(Y) = X\\beta + \\varepsilon\n\\]\nis a transformed linear model, whereas\n\\[\n\\log(\\mathbb{E}[Y \\mid X]) = X\\beta\n\\]\nis a GLM with a log link.\nThese models may look similar algebraically, but they differ in assumptions, interpretation, and estimation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#estimation",
+    "href": "contents/1/glm.html#estimation",
+    "title": "3  Generalized linear models",
+    "section": "3.5 Estimation",
+    "text": "3.5 Estimation\nUnlike ordinary least squares, GLMs are usually estimated by maximum likelihood, often using iteratively reweighted least squares (IRLS).\nThe details of the algorithm are usually less important than the modeling idea:\n\nchoose a suitable distribution;\nchoose a suitable link function;\ninterpret the fitted model on the correct scale.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#interpretation",
+    "href": "contents/1/glm.html#interpretation",
+    "title": "3  Generalized linear models",
+    "section": "3.6 Interpretation",
+    "text": "3.6 Interpretation\nThe coefficients in a GLM are interpreted through the link function.\n\nIn logistic regression, coefficients describe changes in log-odds.\nIn Poisson regression, coefficients describe changes in the log mean count.\nIn linear regression, coefficients describe direct changes in the mean response.\n\nTherefore, interpretation depends on both the response distribution and the link.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#relation-to-gams-and-regularization",
+    "href": "contents/1/glm.html#relation-to-gams-and-regularization",
+    "title": "3  Generalized linear models",
+    "section": "3.7 Relation to GAMs and Regularization",
+    "text": "3.7 Relation to GAMs and Regularization\nGLMs still assume that the predictor enters through the linear form \\(X\\beta\\). A generalized additive model (GAM) relaxes this by replacing linear terms with smooth functions:\n\\[\ng(\\mu) = \\beta_0 + f_1(x_1) + \\cdots + f_p(x_p).\n\\]\nRegularization methods such as ridge regression and LASSO can also be combined with GLMs, producing penalized logistic regression, penalized Poisson regression, and related models.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html",
+    "href": "contents/1/gam.html",
+    "title": "4  Generalized additive models",
+    "section": "",
+    "text": "4.1 What Is a GAM?\nA generalized additive model (GAM) extends a generalized linear model by allowing the effect of a predictor to be a smooth function rather than a fixed linear term.\nInstead of writing\n\\[\ng(\\mu) = \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p,\n\\]\na GAM writes\n\\[\ng(\\mu) = \\beta_0 + f_1(x_1) + \\cdots + f_p(x_p),\n\\]\nwhere each \\(f_j\\) is a smooth function estimated from the data.\nHere \\(\\mu = \\mathbb{E}(Y \\mid X)\\) and \\(g\\) is a link function, just as in a GLM.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#what-is-a-gam",
+    "href": "contents/1/gam.html#what-is-a-gam",
+    "title": "4  Generalized additive models",
+    "section": "",
+    "text": "NoteMain Idea\n\n\n\nA GLM assumes a specific parametric form for each predictor effect. A GAM allows the shape of the effect to be learned from the data, subject to a smoothness constraint.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#why-do-we-need-gams",
+    "href": "contents/1/gam.html#why-do-we-need-gams",
+    "title": "4  Generalized additive models",
+    "section": "4.2 Why Do We Need GAMs?",
+    "text": "4.2 Why Do We Need GAMs?\nIn practice, relationships between predictors and response are often nonlinear.\nIn ordinary linear regression, one may try transformations such as:\n\n\\(\\log(x)\\),\n\\(\\sqrt{x}\\),\n\\(x^2\\).\n\nThese are still parametric choices made by the analyst. A GAM provides a more flexible alternative by estimating a smooth curve directly from the data.\nThis is useful when:\n\nthe true relationship is nonlinear;\nthe correct transformation is not known in advance;\nwe want flexibility without giving up interpretability completely.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#relation-to-linear-regression-and-glms",
+    "href": "contents/1/gam.html#relation-to-linear-regression-and-glms",
+    "title": "4  Generalized additive models",
+    "section": "4.3 Relation to Linear Regression and GLMs",
+    "text": "4.3 Relation to Linear Regression and GLMs\nThe progression is:\n\nLinear regression: linear mean function with Gaussian errors;\nGLM: linear predictor with a general response distribution and link function;\nGAM: additive smooth functions with a general response distribution and link function.\n\nSo a GAM is best viewed as a flexible extension of a GLM.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#smooth-functions",
+    "href": "contents/1/gam.html#smooth-functions",
+    "title": "4  Generalized additive models",
+    "section": "4.4 Smooth Functions",
+    "text": "4.4 Smooth Functions\nThe functions \\(f_j\\) are not arbitrary. They are usually represented by basis expansions, such as splines, and are estimated with a smoothness penalty.\nThe purpose of the penalty is to prevent the fitted curve from becoming too wiggly.\nThus, a GAM balances:\n\nfidelity to the data,\nsmoothness of the fitted functions.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#gam-versus-manual-transformations",
+    "href": "contents/1/gam.html#gam-versus-manual-transformations",
+    "title": "4  Generalized additive models",
+    "section": "4.5 GAM Versus Manual Transformations",
+    "text": "4.5 GAM Versus Manual Transformations\nSuppose in a linear model you try\n\\[\nY = \\beta_0 + \\beta_1 \\log(x) + \\varepsilon\n\\]\nor\n\\[\nY = \\beta_0 + \\beta_1 x + \\beta_2 x^2 + \\varepsilon.\n\\]\nThese are still linear models with chosen transformations.\nIn a GAM, by contrast, we write\n\\[\nY = \\beta_0 + f(x) + \\varepsilon\n\\]\nor, more generally,\n\\[\ng(\\mu) = \\beta_0 + f(x).\n\\]\nThe difference is that the shape of \\(f\\) is estimated from the data rather than fixed in advance as \\(\\log(x)\\) or \\(x^2\\).",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#estimation-and-inference",
+    "href": "contents/1/gam.html#estimation-and-inference",
+    "title": "4  Generalized additive models",
+    "section": "4.6 Estimation and Inference",
+    "text": "4.6 Estimation and Inference\nGAMs are usually fitted by penalized likelihood methods. The amount of smoothness is controlled by smoothing parameters, which are often selected automatically by criteria such as:\n\ngeneralized cross-validation (GCV),\nrestricted maximum likelihood (REML),\ncross-validation.\n\nBecause the model learns functional form from the data, inference should still be interpreted with care, especially if the analyst repeatedly changes the model after inspecting diagnostic plots.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#relation-to-ridge-and-lasso",
+    "href": "contents/1/gam.html#relation-to-ridge-and-lasso",
+    "title": "4  Generalized additive models",
+    "section": "4.7 Relation to Ridge and LASSO",
+    "text": "4.7 Relation to Ridge and LASSO\nGAMs already use regularization through smoothness penalties. This is a different kind of regularization from ridge regression and LASSO:\n\nridge shrinks coefficients with an \\(L_2\\) penalty;\nLASSO shrinks coefficients with an \\(L_1\\) penalty and can set some exactly to zero;\nGAMs penalize the roughness of smooth functions.\n\nThere are also sparse versions of GAMs that combine smooth modeling with variable selection.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#why-ridge-regression-helps",
+    "href": "contents/1/ridge.html#why-ridge-regression-helps",
+    "title": "5  Ridge Regression",
+    "section": "5.3 Why Ridge Regression Helps",
+    "text": "5.3 Why Ridge Regression Helps\nOLS is unbiased under the classical linear model assumptions, but it can have high variance when predictors are strongly correlated. Ridge regression introduces bias, but it often reduces variance enough to improve predictive performance.\nThis is a standard example of the bias-variance tradeoff.\n\n\n\n\n\n\nNoteKey Properties\n\n\n\n\nIf \\(\\lambda = 0\\), ridge regression reduces to OLS.\nIf \\(\\lambda &gt; 0\\), the matrix \\(X^\\top X + \\lambda I\\) is invertible even when \\(X^\\top X\\) is singular.\nRidge shrinks coefficients continuously toward zero.\nRidge usually does not set coefficients exactly to zero.\nRidge is particularly useful under multicollinearity.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#choosing-lambda",
+    "href": "contents/1/ridge.html#choosing-lambda",
+    "title": "5  Ridge Regression",
+    "section": "5.4 Choosing \\(\\lambda\\)",
+    "text": "5.4 Choosing \\(\\lambda\\)\nThe tuning parameter \\(\\lambda\\) determines how much shrinkage is applied.\n\nSmall \\(\\lambda\\) gives a model close to OLS.\nLarge \\(\\lambda\\) gives stronger regularization.\n\nIn practice, the modern standard is to choose \\(\\lambda\\) by cross-validation. If \\(\\mathrm{CV}(\\lambda)\\) denotes the cross-validation error, we choose\n\\[\n\\hat{\\lambda}\n= \\arg\\min_{\\lambda} \\mathrm{CV}(\\lambda).\n\\]\nClassical ridge analysis also uses ridge trace plots and generalized cross-validation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#fitting-ridge-regression-in-r",
+    "href": "contents/1/ridge.html#fitting-ridge-regression-in-r",
+    "title": "5  Ridge Regression",
+    "section": "5.5 Fitting Ridge Regression in R",
+    "text": "5.5 Fitting Ridge Regression in R\nThe glmnet package is a standard implementation:\nlibrary(glmnet)\n\nx &lt;- model.matrix(y ~ ., data = dat)[, -1]\ny &lt;- dat$y\n\nridge_fit &lt;- glmnet(x, y, alpha = 0)\nplot(ridge_fit)\nCross-validation is performed with:\ncv_fit &lt;- cv.glmnet(x, y, alpha = 0)\nplot(cv_fit)\ncoef(cv_fit, s = \"lambda.min\")\nHere alpha = 0 specifies ridge regression.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#relation-to-tikhonov-regularization",
+    "href": "contents/1/ridge.html#relation-to-tikhonov-regularization",
+    "title": "5  Ridge Regression",
+    "section": "5.7 Relation to Tikhonov Regularization",
+    "text": "5.7 Relation to Tikhonov Regularization\nRidge regression is the statistical form of Tikhonov regularization. In inverse problems, Tikhonov regularization stabilizes an ill-posed problem by adding a quadratic penalty. Ridge regression applies the same idea to linear regression.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#summary",
+    "href": "contents/1/ridge.html#summary",
+    "title": "5  Ridge Regression",
+    "section": "5.8 Summary",
+    "text": "5.8 Summary\nThe main ideas of ridge regression are:\n\nit adds an \\(L_2\\) penalty to least squares;\nit shrinks coefficients toward zero;\nit reduces variance and can improve prediction;\nit is particularly useful when predictors are highly correlated;\nit usually keeps all variables in the model.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#what-is-lasso",
+    "href": "contents/1/lasso.html#what-is-lasso",
+    "title": "6  LASSO",
+    "section": "",
+    "text": "NoteMain Point\n\n\n\nLike ridge regression, LASSO controls model complexity by shrinking coefficients. Unlike ridge regression, it can set some coefficients exactly equal to zero, so it also performs variable selection.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#why-lasso-is-useful",
+    "href": "contents/1/lasso.html#why-lasso-is-useful",
+    "title": "6  LASSO",
+    "section": "6.2 Why LASSO Is Useful",
+    "text": "6.2 Why LASSO Is Useful\nOrdinary least squares can become unstable when there are many predictors or when predictors are highly correlated. LASSO addresses this by introducing bias in exchange for lower variance and a simpler model.\nThis can improve prediction, especially when:\n\nonly a subset of predictors is truly important;\ninterpretability matters;\nthe number of predictors is moderately large.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#variable-selection-and-shrinkage",
+    "href": "contents/1/lasso.html#variable-selection-and-shrinkage",
+    "title": "6  LASSO",
+    "section": "6.3 Variable Selection and Shrinkage",
+    "text": "6.3 Variable Selection and Shrinkage\nThe defining feature of LASSO is that the \\(L_1\\) penalty can force some coefficient estimates to be exactly zero.\nAs a result:\n\nunimportant variables may be removed from the model;\nthe final model may be easier to interpret;\nprediction error may improve if irrelevant variables are excluded.\n\nRidge regression also shrinks coefficients, but it usually keeps all variables in the model. LASSO shrinks and selects at the same time.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#geometric-interpretation",
+    "href": "contents/1/lasso.html#geometric-interpretation",
+    "title": "6  LASSO",
+    "section": "6.4 Geometric Interpretation",
+    "text": "6.4 Geometric Interpretation\nThe geometric explanation of LASSO is useful for understanding why exact zeros occur.\nRidge regression can be written with an \\(L_2\\) constraint:\n\\[\n\\sum_{j=1}^p \\beta_j^2 \\le t.\n\\]\nThe corresponding constraint region is a circle in two dimensions, or a sphere in higher dimensions.\nLASSO can be written with an \\(L_1\\) constraint:\n\\[\n\\sum_{j=1}^p |\\beta_j| \\le t.\n\\]\nThe corresponding constraint region is a diamond in two dimensions.\nBecause the diamond has corners on the coordinate axes, the least-squares contours often touch the constraint region at a corner. At such a point, one or more coefficients are exactly zero.\n\n\n\n\n\n\nImportantComparison With Ridge\n\n\n\nRidge has a smooth constraint boundary, so coefficients are typically shrunk but remain nonzero. LASSO has corners aligned with the axes, so solutions often occur at points where some coefficients are exactly zero.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#bias-variance-tradeoff",
+    "href": "contents/1/lasso.html#bias-variance-tradeoff",
+    "title": "6  LASSO",
+    "section": "6.5 Bias-Variance Tradeoff",
+    "text": "6.5 Bias-Variance Tradeoff\nLASSO is a biased estimator. The penalty pulls coefficients toward zero, so the estimates are no longer unbiased in the classical sense.\nHowever, this bias can be worthwhile because it may greatly reduce variance. If the reduction in variance is large enough, the overall prediction error can decrease.\nThus, LASSO is another example of the bias-variance tradeoff:\n\nless flexibility may increase bias;\nless flexibility may also reduce variance;\nprediction may improve if the tradeoff is favorable.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#how-to-choose-lambda",
+    "href": "contents/1/lasso.html#how-to-choose-lambda",
+    "title": "6  LASSO",
+    "section": "6.6 How to Choose \\(\\lambda\\)",
+    "text": "6.6 How to Choose \\(\\lambda\\)\nThe tuning parameter \\(\\lambda\\) controls the amount of regularization in both ridge regression and LASSO.\n\nWhen \\(\\lambda = 0\\), both methods reduce to ordinary least squares.\nAs \\(\\lambda\\) increases, the coefficients are shrunk more strongly.\nIn ridge regression, coefficients move continuously toward zero.\nIn LASSO, some coefficients may become exactly zero.\n\nSo the practical question is: how should we choose \\(\\lambda\\)?\n\n\n\n\n\n\nNoteMain Idea\n\n\n\nThere is no single universally best value of \\(\\lambda\\). It is usually chosen to balance model fit and model complexity, with the goal of improving prediction and avoiding overfitting.\n\n\n\n6.6.1 A Simple Way\nThe simplest explanation is to treat \\(\\lambda\\) as a knob that controls the strength of shrinkage.\n\nA small \\(\\lambda\\) gives a model close to least squares.\nA large \\(\\lambda\\) gives a more heavily regularized model.\n\nIn an introductory discussion, one can fit the model over a grid of \\(\\lambda\\) values and inspect how the coefficients change. This gives an immediate visual understanding of the regularization path.\nFor ridge regression, the coefficients decrease smoothly as \\(\\lambda\\) grows. For LASSO, some coefficients drop to zero as \\(\\lambda\\) increases.\n\n\n6.6.2 The Traditional Classical Way\nA classical approach is to choose \\(\\lambda\\) using an analytic criterion that balances goodness of fit against model complexity.\nFor ridge regression, older literature often used:\n\ninspection of ridge trace plots,\nMallows’ \\(C_p\\),\nAkaike’s Information Criterion (AIC),\nBayesian Information Criterion (BIC),\ngeneralized cross-validation (GCV).\n\nFor LASSO, information criteria such as AIC or BIC can also be used, usually together with an estimate of the effective degrees of freedom.\n\n\n6.6.3 The Modern Way\nThe modern standard is to choose \\(\\lambda\\) by cross-validation, especially \\(K\\)-fold cross-validation.\nIf \\(\\mathrm{CV}(\\lambda)\\) denotes the cross-validation error, we choose\n\\[\n\\hat{\\lambda}\n= \\arg\\min_{\\lambda} \\mathrm{CV}(\\lambda).\n\\]\nIn practice, two values are often reported:\n\n\\(\\lambda_{\\min}\\), the value that minimizes cross-validation error;\n\\(\\lambda_{1se}\\), the largest value of \\(\\lambda\\) within one standard error of the minimum.\n\nUsually, \\(\\lambda_{\\min}\\) gives the most accurate prediction, while \\(\\lambda_{1se}\\) gives a simpler and more stable model.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#standardization",
+    "href": "contents/1/lasso.html#standardization",
+    "title": "6  LASSO",
+    "section": "6.7 Standardization",
+    "text": "6.7 Standardization\nFor both ridge regression and LASSO, the predictors are usually standardized before fitting the model.\nThe usual standardization is\n\\[\nx_j^* = \\frac{x_j - \\bar{x}_j}{s_j},\n\\]\nso that each predictor has mean \\(0\\) and standard deviation \\(1\\).\nThis is important because the penalty acts on the coefficient magnitudes. Without standardization, variables measured on different scales would be penalized unequally.\nIn practice:\n\nwe usually standardize the predictors \\(X\\);\nwe usually do not penalize the intercept;\nsoftware such as glmnet standardizes predictors automatically by default.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#fitting-lasso-with-glmnet",
+    "href": "contents/1/lasso.html#fitting-lasso-with-glmnet",
+    "title": "6  LASSO",
+    "section": "6.8 Fitting LASSO With glmnet",
+    "text": "6.8 Fitting LASSO With glmnet\nIn R, the most common implementation is the glmnet package.\nlibrary(glmnet)\n\nx &lt;- model.matrix(y ~ ., data = dat)[, -1]\ny &lt;- dat$y\n\nlasso_fit &lt;- glmnet(x, y, alpha = 1)\nplot(lasso_fit)\nTo choose \\(\\lambda\\) by cross-validation:\ncv_fit &lt;- cv.glmnet(x, y, alpha = 1)\nplot(cv_fit)\n\ncoef(cv_fit, s = \"lambda.min\")\ncoef(cv_fit, s = \"lambda.1se\")\nHere:\n\nalpha = 1 specifies LASSO;\nlambda.min gives the model with minimum CV error;\nlambda.1se gives a simpler model within one standard error of the minimum.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#relation-to-forward-stagewise-regression-and-elastic-net",
+    "href": "contents/1/lasso.html#relation-to-forward-stagewise-regression-and-elastic-net",
+    "title": "6  LASSO",
+    "section": "6.9 Relation to Forward Stagewise Regression and Elastic Net",
+    "text": "6.9 Relation to Forward Stagewise Regression and Elastic Net\nLASSO is closely related to forward stagewise regression because both build a model gradually and often produce similar coefficient paths.\nLASSO is also closely related to the elastic net, which combines the ridge and LASSO penalties:\n\\[\n\\lambda_1 \\sum_{j=1}^p |\\beta_j| + \\lambda_2 \\sum_{j=1}^p \\beta_j^2.\n\\]\nElastic net is often useful when predictors are highly correlated, because it combines variable selection with additional shrinkage.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#summary",
+    "href": "contents/1/lasso.html#summary",
+    "title": "6  LASSO",
+    "section": "6.10 Summary",
+    "text": "6.10 Summary\nThe main ideas of LASSO are:\n\nit adds an \\(L_1\\) penalty to least squares;\nit shrinks coefficients toward zero;\nit can set some coefficients exactly to zero;\nit is useful for both prediction and variable selection;\nthe tuning parameter \\(\\lambda\\) is usually chosen by cross-validation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#model-selection-regularization",
+    "href": "index.html#model-selection-regularization",
+    "title": "Statistical Learning",
+    "section": "2. Model Selection & Regularization",
+    "text": "2. Model Selection & Regularization\nPython’s scikit-learn (sklearn) is the powerhouse for cross-validation and penalized regression.\n\n\n\n\n\n\n\n\n\nFeature\nR Code (Package)\nPython Library\nPython Counterpart\n\n\n\n\nLasso / Ridge\nglmnet(x, y)\nsklearn\nLassoCV() or RidgeCV()\n\n\nStepwise (AIC/BIC)\nstep(fit)\nsklearn\nSequentialFeatureSelector\n\n\nBest Subset\nregsubsets() (leaps)\nmlxtend\nExhaustiveFeatureSelector\n\n\nValidation Split\nsample() / createDataPartition\nsklearn\ntrain_test_split()\n\n\nK-Fold CV\ncv.glmnet()\nsklearn\ncross_val_score() or GridSearchCV()",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#diagnostics-residuals",
+    "href": "index.html#diagnostics-residuals",
+    "title": "Statistical Learning",
+    "section": "3. Diagnostics & Residuals",
+    "text": "3. Diagnostics & Residuals\nIn R, plot(fit) automatically generates four diagnostic plots. In Python, you access these via the .resid attribute or statsmodels.graphics.\n\n\n\n\n\n\n\n\nMetric / Plot\nR Code\nPython Code\n\n\n\n\nResiduals\nresiduals(fit)\nfit.resid\n\n\nFitted Values\nfitted(fit)\nfit.fittedvalues\n\n\nQ-Q Plot\nqqnorm(fit$resid)\nsm.qqplot(fit.resid, line='s')\n\n\nLeverage Plot\nplot(fit, which=4)\nsm.graphics.influence_plot(fit)\n\n\nResidual Plot\nplot(fit, which=1)\nsns.residplot(x=fit.fittedvalues, y=df['y'])",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#required-libraries-for-the-course",
+    "href": "index.html#required-libraries-for-the-course",
+    "title": "Statistical Learning",
+    "section": "4. Required Libraries for the Course",
+    "text": "4. Required Libraries for the Course\nTo set up a Python environment equivalent to the R statistical suite, run:",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics",
+    "href": "index.html#main-topics",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nWhat is statistical learning?\nSupervised vs unsupervised learning\nParametric vs nonparametric methods\nPrediction vs explanation\nBias–variance tradeoff",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals",
+    "href": "index.html#teaching-goals",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand that the main goal of statistical learning is good prediction on new data, not simply fitting the observed sample as closely as possible.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#suggested-emphasis",
+    "href": "index.html#suggested-emphasis",
+    "title": "Statistical Learning",
+    "section": "Suggested Emphasis",
+    "text": "Suggested Emphasis\n\nIntroduce the overall modeling problem first.\nUse simple real-world examples such as house prices, medical diagnosis, or spam filtering.\nMake overfitting a central theme from the beginning.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-1",
+    "href": "index.html#main-topics-1",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nLinear regression as a prediction tool\nInterpreting fitted relationships\nStrengths and weaknesses of linear models\nLinear models as a baseline for comparison",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-1",
+    "href": "index.html#teaching-goals-1",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should see linear regression as the starting point of predictive modeling: simple, interpretable, and useful, but limited in flexibility.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#suggested-emphasis-1",
+    "href": "index.html#suggested-emphasis-1",
+    "title": "Statistical Learning",
+    "section": "Suggested Emphasis",
+    "text": "Suggested Emphasis\n\nPresent linear regression mainly as a predictive model.\nKeep inference light unless needed for context.\nHighlight when linear models fail to capture nonlinear structure.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-2",
+    "href": "index.html#main-topics-2",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nFlexible regression methods\nK-nearest neighbors regression\nSmoothers and local fitting ideas\nModel flexibility and overfitting",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-2",
+    "href": "index.html#teaching-goals-2",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should learn that more flexible models can better capture complicated patterns, but at the cost of increased variance. ## Suggested Emphasis - Connect this unit directly to bias–variance tradeoff. - Compare flexible and inflexible models visually. - Use plots to show underfitting and overfitting.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-3",
+    "href": "index.html#main-topics-3",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nClassification as a prediction problem\nLogistic regression\nDecision boundaries\nK-nearest neighbors classification",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-3",
+    "href": "index.html#teaching-goals-3",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand that classification uses the same modeling logic as regression, but with categorical outcomes. ## Suggested Emphasis - Stress the difference between predicting a class and predicting a numeric response. - Introduce class probabilities early. - Use confusion matrices and classification error as evaluation tools.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-4",
+    "href": "index.html#main-topics-4",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nLogistic regression in more detail\nInterpreting probabilities\nThresholds and classification decisions\nComparing classifiers",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-4",
+    "href": "index.html#teaching-goals-4",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should learn how binary classification models convert predictors into class probabilities and final decisions. ## Suggested Emphasis - Distinguish between probability estimation and hard classification. - Discuss how different thresholds change predictions. - Use practical examples such as disease detection or spam filtering.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-5",
+    "href": "index.html#main-topics-5",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nLDA\nQDA\nNaive Bayes\nDiscriminative vs generative modeling",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-5",
+    "href": "index.html#teaching-goals-5",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand the idea of modeling class distributions directly and then using Bayes’ rule for prediction. ## Suggested Emphasis - Compare logistic regression with LDA and QDA conceptually. - Emphasize assumptions and when they matter. - Use side-by-side model comparisons.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-6",
+    "href": "index.html#main-topics-6",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nValidation set approach\nCross-validation\nBootstrap\nEstimating test error",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-6",
+    "href": "index.html#teaching-goals-6",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nThis unit is the conceptual center of the course. Students must understand that training error is not enough, and that model performance must be evaluated using principled estimates of test error. ## Suggested Emphasis - Make cross-validation a central practical tool. - Show why naive comparison by training error is misleading. - Use repeated examples across multiple methods.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-7",
+    "href": "index.html#main-topics-7",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nRidge regression\nLasso\nElastic net\nShrinkage and complexity control",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-7",
+    "href": "index.html#teaching-goals-7",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand how regularization controls complexity and improves prediction without exhaustively searching across models. ## Suggested Emphasis - Present regularization as a modern answer to overfitting in linear models. - Compare subset selection and shrinkage conceptually. - Use coefficient path plots when possible.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-8",
+    "href": "index.html#main-topics-8",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nDecision trees\nBagging\nRandom forests\nBoosting",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-8",
+    "href": "index.html#teaching-goals-8",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should learn that combining many unstable or weak learners can create a stronger predictive model. ## Suggested Emphasis - Start with a single tree and its limitations. - Then motivate bagging as variance reduction. - Finally introduce random forests and boosting as improved ensemble ideas.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-9",
+    "href": "index.html#main-topics-9",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nEnd-to-end modeling workflow\nData preprocessing\nModel tuning\nModel comparison\nPractical considerations on real datasets",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-9",
+    "href": "index.html#teaching-goals-9",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should be able to complete a full predictive analysis from data setup through final model comparison and interpretation. ## Suggested Emphasis - Organize this unit around a full case study. - Show how preprocessing, resampling, tuning, and comparison fit together. - Emphasize reproducible workflow and communication.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#midterm-i",
+    "href": "index.html#midterm-i",
+    "title": "Statistical Learning",
+    "section": "Midterm I",
+    "text": "Midterm I\nSuggested coverage:\n\nfoundations of statistical learning,\nlinear regression,\nnonparametric regression,\nearly classification concepts.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#midterm-ii",
+    "href": "index.html#midterm-ii",
+    "title": "Statistical Learning",
+    "section": "Midterm II",
+    "text": "Midterm II\nSuggested coverage:\n\nclassification,\ngenerative models,\nresampling,\nregularization.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#final-assessment-or-project",
+    "href": "index.html#final-assessment-or-project",
+    "title": "Statistical Learning",
+    "section": "Final Assessment or Project",
+    "text": "Final Assessment or Project\nSuggested format:\n\na real dataset,\nseveral competing methods,\nmodel comparison using validation or cross-validation,\nwritten interpretation of results.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#lecture-2",
+    "href": "index.html#lecture-2",
+    "title": "Statistical Learning",
+    "section": "Lecture 2",
+    "text": "Lecture 2\n\nimplementation,\nmodel fitting,\ncomparison with earlier methods,\nshort applied example.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#theme-1-model-flexibility",
+    "href": "index.html#theme-1-model-flexibility",
+    "title": "Statistical Learning",
+    "section": "Theme 1: Model Flexibility",
+    "text": "Theme 1: Model Flexibility\nStudents should repeatedly ask: &gt; How flexible is this model, and what does that flexibility buy us? ## Theme 2: Generalization Students should repeatedly ask: &gt; How do we know whether this model will work on new data? ## Theme 3: Comparison Students should repeatedly ask: &gt; Is this method better than what we already had? # Recommended Course Message to Students A useful recurring message for students is: &gt; Statistical learning is about building models that perform well on new data, understanding the tradeoff between simplicity and flexibility, and choosing methods based on predictive performance. # Condensed Teaching Calendar\n\n\n\n\n\n\n\n\nUnit\nTopic\nMain Goal\n\n\n\n\n1\nFoundations\nIntroduce statistical learning and bias–variance\n\n\n2\nLinear Regression\nEstablish a simple predictive baseline\n\n\n3\nNonparametric Regression\nIntroduce flexibility\n\n\n4\nClassification\nShift from numeric to categorical prediction\n\n\n5\nBinary Classification\nDevelop logistic and classification ideas\n\n\n6\nGenerative Models\nCompare generative and discriminative methods\n\n\n7\nResampling\nLearn to estimate test error\n\n\n8\nRegularization\nControl complexity and improve prediction\n\n\n9\nEnsemble Methods\nCombine models to improve performance\n\n\n10\nML in Practice\nExecute a complete workflow",
+    "crumbs": [
+      "Preface"
     ]
   }
 ]

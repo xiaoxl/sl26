@@ -22,5 +22,11 @@
   },
   "hidden/pdf/template/template.qmd": {
     "template.html": "8d5ed35e"
+  },
+  "contents/1/glm.qmd": {
+    "glm.html": "24778de1"
+  },
+  "contents/1/gam.qmd": {
+    "gam.html": "c8b5f29e"
   }
 }

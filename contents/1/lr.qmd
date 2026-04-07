@@ -1,33 +1,247 @@
-
-# Linear regression
+# Linear Regression
 
 
 {{< include ../math.qmd >}}
 
 
-## Quick overview
-OLS
+## Quick Overview
+
+Linear regression is the basic supervised learning method for a quantitative response. It models the mean of the response as a linear function of the predictors:
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p + \varepsilon.
+$$
+
+Equivalently, in matrix form,
+
+$$
+y = X\beta + \varepsilon.
+$$
+
+Linear regression is popular because it is:
+
+- easy to fit;
+- easy to interpret;
+- often a strong baseline for more complex methods.
 
 
-## lm
+## The Ordinary Least Squares Estimator
+
+The most common fitting method is **ordinary least squares (OLS)**. It chooses the coefficient vector $\beta$ that minimizes the residual sum of squares:
+
+$$
+\mathrm{RSS}(\beta) = \sum_{i=1}^n (y_i - \hat{y}_i)^2
+= \lVert y - X\beta \rVert_2^2.
+$$
+
+The OLS estimator is
+
+$$
+\hat{\beta}_{\mathrm{OLS}} = (X^\top X)^{-1}X^\top y,
+$$
+
+provided that $X^\top X$ is invertible.
+
+Once the coefficients are estimated, the fitted value for observation $i$ is
+
+$$
+\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_{i1} + \cdots + \hat{\beta}_p x_{ip}.
+$$
 
 
-## higher/interaction/categorical
+## Fitting Linear Regression in R
+
+In R, linear regression is fitted with `lm()`:
+
+```r
+fit <- lm(y ~ x1 + x2, data = dat)
+summary(fit)
+```
+
+The formula syntax is convenient:
+
+- `y ~ x1 + x2` includes two predictors;
+- `y ~ .` includes all available predictors;
+- `y ~ x1 * x2` includes main effects and the interaction;
+- `y ~ x + I(x^2)` adds a quadratic term.
 
 
-## interpreting 
+## Categorical Variables, Interactions, and Nonlinear Terms
 
-1. beta
-2. main effects
-3. conf.int
-4. predict.int
+Linear regression can handle more than purely numeric additive effects.
+
+### Categorical Predictors
+
+Categorical predictors are represented through indicator variables. If a factor has $k$ levels, the model usually includes $k-1$ dummy variables.
+
+Thus, linear regression can compare group means while adjusting for other predictors.
+
+### Interaction Terms
+
+An interaction allows the effect of one predictor to depend on another predictor. For example,
+
+$$
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \varepsilon.
+$$
+
+If $\beta_3 \neq 0$, the effect of $x_1$ depends on the value of $x_2$.
+
+### Polynomial and Transformed Terms
+
+We may also include nonlinear transformations such as:
+
+- $x^2$,
+- $\log(x)$,
+- $\sqrt{x}$.
+
+The model remains a linear model because it is still linear in the coefficients $\beta$.
 
 
+## Interpreting the Model
 
-## model selection
+Interpretation is one of the main strengths of linear regression.
 
-### AIC/BIC/Cp
+### Coefficients
 
-### best selection
+The coefficient $\beta_j$ represents the change in the mean response associated with a one-unit increase in $X_j$, holding the other predictors fixed.
 
-### stepwise
+### Main Effects With Interactions
+
+When interactions are present, a main effect should not be interpreted in isolation. Its meaning depends on the interacting variables.
+
+### Confidence Intervals
+
+A confidence interval gives a range of plausible values for a coefficient or for the mean response at a given predictor combination.
+
+### Prediction Intervals
+
+A prediction interval is wider than a confidence interval because it must account for both:
+
+- uncertainty in the estimated mean;
+- random variation in a future observation.
+
+
+## Assessing Model Fit
+
+Several tools are commonly used to assess a linear regression fit:
+
+- residual plots,
+- Q-Q plots,
+- leverage and influence diagnostics,
+- measures such as $R^2$, adjusted $R^2$, and residual standard error.
+
+Residual plots help detect:
+
+- nonlinearity,
+- nonconstant variance,
+- outliers,
+- influential observations.
+
+These diagnostics do not prove that a model is correct, but they help identify important problems.
+
+
+## Model Selection
+
+In multiple regression, several competing predictor sets may be plausible. Model selection compares them using a criterion that balances fit and complexity.
+
+### AIC, BIC, and Mallows' $C_p$
+
+These criteria reward good fit but penalize model complexity.
+
+- **AIC** tends to prefer somewhat larger models.
+- **BIC** penalizes complexity more strongly and often prefers smaller models.
+- **Mallows' $C_p$** compares a candidate model to a larger reference model.
+
+These tools are useful for comparing models, but they should not replace subject-matter reasoning.
+
+### Best Subset Selection
+
+Best subset selection compares all models of a given size and then chooses the best one according to a criterion such as AIC, BIC, adjusted $R^2$, or $C_p$.
+
+It is conceptually simple, but it becomes computationally expensive when the number of predictors is large.
+
+### Stepwise Selection
+
+Stepwise procedures add or remove variables sequentially rather than searching all possible models.
+
+Common versions are:
+
+- forward selection,
+- backward elimination,
+- bidirectional stepwise selection.
+
+These methods are faster than best subset selection, but they are greedy procedures and do not guarantee the globally best model.
+
+::: {.callout-important}
+## Caution
+
+If many models are tried and the final model is selected from the same data, p-values and confidence intervals from the final selected model should be interpreted cautiously.
+:::
+
+
+## Strengths and Limitations
+
+Linear regression is often the first model to try because it is transparent and effective in many settings. However, it has limits.
+
+Strengths:
+
+- simple interpretation;
+- fast computation;
+- useful baseline;
+- strong connection to statistical inference.
+
+Limitations:
+
+- assumes a linear mean structure unless we add transformed terms;
+- can be unstable under multicollinearity;
+- may overfit when many predictors are included;
+- may perform poorly when relationships are strongly nonlinear.
+
+These limitations motivate later methods such as GLMs, GAMs, ridge regression, and LASSO.
+
+
+## Python Example
+
+The following example fits an ordinary least squares model in Python using the public `mpg` dataset from `seaborn`. It includes model fitting, coefficient tables, confidence intervals, and standard diagnostic plots.
+
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+mpg = sns.load_dataset("mpg").dropna()
+
+fit = smf.ols("mpg ~ horsepower + weight + acceleration", data=mpg).fit()
+
+# Main regression table
+print(fit.summary())
+
+# Coefficient table and confidence intervals
+print(fit.summary2().tables[1])
+print(fit.conf_int())
+
+# Fitted values and residuals
+diagnostics = mpg[["mpg", "horsepower", "weight", "acceleration"]].copy()
+diagnostics["fitted"] = fit.fittedvalues
+diagnostics["resid"] = fit.resid
+diagnostics["student_resid"] = fit.get_influence().resid_studentized_internal
+diagnostics["leverage"] = fit.get_influence().hat_matrix_diag
+print(diagnostics.head())
+
+# Standard diagnostic plots
+fig = plt.figure(figsize=(10, 8))
+sm.graphics.plot_regress_exog(fit, "horsepower", fig=fig)
+plt.tight_layout()
+
+fig = plt.figure(figsize=(6, 4))
+sm.qqplot(fit.resid, line="45", fit=True, ax=plt.gca())
+plt.tight_layout()
+
+fig = plt.figure(figsize=(6, 4))
+sm.graphics.influence_plot(fit, ax=plt.gca(), criterion="cooks")
+plt.tight_layout()
+plt.show()
+```
+
+This model treats `mpg` as the response and uses `horsepower`, `weight`, and `acceleration` as predictors. The output includes the regression table, coefficient table, fitted values, residual diagnostics, a Q-Q plot, and an influence plot.

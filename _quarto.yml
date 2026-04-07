@@ -36,6 +36,18 @@ format:
         toc: true
         toc-depth: 3
         css: blocks.css
+        mainfont: Noto Serif
+        # mainfont: Libertinus Serif
+        sansfont: Noto Sans
+        # sansfont: Libertinus Sans
+        # monofont: Noto Sans Mono
+        monofont: JetBrains Mono
+        # monofont: Latin Modern Mono
+        monofontoptions:
+          - Scale=0.95
+        mathfont: Libertinus Math
+        # mathfont: Noto Serif Math
+        # fontsize: 11pt
   # html:
   #   theme: cosmo
   #   code-block-bg: true
@@ -54,6 +66,8 @@ book:
       chapters:
       - contents/1/basic.qmd
       - contents/1/lr.qmd
+      - contents/1/glm.qmd
+      - contents/1/gam.qmd
       - contents/1/ridge.qmd      
       - contents/1/lasso.qmd
     # - part: "Simple Linear regression"

@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.12">
+<meta name="generator" content="quarto-1.10.1">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Ridge regression – Statistical Learning</title>
+<title>5&nbsp; Ridge Regression – Statistical Learning</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -19,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -31,22 +69,21 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../contents/1/lasso.html" rel="next">
-<link href="../../contents/1/lr.html" rel="prev">
+<link href="../../contents/1/gam.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-76bd60113cab0e4045c5a075e28c35eb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bd72660a7ac1d74eb59e6013565e57c7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-76bd60113cab0e4045c5a075e28c35eb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d92d5cff11b5a4a3cd0f50ea0ce9e284.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-c60cbcc8bdfee26fac83d4dbdf574358.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d92d5cff11b5a4a3cd0f50ea0ce9e284.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-18c4c02f2e0c35b6cc6a137a251bffe3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-98d67fd4a94d75c92ed86be1e8f4ff03.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-18c4c02f2e0c35b6cc6a137a251bffe3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-e3eed16546a328e380369e0313346744.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3e63bd5b4074a6e77d47374a04a22f27.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-e3eed16546a328e380369e0313346744.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/bookup_fonts_gwf-0.0/fonts-embed.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -76,6 +113,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../blocks.css">
 </head>
@@ -252,7 +318,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ridge regression</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ridge Regression</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -269,6 +335,11 @@ ul.task-list li input[type="checkbox"] {
       <a href="../../">Statistical Learning</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
@@ -297,25 +368,37 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/basic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Course Overview</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning Basics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/lr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalized linear models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/gam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Generalized additive models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/ridge.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ridge regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ridge Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/lasso.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">LASSO</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO</span></span></a>
   </div>
 </li>
       </ul>
@@ -342,8 +425,22 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-short-history-of-ridge-regression" id="toc-a-short-history-of-ridge-regression" class="nav-link active" data-scroll-target="#a-short-history-of-ridge-regression"><span class="header-section-number">5.1</span> A Short History of Ridge Regression</a></li>
+  <li><a href="#what-is-ridge-regression" id="toc-what-is-ridge-regression" class="nav-link" data-scroll-target="#what-is-ridge-regression"><span class="header-section-number">5.2</span> What Is Ridge Regression?</a></li>
+  <li><a href="#why-ridge-regression-helps" id="toc-why-ridge-regression-helps" class="nav-link" data-scroll-target="#why-ridge-regression-helps"><span class="header-section-number">5.3</span> Why Ridge Regression Helps</a></li>
+  <li><a href="#choosing-lambda" id="toc-choosing-lambda" class="nav-link" data-scroll-target="#choosing-lambda"><span class="header-section-number">5.4</span> Choosing <span class="math inline">\(\lambda\)</span></a></li>
+  <li><a href="#fitting-ridge-regression-in-r" id="toc-fitting-ridge-regression-in-r" class="nav-link" data-scroll-target="#fitting-ridge-regression-in-r"><span class="header-section-number">5.5</span> Fitting Ridge Regression in R</a></li>
+  <li><a href="#scaling-issues-of-ridge-regression" id="toc-scaling-issues-of-ridge-regression" class="nav-link" data-scroll-target="#scaling-issues-of-ridge-regression"><span class="header-section-number">5.6</span> Scaling Issues of Ridge Regression</a></li>
+  <li><a href="#relation-to-tikhonov-regularization" id="toc-relation-to-tikhonov-regularization" class="nav-link" data-scroll-target="#relation-to-tikhonov-regularization"><span class="header-section-number">5.7</span> Relation to Tikhonov Regularization</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.8</span> Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5.9</span> References</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -351,7 +448,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ridge regression</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ridge Regression</span></h1>
 </div>
 
 
@@ -368,8 +465,200 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\newcommand{\argmin}{\operatorname{argmin}}
+\]</span></p>
+<!-- Probability -->
+<p>$$ </p>
+<p> $$</p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\]</span></p>
+</div>
+<section id="a-short-history-of-ridge-regression" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="a-short-history-of-ridge-regression"><span class="header-section-number">5.1</span> A Short History of Ridge Regression</h2>
+<p>Ridge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from <strong>Tikhonov (1963)</strong> in numerical analysis, where a regularization term was added to ill-posed problems.</p>
+<p>In statistics, <strong>Hoerl and Kennard (1970)</strong> formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.</p>
+</section>
+<section id="what-is-ridge-regression" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="what-is-ridge-regression"><span class="header-section-number">5.2</span> What Is Ridge Regression?</h2>
+<p>Ridge regression is a regularized version of ordinary least squares (OLS). It is especially useful when predictors are highly correlated or when the matrix <span class="math inline">\(X^\top X\)</span> is nearly singular, because in such settings the OLS estimator can be unstable.</p>
+<p>Recall the linear model</p>
+<p><span class="math display">\[
+y = X\beta + \varepsilon.
+\]</span></p>
+<p>When <span class="math inline">\(X^\top X\)</span> is invertible, the OLS estimator is</p>
+<p><span class="math display">\[
+\hat{\beta}_{\mathrm{OLS}} = (X^\top X)^{-1}X^\top y.
+\]</span></p>
+<p>Ridge regression modifies the least-squares criterion by adding a quadratic penalty:</p>
+<p><span class="math display">\[
+\hat{\beta}_{\mathrm{ridge}}
+= \arg\min_{\beta}
+\left\{
+\lVert y - X\beta \rVert_2^2 + \lambda \lVert \beta \rVert_2^2
+\right\},
+\]</span></p>
+<p>where <span class="math inline">\(\lambda \ge 0\)</span> is a tuning parameter.</p>
+<p>Equivalently,</p>
+<p><span class="math display">\[
+\hat{\beta}_{\mathrm{ridge}} = (X^\top X + \lambda I)^{-1}X^\top y.
+\]</span></p>
+<p>The penalty shrinks coefficients toward zero. Larger values of <span class="math inline">\(\lambda\)</span> produce stronger shrinkage.</p>
+</section>
+<section id="why-ridge-regression-helps" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="why-ridge-regression-helps"><span class="header-section-number">5.3</span> Why Ridge Regression Helps</h2>
+<p>OLS is unbiased under the classical linear model assumptions, but it can have high variance when predictors are strongly correlated. Ridge regression introduces bias, but it often reduces variance enough to improve predictive performance.</p>
+<p>This is a standard example of the <strong>bias-variance tradeoff</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key Properties
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>If <span class="math inline">\(\lambda = 0\)</span>, ridge regression reduces to OLS.</li>
+<li>If <span class="math inline">\(\lambda &gt; 0\)</span>, the matrix <span class="math inline">\(X^\top X + \lambda I\)</span> is invertible even when <span class="math inline">\(X^\top X\)</span> is singular.</li>
+<li>Ridge shrinks coefficients continuously toward zero.</li>
+<li>Ridge usually does not set coefficients exactly to zero.</li>
+<li>Ridge is particularly useful under multicollinearity.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="choosing-lambda" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="choosing-lambda"><span class="header-section-number">5.4</span> Choosing <span class="math inline">\(\lambda\)</span></h2>
+<p>The tuning parameter <span class="math inline">\(\lambda\)</span> determines how much shrinkage is applied.</p>
+<ul>
+<li>Small <span class="math inline">\(\lambda\)</span> gives a model close to OLS.</li>
+<li>Large <span class="math inline">\(\lambda\)</span> gives stronger regularization.</li>
+</ul>
+<p>In practice, the modern standard is to choose <span class="math inline">\(\lambda\)</span> by cross-validation. If <span class="math inline">\(\mathrm{CV}(\lambda)\)</span> denotes the cross-validation error, we choose</p>
+<p><span class="math display">\[
+\hat{\lambda}
+= \arg\min_{\lambda} \mathrm{CV}(\lambda).
+\]</span></p>
+<p>Classical ridge analysis also uses ridge trace plots and generalized cross-validation.</p>
+</section>
+<section id="fitting-ridge-regression-in-r" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="fitting-ridge-regression-in-r"><span class="header-section-number">5.5</span> Fitting Ridge Regression in R</h2>
+<p>The <code>glmnet</code> package is a standard implementation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(y <span class="sc">~</span> ., <span class="at">data =</span> dat)[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> dat<span class="sc">$</span>y</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>ridge_fit <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ridge_fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Cross-validation is performed with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cv_fit <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv_fit)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(cv_fit, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Here <code>alpha = 0</code> specifies ridge regression.</p>
+</section>
+<section id="scaling-issues-of-ridge-regression" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="scaling-issues-of-ridge-regression"><span class="header-section-number">5.6</span> Scaling Issues of Ridge Regression</h2>
+<p>Ridge regression is sensitive to the scale of the predictors, so the variables are usually <strong>standardized</strong> before fitting the model.</p>
+<p>The usual standardization is</p>
+<p><span class="math display">\[
+x_j^* = \frac{x_j - \bar{x}_j}{s_j},
+\]</span></p>
+<p>so that each predictor has mean <span class="math inline">\(0\)</span> and standard deviation <span class="math inline">\(1\)</span>.</p>
+<p>This matters because the penalty acts directly on the coefficients. If predictors are measured on very different scales, then the penalty will not be applied fairly across variables.</p>
+<p>In practice:</p>
+<ul>
+<li>the predictors are standardized before fitting the model;</li>
+<li>the intercept is typically left unpenalized;</li>
+<li>software such as <code>glmnet</code> usually performs standardization automatically.</li>
+</ul>
+</section>
+<section id="relation-to-tikhonov-regularization" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="relation-to-tikhonov-regularization"><span class="header-section-number">5.7</span> Relation to Tikhonov Regularization</h2>
+<p>Ridge regression is the statistical form of <strong>Tikhonov regularization</strong>. In inverse problems, Tikhonov regularization stabilizes an ill-posed problem by adding a quadratic penalty. Ridge regression applies the same idea to linear regression.</p>
+</section>
+<section id="summary" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.8</span> Summary</h2>
+<p>The main ideas of ridge regression are:</p>
+<ul>
+<li>it adds an <span class="math inline">\(L_2\)</span> penalty to least squares;</li>
+<li>it shrinks coefficients toward zero;</li>
+<li>it reduces variance and can improve prediction;</li>
+<li>it is particularly useful when predictors are highly correlated;</li>
+<li>it usually keeps all variables in the model.</li>
+</ul>
+</section>
+<section id="references" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="references"><span class="header-section-number">5.9</span> References</h2>
+<ul>
+<li>Hoerl, A. E., &amp; Kennard, R. W. (1970). <em>Ridge regression: Biased estimation for nonorthogonal problems</em>. Technometrics, 12(1), 55-67.</li>
+<li>Marquardt, D. W. (1970). <em>Generalized inverses, ridge regression, biased linear estimation, and nonlinear estimation</em>. Technometrics, 12(3), 591-612.</li>
+<li>Tibshirani, R. (1996). <em>Regression shrinkage and selection via the lasso</em>. Journal of the Royal Statistical Society Series B, 58(1), 267-288.</li>
+<li>Tikhonov, A. N. (1963). <em>Solution of incorrectly formulated problems and the regularization method</em>. Soviet Mathematics Doklady, 4, 1035-1038.</li>
+</ul>
+<!--
+Archived draft sections
 
 
+::: {.cell}
+
+```{.r .cell-code}
+fit <- lm(y ~ ., data = dat)
+```
+:::
+
+
+## Correlated Variables, Convexity and Variance
+
+## tradeoff
+
+## A Biased Estimator
+
+## Bias Caused by the Ridge Penalty
+
+## lm.ridge()
+
+## cross-validation
+
+## Generalized cross-validation
+
+## glmnet
+
+## PCA
+
+# Ridge and Lasso Regression: Teaching Scope
+
+A large teaching-scope draft was removed from the active chapter and archived here.
+-->
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -787,13 +1076,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/1/lr.html" class="pagination-link" aria-label="Linear regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear regression</span></span>
+      <a href="../../contents/1/gam.html" class="pagination-link" aria-label="Generalized additive models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Generalized additive models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../../contents/1/lasso.html" class="pagination-link" aria-label="LASSO">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">LASSO</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

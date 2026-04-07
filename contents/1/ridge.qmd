@@ -1,17 +1,166 @@
-# Ridge regression
+# Ridge Regression
 
 
-## what is
+{{< include ../math.qmd >}}
 
 
-## 
+## A Short History of Ridge Regression
+
+Ridge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from **Tikhonov (1963)** in numerical analysis, where a regularization term was added to ill-posed problems.
+
+In statistics, **Hoerl and Kennard (1970)** formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.
 
 
+## What Is Ridge Regression?
 
+Ridge regression is a regularized version of ordinary least squares (OLS). It is especially useful when predictors are highly correlated or when the matrix $X^\top X$ is nearly singular, because in such settings the OLS estimator can be unstable.
+
+Recall the linear model
+
+$$
+y = X\beta + \varepsilon.
+$$
+
+When $X^\top X$ is invertible, the OLS estimator is
+
+$$
+\hat{\beta}_{\mathrm{OLS}} = (X^\top X)^{-1}X^\top y.
+$$
+
+Ridge regression modifies the least-squares criterion by adding a quadratic penalty:
+
+$$
+\hat{\beta}_{\mathrm{ridge}}
+= \arg\min_{\beta}
+\left\{
+\lVert y - X\beta \rVert_2^2 + \lambda \lVert \beta \rVert_2^2
+\right\},
+$$
+
+where $\lambda \ge 0$ is a tuning parameter.
+
+Equivalently,
+
+$$
+\hat{\beta}_{\mathrm{ridge}} = (X^\top X + \lambda I)^{-1}X^\top y.
+$$
+
+The penalty shrinks coefficients toward zero. Larger values of $\lambda$ produce stronger shrinkage.
+
+
+## Why Ridge Regression Helps
+
+OLS is unbiased under the classical linear model assumptions, but it can have high variance when predictors are strongly correlated. Ridge regression introduces bias, but it often reduces variance enough to improve predictive performance.
+
+This is a standard example of the **bias-variance tradeoff**.
+
+::: {.callout-note}
+## Key Properties
+
+- If $\lambda = 0$, ridge regression reduces to OLS.
+- If $\lambda > 0$, the matrix $X^\top X + \lambda I$ is invertible even when $X^\top X$ is singular.
+- Ridge shrinks coefficients continuously toward zero.
+- Ridge usually does not set coefficients exactly to zero.
+- Ridge is particularly useful under multicollinearity.
+:::
+
+
+## Choosing $\lambda$
+
+The tuning parameter $\lambda$ determines how much shrinkage is applied.
+
+- Small $\lambda$ gives a model close to OLS.
+- Large $\lambda$ gives stronger regularization.
+
+In practice, the modern standard is to choose $\lambda$ by cross-validation. If $\mathrm{CV}(\lambda)$ denotes the cross-validation error, we choose
+
+$$
+\hat{\lambda}
+= \arg\min_{\lambda} \mathrm{CV}(\lambda).
+$$
+
+Classical ridge analysis also uses ridge trace plots and generalized cross-validation.
+
+
+## Fitting Ridge Regression in R
+
+The `glmnet` package is a standard implementation:
+
+```r
+library(glmnet)
+
+x <- model.matrix(y ~ ., data = dat)[, -1]
+y <- dat$y
+
+ridge_fit <- glmnet(x, y, alpha = 0)
+plot(ridge_fit)
+```
+
+Cross-validation is performed with:
+
+```r
+cv_fit <- cv.glmnet(x, y, alpha = 0)
+plot(cv_fit)
+coef(cv_fit, s = "lambda.min")
+```
+
+Here `alpha = 0` specifies ridge regression.
+
+
+## Scaling Issues of Ridge Regression
+
+Ridge regression is sensitive to the scale of the predictors, so the variables are usually **standardized** before fitting the model.
+
+The usual standardization is
+
+$$
+x_j^* = \frac{x_j - \bar{x}_j}{s_j},
+$$
+
+so that each predictor has mean $0$ and standard deviation $1$.
+
+This matters because the penalty acts directly on the coefficients. If predictors are measured on very different scales, then the penalty will not be applied fairly across variables.
+
+In practice:
+
+- the predictors are standardized before fitting the model;
+- the intercept is typically left unpenalized;
+- software such as `glmnet` usually performs standardization automatically.
+
+
+## Relation to Tikhonov Regularization
+
+Ridge regression is the statistical form of **Tikhonov regularization**. In inverse problems, Tikhonov regularization stabilizes an ill-posed problem by adding a quadratic penalty. Ridge regression applies the same idea to linear regression.
+
+
+## Summary
+
+The main ideas of ridge regression are:
+
+- it adds an $L_2$ penalty to least squares;
+- it shrinks coefficients toward zero;
+- it reduces variance and can improve prediction;
+- it is particularly useful when predictors are highly correlated;
+- it usually keeps all variables in the model.
+
+
+## References
+
+- Hoerl, A. E., & Kennard, R. W. (1970). *Ridge regression: Biased estimation for nonorthogonal problems*. Technometrics, 12(1), 55-67.
+- Marquardt, D. W. (1970). *Generalized inverses, ridge regression, biased linear estimation, and nonlinear estimation*. Technometrics, 12(3), 591-612.
+- Tibshirani, R. (1996). *Regression shrinkage and selection via the lasso*. Journal of the Royal Statistical Society Series B, 58(1), 267-288.
+- Tikhonov, A. N. (1963). *Solution of incorrectly formulated problems and the regularization method*. Soviet Mathematics Doklady, 4, 1035-1038.
+
+
+<!--
+Archived draft sections
+
+```{r}
+#| eval: false
+fit <- lm(y ~ ., data = dat)
+```
 
 ## Correlated Variables, Convexity and Variance
-
-
 
 ## tradeoff
 
@@ -19,331 +168,17 @@
 
 ## Bias Caused by the Ridge Penalty
 
-
 ## lm.ridge()
-
-
 
 ## cross-validation
 
-
 ## Generalized cross-validation
 
-
-
-## glmnet 
-
-
-## Scaling Issues of Ridge Regression
-
-
+## glmnet
 
 ## PCA
 
-
-
-
-
 # Ridge and Lasso Regression: Teaching Scope
 
-This document summarizes what topics should be **included** and what topics can be **skipped** when teaching Ridge and Lasso regression in a regression or statistical learning course.
-
-The goal is for students to understand:
-
-- why regularization is needed,
-- how Ridge and Lasso work,
-- how to apply them in practice.
-
-Deep optimization theory is not necessary for most applied statistics courses.
-
----
-
-# 1. Core Topics (Must Include)
-
-These topics are essential for students to understand Ridge and Lasso.
-
-## 1.1 Motivation: Why Regularization
-
-Students should first understand the limitations of ordinary least squares.
-
-Key issues include:
-
-- Overfitting
-- High variance of coefficient estimates
-- Multicollinearity
-- Poor prediction performance when predictors are highly correlated
-
-Introduce the **bias–variance tradeoff**.
-
-Explain that instead of minimizing only residual sum of squares
-
-$$
-RSS = \sum (y_i - \hat{y}_i)^2
-$$
-
-we add a **penalty term** to control model complexity.
-
----
-
-## 1.2 Ridge Regression
-
-Ridge regression solves
-
-$$
-\min_{\beta}
-RSS + \lambda \sum_{j=1}^p \beta_j^2
-$$
-
-where
-
-- $\lambda \ge 0$ controls the strength of regularization.
-
-Key ideas students should understand:
-
-- coefficients are **shrunk toward zero**
-- ridge **does not set coefficients exactly to zero**
-- useful when predictors are **highly correlated**
-- reduces variance of estimates
-
-Important properties:
-
-- When $\lambda = 0$, ridge reduces to OLS
-- As $\lambda \to \infty$, coefficients approach zero
-
----
-
-## 1.3 Lasso Regression
-
-Lasso regression solves
-
-$$
-\min_{\beta}
-RSS + \lambda \sum_{j=1}^p |\beta_j|
-$$
-
-Key properties:
-
-- some coefficients become **exactly zero**
-- performs **automatic variable selection**
-- produces **sparse models**
-
-This makes Lasso useful for **interpretability** and **feature selection**.
-
----
-
-## 1.4 Geometric Interpretation
-
-Students should understand the geometry behind Ridge and Lasso.
-
-Ridge constraint:
-
-$$
-\sum \beta_j^2 \le t
-$$
-
-This produces a **circular constraint region**.
-
-Lasso constraint:
-
-$$
-\sum |\beta_j| \le t
-$$
-
-This produces a **diamond-shaped region**.
-
-Because the diamond has **corners**, the solution often occurs at axes where coefficients equal zero. This explains why Lasso performs variable selection.
-
----
-
-## 1.5 Standardizing Predictors
-
-Before applying Ridge or Lasso, predictors should be **standardized**.
-
-Reason:
-
-- the penalty depends on coefficient magnitude
-- variables with large scale would otherwise be penalized differently
-
-Typical preprocessing:
-
-$$
-x_j \leftarrow \frac{x_j - \bar{x}_j}{sd(x_j)}
-$$
-
-Most software automatically performs this step.
-
----
-
-## 1.6 Choosing the Tuning Parameter
-
-The tuning parameter $\lambda$ determines the strength of regularization.
-
-A common method is **K-fold cross-validation**.
-
-Procedure:
-
-1. Fit models across a grid of $\lambda$
-2. Compute validation error
-3. Choose $\lambda$ minimizing CV error
-
-In practice, two common choices are
-
-- $\lambda_{min}$: minimum CV error
-- $\lambda_{1se}$: simplest model within one standard error
-
----
-
-## 1.7 Practical Implementation
-
-Students should see how to fit these models in software.
-
-Example in R using `glmnet`:
-
-```r
-library(glmnet)
-
-x <- model.matrix(y ~ ., data)[,-1]
-y <- data$y
-
-ridge_fit <- glmnet(x, y, alpha = 0)
-lasso_fit <- glmnet(x, y, alpha = 1)
-```
-
-Cross-validation:
-
-```r
-cv_fit <- cv.glmnet(x, y, alpha = 1)
-plot(cv_fit)
-```
-
-Coefficient path:
-
-```r
-plot(lasso_fit)
-```
-
----
-
-# 2. Optional Topics (Good but Not Essential)
-
-These topics deepen understanding but are not strictly required.
-
-## 2.1 Elastic Net
-
-Elastic Net combines Ridge and Lasso penalties:
-
-$$
-\lambda_1 \sum |\beta_j| + \lambda_2 \sum \beta_j^2
-$$
-
-Purpose:
-
-- handles groups of correlated predictors
-- provides a compromise between Ridge and Lasso
-
----
-
-## 2.2 Relation to Subset Selection
-
-Explain the relationship between regularization and model selection.
-
-| Method | Penalty |
-|------|------|
-| Best subset | $||\beta||_0$ |
-| Ridge | $||\beta||_2$ |
-| Lasso | $||\beta||_1$ |
-
-This helps students understand different approaches to controlling model complexity.
-
----
-
-## 2.3 Effective Degrees of Freedom
-
-For ridge regression, the effective degrees of freedom can be written as
-
-$$
-df(\lambda) = tr(S_\lambda)
-$$
-
-This concept helps connect ridge regression with smoothing methods.
-
----
-
-## 2.4 Bayesian Interpretation
-
-Regularization can also be viewed from a Bayesian perspective.
-
-- Ridge regression corresponds to a **Gaussian prior** on coefficients
-- Lasso corresponds to a **Laplace prior**
-
-This connection is conceptually interesting but not required.
-
----
-
-# 3. Topics That Can Be Skipped
-
-For most regression or applied statistical learning courses, the following topics can be safely omitted.
-
-## 3.1 Optimization Algorithms
-
-Detailed derivations of algorithms such as:
-
-- Coordinate descent
-- Least Angle Regression (LARS)
-- Convex optimization proofs
-
-Students only need to know that efficient algorithms exist.
-
----
-
-## 3.2 High-Dimensional Statistical Theory
-
-Topics such as:
-
-- sparsistency
-- irrepresentable conditions
-- oracle properties
-
-are usually covered only in advanced statistics courses.
-
----
-
-## 3.3 Full Mathematical Derivation
-
-The ridge estimator
-
-$$
-\hat{\beta} = (X^T X + \lambda I)^{-1} X^T y
-$$
-
-can be shown, but a full derivation is not necessary for most students.
-
----
-
-# 4. Suggested Lecture Structure
-
-A typical two-lecture structure could be:
-
-### Lecture 1
-- Motivation for regularization
-- Ridge regression
-- Geometry interpretation
-- Choosing $\lambda$
-
-### Lecture 2
-- Lasso regression
-- Variable selection
-- Ridge vs Lasso comparison
-- Elastic Net
-- Practical implementation in software
-
----
-
-# 5. Key Takeaways for Students
-
-Students should remember:
-
-- Ridge shrinks coefficients but keeps all variables.
-- Lasso can set coefficients exactly to zero.
-- Regularization improves prediction by controlling model complexity.
-- Cross-validation is used to choose the tuning parameter.
+A large teaching-scope draft was removed from the active chapter and archived here.
+-->
