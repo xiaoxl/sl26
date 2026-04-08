@@ -4,6 +4,15 @@
 {{< include ../math.qmd >}}
 
 
+
+```{python}
+
+import sys
+print(sys.executable)
+```
+
+
+
 ## Quick Overview
 
 Linear regression is the basic supervised learning method for a quantitative response. It models the mean of the response as a linear function of the predictors:

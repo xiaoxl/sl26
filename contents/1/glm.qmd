@@ -145,9 +145,11 @@ import seaborn as sns
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 
-titanic = sns.load_dataset("titanic").dropna(
-    subset=["survived", "fare", "age", "sex", "pclass"]
-)
+import sys
+
+print(sys.executable)
+
+titanic = sns.load_dataset("titanic").dropna(subset=["survived", "fare", "age", "sex", "pclass"])
 
 fit = smf.glm(
     "survived ~ fare + age + C(sex) + C(pclass)",

@@ -24,7 +24,7 @@ __pycache__/
 # --- Project Resources (DO NOT IGNORE usually) ---
 # fonts/           # KEEP in Git if they are custom Libertinus/Source Han fonts
 # _extensions/     # KEEP in Git to ensure 'juba/bookup' works for others
-# docs/            # KEEP if this contains your manual documentation
+docs/            # KEEP if this contains your manual documentation
 
 # --- OS Specific ---
 .DS_Store
