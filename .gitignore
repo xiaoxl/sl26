@@ -31,3 +31,5 @@ docs/            # KEEP if this contains your manual documentation
 Thumbs.db
 /.quarto/
 **/*.quarto_ipynb
+
+/env/
