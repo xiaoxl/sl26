@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Linear Regression – Statistical Learning</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../contents/1/glm.html" rel="next">
+<link href="../../contents/1/basic.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d92d5cff11b5a4a3cd0f50ea0ce9e284.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-c60cbcc8bdfee26fac83d4dbdf574358.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-d92d5cff11b5a4a3cd0f50ea0ce9e284.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e3eed16546a328e380369e0313346744.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3e63bd5b4074a6e77d47374a04a22f27.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-e3eed16546a328e380369e0313346744.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/bookup_fonts_gwf-0.0/fonts-embed.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../blocks.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Statistical Learning</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/lr.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalized linear models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/gam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Generalized additive models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/ridge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ridge Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/lasso.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/app/r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Quick intro to R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#quick-overview" id="toc-quick-overview" class="nav-link active" data-scroll-target="#quick-overview"><span class="header-section-number">2.1</span> Quick Overview</a></li>
+  <li><a href="#the-ordinary-least-squares-estimator" id="toc-the-ordinary-least-squares-estimator" class="nav-link" data-scroll-target="#the-ordinary-least-squares-estimator"><span class="header-section-number">2.2</span> The Ordinary Least Squares Estimator</a></li>
+  <li><a href="#fitting-linear-regression-in-r" id="toc-fitting-linear-regression-in-r" class="nav-link" data-scroll-target="#fitting-linear-regression-in-r"><span class="header-section-number">2.3</span> Fitting Linear Regression in R</a></li>
+  <li><a href="#categorical-variables-interactions-and-nonlinear-terms" id="toc-categorical-variables-interactions-and-nonlinear-terms" class="nav-link" data-scroll-target="#categorical-variables-interactions-and-nonlinear-terms"><span class="header-section-number">2.4</span> Categorical Variables, Interactions, and Nonlinear Terms</a>
+  <ul class="collapse">
+  <li><a href="#categorical-predictors" id="toc-categorical-predictors" class="nav-link" data-scroll-target="#categorical-predictors"><span class="header-section-number">2.4.1</span> Categorical Predictors</a></li>
+  <li><a href="#interaction-terms" id="toc-interaction-terms" class="nav-link" data-scroll-target="#interaction-terms"><span class="header-section-number">2.4.2</span> Interaction Terms</a></li>
+  <li><a href="#polynomial-and-transformed-terms" id="toc-polynomial-and-transformed-terms" class="nav-link" data-scroll-target="#polynomial-and-transformed-terms"><span class="header-section-number">2.4.3</span> Polynomial and Transformed Terms</a></li>
+  </ul></li>
+  <li><a href="#interpreting-the-model" id="toc-interpreting-the-model" class="nav-link" data-scroll-target="#interpreting-the-model"><span class="header-section-number">2.5</span> Interpreting the Model</a>
+  <ul class="collapse">
+  <li><a href="#coefficients" id="toc-coefficients" class="nav-link" data-scroll-target="#coefficients"><span class="header-section-number">2.5.1</span> Coefficients</a></li>
+  <li><a href="#main-effects-with-interactions" id="toc-main-effects-with-interactions" class="nav-link" data-scroll-target="#main-effects-with-interactions"><span class="header-section-number">2.5.2</span> Main Effects With Interactions</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">2.5.3</span> Confidence Intervals</a></li>
+  <li><a href="#prediction-intervals" id="toc-prediction-intervals" class="nav-link" data-scroll-target="#prediction-intervals"><span class="header-section-number">2.5.4</span> Prediction Intervals</a></li>
+  </ul></li>
+  <li><a href="#assessing-model-fit" id="toc-assessing-model-fit" class="nav-link" data-scroll-target="#assessing-model-fit"><span class="header-section-number">2.6</span> Assessing Model Fit</a></li>
+  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">2.7</span> Model Selection</a>
+  <ul class="collapse">
+  <li><a href="#aic-bic-and-mallows-c_p" id="toc-aic-bic-and-mallows-c_p" class="nav-link" data-scroll-target="#aic-bic-and-mallows-c_p"><span class="header-section-number">2.7.1</span> AIC, BIC, and Mallows’ <span class="math inline">\(C_p\)</span></a></li>
+  <li><a href="#best-subset-selection" id="toc-best-subset-selection" class="nav-link" data-scroll-target="#best-subset-selection"><span class="header-section-number">2.7.2</span> Best Subset Selection</a></li>
+  <li><a href="#stepwise-selection" id="toc-stepwise-selection" class="nav-link" data-scroll-target="#stepwise-selection"><span class="header-section-number">2.7.3</span> Stepwise Selection</a></li>
+  </ul></li>
+  <li><a href="#strengths-and-limitations" id="toc-strengths-and-limitations" class="nav-link" data-scroll-target="#strengths-and-limitations"><span class="header-section-number">2.8</span> Strengths and Limitations</a></li>
+  <li><a href="#python-example" id="toc-python-example" class="nav-link" data-scroll-target="#python-example"><span class="header-section-number">2.9</span> Python Example</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\newcommand{\argmin}{\operatorname{argmin}}
+\]</span></p>
+<!-- Probability -->
+<p>$$ </p>
+<p> $$</p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\]</span></p>
+</div>
+<div id="2ddb4ffa" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.executable)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>C:\Users\xiaox\venvs\core\Scripts\pythonw.exe</code></pre>
+</div>
+</div>
+<section id="quick-overview" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="quick-overview"><span class="header-section-number">2.1</span> Quick Overview</h2>
+<p>Linear regression is the basic supervised learning method for a quantitative response. It models the mean of the response as a linear function of the predictors:</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p + \varepsilon.
+\]</span></p>
+<p>Equivalently, in matrix form,</p>
+<p><span class="math display">\[
+y = X\beta + \varepsilon.
+\]</span></p>
+<p>Linear regression is popular because it is:</p>
+<ul>
+<li>easy to fit;</li>
+<li>easy to interpret;</li>
+<li>often a strong baseline for more complex methods.</li>
+</ul>
+</section>
+<section id="the-ordinary-least-squares-estimator" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-ordinary-least-squares-estimator"><span class="header-section-number">2.2</span> The Ordinary Least Squares Estimator</h2>
+<p>The most common fitting method is <strong>ordinary least squares (OLS)</strong>. It chooses the coefficient vector <span class="math inline">\(\beta\)</span> that minimizes the residual sum of squares:</p>
+<p><span class="math display">\[
+\mathrm{RSS}(\beta) = \sum_{i=1}^n (y_i - \hat{y}_i)^2
+= \lVert y - X\beta \rVert_2^2.
+\]</span></p>
+<p>The OLS estimator is</p>
+<p><span class="math display">\[
+\hat{\beta}_{\mathrm{OLS}} = (X^\top X)^{-1}X^\top y,
+\]</span></p>
+<p>provided that <span class="math inline">\(X^\top X\)</span> is invertible.</p>
+<p>Once the coefficients are estimated, the fitted value for observation <span class="math inline">\(i\)</span> is</p>
+<p><span class="math display">\[
+\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_{i1} + \cdots + \hat{\beta}_p x_{ip}.
+\]</span></p>
+</section>
+<section id="fitting-linear-regression-in-r" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="fitting-linear-regression-in-r"><span class="header-section-number">2.3</span> Fitting Linear Regression in R</h2>
+<p>In R, linear regression is fitted with <code>lm()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> dat)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The formula syntax is convenient:</p>
+<ul>
+<li><code>y ~ x1 + x2</code> includes two predictors;</li>
+<li><code>y ~ .</code> includes all available predictors;</li>
+<li><code>y ~ x1 * x2</code> includes main effects and the interaction;</li>
+<li><code>y ~ x + I(x^2)</code> adds a quadratic term.</li>
+</ul>
+</section>
+<section id="categorical-variables-interactions-and-nonlinear-terms" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="categorical-variables-interactions-and-nonlinear-terms"><span class="header-section-number">2.4</span> Categorical Variables, Interactions, and Nonlinear Terms</h2>
+<p>Linear regression can handle more than purely numeric additive effects.</p>
+<section id="categorical-predictors" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="categorical-predictors"><span class="header-section-number">2.4.1</span> Categorical Predictors</h3>
+<p>Categorical predictors are represented through indicator variables. If a factor has <span class="math inline">\(k\)</span> levels, the model usually includes <span class="math inline">\(k-1\)</span> dummy variables.</p>
+<p>Thus, linear regression can compare group means while adjusting for other predictors.</p>
+</section>
+<section id="interaction-terms" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="interaction-terms"><span class="header-section-number">2.4.2</span> Interaction Terms</h3>
+<p>An interaction allows the effect of one predictor to depend on another predictor. For example,</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \varepsilon.
+\]</span></p>
+<p>If <span class="math inline">\(\beta_3 \neq 0\)</span>, the effect of <span class="math inline">\(x_1\)</span> depends on the value of <span class="math inline">\(x_2\)</span>.</p>
+</section>
+<section id="polynomial-and-transformed-terms" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="polynomial-and-transformed-terms"><span class="header-section-number">2.4.3</span> Polynomial and Transformed Terms</h3>
+<p>We may also include nonlinear transformations such as:</p>
+<ul>
+<li><span class="math inline">\(x^2\)</span>,</li>
+<li><span class="math inline">\(\log(x)\)</span>,</li>
+<li><span class="math inline">\(\sqrt{x}\)</span>.</li>
+</ul>
+<p>The model remains a linear model because it is still linear in the coefficients <span class="math inline">\(\beta\)</span>.</p>
+</section>
+</section>
+<section id="interpreting-the-model" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="interpreting-the-model"><span class="header-section-number">2.5</span> Interpreting the Model</h2>
+<p>Interpretation is one of the main strengths of linear regression.</p>
+<section id="coefficients" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="coefficients"><span class="header-section-number">2.5.1</span> Coefficients</h3>
+<p>The coefficient <span class="math inline">\(\beta_j\)</span> represents the change in the mean response associated with a one-unit increase in <span class="math inline">\(X_j\)</span>, holding the other predictors fixed.</p>
+</section>
+<section id="main-effects-with-interactions" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="main-effects-with-interactions"><span class="header-section-number">2.5.2</span> Main Effects With Interactions</h3>
+<p>When interactions are present, a main effect should not be interpreted in isolation. Its meaning depends on the interacting variables.</p>
+</section>
+<section id="confidence-intervals" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">2.5.3</span> Confidence Intervals</h3>
+<p>A confidence interval gives a range of plausible values for a coefficient or for the mean response at a given predictor combination.</p>
+</section>
+<section id="prediction-intervals" class="level3" data-number="2.5.4">
+<h3 data-number="2.5.4" class="anchored" data-anchor-id="prediction-intervals"><span class="header-section-number">2.5.4</span> Prediction Intervals</h3>
+<p>A prediction interval is wider than a confidence interval because it must account for both:</p>
+<ul>
+<li>uncertainty in the estimated mean;</li>
+<li>random variation in a future observation.</li>
+</ul>
+</section>
+</section>
+<section id="assessing-model-fit" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="assessing-model-fit"><span class="header-section-number">2.6</span> Assessing Model Fit</h2>
+<p>Several tools are commonly used to assess a linear regression fit:</p>
+<ul>
+<li>residual plots,</li>
+<li>Q-Q plots,</li>
+<li>leverage and influence diagnostics,</li>
+<li>measures such as <span class="math inline">\(R^2\)</span>, adjusted <span class="math inline">\(R^2\)</span>, and residual standard error.</li>
+</ul>
+<p>Residual plots help detect:</p>
+<ul>
+<li>nonlinearity,</li>
+<li>nonconstant variance,</li>
+<li>outliers,</li>
+<li>influential observations.</li>
+</ul>
+<p>These diagnostics do not prove that a model is correct, but they help identify important problems.</p>
+</section>
+<section id="model-selection" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">2.7</span> Model Selection</h2>
+<p>In multiple regression, several competing predictor sets may be plausible. Model selection compares them using a criterion that balances fit and complexity.</p>
+<section id="aic-bic-and-mallows-c_p" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="aic-bic-and-mallows-c_p"><span class="header-section-number">2.7.1</span> AIC, BIC, and Mallows’ <span class="math inline">\(C_p\)</span></h3>
+<p>These criteria reward good fit but penalize model complexity.</p>
+<ul>
+<li><strong>AIC</strong> tends to prefer somewhat larger models.</li>
+<li><strong>BIC</strong> penalizes complexity more strongly and often prefers smaller models.</li>
+<li><strong>Mallows’ <span class="math inline">\(C_p\)</span></strong> compares a candidate model to a larger reference model.</li>
+</ul>
+<p>These tools are useful for comparing models, but they should not replace subject-matter reasoning.</p>
+</section>
+<section id="best-subset-selection" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="best-subset-selection"><span class="header-section-number">2.7.2</span> Best Subset Selection</h3>
+<p>Best subset selection compares all models of a given size and then chooses the best one according to a criterion such as AIC, BIC, adjusted <span class="math inline">\(R^2\)</span>, or <span class="math inline">\(C_p\)</span>.</p>
+<p>It is conceptually simple, but it becomes computationally expensive when the number of predictors is large.</p>
+</section>
+<section id="stepwise-selection" class="level3" data-number="2.7.3">
+<h3 data-number="2.7.3" class="anchored" data-anchor-id="stepwise-selection"><span class="header-section-number">2.7.3</span> Stepwise Selection</h3>
+<p>Stepwise procedures add or remove variables sequentially rather than searching all possible models.</p>
+<p>Common versions are:</p>
+<ul>
+<li>forward selection,</li>
+<li>backward elimination,</li>
+<li>bidirectional stepwise selection.</li>
+</ul>
+<p>These methods are faster than best subset selection, but they are greedy procedures and do not guarantee the globally best model.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If many models are tried and the final model is selected from the same data, p-values and confidence intervals from the final selected model should be interpreted cautiously.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="strengths-and-limitations" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="strengths-and-limitations"><span class="header-section-number">2.8</span> Strengths and Limitations</h2>
+<p>Linear regression is often the first model to try because it is transparent and effective in many settings. However, it has limits.</p>
+<p>Strengths:</p>
+<ul>
+<li>simple interpretation;</li>
+<li>fast computation;</li>
+<li>useful baseline;</li>
+<li>strong connection to statistical inference.</li>
+</ul>
+<p>Limitations:</p>
+<ul>
+<li>assumes a linear mean structure unless we add transformed terms;</li>
+<li>can be unstable under multicollinearity;</li>
+<li>may overfit when many predictors are included;</li>
+<li>may perform poorly when relationships are strongly nonlinear.</li>
+</ul>
+<p>These limitations motivate later methods such as GLMs, GAMs, ridge regression, and LASSO.</p>
+</section>
+<section id="python-example" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="python-example"><span class="header-section-number">2.9</span> Python Example</h2>
+<p>The following example fits an ordinary least squares model in Python using the public <code>mpg</code> dataset from <code>seaborn</code>. It includes model fitting, coefficient tables, confidence intervals, and standard diagnostic plots.</p>
+<div id="79d35710" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>mpg <span class="op">=</span> sns.load_dataset(<span class="st">"mpg"</span>).dropna()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>fit <span class="op">=</span> smf.ols(<span class="st">"mpg ~ horsepower + weight + acceleration"</span>, data<span class="op">=</span>mpg).fit()</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Main regression table</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fit.summary())</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Coefficient table and confidence intervals</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fit.summary2().tables[<span class="dv">1</span>])</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fit.conf_int())</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitted values and residuals</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>diagnostics <span class="op">=</span> mpg[[<span class="st">"mpg"</span>, <span class="st">"horsepower"</span>, <span class="st">"weight"</span>, <span class="st">"acceleration"</span>]].copy()</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"fitted"</span>] <span class="op">=</span> fit.fittedvalues</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"resid"</span>] <span class="op">=</span> fit.resid</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"student_resid"</span>] <span class="op">=</span> fit.get_influence().resid_studentized_internal</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"leverage"</span>] <span class="op">=</span> fit.get_influence().hat_matrix_diag</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(diagnostics.head())</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard diagnostic plots</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>sm.graphics.plot_regress_exog(fit, <span class="st">"horsepower"</span>, fig<span class="op">=</span>fig)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>sm.qqplot(fit.resid, line<span class="op">=</span><span class="st">"45"</span>, fit<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>plt.gca())</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>sm.graphics.influence_plot(fit, ax<span class="op">=</span>plt.gca(), criterion<span class="op">=</span><span class="st">"cooks"</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    mpg   R-squared:                       0.706
+Model:                            OLS   Adj. R-squared:                  0.704
+Method:                 Least Squares   F-statistic:                     311.1
+Date:                Wed, 08 Apr 2026   Prob (F-statistic):          7.48e-103
+Time:                        15:41:13   Log-Likelihood:                -1121.0
+No. Observations:                 392   AIC:                             2250.
+Df Residuals:                     388   BIC:                             2266.
+Df Model:                           3                                         
+Covariance Type:            nonrobust                                         
+================================================================================
+                   coef    std err          t      P&gt;|t|      [0.025      0.975]
+--------------------------------------------------------------------------------
+Intercept       45.6783      2.409     18.965      0.000      40.943      50.414
+horsepower      -0.0475      0.016     -2.970      0.003      -0.079      -0.016
+weight          -0.0058      0.001    -10.024      0.000      -0.007      -0.005
+acceleration    -0.0021      0.123     -0.017      0.987      -0.245       0.240
+==============================================================================
+Omnibus:                       35.392   Durbin-Watson:                   0.858
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               46.071
+Skew:                           0.684   Prob(JB):                     9.91e-11
+Kurtosis:                       3.975   Cond. No.                     3.48e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 3.48e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.
+                  Coef.  Std.Err.          t         P&gt;|t|     [0.025  \
+Intercept     45.678293  2.408543  18.965113  3.147407e-57  40.942864   
+horsepower    -0.047496  0.015989  -2.970493  3.158152e-03  -0.078932   
+weight        -0.005789  0.000578 -10.023793  3.500486e-21  -0.006925   
+acceleration  -0.002066  0.123338  -0.016748  9.866463e-01  -0.244560   
+
+                 0.975]  
+Intercept     50.413722  
+horsepower    -0.016059  
+weight        -0.004654  
+acceleration   0.240428  
+                      0          1
+Intercept     40.942864  50.413722
+horsepower    -0.078932  -0.016059
+weight        -0.006925  -0.004654
+acceleration  -0.244560   0.240428
+    mpg  horsepower  weight  acceleration     fitted     resid  student_resid  \
+0  18.0       130.0    3504          12.0  19.193008 -1.193008      -0.282190   
+1  15.0       165.0    3693          11.5  16.437498 -1.437498      -0.340562   
+2  18.0       150.0    3436          11.0  18.638841 -0.638841      -0.151230   
+3  16.0       150.0    3433          12.0  18.654144 -2.654144      -0.627861   
+4  17.0       140.0    3449          10.5  19.039568 -2.039568      -0.483300   
+
+   leverage  
+0  0.008441  
+1  0.011587  
+2  0.010025  
+3  0.008624  
+4  0.011997  </code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lr_files/figure-html/cell-3-output-2.png" width="951" height="758" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lr_files/figure-html/cell-3-output-3.png" width="566" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lr_files/figure-html/cell-3-output-4.png" width="567" height="376" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This model treats <code>mpg</code> as the response and uses <code>horsepower</code>, <code>weight</code>, and <code>acceleration</code> as predictors. The output includes the regression table, coefficient table, fitted values, residual diagnostics, a Q-Q plot, and an influence plot.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../contents/1/basic.html" class="pagination-link" aria-label="Statistical Learning Basics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning Basics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../contents/1/glm.html" class="pagination-link" aria-label="Generalized linear models">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalized linear models</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

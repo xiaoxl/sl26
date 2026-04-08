@@ -1,6 +1,8 @@
 project:
   type: default
 
+jupyter: stats
+
 lang: en
 format: 
   pdf:
