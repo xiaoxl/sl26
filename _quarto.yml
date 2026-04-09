@@ -47,7 +47,7 @@ format:
           - Scale=0.95
         mathfont: Libertinus Math
         # mathfont: Noto Serif Math
-        # fontsize: 11pt
+        fontsize: 12pt
   # html:
   #   theme: cosmo
   #   code-block-bg: true

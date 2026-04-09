@@ -1,4 +1,6 @@
-
+---
+code-annotations: select
+---
 
 # Linear Regression
 
@@ -212,10 +214,137 @@ These limitations motivate later methods such as GLMs, GAMs, ridge regression, a
 
 
 ## Python Example
-
-The following Python examples use the public `mpg` dataset from `seaborn`. We will fit several related linear models, compare them with ANOVA and model-selection criteria, and inspect standard regression diagnostics.
+<!-- 
+The following Python examples use the public `mpg` dataset from `seaborn`. We will fit several related linear models, compare them with ANOVA and model-selection criteria, and inspect standard regression diagnostics. -->
 
 ### Setup
+
+As an example we use the public `mpg` dataset from `seaborn` to demonstrate the workflow of the standard linear regression. 
+
+This is a dataset for cars manufactured between 1970-82 in USA, Europe., and Japan. It was taken from the StatLib library which is maintained at Carnegie Mellon University. The dataset was used in the 1983 American Statistical Association Exposition. More info can be found [here](https://data.world/dataman-udit/cars-data). 
+
+
+
+```{python}
+import seaborn as sns
+sns.set_theme() # <1>
+
+mpg = sns.load_dataset("mpg")
+mpg.head()
+```
+1. We use the `sns` theme to obtain cleaner and more visually appealing plots compared to the default `matplotlib` style.
+
+```{python}
+mpg.shape
+```
+
+```{python}
+mpg.columns
+```
+
+
+There are 9 variables and 398 observations in the dataset: 
+
+- `mpg`  :   continuous
+- `cylinders`  :  multi-valued discrete
+- `displacement`  :   continuous
+- `horsepower`  :   continuous
+- `weight`  :   continuous
+- `acceleration`  :  continuous
+- `model_year`  :   multi-valued discrete
+- `origin`  :   multi-valued discrete
+- `name`  :   string (Unique values)
+
+```{python}
+mpg.info()
+```
+This table shows that `horsepower` contains some missing values. We would like to drop them.
+
+```{python}
+mpg = mpg.dropna()
+```
+
+
+The goal is to predict `mpg` using the other features of the car. We remove `name` because it does not provide meaningful information about vehicle performance. We also treat `cylinders` and `origin` as categorical variables.
+
+For `model_year`, it could reasonably be treated as either a numerical or a categorical variable. For simplicity, we treat it as numerical here, since it has 13 unique values and using 13 categories would make the model less parsimonious.
+
+```{python}
+mpg["cylinders"] = mpg["cylinders"].astype("category")
+mpg["origin"] = mpg["origin"].astype("category")
+mpg = mpg.drop(columns=["name"])
+```
+
+
+::: {.callout-tip}
+For categorical data, we could explicitly change the datatype in the dataset as shown above using `.astype("category")`, or we could indicate it in the formula language using `C()`. For example, we could later try `C(model_year)` to test what would happen if we treat `model_year` as a numerical value.
+:::
+
+
+Now we could see the summary of the cleaned dataset. The default `describe()` will only show the distribution of numerical values. If we want to see categorical variables, we need to add the argument `include="category"'. 
+
+```{python}
+mpg.describe()
+```
+```{python}
+mpg.describe(include="category")
+```
+
+### EDA
+
+We mainly use three types of plots for exploratory data analysis.
+
+
+```{python}
+# | column: page
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.pairplot(mpg)
+plt.gcf().set_size_inches(14, 9)  # <1>
+```
+1. `plt.gcf()` returns the current figure object. Once we have the figure object, we can modify its properties, such as resizing the figure or setting the DPI.
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+We can use hue to visualize the effect of categorical variables.
+```{python}
+sns.pairplot(mpg, hue = "cylinders")
+```
+
+
+```{python}
+sns.pairplot(mpg, hue = "origin")
+```
+
+</details>
+
+To display the correlation matrix heatmap, we first compute the correlation matrix and then use `sns.heatmap()` to visualize it.
+
+```{python}
+corr = mpg.corr(numeric_only=True)
+sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
+plt.gcf().set_size_inches(8, 8)  
+```
+
+Finally, we may also want to examine the histogram of each variable, although this information is already reflected in the pair plot.
+
+```{python}
+mpg.hist(
+    bins=20,  
+    figsize=(10, 8), # <1>
+);   # <2>
+```
+1. The `hist()` method provides a built-in `figsize` argument, so there is no need to call `plt.gcf()` in this case.
+2. The `hist()` method returns an array of axes objects, which would normally produce text output. The `;` suppresses this output.
+
+
+
+
+### Fit a Basic Model
+
+
 
 ```{python}
 import itertools
@@ -228,19 +357,16 @@ import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from statsmodels.stats.anova import anova_lm
 
-mpg = sns.load_dataset("mpg").dropna().copy()
-mpg["origin"] = mpg["origin"].astype("category")
-mpg["cylinders"] = mpg["cylinders"].astype("category")
-mpg["hp2"] = mpg["horsepower"] ** 2
-mpg["wt2"] = mpg["weight"] ** 2
-
 response = "mpg"
 predictors = ["horsepower", "weight", "acceleration"]
-
-mpg[["mpg", "horsepower", "weight", "acceleration", "origin", "cylinders"]].head()
 ```
 
-### Fit a Basic Model
+
+
+
+
+
+
 
 ```{python}
 fit_linear = smf.ols(
