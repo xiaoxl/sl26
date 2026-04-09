@@ -81,9 +81,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-31b7339fbb7181fdc9e579268dd0afcf.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-58ec67185988193859eb14877461f5d9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-cf1541c3a1dbd55c2d61cd6fc33ff757.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-58ec67185988193859eb14877461f5d9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-34c91892f896ce4854c4dcc1026a7fe2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-7e342b42b1d8244df6d5a8d63372ab02.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-34c91892f896ce4854c4dcc1026a7fe2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -142,6 +142,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="../../styles/fonts.css">
 <link rel="stylesheet" href="../../styles/blocks.css">
 </head>
 
@@ -429,20 +430,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-a-glm" id="toc-what-is-a-glm" class="nav-link active" data-scroll-target="#what-is-a-glm"><span class="header-section-number">3.1</span> What Is a GLM?</a></li>
-  <li><a href="#why-do-we-need-glms" id="toc-why-do-we-need-glms" class="nav-link" data-scroll-target="#why-do-we-need-glms"><span class="header-section-number">3.2</span> Why Do We Need GLMs?</a></li>
-  <li><a href="#common-examples" id="toc-common-examples" class="nav-link" data-scroll-target="#common-examples"><span class="header-section-number">3.3</span> Common Examples</a>
+  <li><a href="#strengths-and-limitations" id="toc-strengths-and-limitations" class="nav-link active" data-scroll-target="#strengths-and-limitations"><span class="header-section-number">3.1</span> Strengths and Limitations</a></li>
+  <li><a href="#what-is-a-glm" id="toc-what-is-a-glm" class="nav-link" data-scroll-target="#what-is-a-glm"><span class="header-section-number">3.2</span> What Is a GLM?</a></li>
+  <li><a href="#why-do-we-need-glms" id="toc-why-do-we-need-glms" class="nav-link" data-scroll-target="#why-do-we-need-glms"><span class="header-section-number">3.3</span> Why Do We Need GLMs?</a></li>
+  <li><a href="#common-examples" id="toc-common-examples" class="nav-link" data-scroll-target="#common-examples"><span class="header-section-number">3.4</span> Common Examples</a>
   <ul class="collapse">
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">3.3.1</span> Linear Regression</a></li>
-  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">3.3.2</span> Logistic Regression</a></li>
-  <li><a href="#poisson-regression" id="toc-poisson-regression" class="nav-link" data-scroll-target="#poisson-regression"><span class="header-section-number">3.3.3</span> Poisson Regression</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">3.4.1</span> Linear Regression</a></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">3.4.2</span> Logistic Regression</a></li>
+  <li><a href="#poisson-regression" id="toc-poisson-regression" class="nav-link" data-scroll-target="#poisson-regression"><span class="header-section-number">3.4.3</span> Poisson Regression</a></li>
   </ul></li>
-  <li><a href="#relation-to-linear-regression" id="toc-relation-to-linear-regression" class="nav-link" data-scroll-target="#relation-to-linear-regression"><span class="header-section-number">3.4</span> Relation to Linear Regression</a></li>
-  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">3.5</span> Estimation</a></li>
-  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">3.6</span> Interpretation</a></li>
-  <li><a href="#relation-to-gams-and-regularization" id="toc-relation-to-gams-and-regularization" class="nav-link" data-scroll-target="#relation-to-gams-and-regularization"><span class="header-section-number">3.7</span> Relation to GAMs and Regularization</a></li>
-  <li><a href="#python-example" id="toc-python-example" class="nav-link" data-scroll-target="#python-example"><span class="header-section-number">3.8</span> Python Example</a></li>
-  <li><a href="#similarities-and-differences-between-lm-and-glm" id="toc-similarities-and-differences-between-lm-and-glm" class="nav-link" data-scroll-target="#similarities-and-differences-between-lm-and-glm"><span class="header-section-number">3.9</span> Similarities and Differences Between LM and GLM</a></li>
+  <li><a href="#relation-to-linear-regression" id="toc-relation-to-linear-regression" class="nav-link" data-scroll-target="#relation-to-linear-regression"><span class="header-section-number">3.5</span> Relation to Linear Regression</a></li>
+  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">3.6</span> Estimation</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">3.7</span> Interpretation</a></li>
+  <li><a href="#relation-to-gams-and-regularization" id="toc-relation-to-gams-and-regularization" class="nav-link" data-scroll-target="#relation-to-gams-and-regularization"><span class="header-section-number">3.8</span> Relation to GAMs and Regularization</a></li>
+  <li><a href="#python-example" id="toc-python-example" class="nav-link" data-scroll-target="#python-example"><span class="header-section-number">3.9</span> Python Example</a></li>
+  <li><a href="#similarities-and-differences-between-lm-and-glm" id="toc-similarities-and-differences-between-lm-and-glm" class="nav-link" data-scroll-target="#similarities-and-differences-between-lm-and-glm"><span class="header-section-number">3.10</span> Similarities and Differences Between LM and GLM</a></li>
   </ul>
 </nav>
     </div>
@@ -479,6 +481,9 @@ window.Quarto = {
 \newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
 \newcommand{\me}{{\mathrm e}}
 \newcommand{\argmin}{\operatorname{argmin}}
+\newcommand{\rss}{\mathrm{RSS}}
+\newcommand{\ols}{\mathrm{OLS}}
+\newcommand{\mle}{\mathrm{MLE}}
 \]</span></p>
 <!-- Probability -->
 <p>$$ </p>
@@ -502,8 +507,27 @@ window.Quarto = {
 \newcommand{\distnormal}{\operatorname{\mathcal N}}
 \]</span></p>
 </div>
-<section id="what-is-a-glm" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="what-is-a-glm"><span class="header-section-number">3.1</span> What Is a GLM?</h2>
+<section id="strengths-and-limitations" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="strengths-and-limitations"><span class="header-section-number">3.1</span> Strengths and Limitations</h2>
+<p>Linear regression is often the first model to try because it is transparent and effective in many settings. However, it has limits.</p>
+<p>Strengths:</p>
+<ul>
+<li>simple interpretation;</li>
+<li>fast computation;</li>
+<li>useful baseline;</li>
+<li>strong connection to statistical inference.</li>
+</ul>
+<p>Limitations:</p>
+<ul>
+<li>assumes a linear mean structure unless we add transformed terms;</li>
+<li>can be unstable under multicollinearity;</li>
+<li>may overfit when many predictors are included;</li>
+<li>may perform poorly when relationships are strongly nonlinear.</li>
+</ul>
+<p>These limitations motivate later methods such as GLMs, GAMs, ridge regression, and LASSO.</p>
+</section>
+<section id="what-is-a-glm" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="what-is-a-glm"><span class="header-section-number">3.2</span> What Is a GLM?</h2>
 <p>A <strong>generalized linear model (GLM)</strong> extends ordinary linear regression in two ways:</p>
 <ul>
 <li>the response variable does not need to be normally distributed;</li>
@@ -538,8 +562,8 @@ g(\mu) = \eta = X\beta.
 </div>
 </div>
 </section>
-<section id="why-do-we-need-glms" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="why-do-we-need-glms"><span class="header-section-number">3.2</span> Why Do We Need GLMs?</h2>
+<section id="why-do-we-need-glms" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="why-do-we-need-glms"><span class="header-section-number">3.3</span> Why Do We Need GLMs?</h2>
 <p>Ordinary linear regression is not always appropriate.</p>
 <ul>
 <li>For binary outcomes, fitted values from linear regression may fall outside <span class="math inline">\([0,1]\)</span>.</li>
@@ -548,26 +572,26 @@ g(\mu) = \eta = X\beta.
 </ul>
 <p>GLMs address these issues by choosing a distribution and a link function suited to the data.</p>
 </section>
-<section id="common-examples" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="common-examples"><span class="header-section-number">3.3</span> Common Examples</h2>
-<section id="linear-regression" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">3.3.1</span> Linear Regression</h3>
+<section id="common-examples" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="common-examples"><span class="header-section-number">3.4</span> Common Examples</h2>
+<section id="linear-regression" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">3.4.1</span> Linear Regression</h3>
 <p>For a Gaussian response with the identity link,</p>
 <p><span class="math display">\[
 \mu = X\beta.
 \]</span></p>
 <p>This is the ordinary linear model.</p>
 </section>
-<section id="logistic-regression" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="logistic-regression"><span class="header-section-number">3.3.2</span> Logistic Regression</h3>
+<section id="logistic-regression" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="logistic-regression"><span class="header-section-number">3.4.2</span> Logistic Regression</h3>
 <p>For binary data, logistic regression uses</p>
 <p><span class="math display">\[
 \log\left(\frac{\mu}{1-\mu}\right) = X\beta,
 \]</span></p>
 <p>where <span class="math inline">\(\mu = \mathbb{P}(Y=1 \mid X)\)</span>.</p>
 </section>
-<section id="poisson-regression" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="poisson-regression"><span class="header-section-number">3.3.3</span> Poisson Regression</h3>
+<section id="poisson-regression" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="poisson-regression"><span class="header-section-number">3.4.3</span> Poisson Regression</h3>
 <p>For count data, Poisson regression uses</p>
 <p><span class="math display">\[
 \log(\mu) = X\beta,
@@ -575,8 +599,8 @@ g(\mu) = \eta = X\beta.
 <p>where <span class="math inline">\(\mu = \mathbb{E}(Y \mid X)\)</span>.</p>
 </section>
 </section>
-<section id="relation-to-linear-regression" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="relation-to-linear-regression"><span class="header-section-number">3.4</span> Relation to Linear Regression</h2>
+<section id="relation-to-linear-regression" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="relation-to-linear-regression"><span class="header-section-number">3.5</span> Relation to Linear Regression</h2>
 <p>A GLM is not the same as transforming the response and then applying ordinary least squares.</p>
 <p>For example,</p>
 <p><span class="math display">\[
@@ -589,8 +613,8 @@ g(\mu) = \eta = X\beta.
 <p>is a GLM with a log link.</p>
 <p>These models may look similar algebraically, but they differ in assumptions, interpretation, and estimation.</p>
 </section>
-<section id="estimation" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="estimation"><span class="header-section-number">3.5</span> Estimation</h2>
+<section id="estimation" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="estimation"><span class="header-section-number">3.6</span> Estimation</h2>
 <p>Unlike ordinary least squares, GLMs are usually estimated by <strong>maximum likelihood</strong>, often using <strong>iteratively reweighted least squares (IRLS)</strong>.</p>
 <p>The details of the algorithm are usually less important than the modeling idea:</p>
 <ul>
@@ -599,8 +623,8 @@ g(\mu) = \eta = X\beta.
 <li>interpret the fitted model on the correct scale.</li>
 </ul>
 </section>
-<section id="interpretation" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">3.6</span> Interpretation</h2>
+<section id="interpretation" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">3.7</span> Interpretation</h2>
 <p>The coefficients in a GLM are interpreted through the link function.</p>
 <ul>
 <li>In logistic regression, coefficients describe changes in log-odds.</li>
@@ -609,18 +633,18 @@ g(\mu) = \eta = X\beta.
 </ul>
 <p>Therefore, interpretation depends on both the response distribution and the link.</p>
 </section>
-<section id="relation-to-gams-and-regularization" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="relation-to-gams-and-regularization"><span class="header-section-number">3.7</span> Relation to GAMs and Regularization</h2>
+<section id="relation-to-gams-and-regularization" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="relation-to-gams-and-regularization"><span class="header-section-number">3.8</span> Relation to GAMs and Regularization</h2>
 <p>GLMs still assume that the predictor enters through the linear form <span class="math inline">\(X\beta\)</span>. A <strong>generalized additive model (GAM)</strong> relaxes this by replacing linear terms with smooth functions:</p>
 <p><span class="math display">\[
 g(\mu) = \beta_0 + f_1(x_1) + \cdots + f_p(x_p).
 \]</span></p>
 <p>Regularization methods such as ridge regression and LASSO can also be combined with GLMs, producing penalized logistic regression, penalized Poisson regression, and related models.</p>
 </section>
-<section id="python-example" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="python-example"><span class="header-section-number">3.8</span> Python Example</h2>
+<section id="python-example" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="python-example"><span class="header-section-number">3.9</span> Python Example</h2>
 <p>The following example fits a logistic regression model in Python using the public <code>titanic</code> dataset from <code>seaborn</code>. It includes coefficient tables, fitted probabilities, a classification table, and standard residual and influence diagnostics.</p>
-<div id="17f45cf7" class="cell" data-execution_count="1">
+<div id="fa3af893" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -685,7 +709,7 @@ g(\mu) = \beta_0 + f_1(x_1) + \cdots + f_p(x_p).
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>C:\Users\xiaox\venvs\core\Scripts\python.exe
+<pre><code>d:\Codes\Notes\sl26\env\Scripts\python.exe
                  Generalized Linear Model Regression Results                  
 ==============================================================================
 Dep. Variable:               survived   No. Observations:                  714
@@ -693,8 +717,8 @@ Model:                            GLM   Df Residuals:                      708
 Model Family:                Binomial   Df Model:                            5
 Link Function:                  Logit   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -323.61
-Date:                Wed, 08 Apr 2026   Deviance:                       647.23
-Time:                        15:43:36   Pearson chi2:                     768.
+Date:                Thu, 09 Apr 2026   Deviance:                       647.23
+Time:                        14:01:26   Pearson chi2:                     768.
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.3588
 Covariance Type:            nonrobust                                         
 ==================================================================================
@@ -778,8 +802,8 @@ All         438  276  714
 </div>
 <p>Here the response <code>survived</code> is binary, so a binomial GLM with a logit link is appropriate. The terms <code>C(sex)</code> and <code>C(pclass)</code> tell <code>statsmodels</code> to treat those variables as categorical predictors.</p>
 </section>
-<section id="similarities-and-differences-between-lm-and-glm" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="similarities-and-differences-between-lm-and-glm"><span class="header-section-number">3.9</span> Similarities and Differences Between LM and GLM</h2>
+<section id="similarities-and-differences-between-lm-and-glm" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="similarities-and-differences-between-lm-and-glm"><span class="header-section-number">3.10</span> Similarities and Differences Between LM and GLM</h2>
 <p>A linear model (LM) and a generalized linear model (GLM) are closely related. In fact, the ordinary linear regression model can be viewed as a special case of a GLM.</p>
 <p>They are similar in several important ways:</p>
 <ul>

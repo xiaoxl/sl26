@@ -10,41 +10,33 @@
 
 ## Quick Overview
 
-Linear regression is the basic supervised learning method for a quantitative response. It models the mean of the response as a linear function of the predictors:
-
+Linear regression is the fundamental supervised learning method for a quantitative response. It models the conditional mean of the response as a linear function of the predictors:
 $$
-Y = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p + \varepsilon.
-$$
-
-Equivalently, in matrix form,
-
-$$
-y = X\beta + \varepsilon.
+y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 $$
 
-<!-- Linear regression is popular because it is:
-
-- easy to fit;
-- easy to interpret;
-- often a strong baseline for more complex methods. -->
-
+In matrix notation, this can be written as
+$$
+\vb y = \vb X\beta + \varepsilon.
+$$
+Here, $\vb X$ is the design matrix, whose first column is a column of ones representing the intercept.
 
 ## The Ordinary Least Squares Estimator
 
 The most common fitting method is ordinary least squares (OLS). It chooses the coefficient vector $\beta$ that minimizes the residual sum of squares:
 
 $$
-\mathrm{RSS}(\beta) = \sum_{i=1}^n (y_i - \hat{y}_i)^2
-= \lVert y - X\beta \rVert_2^2.
+\rss(\beta) = \sum_{i=1}^n (y_i - \hat{y}_i)^2
+= \norm{\vb y - \vb X\beta }_2^2.
 $$
 
 The OLS estimator is
 
 $$
-\hat{\beta}_{\mathrm{OLS}} = (X^\top X)^{-1}X^\top y,
+\hat{\beta}_{\ols} = (\vb X^\top \vb X)^{-1}\vb X^\top \vb y,
 $$
 
-provided that $X^\top X$ is invertible.
+provided that $\vb X^\top \vb X$ is invertible.
 
 Once the coefficients are estimated, the fitted value for observation $i$ is
 
@@ -53,162 +45,103 @@ $$
 $$
 
 
-## Fitting Linear Regression in R
-
-In R, linear regression is fitted with `lm()`:
-
-```r
-fit <- lm(y ~ x1 + x2, data = dat)
-summary(fit)
-```
-
-The formula syntax is convenient:
-
-- `y ~ x1 + x2` includes two predictors;
-- `y ~ .` includes all available predictors;
-- `y ~ x1 * x2` includes main effects and the interaction;
-- `y ~ x + I(x^2)` adds a quadratic term.
-
-
-## Categorical Variables, Interactions, and Nonlinear Terms
-
-Linear regression can handle more than purely numeric additive effects.
-
-### Categorical Predictors
-
-Categorical predictors are represented through indicator variables. If a factor has $k$ levels, the model usually includes $k-1$ dummy variables.
-
-Thus, linear regression can compare group means while adjusting for other predictors.
-
-### Interaction Terms
-
-An interaction allows the effect of one predictor to depend on another predictor. For example,
-
-$$
-Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \varepsilon.
-$$
-
-If $\beta_3 \neq 0$, the effect of $x_1$ depends on the value of $x_2$.
-
-### Polynomial and Transformed Terms
-
-We may also include nonlinear transformations such as:
-
-- $x^2$,
-- $\log(x)$,
-- $\sqrt{x}$.
-
-The model remains a linear model because it is still linear in the coefficients $\beta$.
-
-
-## Interpreting the Model
 
 Interpretation is one of the main strengths of linear regression.
 
-### Coefficients
-
-The coefficient $\beta_j$ represents the change in the mean response associated with a one-unit increase in $X_j$, holding the other predictors fixed.
-
-### Main Effects With Interactions
-
-When interactions are present, a main effect should not be interpreted in isolation. Its meaning depends on the interacting variables.
-
-### Confidence Intervals
-
-A confidence interval gives a range of plausible values for a coefficient or for the mean response at a given predictor combination.
-
-### Prediction Intervals
-
-A prediction interval is wider than a confidence interval because it must account for both:
-
-- uncertainty in the estimated mean;
-- random variation in a future observation.
+1. The coefficient $\beta_j$ represents the change in the mean response associated with a one-unit increase in $x_j$, holding the other predictors fixed.
+2. When interactions are present, a main effect should not be interpreted in isolation. Its meaning depends on the values of the interacting variables.
+3. If the predictors are centered so that a value of 0 corresponds to the average of the original variable, then the main-effect coefficient can be interpreted as the change in the mean response associated with a one-unit increase in $x_j$, while holding the other predictors at their average levels.
+4. A confidence interval gives a range of plausible values for a coefficient or for the mean response at a given combination of predictors.
+5. A prediction interval is wider than a confidence interval because it must account for both uncertainty in the estimated mean response, and random variation in a future observation.
 
 
 ## Assessing Model Fit
 
-Several tools are commonly used to assess a linear regression fit:
+The classical assumptions of a linear regression model are:
 
-- residual plots,
+1. The random errors are independent.
+2. The errors follow a normal distribution.
+3. The mean of the error distribution is $0$.
+4. The variance of the error distribution is constant across observations.
+
+Several tools are commonly used to assess a linear regression fit. These diagnostics do not prove that a model is correct, but they help identify potential problems.
+
+- residual plots and partial residual plots,
 - Q-Q plots,
 - leverage and influence diagnostics,
-- measures such as $R^2$, adjusted $R^2$, and residual standard error.
+- summary measures such as $R^2$, adjusted $R^2$, and the residual standard error.
 
-Residual plots help detect:
 
-- nonlinearity,
-- nonconstant variance,
-- outliers,
-- influential observations.
 
-These diagnostics do not prove that a model is correct, but they help identify important problems.
+
+## Formula language
+
+The formula language was developed based on the Wilkinson-Rogers notations introduced in @wilkinson1973symbolic, and was later implemented in the S language at Bell Labs by John Chambers and colleagues in the 1980s @chambers1992statistical. It has since become the standard way to specify linear models in statistical software such as R and Python (`statsmodels`).
+
+The following table summarizes the basic syntax and provides examples. Note that it differs slightly from the R version because Python and R use different syntax.
+
+
+| Formula | Meaning |
+|---|---|
+| `y ~ x` | Response $y$ regressed on predictor $x$ |
+| `y ~ x1 + x2` | Include predictors $x_1$ and $x_2$ |
+| `y ~ .` | Include all available predictors in the dataset |
+| `y ~ x1:x2` | Interaction between $x_1$ and $x_2$ only |
+| `y ~ x1 * x2` | Main effects and interaction (`x1 + x2 + x1:x2`) |
+| `y ~ x1 + x2 + x3 - x2` | Include all listed variables except `x2` |
+| `y ~ (x1 + x2 + x3)^2` | All main effects and two-way interactions |
+| `y ~ I(x**2)` | Include a mathematical transformation of $x$ |
+| `y ~ C(group)` | Treat `group` as a categorical variable |
+| `y ~ np.log(x)` | Include the transformation $\log(x)$ using a Python function |
+| `y ~ 1` | Model with intercept only |
+| `y ~ x - 1` | Remove the intercept |
+
+
+::: {.callout-note}
+## Categorical Predictors
+
+Categorical predictors are represented through indicator (dummy) variables. If a factor has $k$ levels, the model usually includes $k-1$ dummy variables.
+
+In Python when using `statsmodels` to fit linear regression models, categorical variables are automatically converted into dummy variables. To indicate that a variable is categorical, you may either:
+
+- explicitly convert the variable in the dataset to a categorical type using `.astype("category")`, or
+- use the `C()` function in the formula language.
+
+:::
+
 
 
 ## Model Selection
 
-In multiple regression, several competing predictor sets may be plausible. Model selection compares them using a criterion that balances fit and complexity.
+In traditional multiple regression, several competing sets of predictors may be plausible. Model selection compares these models using criteria that balance goodness of fit with model complexity.
 
-### AIC, BIC, and Mallows' $C_p$
+
+
+### Some Criteria
 
 These criteria reward good fit but penalize model complexity.
 
-- **AIC** tends to prefer somewhat larger models.
-- **BIC** penalizes complexity more strongly and often prefers smaller models.
-- **Mallows' $C_p$** compares a candidate model to a larger reference model.
-
-These tools are useful for comparing models, but they should not replace subject-matter reasoning.
-
-### Best Subset Selection
-
-Best subset selection compares all models of a given size and then chooses the best one according to a criterion such as AIC, BIC, adjusted $R^2$, or $C_p$.
-
-It is conceptually simple, but it becomes computationally expensive when the number of predictors is large.
-
-### Stepwise Selection
-
-Stepwise procedures add or remove variables sequentially rather than searching all possible models.
-
-Common versions are:
-
-- forward selection,
-- backward elimination,
-- bidirectional stepwise selection.
-
-These methods are faster than best subset selection, but they are greedy procedures and do not guarantee the globally best model.
-
-::: {.callout-important}
-## Caution
-
-If many models are tried and the final model is selected from the same data, p-values and confidence intervals from the final selected model should be interpreted cautiously.
-:::
+- AIC tends to prefer somewhat larger models.
+- BIC penalizes complexity more strongly and often prefers smaller models.
+- Mallows' $C_p$ compares a candidate model to a larger reference model.
+- PRESS uses leave-one-out data to measure test performance.
+  
+The first three methods use training results to estimate test performance, whereas PRESS directly approximates the test error through leave-one-out validation. These tools are useful for comparing models, but they should not replace subject-matter reasoning.
 
 
-## Strengths and Limitations
+### Traditional variable selection methods
 
-Linear regression is often the first model to try because it is transparent and effective in many settings. However, it has limits.
 
-Strengths:
+- Best Subset Selection: Best subset selection compares all models of a given size and then chooses the best one according to a criterion such as AIC, BIC, adjusted $R^2$, $C_p$, or PRESS. It is conceptually simple, but it becomes computationally expensive when the number of predictors is large.
+- Stepwise Selection: Stepwise procedures add or remove variables sequentially rather than searching all possible models. These methods are faster than best subset selection, but they are greedy procedures and do not guarantee the globally best model.
 
-- simple interpretation;
-- fast computation;
-- useful baseline;
-- strong connection to statistical inference.
 
-Limitations:
-
-- assumes a linear mean structure unless we add transformed terms;
-- can be unstable under multicollinearity;
-- may overfit when many predictors are included;
-- may perform poorly when relationships are strongly nonlinear.
-
-These limitations motivate later methods such as GLMs, GAMs, ridge regression, and LASSO.
 
 
 ## Python Code
-<!-- 
-The following Python examples use the public `mpg` dataset from `seaborn`. We will fit several related linear models, compare them with ANOVA and model-selection criteria, and inspect standard regression diagnostics. -->
 
-The main library for linear regression is `statsmodels`. We will also use `pandas` and `seaborn` to deal with data and visualization.
+
+The main library for linear regression is `statsmodels`. We will also use `pandas` to deal with dataset and `seaborn` to deal with data visualization.
 
 
 ### Setup
@@ -363,6 +296,8 @@ predictors = ["horsepower", "weight", "acceleration"]
 
 
 ```{python}
+import statsmodels.formula.api as smf
+
 fit_linear = smf.ols(
     "mpg ~ horsepower + weight + acceleration",
     data=mpg,
@@ -664,3 +599,36 @@ pd.Series(
 ```
 
 These examples show how the same regression problem can be examined from several angles: fitting increasingly flexible models, testing nested terms, diagnosing influential observations, and comparing candidate models with both classical and predictive criteria.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+### Transformed Terms
+
+We may also include nonlinear transformations such as:
+
+- $x^2$,
+- $\log(x)$,
+- $\sqrt{x}$.
+
+The model remains a linear model because it remains linear in the coefficients $\beta$.
+
+These transformations can be created in two ways:
+
+- Explicitly in the dataset, by defining a new variable;
+- Directly in the formula language using functions. -->

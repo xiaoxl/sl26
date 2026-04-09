@@ -6,6 +6,26 @@
 {{< include ../math.qmd >}}
 
 
+## Strengths and Limitations
+
+Linear regression is often the first model to try because it is transparent and effective in many settings. However, it has limits.
+
+Strengths:
+
+- simple interpretation;
+- fast computation;
+- useful baseline;
+- strong connection to statistical inference.
+
+Limitations:
+
+- assumes a linear mean structure unless we add transformed terms;
+- can be unstable under multicollinearity;
+- may overfit when many predictors are included;
+- may perform poorly when relationships are strongly nonlinear.
+
+These limitations motivate later methods such as GLMs, GAMs, ridge regression, and LASSO.
+
 ## What Is a GLM?
 
 A **generalized linear model (GLM)** extends ordinary linear regression in two ways:
