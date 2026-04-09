@@ -31,16 +31,16 @@ $$
 y = X\beta + \varepsilon.
 $$
 
-Linear regression is popular because it is:
+<!-- Linear regression is popular because it is:
 
 - easy to fit;
 - easy to interpret;
-- often a strong baseline for more complex methods.
+- often a strong baseline for more complex methods. -->
 
 
 ## The Ordinary Least Squares Estimator
 
-The most common fitting method is **ordinary least squares (OLS)**. It chooses the coefficient vector $\beta$ that minimizes the residual sum of squares:
+The most common fitting method is ordinary least squares (OLS). It chooses the coefficient vector $\beta$ that minimizes the residual sum of squares:
 
 $$
 \mathrm{RSS}(\beta) = \sum_{i=1}^n (y_i - \hat{y}_i)^2
@@ -213,9 +213,12 @@ Limitations:
 These limitations motivate later methods such as GLMs, GAMs, ridge regression, and LASSO.
 
 
-## Python Example
+## Python Code
 <!-- 
 The following Python examples use the public `mpg` dataset from `seaborn`. We will fit several related linear models, compare them with ANOVA and model-selection criteria, and inspect standard regression diagnostics. -->
+
+The main library for linear regression is `statsmodels`. We will also use `pandas` and `seaborn` to deal with data and visualization.
+
 
 ### Setup
 
