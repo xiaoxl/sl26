@@ -132,10 +132,7 @@ div.csl-indent {
 }</script>
 <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
-
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -581,25 +578,25 @@ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 </section>
 <section id="assessing-model-fit" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="assessing-model-fit"><span class="header-section-number">2.3</span> Assessing Model Fit</h2>
-<p>The orginal assumptions for a linear regression model are</p>
+<p>The classical assumptions of a linear regression model are:</p>
 <ol type="1">
-<li>All random errors are independent and follow a unique distribution.</li>
-<li>The unique distribution is normal.</li>
-<li>The mean of the normal distribution is <span class="math inline">\(0\)</span>.</li>
-<li>The variance of the normal distribution is fixed across all variables.</li>
+<li>The random errors are independent.</li>
+<li>The errors follow a normal distribution.</li>
+<li>The mean of the error distribution is <span class="math inline">\(0\)</span>.</li>
+<li>The variance of the error distribution is constant across observations.</li>
 </ol>
-<p>Several tools are commonly used to assess a linear regression fit. These diagnostics do not prove that a model is correct, but they help identify important problems.</p>
+<p>Several tools are commonly used to assess a linear regression fit. These diagnostics do not prove that a model is correct, but they help identify potential problems.</p>
 <ul>
 <li>residual plots and partial residual plots,</li>
 <li>Q-Q plots,</li>
 <li>leverage and influence diagnostics,</li>
-<li>measures such as <span class="math inline">\(R^2\)</span>, adjusted <span class="math inline">\(R^2\)</span>, and residual standard error.</li>
+<li>summary measures such as <span class="math inline">\(R^2\)</span>, adjusted <span class="math inline">\(R^2\)</span>, and the residual standard error.</li>
 </ul>
 </section>
 <section id="formula-language" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="formula-language"><span class="header-section-number">2.4</span> Formula language</h2>
 <p>The formula language was developed based on the Wilkinson-Rogers notations introduced in <span class="citation" data-cites="wilkinson1973symbolic">[<a href="../../index.html#ref-wilkinson1973symbolic" role="doc-biblioref">1</a>]</span>, and was later implemented in the S language at Bell Labs by John Chambers and colleagues in the 1980s <span class="citation" data-cites="chambers1992statistical">[<a href="../../index.html#ref-chambers1992statistical" role="doc-biblioref">2</a>]</span>. It has since become the standard way to specify linear models in statistical software such as R and Python (<code>statsmodels</code>).</p>
-<p>The basic syntax is summarized in the following table with examples.</p>
+<p>The following table summarizes the basic syntax and provides examples. Note that it differs slightly from the R version because Python and R use different syntax.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -710,7 +707,7 @@ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">2.6.1</span> Setup</h3>
 <p>As an example we use the public <code>mpg</code> dataset from <code>seaborn</code> to demonstrate the workflow of the standard linear regression.</p>
 <p>This is a dataset for cars manufactured between 1970-82 in USA, Europe., and Japan. It was taken from the StatLib library which is maintained at Carnegie Mellon University. The dataset was used in the 1983 American Statistical Association Exposition. More info can be found <a href="https://data.world/dataman-udit/cars-data">here</a>.</p>
-<div id="1caba22f" class="cell" data-execution_count="1">
+<div id="5f8c3981" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -724,7 +721,7 @@ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 </dd>
 </dl>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="57">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 
 
@@ -810,15 +807,15 @@ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 </div>
 </div>
 </div>
-<div id="d049285d" class="cell" data-execution_count="2">
+<div id="445e9c2c" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mpg.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="58">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>(398, 9)</code></pre>
 </div>
 </div>
-<div id="f90e9218" class="cell" data-execution_count="3">
+<div id="d783ce11" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mpg.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="59">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Index(['mpg', 'cylinders', 'displacement', 'horsepower', 'weight',
        'acceleration', 'model_year', 'origin', 'name'],
       dtype='str')</code></pre>
@@ -836,7 +833,7 @@ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 <li><code>origin</code> : multi-valued discrete</li>
 <li><code>name</code> : string (Unique values)</li>
 </ul>
-<div id="f63401c1" class="cell" data-execution_count="4">
+<div id="7fdf2f3a" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mpg.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.DataFrame'&gt;
@@ -858,12 +855,12 @@ memory usage: 28.1 KB</code></pre>
 </div>
 </div>
 <p>This table shows that <code>horsepower</code> contains some missing values. We would like to drop them.</p>
-<div id="983a77a1" class="cell" data-execution_count="5">
+<div id="8cd6e973" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="op">=</span> mpg.dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The goal is to predict <code>mpg</code> using the other features of the car. We remove <code>name</code> because it does not provide meaningful information about vehicle performance. We also treat <code>cylinders</code> and <code>origin</code> as categorical variables.</p>
 <p>For <code>model_year</code>, it could reasonably be treated as either a numerical or a categorical variable. For simplicity, we treat it as numerical here, since it has 13 unique values and using 13 categories would make the model less parsimonious.</p>
-<div id="32de4e9c" class="cell" data-execution_count="6">
+<div id="7858d37a" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mpg[<span class="st">"cylinders"</span>] <span class="op">=</span> mpg[<span class="st">"cylinders"</span>].astype(<span class="st">"category"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mpg[<span class="st">"origin"</span>] <span class="op">=</span> mpg[<span class="st">"origin"</span>].astype(<span class="st">"category"</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="op">=</span> mpg.drop(columns<span class="op">=</span>[<span class="st">"name"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -882,9 +879,9 @@ Tip
 </div>
 </div>
 <p>Now we could see the summary of the cleaned dataset. The default <code>describe()</code> will only show the distribution of numerical values. If we want to see categorical variables, we need to add the argument `include=“category”’.</p>
-<div id="e02cab79" class="cell" data-execution_count="7">
+<div id="f2c4a131" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mpg.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="63">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -979,9 +976,9 @@ Tip
 </div>
 </div>
 </div>
-<div id="b78b2c1b" class="cell" data-execution_count="8">
+<div id="c38beb2a" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mpg.describe(include<span class="op">=</span><span class="st">"category"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="64">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -1024,7 +1021,7 @@ Tip
 <section id="eda" class="level3 page-columns page-full" data-number="2.6.2">
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="eda"><span class="header-section-number">2.6.2</span> EDA</h3>
 <p>We mainly use three types of plots for exploratory data analysis.</p>
-<div id="ef76e53c" class="cell page-columns page-full" data-execution_count="9">
+<div id="881c9b03" class="cell page-columns page-full" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1051,7 +1048,7 @@ Tip
 <strong>Click to expand.</strong>
 </summary>
 <p>We can use hue to visualize the effect of categorical variables.</p>
-<div id="36c1b905" class="cell" data-execution_count="10">
+<div id="0a4e507f" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(mpg, hue <span class="op">=</span> <span class="st">"cylinders"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1061,7 +1058,7 @@ Tip
 </div>
 </div>
 </div>
-<div id="ded43105" class="cell" data-execution_count="11">
+<div id="cbd88456" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(mpg, hue <span class="op">=</span> <span class="st">"origin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1073,7 +1070,7 @@ Tip
 </div>
 </details>
 <p>To display the correlation matrix heatmap, we first compute the correlation matrix and then use <code>sns.heatmap()</code> to visualize it.</p>
-<div id="3e8bc1fe" class="cell" data-execution_count="12">
+<div id="32b1090e" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> mpg.corr(numeric_only<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"coolwarm"</span>, fmt<span class="op">=</span><span class="st">".2f"</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plt.gcf().set_size_inches(<span class="dv">8</span>, <span class="dv">8</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1086,7 +1083,7 @@ Tip
 </div>
 </div>
 <p>Finally, we may also want to examine the histogram of each variable, although this information is already reflected in the pair plot.</p>
-<div id="4c15a34b" class="cell" data-execution_count="13">
+<div id="11e56688" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a>mpg.hist(</span>
 <span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span><span class="dv">20</span>,  </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>),</span>
@@ -1114,7 +1111,7 @@ Tip
 </section>
 <section id="fit-a-basic-model" class="level3" data-number="2.6.3">
 <h3 data-number="2.6.3" class="anchored" data-anchor-id="fit-a-basic-model"><span class="header-section-number">2.6.3</span> Fit a Basic Model</h3>
-<div id="2cd47a0d" class="cell" data-execution_count="14">
+<div id="efca5d8b" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1128,7 +1125,7 @@ Tip
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> <span class="st">"mpg"</span></span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">"horsepower"</span>, <span class="st">"weight"</span>, <span class="st">"acceleration"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="0e1703f9" class="cell" data-execution_count="15">
+<div id="0ec3f63f" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>fit_linear <span class="op">=</span> smf.ols(</span>
@@ -1144,7 +1141,7 @@ Dep. Variable:                    mpg   R-squared:                       0.706
 Model:                            OLS   Adj. R-squared:                  0.704
 Method:                 Least Squares   F-statistic:                     311.1
 Date:                Thu, 09 Apr 2026   Prob (F-statistic):          7.48e-103
-Time:                        14:00:50   Log-Likelihood:                -1121.0
+Time:                        14:07:24   Log-Likelihood:                -1121.0
 No. Observations:                 392   AIC:                             2250.
 Df Residuals:                     388   BIC:                             2266.
 Df Model:                           3                                         
@@ -1172,7 +1169,7 @@ strong multicollinearity or other numerical problems.</code></pre>
 </section>
 <section id="fit-a-higher-degree-model" class="level3" data-number="2.6.4">
 <h3 data-number="2.6.4" class="anchored" data-anchor-id="fit-a-higher-degree-model"><span class="header-section-number">2.6.4</span> Fit a Higher-Degree Model</h3>
-<div id="2eb8eddb" class="cell" data-execution_count="16">
+<div id="b484087d" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fit_poly <span class="op">=</span> smf.ols(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mpg ~ horsepower + I(horsepower**2) + weight + I(weight**2) + acceleration"</span>,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>mpg,</span>
@@ -1186,7 +1183,7 @@ Dep. Variable:                    mpg   R-squared:                       0.752
 Model:                            OLS   Adj. R-squared:                  0.748
 Method:                 Least Squares   F-statistic:                     233.5
 Date:                Thu, 09 Apr 2026   Prob (F-statistic):          2.55e-114
-Time:                        14:00:50   Log-Likelihood:                -1088.3
+Time:                        14:07:24   Log-Likelihood:                -1088.3
 No. Observations:                 392   AIC:                             2189.
 Df Residuals:                     386   BIC:                             2212.
 Df Model:                           5                                         
@@ -1216,7 +1213,7 @@ strong multicollinearity or other numerical problems.</code></pre>
 </section>
 <section id="fit-a-model-with-interactions" class="level3" data-number="2.6.5">
 <h3 data-number="2.6.5" class="anchored" data-anchor-id="fit-a-model-with-interactions"><span class="header-section-number">2.6.5</span> Fit a Model With Interactions</h3>
-<div id="c34957a1" class="cell" data-execution_count="17">
+<div id="04b1d445" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit_interaction <span class="op">=</span> smf.ols(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mpg ~ horsepower * weight + acceleration"</span>,</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>mpg,</span>
@@ -1230,7 +1227,7 @@ Dep. Variable:                    mpg   R-squared:                       0.750
 Model:                            OLS   Adj. R-squared:                  0.747
 Method:                 Least Squares   F-statistic:                     290.0
 Date:                Thu, 09 Apr 2026   Prob (F-statistic):          5.14e-115
-Time:                        14:00:50   Log-Likelihood:                -1089.6
+Time:                        14:07:24   Log-Likelihood:                -1089.6
 No. Observations:                 392   AIC:                             2189.
 Df Residuals:                     387   BIC:                             2209.
 Df Model:                           4                                         
@@ -1259,7 +1256,7 @@ strong multicollinearity or other numerical problems.</code></pre>
 </section>
 <section id="fit-a-model-with-categorical-variables" class="level3" data-number="2.6.6">
 <h3 data-number="2.6.6" class="anchored" data-anchor-id="fit-a-model-with-categorical-variables"><span class="header-section-number">2.6.6</span> Fit a Model With Categorical Variables</h3>
-<div id="a4120ecf" class="cell" data-execution_count="18">
+<div id="ff7b5328" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit_categorical <span class="op">=</span> smf.ols(</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mpg ~ horsepower + weight + acceleration + C(origin) + C(cylinders)"</span>,</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>mpg,</span>
@@ -1273,7 +1270,7 @@ Dep. Variable:                    mpg   R-squared:                       0.755
 Model:                            OLS   Adj. R-squared:                  0.749
 Method:                 Least Squares   F-statistic:                     131.0
 Date:                Thu, 09 Apr 2026   Prob (F-statistic):          5.84e-111
-Time:                        14:00:50   Log-Likelihood:                -1085.3
+Time:                        14:07:24   Log-Likelihood:                -1085.3
 No. Observations:                 392   AIC:                             2191.
 Df Residuals:                     382   BIC:                             2230.
 Df Model:                           9                                         
@@ -1307,12 +1304,12 @@ strong multicollinearity or other numerical problems.</code></pre>
 </section>
 <section id="generate-a-summary-table" class="level3" data-number="2.6.7">
 <h3 data-number="2.6.7" class="anchored" data-anchor-id="generate-a-summary-table"><span class="header-section-number">2.6.7</span> Generate a Summary Table</h3>
-<div id="82d92fb7" class="cell" data-execution_count="19">
+<div id="ec164f65" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>summary_table <span class="op">=</span> fit_categorical.summary2().tables[<span class="dv">1</span>].copy()</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>summary_table[<span class="st">"CI 2.5%"</span>] <span class="op">=</span> fit_categorical.conf_int()[<span class="dv">0</span>]</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>summary_table[<span class="st">"CI 97.5%"</span>] <span class="op">=</span> fit_categorical.conf_int()[<span class="dv">1</span>]</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>summary_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="75">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 
 
@@ -1451,7 +1448,7 @@ strong multicollinearity or other numerical problems.</code></pre>
 <section id="generate-anova-tables-type-i-ii-and-iii" class="level3" data-number="2.6.8">
 <h3 data-number="2.6.8" class="anchored" data-anchor-id="generate-anova-tables-type-i-ii-and-iii"><span class="header-section-number">2.6.8</span> Generate ANOVA Tables: Type I, II, and III</h3>
 <p>Type I sums of squares depend on the order in which the terms enter the model. Type II and Type III tables are order-invariant under the usual model-coding assumptions, but they answer slightly different questions.</p>
-<div id="b1858581" class="cell" data-execution_count="20">
+<div id="5fae3acb" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fit_anova <span class="op">=</span> smf.ols(</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mpg ~ horsepower + weight + acceleration + C(origin)"</span>,</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>mpg,</span>
@@ -1496,7 +1493,7 @@ Residual      6685.366385  386.0         NaN           NaN</code></pre>
 <section id="generate-a-nested-anova-table" class="level3" data-number="2.6.9">
 <h3 data-number="2.6.9" class="anchored" data-anchor-id="generate-a-nested-anova-table"><span class="header-section-number">2.6.9</span> Generate a Nested ANOVA Table</h3>
 <p>Nested ANOVA compares a smaller model with a larger model that contains all of its terms plus additional predictors.</p>
-<div id="e1618d07" class="cell" data-execution_count="21">
+<div id="dcf9cdde" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fit_nested_small <span class="op">=</span> smf.ols(<span class="st">"mpg ~ horsepower + weight"</span>, data<span class="op">=</span>mpg).fit()</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>fit_nested_large <span class="op">=</span> smf.ols(</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mpg ~ horsepower + weight + acceleration + C(origin)"</span>,</span>
@@ -1504,7 +1501,7 @@ Residual      6685.366385  386.0         NaN           NaN</code></pre>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>).fit()</span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>anova_lm(fit_nested_small, fit_nested_large)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="77">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <div>
 
 
@@ -1548,7 +1545,7 @@ Residual      6685.366385  386.0         NaN           NaN</code></pre>
 </section>
 <section id="residual-plots" class="level3" data-number="2.6.10">
 <h3 data-number="2.6.10" class="anchored" data-anchor-id="residual-plots"><span class="header-section-number">2.6.10</span> Residual Plots</h3>
-<div id="126261d2" class="cell" data-execution_count="22">
+<div id="b29ce9c5" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>diagnostics <span class="op">=</span> mpg[[<span class="st">"mpg"</span>, <span class="st">"horsepower"</span>, <span class="st">"weight"</span>, <span class="st">"acceleration"</span>, <span class="st">"origin"</span>]].copy()</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"fitted"</span>] <span class="op">=</span> fit_categorical.fittedvalues</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"resid"</span>] <span class="op">=</span> fit_categorical.resid</span>
@@ -1579,7 +1576,7 @@ Residual      6685.366385  386.0         NaN           NaN</code></pre>
 <section id="partial-residual-plots" class="level3" data-number="2.6.11">
 <h3 data-number="2.6.11" class="anchored" data-anchor-id="partial-residual-plots"><span class="header-section-number">2.6.11</span> Partial Residual Plots</h3>
 <p>Component-plus-residual plots help assess whether the linear contribution of a predictor is adequate after controlling for the other variables.</p>
-<div id="9a838c73" class="cell" data-execution_count="23">
+<div id="a8f26d23" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>sm.graphics.plot_ccpr_grid(fit_categorical, fig<span class="op">=</span>fig)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
@@ -1595,7 +1592,7 @@ Residual      6685.366385  386.0         NaN           NaN</code></pre>
 </section>
 <section id="pair-plots" class="level3" data-number="2.6.12">
 <h3 data-number="2.6.12" class="anchored" data-anchor-id="pair-plots"><span class="header-section-number">2.6.12</span> Pair Plots</h3>
-<div id="0ab7962d" class="cell" data-execution_count="24">
+<div id="fbf848a6" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pair_data <span class="op">=</span> mpg[</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"mpg"</span>, <span class="st">"horsepower"</span>, <span class="st">"weight"</span>, <span class="st">"acceleration"</span>, <span class="st">"origin"</span>]</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>].sample(n<span class="op">=</span><span class="bu">min</span>(<span class="dv">120</span>, <span class="bu">len</span>(mpg)), random_state<span class="op">=</span><span class="dv">1</span>)</span>
@@ -1613,7 +1610,7 @@ Residual      6685.366385  386.0         NaN           NaN</code></pre>
 </section>
 <section id="leverage-and-cooks-distance-plots" class="level3" data-number="2.6.13">
 <h3 data-number="2.6.13" class="anchored" data-anchor-id="leverage-and-cooks-distance-plots"><span class="header-section-number">2.6.13</span> Leverage and Cook’s Distance Plots</h3>
-<div id="830019c7" class="cell" data-execution_count="25">
+<div id="768fbdb7" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>influence <span class="op">=</span> fit_categorical.get_influence()</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>influence_frame <span class="op">=</span> influence.summary_frame()</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1648,7 +1645,7 @@ Residual      6685.366385  386.0         NaN           NaN</code></pre>
 <section id="stepwise-selection" class="level3" data-number="2.6.14">
 <h3 data-number="2.6.14" class="anchored" data-anchor-id="stepwise-selection"><span class="header-section-number">2.6.14</span> Stepwise Selection</h3>
 <p>The following simple forward-selection routine uses AIC as the selection criterion. It is easy to implement, but it is still a greedy search rather than a global optimum.</p>
-<div id="bcd3ca6f" class="cell" data-execution_count="26">
+<div id="1da171f3" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward_selection(data, response, candidates):</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    remaining <span class="op">=</span> <span class="bu">list</span>(candidates)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    selected <span class="op">=</span> []</span>
@@ -1693,7 +1690,7 @@ Residual      6685.366385  386.0         NaN           NaN</code></pre>
 <pre><code>Selected terms: ['weight', 'C(cylinders)', 'horsepower', 'C(origin)']
 Final AIC: 2189.4686412079573</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="82">
+<div class="cell-output cell-output-display" data-execution_count="26">
 <div>
 
 
@@ -1736,7 +1733,7 @@ Final AIC: 2189.4686412079573</code></pre>
 <section id="best-subset-selection" class="level3" data-number="2.6.15">
 <h3 data-number="2.6.15" class="anchored" data-anchor-id="best-subset-selection"><span class="header-section-number">2.6.15</span> Best Subset Selection</h3>
 <p>Best subset selection fits every model of a given size and records the best one according to a chosen criterion.</p>
-<div id="b8679b1e" class="cell" data-execution_count="27">
+<div id="f0159018" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model_diagnostics(fit):</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> fit.model.endog</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> fit.nobs</span>
@@ -1791,7 +1788,7 @@ Final AIC: 2189.4686412079573</code></pre>
 <span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a>best_subsets[</span>
 <span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"size"</span>, <span class="st">"terms"</span>, <span class="st">"r2"</span>, <span class="st">"adj_r2"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span>, <span class="st">"cp"</span>, <span class="st">"press"</span>]</span>
 <span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="83">
+<div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 
 
@@ -1864,7 +1861,7 @@ Final AIC: 2189.4686412079573</code></pre>
 <section id="computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press" class="level3" data-number="2.6.16">
 <h3 data-number="2.6.16" class="anchored" data-anchor-id="computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press"><span class="header-section-number">2.6.16</span> Computing <span class="math inline">\(R^2\)</span>, Adjusted <span class="math inline">\(R^2\)</span>, SSE, MSE, AIC, BIC, <span class="math inline">\(C_p\)</span>, and PRESS</h3>
 <p>These quantities can be read from a fitted model, but it is useful to compute them directly from the residuals and leverage values.</p>
-<div id="a8ccc0b7" class="cell" data-execution_count="28">
+<div id="2fd3b975" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fit_metrics <span class="op">=</span> fit_categorical</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> fit_metrics.model.endog</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> fit_metrics.nobs</span>
@@ -1894,7 +1891,7 @@ Final AIC: 2189.4686412079573</code></pre>
 <span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PRESS"</span>: press,</span>
 <span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="84">
+<div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>R^2                0.755224
 Adjusted R^2       0.749457
 SSE             5830.317633
