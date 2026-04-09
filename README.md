@@ -9,13 +9,11 @@ stats notes
 python -m ipykernel install --user --name stats --display-name "(stats)"
 ```
 
-## bookup
+## Theme
+
+This uses a modified version of the `bookup-html` custom quarto format. You can learn more about `bookup` in its [Github repository](https://github.com/juba/bookup-html).
+
 
 ```
 quarto use template juba/bookup-html
 ```
-
-
-
-
-

@@ -1,19 +1,10 @@
----
-code-annotations: select
----
+
 
 # Linear Regression
 
 
 {{< include ../math.qmd >}}
 
-
-
-```{python}
-
-import sys
-print(sys.executable)
-```
 
 
 

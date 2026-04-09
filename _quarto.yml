@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: docs
+  resources:
+    - fonts/
 
 number-sections: true
 # top-level-division: part
@@ -23,38 +25,6 @@ knitr:
 
 jupyter: stats
 
-# filters:
-#   - pseudocode
-
-# pseudocode:
-#   caption-prefix: "Algorithm"
-#   reference-prefix: "Algorithm"
-#   caption-number: true
-
-format:
-  bookup-html:
-        toc: true
-        toc-depth: 3
-        css: blocks.css
-        mainfont: Noto Serif
-        # mainfont: Libertinus Serif
-        sansfont: Noto Sans
-        # sansfont: Libertinus Sans
-        # monofont: Noto Sans Mono
-        monofont: JetBrains Mono
-        # monofont: Latin Modern Mono
-        monofontoptions:
-          - Scale=0.95
-        mathfont: Libertinus Math
-        # mathfont: Noto Serif Math
-        fontsize: 12pt
-  # html:
-  #   theme: cosmo
-  #   code-block-bg: true
-  #   code-block-border-left: true #"#31BAE9"
-  #   # code-line-numbers: true
-  #   highlight-style: atom-one
-  #   page-layout: article
  
 book:
   title: "Statistical Learning"
@@ -111,3 +81,47 @@ book:
   search: true
   reader-mode: true
    
+
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme:
+      light:
+        - styles/light.scss
+      dark:
+        - styles/light.scss
+        - styles/dark.scss
+    css:
+      - styles/fonts.css
+      - styles/blocks.css
+
+    mainfont: Noto Serif
+    sansfont: Noto Sans
+    # mainfont: Libertinus Serif
+    # sansfont: Libertinus Sans
+
+    mathfont: Libertinus Math
+    monofont: JetBrains Mono
+    # # monofont: Latin Modern Mono
+    monofontoptions:
+      - Scale=0.95
+
+    fontsize: 12pt
+    # linestretch: 1.1
+
+    code-annotations: select
+
+    code-block-bg: true
+    code-block-border-left: true #"#31BAE9"
+    # code-line-numbers: true
+    highlight-style: atom-one
+    page-layout: article
+
+# filters:
+#   - pseudocode
+
+# pseudocode:
+#   caption-prefix: "Algorithm"
+#   reference-prefix: "Algorithm"
+#   caption-number: true
