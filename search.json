@@ -4,7 +4,307 @@
     "href": "index.html",
     "title": "Statistical Learning",
     "section": "",
-    "text": "Preface\nThese are notes for STAT 3113 Regression 2026 Summer at Arkansas Tech University. If you have any questions please contact me through email.",
+    "text": "Preface\nThese are notes for STAT 3113 Regression 2026 Summer at Arkansas Tech University. If you have any questions please contact me through email.\nArchived draft material from earlier notes",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics",
+    "href": "index.html#main-topics",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nWhat is statistical learning?\nSupervised vs unsupervised learning\nParametric vs nonparametric methods\nPrediction vs explanation\nBias–variance tradeoff",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals",
+    "href": "index.html#teaching-goals",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand that the main goal of statistical learning is good prediction on new data, not simply fitting the observed sample as closely as possible.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#suggested-emphasis",
+    "href": "index.html#suggested-emphasis",
+    "title": "Statistical Learning",
+    "section": "Suggested Emphasis",
+    "text": "Suggested Emphasis\n\nIntroduce the overall modeling problem first.\nUse simple real-world examples such as house prices, medical diagnosis, or spam filtering.\nMake overfitting a central theme from the beginning.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-1",
+    "href": "index.html#main-topics-1",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nLinear regression as a prediction tool\nInterpreting fitted relationships\nStrengths and weaknesses of linear models\nLinear models as a baseline for comparison",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-1",
+    "href": "index.html#teaching-goals-1",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should see linear regression as the starting point of predictive modeling: simple, interpretable, and useful, but limited in flexibility.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#suggested-emphasis-1",
+    "href": "index.html#suggested-emphasis-1",
+    "title": "Statistical Learning",
+    "section": "Suggested Emphasis",
+    "text": "Suggested Emphasis\n\nPresent linear regression mainly as a predictive model.\nKeep inference light unless needed for context.\nHighlight when linear models fail to capture nonlinear structure.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-2",
+    "href": "index.html#main-topics-2",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nFlexible regression methods\nK-nearest neighbors regression\nSmoothers and local fitting ideas\nModel flexibility and overfitting",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-2",
+    "href": "index.html#teaching-goals-2",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should learn that more flexible models can better capture complicated patterns, but at the cost of increased variance. ## Suggested Emphasis - Connect this unit directly to bias–variance tradeoff. - Compare flexible and inflexible models visually. - Use plots to show underfitting and overfitting.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-3",
+    "href": "index.html#main-topics-3",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nClassification as a prediction problem\nLogistic regression\nDecision boundaries\nK-nearest neighbors classification",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-3",
+    "href": "index.html#teaching-goals-3",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand that classification uses the same modeling logic as regression, but with categorical outcomes. ## Suggested Emphasis - Stress the difference between predicting a class and predicting a numeric response. - Introduce class probabilities early. - Use confusion matrices and classification error as evaluation tools.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-4",
+    "href": "index.html#main-topics-4",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nLogistic regression in more detail\nInterpreting probabilities\nThresholds and classification decisions\nComparing classifiers",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-4",
+    "href": "index.html#teaching-goals-4",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should learn how binary classification models convert predictors into class probabilities and final decisions. ## Suggested Emphasis - Distinguish between probability estimation and hard classification. - Discuss how different thresholds change predictions. - Use practical examples such as disease detection or spam filtering.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-5",
+    "href": "index.html#main-topics-5",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nLDA\nQDA\nNaive Bayes\nDiscriminative vs generative modeling",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-5",
+    "href": "index.html#teaching-goals-5",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand the idea of modeling class distributions directly and then using Bayes’ rule for prediction. ## Suggested Emphasis - Compare logistic regression with LDA and QDA conceptually. - Emphasize assumptions and when they matter. - Use side-by-side model comparisons.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-6",
+    "href": "index.html#main-topics-6",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nValidation set approach\nCross-validation\nBootstrap\nEstimating test error",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-6",
+    "href": "index.html#teaching-goals-6",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nThis unit is the conceptual center of the course. Students must understand that training error is not enough, and that model performance must be evaluated using principled estimates of test error. ## Suggested Emphasis - Make cross-validation a central practical tool. - Show why naive comparison by training error is misleading. - Use repeated examples across multiple methods.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-7",
+    "href": "index.html#main-topics-7",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nRidge regression\nLasso\nElastic net\nShrinkage and complexity control",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-7",
+    "href": "index.html#teaching-goals-7",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand how regularization controls complexity and improves prediction without exhaustively searching across models. ## Suggested Emphasis - Present regularization as a modern answer to overfitting in linear models. - Compare subset selection and shrinkage conceptually. - Use coefficient path plots when possible.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-8",
+    "href": "index.html#main-topics-8",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nDecision trees\nBagging\nRandom forests\nBoosting",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-8",
+    "href": "index.html#teaching-goals-8",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should learn that combining many unstable or weak learners can create a stronger predictive model. ## Suggested Emphasis - Start with a single tree and its limitations. - Then motivate bagging as variance reduction. - Finally introduce random forests and boosting as improved ensemble ideas.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-9",
+    "href": "index.html#main-topics-9",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nEnd-to-end modeling workflow\nData preprocessing\nModel tuning\nModel comparison\nPractical considerations on real datasets",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-9",
+    "href": "index.html#teaching-goals-9",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should be able to complete a full predictive analysis from data setup through final model comparison and interpretation. ## Suggested Emphasis - Organize this unit around a full case study. - Show how preprocessing, resampling, tuning, and comparison fit together. - Emphasize reproducible workflow and communication.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#midterm-i",
+    "href": "index.html#midterm-i",
+    "title": "Statistical Learning",
+    "section": "Midterm I",
+    "text": "Midterm I\nSuggested coverage:\n\nfoundations of statistical learning,\nlinear regression,\nnonparametric regression,\nearly classification concepts.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#midterm-ii",
+    "href": "index.html#midterm-ii",
+    "title": "Statistical Learning",
+    "section": "Midterm II",
+    "text": "Midterm II\nSuggested coverage:\n\nclassification,\ngenerative models,\nresampling,\nregularization.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#final-assessment-or-project",
+    "href": "index.html#final-assessment-or-project",
+    "title": "Statistical Learning",
+    "section": "Final Assessment or Project",
+    "text": "Final Assessment or Project\nSuggested format:\n\na real dataset,\nseveral competing methods,\nmodel comparison using validation or cross-validation,\nwritten interpretation of results.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#lecture-2",
+    "href": "index.html#lecture-2",
+    "title": "Statistical Learning",
+    "section": "Lecture 2",
+    "text": "Lecture 2\n\nimplementation,\nmodel fitting,\ncomparison with earlier methods,\nshort applied example.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#theme-1-model-flexibility",
+    "href": "index.html#theme-1-model-flexibility",
+    "title": "Statistical Learning",
+    "section": "Theme 1: Model Flexibility",
+    "text": "Theme 1: Model Flexibility\nStudents should repeatedly ask: &gt; How flexible is this model, and what does that flexibility buy us? ## Theme 2: Generalization Students should repeatedly ask: &gt; How do we know whether this model will work on new data? ## Theme 3: Comparison Students should repeatedly ask: &gt; Is this method better than what we already had? # Recommended Course Message to Students A useful recurring message for students is: &gt; Statistical learning is about building models that perform well on new data, understanding the tradeoff between simplicity and flexibility, and choosing methods based on predictive performance. # Condensed Teaching Calendar\n\n\n\n\n\n\n\n\nUnit\nTopic\nMain Goal\n\n\n\n\n1\nFoundations\nIntroduce statistical learning and bias–variance\n\n\n2\nLinear Regression\nEstablish a simple predictive baseline\n\n\n3\nNonparametric Regression\nIntroduce flexibility\n\n\n4\nClassification\nShift from numeric to categorical prediction\n\n\n5\nBinary Classification\nDevelop logistic and classification ideas\n\n\n6\nGenerative Models\nCompare generative and discriminative methods\n\n\n7\nResampling\nLearn to estimate test error\n\n\n8\nRegularization\nControl complexity and improve prediction\n\n\n9\nEnsemble Methods\nCombine models to improve performance\n\n\n10\nML in Practice\nExecute a complete workflow",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#model-selection-regularization",
+    "href": "index.html#model-selection-regularization",
+    "title": "Statistical Learning",
+    "section": "2. Model Selection & Regularization",
+    "text": "2. Model Selection & Regularization\nPython’s scikit-learn (sklearn) is the powerhouse for cross-validation and penalized regression.\n\n\n\n\n\n\n\n\n\nFeature\nR Code (Package)\nPython Library\nPython Counterpart\n\n\n\n\nLasso / Ridge\nglmnet(x, y)\nsklearn\nLassoCV() or RidgeCV()\n\n\nStepwise (AIC/BIC)\nstep(fit)\nsklearn\nSequentialFeatureSelector\n\n\nBest Subset\nregsubsets() (leaps)\nmlxtend\nExhaustiveFeatureSelector\n\n\nValidation Split\nsample() / createDataPartition\nsklearn\ntrain_test_split()\n\n\nK-Fold CV\ncv.glmnet()\nsklearn\ncross_val_score() or GridSearchCV()",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#diagnostics-residuals",
+    "href": "index.html#diagnostics-residuals",
+    "title": "Statistical Learning",
+    "section": "3. Diagnostics & Residuals",
+    "text": "3. Diagnostics & Residuals\nIn R, plot(fit) automatically generates four diagnostic plots. In Python, you access these via the .resid attribute or statsmodels.graphics.\n\n\n\n\n\n\n\n\nMetric / Plot\nR Code\nPython Code\n\n\n\n\nResiduals\nresiduals(fit)\nfit.resid\n\n\nFitted Values\nfitted(fit)\nfit.fittedvalues\n\n\nQ-Q Plot\nqqnorm(fit$resid)\nsm.qqplot(fit.resid, line='s')\n\n\nLeverage Plot\nplot(fit, which=4)\nsm.graphics.influence_plot(fit)\n\n\nResidual Plot\nplot(fit, which=1)\nsns.residplot(x=fit.fittedvalues, y=df['y'])",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#required-libraries-for-the-course",
+    "href": "index.html#required-libraries-for-the-course",
+    "title": "Statistical Learning",
+    "section": "4. Required Libraries for the Course",
+    "text": "4. Required Libraries for the Course\nTo set up a Python environment equivalent to the R statistical suite, run:",
     "crumbs": [
       "Preface"
     ]
@@ -14,64 +314,614 @@
     "href": "index.html#references",
     "title": "Statistical Learning",
     "section": "References",
-    "text": "References\n\n\n[1] Wickham, H.\n(2014). Tidy data.\nJournal of Statistical Software 59.\n\n\n[2] Mendenhall, W.\nand Sincich, T. (2020). A second\ncourse in statistics: Regression analyisis. Pearson Education, Inc,\n[Hoboken, New Jersey].\n\n\n[3] Healy, K.\n(2025). Gssrdoc: General\nsocial survey documentation for use in r.",
+    "text": "References\n\n\n[1] Wilkinson, G. N.\nand Rogers, C. E. (1973). Symbolic\ndescriptions of factorial models for analysis of variance. Applied\nStatistics 22 392–9.\n\n\n[2] Chambers, J. M.\nand Hastie, T. J. (1992). Statistical\nmodels in s. Wadsworth & Brooks/Cole.",
     "crumbs": [
       "Preface"
     ]
   },
   {
-    "objectID": "contents/1/basics.html",
-    "href": "contents/1/basics.html",
-    "title": "1  Basics",
+    "objectID": "contents/1/basic.html",
+    "href": "contents/1/basic.html",
+    "title": "1  Statistical Learning Basics",
     "section": "",
-    "text": "1.1 Quick overview\nGiven a set of observations of variables, we would like to understand the relationships among these variables.\nThe standard procedure for developing a statistical model is as follows:\nThere are two primary goals and related ways to assess the model:\nBoth Statistical Learning and specific methods like Regression Analysis may use both assessment strategies, but the emphasis differs. In this course, the focus is on the principles of modeling and statistical inference, with prediction discussed but not treated as the primary objective.",
+    "text": "1.1 What Is Statistical Learning?\nStatistical learning studies how to use data to understand relationships and make predictions. In most applications, we observe a response variable \\(Y\\) and a set of predictors \\(X = (X_1, \\dots, X_p)\\), and we want to learn how \\(Y\\) depends on \\(X\\).\nA common abstract representation is\n\\[\nY = f(X) + \\varepsilon,\n\\]\nwhere \\(f\\) is the systematic part of the relationship and \\(\\varepsilon\\) is random noise.\nThe main goals are usually:",
     "crumbs": [
-      "Review",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
     ]
   },
   {
-    "objectID": "contents/1/basics.html#quick-overview",
-    "href": "contents/1/basics.html#quick-overview",
-    "title": "1  Basics",
+    "objectID": "contents/1/basic.html#what-is-statistical-learning",
+    "href": "contents/1/basic.html#what-is-statistical-learning",
+    "title": "1  Statistical Learning Basics",
     "section": "",
-    "text": "Proposing a model informed by exploratory data analysis and relevant domain knowledge.\nEstimating the parameters of the proposed model using the available data.\nAssessing the adequacy and quality of the fitted model.\nRevising the model based on the assessment results.\n\n\n\nPrediction (Generalization): We evaluate the fitted model on unseen data, using metrics like MSE or classification error. This assesses the model’s generalization ability, which is the primary focus of subjects like Statistical Learning or Machine Learning.\nExplanation (Inference): We use measures such as \\(R^2\\) to assess the goodness-of-fit of the fitted model, and we use confidence intervals and p-values to perform statistical inference about population parameters. Although these calculations are based on the observed sample, they are interpreted as statements about the population. This approach focuses on understanding relationships among variables and is central to traditional Statistical Modeling, including Regression Analysis.",
+    "text": "prediction: accurately predict the response for new observations;\ninference or explanation: understand how the predictors are related to the response.",
     "crumbs": [
-      "Review",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
     ]
   },
   {
-    "objectID": "contents/1/basics.html#population-vs-sample",
-    "href": "contents/1/basics.html#population-vs-sample",
-    "title": "1  Basics",
-    "section": "1.2 Population vs Sample",
-    "text": "1.2 Population vs Sample\n\nPopulation: the set of all elements of interest in a particular study.\nSample: is a subset of the population\nStatistical Inference: The process of using data collected on a sample to draw conclusions about a population is called statistical inference.\n\nA population is described by parameters (e.g., \\(\\mu\\), \\(\\sigma\\), \\(\\beta\\)). A sample produces statistics (e.g., \\(\\bar X\\), \\(s\\), \\(\\hat\\beta\\)), which vary across repeated samples. Statistical inference uses the sampling distribution of these statistics to draw conclusions about population parameters. This part will be revisited later in ?sec-inference.\n\nExample 1.1 (gssr)  \n\n\nClick to expand.\n\nAccording to a previous national media report, the average age of U.S. adults who watch national TV news is 60 years. A data analyst hypothesizes that the average age of frequent TV-news watchers is greater than 60. To test this, she uses the General Social Survey (GSS), accessible via the gssr R package [1], to draw a sample of 500 respondents and record their ages.\n\nDescribe the population: All U.S. adults who watch TV news several times a week or more often, as defined by the GSS survey question on TV-news frequency.\nDescribe the sample: A random sample of 500 GSS respondents who meet the above criterion and have valid age data.\nSample size: \\(n = 500\\)\nDescribe the statistical inference: We want to determine whether the mean age of frequent TV-news watchers is greater than 60 based on the sampled data.",
+    "objectID": "contents/1/basic.html#supervised-and-unsupervised-learning",
+    "href": "contents/1/basic.html#supervised-and-unsupervised-learning",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.2 Supervised and Unsupervised Learning",
+    "text": "1.2 Supervised and Unsupervised Learning\nIn supervised learning, we observe both predictors and a response. The goal is to predict or explain the response.\nExamples include:\n\npredicting house prices from size, location, and age;\npredicting whether an email is spam from its content;\npredicting a patient’s risk from clinical measurements.\n\nIn unsupervised learning, we observe predictors but no response. The goal is to discover structure in the data.\nExamples include:\n\nclustering similar observations;\nreducing dimension with principal component analysis;\nfinding latent groups or patterns.",
     "crumbs": [
-      "Review",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
     ]
   },
   {
-    "objectID": "contents/1/basics.html#data-structure",
-    "href": "contents/1/basics.html#data-structure",
-    "title": "1  Basics",
-    "section": "1.3 Data structure",
-    "text": "1.3 Data structure\nA dataset is a collection of values. Values are organized in two ways. Every value belongs to a variable and an observation.\n\nDefinition 1.1 (Variables and Observations [2])  \n\nA variable contains all values that measure the same underlying attribute (like height, temperature, duration) across units.\nAn observation contains all values measured on the same unit (like a person, or a day, or a race) across attributes.\n\n\n\nExample 1.2 (possum)  \n\n\nClick to expand.\n\nResearchers collected body measurements for bushtail possums in Eastern Australia. They trapped 104 possums and recorded location where possum was trapped, age, gender, head length, skull width, total length, tail length, etc. for each possum. For more details see ?sec-app_possum.\n\nlibrary(DAAG)\ndata(possum)\nhead(possum)\n##     case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye\n## C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2\n## C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0\n## C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5\n## C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2\n## C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1\n## C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2\n##     chest belly\n## C3   28.0    36\n## C5   28.5    33\n## C10  30.0    34\n## C15  28.0    34\n## C23  28.5    33\n## C24  30.0    32\n\nThe dimension of the dataset is\n\ndim(possum)\n## [1] 104  14\n\nIn this example, there are 14 variables, and 104 observations. Each column is a variable. In R you can use the column name to get access to the variable.\n\npossum$hdlngth\n##   [1]  94.1  92.5  94.0  93.2  91.5  93.1  95.3  94.8  93.4  91.8  93.3  94.9\n##  [13]  95.1  95.4  92.9  91.6  94.7  93.5  94.4  94.8  95.9  96.3  92.5  94.4\n##  [25]  95.8  96.0  90.5  93.8  92.8  92.1  92.8  94.3  91.4  90.6  94.4  93.3\n##  [37]  89.3  92.4  84.7  91.0  88.4  85.3  90.0  85.1  90.7  91.4  90.1  98.6\n##  [49]  95.4  91.6  95.6  97.6  93.1  96.9 103.1  99.9  95.1  94.5 102.5  91.3\n##  [61]  95.7  91.3  92.0  96.9  93.5  90.4  93.3  94.1  98.0  91.9  92.8  85.9\n##  [73]  82.5  88.7  93.8  92.4  93.6  86.5  85.8  86.7  90.6  86.0  90.0  88.4\n##  [85]  89.5  88.2  98.5  89.6  97.7  92.6  97.8  90.7  89.2  91.8  91.6  94.8\n##  [97]  91.0  93.2  93.3  89.5  88.6  92.4  91.5  93.6\n\n\n\n\nDefinition 1.2 (Quantitative and Qualitative [3])  \n\nQuantitative data are observations measured on a naturally occurring numerical scale. It is also called numerical data.\nQualitative data are nonnumerical data that can only be classified into one of a group of categories. It is also called categorical data.\n\n\nIn regression, qualitative variables must be encoded using indicator (dummy) variables.\n\nDefinition 1.3 (Discrete and Continuous [3])  \n\nDiscrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2…\nContinuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals.\n\n\n\n\n\n\n\ngraph TD\n    A[All Variables] --&gt; B[Numerical]\n    A --&gt; C[Categorical]\n    B --&gt; D[Continuous]\n    B --&gt; E[Discrete]\n\n\n\n\n\n\n\n\n\n\n\n\nNoteRandom variables\n\n\n\nA variable in a dataset can be modeled by a random variable. The probability density function / probability mass function of the random variable can describe the distribution of all possible values of the variable in a dataset.\nMaking a measurement is equivalent to taking a sample from the corresponding random variable. This will be discussed in detail in ?sec-inference.",
+    "objectID": "contents/1/basic.html#regression-and-classification",
+    "href": "contents/1/basic.html#regression-and-classification",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.3 Regression and Classification",
+    "text": "1.3 Regression and Classification\nWithin supervised learning, two major tasks are:\n\nregression, where the response is quantitative;\nclassification, where the response is categorical.\n\nFor example:\n\npredicting salary is a regression problem;\npredicting whether a tumor is benign or malignant is a classification problem.",
     "crumbs": [
-      "Review",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
     ]
   },
   {
-    "objectID": "contents/1/basics.html#data-visualization",
-    "href": "contents/1/basics.html#data-visualization",
-    "title": "1  Basics",
-    "section": "1.4 Data Visualization",
-    "text": "1.4 Data Visualization\n\n1.4.1 Qualitative (categorical) data\nUsually the most important is the class relative frequency: \\[\n\\text{class relative frequency}=\\frac{\\text{class frequency}}{n}.\n\\]\nTo display it, we could use table, bar chart or pie chart.\n\nExample 1.3 (possum)  \n\n\nClick to expand.\n\nHere we still consider the possum dataset.\n\nlibrary(DAAG)\ndata(possum)\nhead(possum)\n##     case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye\n## C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2\n## C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0\n## C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5\n## C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2\n## C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1\n## C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2\n##     chest belly\n## C3   28.0    36\n## C5   28.5    33\n## C10  30.0    34\n## C15  28.0    34\n## C23  28.5    33\n## C24  30.0    32\n\nThe variable Pop (location where possum was trapped) is qualitative. We could use the following ways to display it. We first compute the frequency table of the variable Pop:\n\ntable(possum$Pop)\n## \n##   Vic other \n##    46    58\n\nor relative frequency table:\n\ntable(possum$Pop)/length(possum$Pop)\n## \n##       Vic     other \n## 0.4423077 0.5576923\n\nThen we could draw the barplot of this variable:\n\nbarplot(table(possum$Pop))\n\n\n\n\n\n\n\n\nand the pie plot:\n\npie(table(possum$Pop))\n\n\n\n\n\n\n\n\nNote that table is handling the statistics, while barplot and pie draw on top of the result from table.\n\n\n\n\n1.4.2 Quantitative (numerical) data\nFor quantitative data, we would like to see the histogram, as well as computing some statistics: min, max, quartiles, median and mean.\n\nHistogram is an approximation of the distribution. In other words, we split the range into small segments (called bins), and count the frequency or relative frequency of data falling into these bins.\nBox plot consists of a box, two lines and possibly some points:\n\nThe box in the box plot extends from the lower quartile to the upper quartile. The difference between the upper quartile and the lower quartile is called the inter-quartile range (IQR).\nThe lines, known as whiskers, extend to one and a half times the interquartile range, but they stop at the most extreme data points that fall within this range.\nThe points, considered as outliers, are those which are not covered by the box and the lines.\n\n\nHistograms and boxplots help check normality and outliers before fitting regression. These summaries approximate the underlying distribution of the variable. In regression, we later apply similar tools to the residuals to check model assumptions.\n\nExample 1.4 (possum)  \n\n\nClick to expand.\n\nWe still consider the possum dataset. We could use summary to compute the major statistics.\n\nlibrary(DAAG)\ndata(possum)\nsummary(possum)\n##       case             site          Pop     sex         age       \n##  Min.   :  1.00   Min.   :1.000   Vic  :46   f:43   Min.   :1.000  \n##  1st Qu.: 26.75   1st Qu.:1.000   other:58   m:61   1st Qu.:2.250  \n##  Median : 52.50   Median :3.000                     Median :3.000  \n##  Mean   : 52.50   Mean   :3.625                     Mean   :3.833  \n##  3rd Qu.: 78.25   3rd Qu.:6.000                     3rd Qu.:5.000  \n##  Max.   :104.00   Max.   :7.000                     Max.   :9.000  \n##                                                     NA's   :2      \n##     hdlngth           skullw         totlngth         taill      \n##  Min.   : 82.50   Min.   :50.00   Min.   :75.00   Min.   :32.00  \n##  1st Qu.: 90.67   1st Qu.:54.98   1st Qu.:84.00   1st Qu.:35.88  \n##  Median : 92.80   Median :56.35   Median :88.00   Median :37.00  \n##  Mean   : 92.60   Mean   :56.88   Mean   :87.09   Mean   :37.01  \n##  3rd Qu.: 94.72   3rd Qu.:58.10   3rd Qu.:90.00   3rd Qu.:38.00  \n##  Max.   :103.10   Max.   :68.60   Max.   :96.50   Max.   :43.00  \n##                                                                  \n##     footlgth        earconch          eye            chest          belly      \n##  Min.   :60.30   Min.   :40.30   Min.   :12.80   Min.   :22.0   Min.   :25.00  \n##  1st Qu.:64.60   1st Qu.:44.80   1st Qu.:14.40   1st Qu.:25.5   1st Qu.:31.00  \n##  Median :68.00   Median :46.80   Median :14.90   Median :27.0   Median :32.50  \n##  Mean   :68.46   Mean   :48.13   Mean   :15.05   Mean   :27.0   Mean   :32.59  \n##  3rd Qu.:72.50   3rd Qu.:52.00   3rd Qu.:15.72   3rd Qu.:28.0   3rd Qu.:34.12  \n##  Max.   :77.90   Max.   :56.20   Max.   :17.80   Max.   :32.0   Max.   :40.00  \n##  NA's   :1\n\nThe variable hdlngth (head length) is quantitative. We first show the histogram. We could use breaks to control the number of bins. Note that the function hist does not only draw the histogram; it also provides many useful pieces of information.\n\nres &lt;- hist(possum$hdlngth, breaks=10)\n\n\n\n\n\n\n\nres\n## $breaks\n##  [1]  82  84  86  88  90  92  94  96  98 100 102 104\n## \n## $counts\n##  [1]  1  6  2 12 22 27 22  7  3  0  2\n## \n## $density\n##  [1] 0.004807692 0.028846154 0.009615385 0.057692308 0.105769231 0.129807692\n##  [7] 0.105769231 0.033653846 0.014423077 0.000000000 0.009615385\n## \n## $mids\n##  [1]  83  85  87  89  91  93  95  97  99 101 103\n## \n## $xname\n## [1] \"possum$hdlngth\"\n## \n## $equidist\n## [1] TRUE\n## \n## attr(,\"class\")\n## [1] \"histogram\"\n\nThen we could show the box plot. You may compare the lines in the plot with the summary table and the histogram above.\n\nboxplot(possum$hdlngth)\n\n\n\n\n\n\n\n\n\n\n\n\n1.4.3 Relations among multiple variables\nWe could show the relation between two variables in a scatterplot. Scatterplots help us assess linearity, detect outliers, and decide whether transformation is needed.\n\nExample 1.5 (possum)  \n\n\nClick to expand.\n\nWhen both variables are numerical and continuous:\n\nplot(possum$hdlngth, possum$skullw)\n\n\n\n\n\n\n\n\nWhen one variable is categorical:\n\nplot(as.factor(possum$Pop), possum$skullw)\n\n\n\n\n\n\n\n\nNote that in this case, the categorical data has to be a factor. And once it is cast into a factor, the plot is multiple box plots for each category. This type of grouped boxplot corresponds to comparing group means and is directly related to one-way ANOVA and regression with dummy variables. It will be discussed in later sections.\nWe can see pair plots for each pair of variables. Pair plots are very important because they help reveal relationships among predictors. Note that before creating the plot, we have to cast pop and sex into factors.\n\npossum$Pop &lt;- as.factor(possum$Pop)\npossum$sex &lt;- as.factor(possum$sex)\npairs(possum)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[1] Healy, K. (2025). Gssrdoc: General social survey documentation for use in r.\n\n\n[2] Wickham, H. (2014). Tidy data. Journal of Statistical Software 59.\n\n\n[3] Mendenhall, W. and Sincich, T. (2020). A second course in statistics: Regression analyisis. Pearson Education, Inc, [Hoboken, New Jersey].",
+    "objectID": "contents/1/basic.html#prediction-versus-inference",
+    "href": "contents/1/basic.html#prediction-versus-inference",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.4 Prediction Versus Inference",
+    "text": "1.4 Prediction Versus Inference\nPrediction and inference are related, but they are not the same.\nIf the goal is prediction, we care mainly about how well the model performs on new data. A more complex model may be acceptable if it improves predictive accuracy.\nIf the goal is inference, we care about understanding the role of each predictor. In this case, interpretability is often more important than pure predictive performance.\n\n\n\n\n\n\nNoteMain Point\n\n\n\nThe best predictive model is not always the best explanatory model. Statistical learning often requires choosing between interpretability and flexibility.",
     "crumbs": [
-      "Review",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Basics</span>"
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#parametric-and-nonparametric-methods",
+    "href": "contents/1/basic.html#parametric-and-nonparametric-methods",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.5 Parametric and Nonparametric Methods",
+    "text": "1.5 Parametric and Nonparametric Methods\nA parametric method assumes a specific functional form for \\(f\\). For example, linear regression assumes that\n\\[\nf(X) = \\beta_0 + \\beta_1 X_1 + \\cdots + \\beta_p X_p.\n\\]\nThis assumption simplifies estimation and interpretation, but it may be too restrictive.\nA nonparametric method does not assume a fixed functional form. It is more flexible, but it usually requires more data and may be harder to interpret.\nThus:\n\nparametric models are simpler and easier to interpret;\nnonparametric models are more flexible but may have higher variance.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#training-error-and-test-error",
+    "href": "contents/1/basic.html#training-error-and-test-error",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.6 Training Error and Test Error",
+    "text": "1.6 Training Error and Test Error\nWhen we fit a model, we can measure how well it matches the observed data. This is the training error.\nHowever, what really matters is performance on new observations. This is the test error.\nA model can have very small training error but still perform poorly on new data. This phenomenon is called overfitting.\n\nUnderfitting occurs when the model is too simple to capture the signal.\nOverfitting occurs when the model is too flexible and starts fitting noise.\n\nGood statistical learning aims to minimize test error, not merely training error.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#bias-variance-tradeoff",
+    "href": "contents/1/basic.html#bias-variance-tradeoff",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.7 Bias-Variance Tradeoff",
+    "text": "1.7 Bias-Variance Tradeoff\nA central idea in statistical learning is the bias-variance tradeoff.\n\nA simple model tends to have higher bias but lower variance.\nA flexible model tends to have lower bias but higher variance.\n\nAs model flexibility increases:\n\ntraining error usually decreases;\ntest error often decreases at first, then increases once overfitting begins.\n\nThe goal is to find a level of complexity that balances bias and variance well.\n\n\n\n\n\n\nImportantWhy This Matters\n\n\n\nMany modern methods can be understood as ways to manage the bias-variance tradeoff. Regularization, cross-validation, and model comparison are all tools for this purpose.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#a-typical-statistical-learning-workflow",
+    "href": "contents/1/basic.html#a-typical-statistical-learning-workflow",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.8 A Typical Statistical Learning Workflow",
+    "text": "1.8 A Typical Statistical Learning Workflow\nA practical workflow often looks like this:\n\nDefine the prediction or explanation goal.\nExplore and preprocess the data.\nChoose one or more candidate models.\nEstimate model performance using validation or cross-validation.\nCompare models and select an appropriate final model.\nInterpret results and communicate conclusions.\n\nThis course will revisit this workflow repeatedly with different methods.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/basic.html#looking-ahead",
+    "href": "contents/1/basic.html#looking-ahead",
+    "title": "1  Statistical Learning Basics",
+    "section": "1.9 Looking Ahead",
+    "text": "1.9 Looking Ahead\nThe early chapters focus on linear regression and its extensions. Later chapters introduce more flexible models, resampling methods, regularization, and practical machine learning workflow.\nThe broad progression is:\n\nstart with simple interpretable models;\nallow more flexible structure when needed;\nevaluate models using principled estimates of test error;\nimprove prediction through regularization and modern methods.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html",
+    "href": "contents/1/lr.html",
+    "title": "2  Linear Regression",
+    "section": "",
+    "text": "2.1 Quick Overview\nLinear regression is the fundamental supervised learning method for a quantitative response. It models the conditional mean of the response as a linear function of the predictors: \\[\ny = \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p + \\varepsilon.\n\\]\nIn matrix notation, this can be written as \\[\n\\vb y = \\vb X\\beta + \\varepsilon.\n\\] Here, \\(\\vb X\\) is the design matrix, whose first column is a column of ones representing the intercept.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#the-ordinary-least-squares-estimator",
+    "href": "contents/1/lr.html#the-ordinary-least-squares-estimator",
+    "title": "2  Linear Regression",
+    "section": "2.2 The Ordinary Least Squares Estimator",
+    "text": "2.2 The Ordinary Least Squares Estimator\nThe most common fitting method is ordinary least squares (OLS). It chooses the coefficient vector \\(\\beta\\) that minimizes the residual sum of squares:\n\\[\n\\rss(\\beta) = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\n= \\norm{\\vb y - \\vb X\\beta }_2^2.\n\\]\nThe OLS estimator is\n\\[\n\\hat{\\beta}_{\\ols} = (\\vb X^\\top \\vb X)^{-1}\\vb X^\\top \\vb y,\n\\]\nprovided that \\(\\vb X^\\top \\vb X\\) is invertible.\nOnce the coefficients are estimated, the fitted value for observation \\(i\\) is\n\\[\n\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\cdots + \\hat{\\beta}_p x_{ip}.\n\\]\nInterpretation is one of the main strengths of linear regression.\n\nThe coefficient \\(\\beta_j\\) represents the change in the mean response associated with a one-unit increase in \\(x_j\\), holding the other predictors fixed.\nWhen interactions are present, a main effect should not be interpreted in isolation. Its meaning depends on the values of the interacting variables.\nIf the predictors are centered so that a value of 0 corresponds to the average of the original variable, then the main-effect coefficient can be interpreted as the change in the mean response associated with a one-unit increase in \\(x_j\\), while holding the other predictors at their average levels.\nA confidence interval gives a range of plausible values for a coefficient or for the mean response at a given combination of predictors.\nA prediction interval is wider than a confidence interval because it must account for both uncertainty in the estimated mean response, and random variation in a future observation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#assessing-model-fit",
+    "href": "contents/1/lr.html#assessing-model-fit",
+    "title": "2  Linear Regression",
+    "section": "2.3 Assessing Model Fit",
+    "text": "2.3 Assessing Model Fit\nThe orginal assumptions for a linear regression model are\n\nAll random errors are independent and follow a unique distribution.\nThe unique distribution is normal.\nThe mean of the normal distribution is \\(0\\).\nThe variance of the normal distribution is fixed across all variables.\n\nSeveral tools are commonly used to assess a linear regression fit. These diagnostics do not prove that a model is correct, but they help identify important problems.\n\nresidual plots and partial residual plots,\nQ-Q plots,\nleverage and influence diagnostics,\nmeasures such as \\(R^2\\), adjusted \\(R^2\\), and residual standard error.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#formula-language",
+    "href": "contents/1/lr.html#formula-language",
+    "title": "2  Linear Regression",
+    "section": "2.4 Formula language",
+    "text": "2.4 Formula language\nThe formula language was developed based on the Wilkinson-Rogers notations introduced in [1], and was later implemented in the S language at Bell Labs by John Chambers and colleagues in the 1980s [2]. It has since become the standard way to specify linear models in statistical software such as R and Python (statsmodels).\nThe basic syntax is summarized in the following table with examples.\n\n\n\n\n\n\n\nFormula\nMeaning\n\n\n\n\ny ~ x\nResponse \\(y\\) regressed on predictor \\(x\\)\n\n\ny ~ x1 + x2\nInclude predictors \\(x_1\\) and \\(x_2\\)\n\n\ny ~ .\nInclude all available predictors in the dataset\n\n\ny ~ x1:x2\nInteraction between \\(x_1\\) and \\(x_2\\) only\n\n\ny ~ x1 * x2\nMain effects and interaction (x1 + x2 + x1:x2)\n\n\ny ~ x1 + x2 + x3 - x2\nInclude all listed variables except x2\n\n\ny ~ (x1 + x2 + x3)^2\nAll main effects and two-way interactions\n\n\ny ~ I(x**2)\nInclude a mathematical transformation of \\(x\\)\n\n\ny ~ C(group)\nTreat group as a categorical variable\n\n\ny ~ np.log(x)\nInclude the transformation \\(\\log(x)\\) using a Python function\n\n\ny ~ 1\nModel with intercept only\n\n\ny ~ x - 1\nRemove the intercept\n\n\n\n\n\n\n\n\n\nNoteCategorical Predictors\n\n\n\nCategorical predictors are represented through indicator (dummy) variables. If a factor has \\(k\\) levels, the model usually includes \\(k-1\\) dummy variables.\nIn Python when using statsmodels to fit linear regression models, categorical variables are automatically converted into dummy variables. To indicate that a variable is categorical, you may either:\n\nexplicitly convert the variable in the dataset to a categorical type using .astype(\"category\"), or\nuse the C() function in the formula language.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#model-selection",
+    "href": "contents/1/lr.html#model-selection",
+    "title": "2  Linear Regression",
+    "section": "2.5 Model Selection",
+    "text": "2.5 Model Selection\nIn traditional multiple regression, several competing sets of predictors may be plausible. Model selection compares these models using criteria that balance goodness of fit with model complexity.\n\n2.5.1 Some Criteria\nThese criteria reward good fit but penalize model complexity.\n\nAIC tends to prefer somewhat larger models.\nBIC penalizes complexity more strongly and often prefers smaller models.\nMallows’ \\(C_p\\) compares a candidate model to a larger reference model.\nPRESS uses leave-one-out data to measure test performance.\n\nThe first three methods use training results to estimate test performance, whereas PRESS directly approximates the test error through leave-one-out validation. These tools are useful for comparing models, but they should not replace subject-matter reasoning.\n\n\n2.5.2 Traditional variable selection methods\n\nBest Subset Selection: Best subset selection compares all models of a given size and then chooses the best one according to a criterion such as AIC, BIC, adjusted \\(R^2\\), \\(C_p\\), or PRESS. It is conceptually simple, but it becomes computationally expensive when the number of predictors is large.\nStepwise Selection: Stepwise procedures add or remove variables sequentially rather than searching all possible models. These methods are faster than best subset selection, but they are greedy procedures and do not guarantee the globally best model.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#python-code",
+    "href": "contents/1/lr.html#python-code",
+    "title": "2  Linear Regression",
+    "section": "2.6 Python Code",
+    "text": "2.6 Python Code\nThe main library for linear regression is statsmodels. We will also use pandas to deal with dataset and seaborn to deal with data visualization.\n\n2.6.1 Setup\nAs an example we use the public mpg dataset from seaborn to demonstrate the workflow of the standard linear regression.\nThis is a dataset for cars manufactured between 1970-82 in USA, Europe., and Japan. It was taken from the StatLib library which is maintained at Carnegie Mellon University. The dataset was used in the 1983 American Statistical Association Exposition. More info can be found here.\n\nimport seaborn as sns\n1sns.set_theme()\n\nmpg = sns.load_dataset(\"mpg\")\nmpg.head()\n\n\n1\n\nWe use the sns theme to obtain cleaner and more visually appealing plots compared to the default matplotlib style.\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncylinders\ndisplacement\nhorsepower\nweight\nacceleration\nmodel_year\norigin\nname\n\n\n\n\n0\n18.0\n8\n307.0\n130.0\n3504\n12.0\n70\nusa\nchevrolet chevelle malibu\n\n\n1\n15.0\n8\n350.0\n165.0\n3693\n11.5\n70\nusa\nbuick skylark 320\n\n\n2\n18.0\n8\n318.0\n150.0\n3436\n11.0\n70\nusa\nplymouth satellite\n\n\n3\n16.0\n8\n304.0\n150.0\n3433\n12.0\n70\nusa\namc rebel sst\n\n\n4\n17.0\n8\n302.0\n140.0\n3449\n10.5\n70\nusa\nford torino\n\n\n\n\n\n\n\n\nmpg.shape\n\n(398, 9)\n\n\n\nmpg.columns\n\nIndex(['mpg', 'cylinders', 'displacement', 'horsepower', 'weight',\n       'acceleration', 'model_year', 'origin', 'name'],\n      dtype='str')\n\n\nThere are 9 variables and 398 observations in the dataset:\n\nmpg : continuous\ncylinders : multi-valued discrete\ndisplacement : continuous\nhorsepower : continuous\nweight : continuous\nacceleration : continuous\nmodel_year : multi-valued discrete\norigin : multi-valued discrete\nname : string (Unique values)\n\n\nmpg.info()\n\n&lt;class 'pandas.DataFrame'&gt;\nRangeIndex: 398 entries, 0 to 397\nData columns (total 9 columns):\n #   Column        Non-Null Count  Dtype  \n---  ------        --------------  -----  \n 0   mpg           398 non-null    float64\n 1   cylinders     398 non-null    int64  \n 2   displacement  398 non-null    float64\n 3   horsepower    392 non-null    float64\n 4   weight        398 non-null    int64  \n 5   acceleration  398 non-null    float64\n 6   model_year    398 non-null    int64  \n 7   origin        398 non-null    str    \n 8   name          398 non-null    str    \ndtypes: float64(4), int64(3), str(2)\nmemory usage: 28.1 KB\n\n\nThis table shows that horsepower contains some missing values. We would like to drop them.\n\nmpg = mpg.dropna()\n\nThe goal is to predict mpg using the other features of the car. We remove name because it does not provide meaningful information about vehicle performance. We also treat cylinders and origin as categorical variables.\nFor model_year, it could reasonably be treated as either a numerical or a categorical variable. For simplicity, we treat it as numerical here, since it has 13 unique values and using 13 categories would make the model less parsimonious.\n\nmpg[\"cylinders\"] = mpg[\"cylinders\"].astype(\"category\")\nmpg[\"origin\"] = mpg[\"origin\"].astype(\"category\")\nmpg = mpg.drop(columns=[\"name\"])\n\n\n\n\n\n\n\nTip\n\n\n\nFor categorical data, we could explicitly change the datatype in the dataset as shown above using .astype(\"category\"), or we could indicate it in the formula language using C(). For example, we could later try C(model_year) to test what would happen if we treat model_year as a numerical value.\n\n\nNow we could see the summary of the cleaned dataset. The default describe() will only show the distribution of numerical values. If we want to see categorical variables, we need to add the argument `include=“category”’.\n\nmpg.describe()\n\n\n\n\n\n\n\n\nmpg\ndisplacement\nhorsepower\nweight\nacceleration\nmodel_year\n\n\n\n\ncount\n392.000000\n392.000000\n392.000000\n392.000000\n392.000000\n392.000000\n\n\nmean\n23.445918\n194.411990\n104.469388\n2977.584184\n15.541327\n75.979592\n\n\nstd\n7.805007\n104.644004\n38.491160\n849.402560\n2.758864\n3.683737\n\n\nmin\n9.000000\n68.000000\n46.000000\n1613.000000\n8.000000\n70.000000\n\n\n25%\n17.000000\n105.000000\n75.000000\n2225.250000\n13.775000\n73.000000\n\n\n50%\n22.750000\n151.000000\n93.500000\n2803.500000\n15.500000\n76.000000\n\n\n75%\n29.000000\n275.750000\n126.000000\n3614.750000\n17.025000\n79.000000\n\n\nmax\n46.600000\n455.000000\n230.000000\n5140.000000\n24.800000\n82.000000\n\n\n\n\n\n\n\n\nmpg.describe(include=\"category\")\n\n\n\n\n\n\n\n\ncylinders\norigin\n\n\n\n\ncount\n392\n392\n\n\nunique\n5\n3\n\n\ntop\n4\nusa\n\n\nfreq\n199\n245\n\n\n\n\n\n\n\n\n\n2.6.2 EDA\nWe mainly use three types of plots for exploratory data analysis.\n\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\nsns.pairplot(mpg)\n1plt.gcf().set_size_inches(14, 9)\n\n\n1\n\nplt.gcf() returns the current figure object. Once we have the figure object, we can modify its properties, such as resizing the figure or setting the DPI.\n\n\n\n\n\n\n\n\n\n\n\n\n\nClick to expand.\n\nWe can use hue to visualize the effect of categorical variables.\n\nsns.pairplot(mpg, hue = \"cylinders\")\n\n\n\n\n\n\n\n\n\nsns.pairplot(mpg, hue = \"origin\")\n\n\n\n\n\n\n\n\n\nTo display the correlation matrix heatmap, we first compute the correlation matrix and then use sns.heatmap() to visualize it.\n\ncorr = mpg.corr(numeric_only=True)\nsns.heatmap(corr, annot=True, cmap=\"coolwarm\", fmt=\".2f\")\nplt.gcf().set_size_inches(8, 8)  \n\n\n\n\n\n\n\n\nFinally, we may also want to examine the histogram of each variable, although this information is already reflected in the pair plot.\n\nmpg.hist(\n    bins=20,  \n1    figsize=(10, 8),\n2);\n\n\n1\n\nThe hist() method provides a built-in figsize argument, so there is no need to call plt.gcf() in this case.\n\n2\n\nThe hist() method returns an array of axes objects, which would normally produce text output. The ; suppresses this output.\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.6.3 Fit a Basic Model\n\nimport itertools\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pandas as pd\nimport seaborn as sns\nimport statsmodels.api as sm\nimport statsmodels.formula.api as smf\nfrom statsmodels.stats.anova import anova_lm\n\nresponse = \"mpg\"\npredictors = [\"horsepower\", \"weight\", \"acceleration\"]\n\n\nimport statsmodels.formula.api as smf\n\nfit_linear = smf.ols(\n    \"mpg ~ horsepower + weight + acceleration\",\n    data=mpg,\n).fit()\n\nprint(fit_linear.summary())\n\n                            OLS Regression Results                            \n==============================================================================\nDep. Variable:                    mpg   R-squared:                       0.706\nModel:                            OLS   Adj. R-squared:                  0.704\nMethod:                 Least Squares   F-statistic:                     311.1\nDate:                Thu, 09 Apr 2026   Prob (F-statistic):          7.48e-103\nTime:                        14:00:50   Log-Likelihood:                -1121.0\nNo. Observations:                 392   AIC:                             2250.\nDf Residuals:                     388   BIC:                             2266.\nDf Model:                           3                                         \nCovariance Type:            nonrobust                                         \n================================================================================\n                   coef    std err          t      P&gt;|t|      [0.025      0.975]\n--------------------------------------------------------------------------------\nIntercept       45.6783      2.409     18.965      0.000      40.943      50.414\nhorsepower      -0.0475      0.016     -2.970      0.003      -0.079      -0.016\nweight          -0.0058      0.001    -10.024      0.000      -0.007      -0.005\nacceleration    -0.0021      0.123     -0.017      0.987      -0.245       0.240\n==============================================================================\nOmnibus:                       35.392   Durbin-Watson:                   0.858\nProb(Omnibus):                  0.000   Jarque-Bera (JB):               46.071\nSkew:                           0.684   Prob(JB):                     9.91e-11\nKurtosis:                       3.975   Cond. No.                     3.48e+04\n==============================================================================\n\nNotes:\n[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.\n[2] The condition number is large, 3.48e+04. This might indicate that there are\nstrong multicollinearity or other numerical problems.\n\n\n\n\n2.6.4 Fit a Higher-Degree Model\n\nfit_poly = smf.ols(\n    \"mpg ~ horsepower + I(horsepower**2) + weight + I(weight**2) + acceleration\",\n    data=mpg,\n).fit()\n\nprint(fit_poly.summary())\n\n                            OLS Regression Results                            \n==============================================================================\nDep. Variable:                    mpg   R-squared:                       0.752\nModel:                            OLS   Adj. R-squared:                  0.748\nMethod:                 Least Squares   F-statistic:                     233.5\nDate:                Thu, 09 Apr 2026   Prob (F-statistic):          2.55e-114\nTime:                        14:00:50   Log-Likelihood:                -1088.3\nNo. Observations:                 392   AIC:                             2189.\nDf Residuals:                     386   BIC:                             2212.\nDf Model:                           5                                         \nCovariance Type:            nonrobust                                         \n======================================================================================\n                         coef    std err          t      P&gt;|t|      [0.025      0.975]\n--------------------------------------------------------------------------------------\nIntercept             70.0369      3.730     18.775      0.000      62.703      77.371\nhorsepower            -0.2865      0.050     -5.778      0.000      -0.384      -0.189\nI(horsepower ** 2)     0.0007      0.000      4.710      0.000       0.000       0.001\nweight                -0.0106      0.002     -4.294      0.000      -0.015      -0.006\nI(weight ** 2)      1.073e-06   3.56e-07      3.018      0.003    3.74e-07    1.77e-06\nacceleration          -0.2924      0.127     -2.306      0.022      -0.542      -0.043\n==============================================================================\nOmnibus:                       33.993   Durbin-Watson:                   0.957\nProb(Omnibus):                  0.000   Jarque-Bera (JB):               54.382\nSkew:                           0.573   Prob(JB):                     1.55e-12\nKurtosis:                       4.419   Cond. No.                     2.08e+08\n==============================================================================\n\nNotes:\n[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.\n[2] The condition number is large, 2.08e+08. This might indicate that there are\nstrong multicollinearity or other numerical problems.\n\n\n\n\n2.6.5 Fit a Model With Interactions\n\nfit_interaction = smf.ols(\n    \"mpg ~ horsepower * weight + acceleration\",\n    data=mpg,\n).fit()\n\nprint(fit_interaction.summary())\n\n                            OLS Regression Results                            \n==============================================================================\nDep. Variable:                    mpg   R-squared:                       0.750\nModel:                            OLS   Adj. R-squared:                  0.747\nMethod:                 Least Squares   F-statistic:                     290.0\nDate:                Thu, 09 Apr 2026   Prob (F-statistic):          5.14e-115\nTime:                        14:00:50   Log-Likelihood:                -1089.6\nNo. Observations:                 392   AIC:                             2189.\nDf Residuals:                     387   BIC:                             2209.\nDf Model:                           4                                         \nCovariance Type:            nonrobust                                         \n=====================================================================================\n                        coef    std err          t      P&gt;|t|      [0.025      0.975]\n-------------------------------------------------------------------------------------\nIntercept            67.3368      3.453     19.498      0.000      60.547      74.127\nhorsepower           -0.2738      0.031     -8.748      0.000      -0.335      -0.212\nweight               -0.0105      0.001    -13.382      0.000      -0.012      -0.009\nhorsepower:weight  5.535e-05   6.75e-06      8.203      0.000    4.21e-05    6.86e-05\nacceleration         -0.1723      0.116     -1.487      0.138      -0.400       0.055\n==============================================================================\nOmnibus:                       38.343   Durbin-Watson:                   0.922\nProb(Omnibus):                  0.000   Jarque-Bera (JB):               61.072\nSkew:                           0.636   Prob(JB):                     5.47e-14\nKurtosis:                       4.456   Cond. No.                     7.05e+06\n==============================================================================\n\nNotes:\n[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.\n[2] The condition number is large, 7.05e+06. This might indicate that there are\nstrong multicollinearity or other numerical problems.\n\n\n\n\n2.6.6 Fit a Model With Categorical Variables\n\nfit_categorical = smf.ols(\n    \"mpg ~ horsepower + weight + acceleration + C(origin) + C(cylinders)\",\n    data=mpg,\n).fit()\n\nprint(fit_categorical.summary())\n\n                            OLS Regression Results                            \n==============================================================================\nDep. Variable:                    mpg   R-squared:                       0.755\nModel:                            OLS   Adj. R-squared:                  0.749\nMethod:                 Least Squares   F-statistic:                     131.0\nDate:                Thu, 09 Apr 2026   Prob (F-statistic):          5.84e-111\nTime:                        14:00:50   Log-Likelihood:                -1085.3\nNo. Observations:                 392   AIC:                             2191.\nDf Residuals:                     382   BIC:                             2230.\nDf Model:                           9                                         \nCovariance Type:            nonrobust                                         \n======================================================================================\n                         coef    std err          t      P&gt;|t|      [0.025      0.975]\n--------------------------------------------------------------------------------------\nIntercept             35.4394      3.074     11.527      0.000      29.394      41.484\nC(origin)[T.japan]     2.5733      0.673      3.825      0.000       1.250       3.896\nC(origin)[T.usa]       0.0588      0.644      0.091      0.927      -1.208       1.326\nC(cylinders)[T.4]      8.8399      2.031      4.352      0.000       4.846      12.833\nC(cylinders)[T.5]     11.2577      3.099      3.632      0.000       5.164      17.352\nC(cylinders)[T.6]      5.1654      2.108      2.450      0.015       1.020       9.310\nC(cylinders)[T.8]      7.5368      2.243      3.360      0.001       3.126      11.948\nhorsepower            -0.0741      0.015     -4.784      0.000      -0.105      -0.044\nweight                -0.0036      0.001     -5.117      0.000      -0.005      -0.002\nacceleration          -0.1022      0.116     -0.879      0.380      -0.331       0.126\n==============================================================================\nOmnibus:                       62.327   Durbin-Watson:                   0.964\nProb(Omnibus):                  0.000   Jarque-Bera (JB):              115.182\nSkew:                           0.897   Prob(JB):                     9.74e-26\nKurtosis:                       4.958   Cond. No.                     7.39e+04\n==============================================================================\n\nNotes:\n[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.\n[2] The condition number is large, 7.39e+04. This might indicate that there are\nstrong multicollinearity or other numerical problems.\n\n\n\n\n2.6.7 Generate a Summary Table\n\nsummary_table = fit_categorical.summary2().tables[1].copy()\nsummary_table[\"CI 2.5%\"] = fit_categorical.conf_int()[0]\nsummary_table[\"CI 97.5%\"] = fit_categorical.conf_int()[1]\nsummary_table\n\n\n\n\n\n\n\n\nCoef.\nStd.Err.\nt\nP&gt;|t|\n[0.025\n0.975]\nCI 2.5%\nCI 97.5%\n\n\n\n\nIntercept\n35.439379\n3.074454\n11.527049\n1.383458e-26\n29.394408\n41.484351\n29.394408\n41.484351\n\n\nC(origin)[T.japan]\n2.573292\n0.672805\n3.824719\n1.528626e-04\n1.250426\n3.896158\n1.250426\n3.896158\n\n\nC(origin)[T.usa]\n0.058837\n0.644262\n0.091324\n9.272827e-01\n-1.207908\n1.325582\n-1.207908\n1.325582\n\n\nC(cylinders)[T.4]\n8.839885\n2.031124\n4.352214\n1.732322e-05\n4.846303\n12.833467\n4.846303\n12.833467\n\n\nC(cylinders)[T.5]\n11.257740\n3.099401\n3.632231\n3.193287e-04\n5.163718\n17.351763\n5.163718\n17.351763\n\n\nC(cylinders)[T.6]\n5.165401\n2.108133\n2.450225\n1.472453e-02\n1.020403\n9.310400\n1.020403\n9.310400\n\n\nC(cylinders)[T.8]\n7.536836\n2.243271\n3.359753\n8.587001e-04\n3.126131\n11.947541\n3.126131\n11.947541\n\n\nhorsepower\n-0.074129\n0.015497\n-4.783539\n2.464202e-06\n-0.104599\n-0.043660\n-0.104599\n-0.043660\n\n\nweight\n-0.003649\n0.000713\n-5.117398\n4.916772e-07\n-0.005051\n-0.002247\n-0.005051\n-0.002247\n\n\nacceleration\n-0.102182\n0.116299\n-0.878620\n3.801597e-01\n-0.330848\n0.126483\n-0.330848\n0.126483\n\n\n\n\n\n\n\n\n\n2.6.8 Generate ANOVA Tables: Type I, II, and III\nType I sums of squares depend on the order in which the terms enter the model. Type II and Type III tables are order-invariant under the usual model-coding assumptions, but they answer slightly different questions.\n\nfit_anova = smf.ols(\n    \"mpg ~ horsepower + weight + acceleration + C(origin)\",\n    data=mpg,\n).fit()\n\nprint(\"Type I ANOVA\")\nprint(anova_lm(fit_anova, typ=1))\n\nprint(\"\\nType II ANOVA\")\nprint(anova_lm(fit_anova, typ=2))\n\nprint(\"\\nType III ANOVA\")\nprint(anova_lm(fit_anova, typ=3))\n\nType I ANOVA\n                 df       sum_sq      mean_sq           F        PR(&gt;F)\nC(origin)       2.0  7904.291038  3952.145519  228.189165  3.876707e-66\nhorsepower      1.0  7866.315428  7866.315428  454.185692  3.531103e-67\nweight          1.0  1361.903501  1361.903501   78.633649  2.803996e-17\nacceleration    1.0     1.117117     1.117117    0.064500  7.996549e-01\nResidual      386.0  6685.366385    17.319602         NaN           NaN\n\nType II ANOVA\n                   sum_sq     df          F        PR(&gt;F)\nC(origin)      308.473996    2.0   8.905343  1.655896e-04\nhorsepower     220.431050    1.0  12.727258  4.056969e-04\nweight        1017.752738    1.0  58.763056  1.456535e-13\nacceleration     1.117117    1.0   0.064500  7.996549e-01\nResidual      6685.366385  386.0        NaN           NaN\n\nType III ANOVA\n                   sum_sq     df           F        PR(&gt;F)\nIntercept     5797.808250    1.0  334.754126  2.704249e-54\nC(origin)      308.473996    2.0    8.905343  1.655896e-04\nhorsepower     220.431050    1.0   12.727258  4.056969e-04\nweight        1017.752738    1.0   58.763056  1.456535e-13\nacceleration     1.117117    1.0    0.064500  7.996549e-01\nResidual      6685.366385  386.0         NaN           NaN\n\n\n\n\n2.6.9 Generate a Nested ANOVA Table\nNested ANOVA compares a smaller model with a larger model that contains all of its terms plus additional predictors.\n\nfit_nested_small = smf.ols(\"mpg ~ horsepower + weight\", data=mpg).fit()\nfit_nested_large = smf.ols(\n    \"mpg ~ horsepower + weight + acceleration + C(origin)\",\n    data=mpg,\n).fit()\n\nanova_lm(fit_nested_small, fit_nested_large)\n\n\n\n\n\n\n\n\ndf_resid\nssr\ndf_diff\nss_diff\nF\nPr(&gt;F)\n\n\n\n\n0\n389.0\n6993.845437\n0.0\nNaN\nNaN\nNaN\n\n\n1\n386.0\n6685.366385\n3.0\n308.479052\n5.936993\n0.000575\n\n\n\n\n\n\n\n\n\n2.6.10 Residual Plots\n\ndiagnostics = mpg[[\"mpg\", \"horsepower\", \"weight\", \"acceleration\", \"origin\"]].copy()\ndiagnostics[\"fitted\"] = fit_categorical.fittedvalues\ndiagnostics[\"resid\"] = fit_categorical.resid\ndiagnostics[\"student_resid\"] = fit_categorical.get_influence().resid_studentized_internal\n\nfig, axes = plt.subplots(1, 2, figsize=(11, 4))\n\naxes[0].scatter(diagnostics[\"fitted\"], diagnostics[\"resid\"], alpha=0.6)\naxes[0].axhline(0, color=\"black\", linestyle=\"--\")\naxes[0].set_xlabel(\"Fitted values\")\naxes[0].set_ylabel(\"Residuals\")\naxes[0].set_title(\"Residuals vs fitted\")\n\nsm.qqplot(diagnostics[\"resid\"], line=\"45\", fit=True, ax=axes[1])\naxes[1].set_title(\"Normal Q-Q plot\")\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.6.11 Partial Residual Plots\nComponent-plus-residual plots help assess whether the linear contribution of a predictor is adequate after controlling for the other variables.\n\nfig = plt.figure(figsize=(10, 8))\nsm.graphics.plot_ccpr_grid(fit_categorical, fig=fig)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.6.12 Pair Plots\n\npair_data = mpg[\n    [\"mpg\", \"horsepower\", \"weight\", \"acceleration\", \"origin\"]\n].sample(n=min(120, len(mpg)), random_state=1)\n\nsns.pairplot(pair_data, hue=\"origin\", diag_kind=\"hist\")\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.6.13 Leverage and Cook’s Distance Plots\n\ninfluence = fit_categorical.get_influence()\ninfluence_frame = influence.summary_frame()\n\nfig, axes = plt.subplots(1, 2, figsize=(12, 4))\n\naxes[0].scatter(influence_frame[\"hat_diag\"], diagnostics[\"student_resid\"], alpha=0.6)\naxes[0].axhline(0, color=\"black\", linestyle=\"--\")\naxes[0].set_xlabel(\"Leverage\")\naxes[0].set_ylabel(\"Studentized residual\")\naxes[0].set_title(\"Residuals vs leverage\")\n\naxes[1].stem(\n    np.arange(len(influence_frame)),\n    influence_frame[\"cooks_d\"],\n    basefmt=\" \",\n)\naxes[1].set_xlabel(\"Observation\")\naxes[1].set_ylabel(\"Cook's distance\")\naxes[1].set_title(\"Cook's distance\")\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.6.14 Stepwise Selection\nThe following simple forward-selection routine uses AIC as the selection criterion. It is easy to implement, but it is still a greedy search rather than a global optimum.\n\ndef forward_selection(data, response, candidates):\n    remaining = list(candidates)\n    selected = []\n    current_aic = np.inf\n    history = []\n\n    while remaining:\n        scored = []\n        for term in remaining:\n            formula = f\"{response} ~ {' + '.join(selected + [term])}\"\n            fit = smf.ols(formula, data=data).fit()\n            scored.append((fit.aic, term, fit))\n        scored.sort(key=lambda x: x[0])\n        best_aic, best_term, best_fit = scored[0]\n        if best_aic + 1e-8 &lt; current_aic:\n            selected.append(best_term)\n            remaining.remove(best_term)\n            current_aic = best_aic\n            history.append((best_term, best_aic))\n        else:\n            break\n\n    return selected, current_aic, pd.DataFrame(history, columns=[\"added_term\", \"aic\"])\n\n\ncandidate_terms = [\n    \"horsepower\",\n    \"weight\",\n    \"acceleration\",\n    \"C(origin)\",\n    \"C(cylinders)\",\n]\n\nselected_terms, selected_aic, stepwise_path = forward_selection(\n    mpg, \"mpg\", candidate_terms\n)\n\nprint(\"Selected terms:\", selected_terms)\nprint(\"Final AIC:\", selected_aic)\nstepwise_path\n\nSelected terms: ['weight', 'C(cylinders)', 'horsepower', 'C(origin)']\nFinal AIC: 2189.4686412079573\n\n\n\n\n\n\n\n\n\nadded_term\naic\n\n\n\n\n0\nweight\n2263.938549\n\n\n1\nC(cylinders)\n2228.453207\n\n\n2\nhorsepower\n2205.180846\n\n\n3\nC(origin)\n2189.468641\n\n\n\n\n\n\n\n\n\n2.6.15 Best Subset Selection\nBest subset selection fits every model of a given size and records the best one according to a chosen criterion.\n\ndef model_diagnostics(fit):\n    y = fit.model.endog\n    n = fit.nobs\n    p = fit.df_model + 1\n    sse = np.sum(fit.resid ** 2)\n    mse = sse / fit.df_resid\n    press = np.sum((fit.resid / (1 - fit.get_influence().hat_matrix_diag)) ** 2)\n    return {\n        \"r2\": fit.rsquared,\n        \"adj_r2\": fit.rsquared_adj,\n        \"sse\": sse,\n        \"mse\": mse,\n        \"aic\": fit.aic,\n        \"bic\": fit.bic,\n        \"press\": press,\n        \"n\": n,\n        \"p\": p,\n    }\n\n\nfull_formula = \"mpg ~ horsepower + weight + acceleration + C(origin) + C(cylinders)\"\nfull_fit = smf.ols(full_formula, data=mpg).fit()\nsigma2_full = np.sum(full_fit.resid ** 2) / full_fit.df_resid\n\n\ndef mallows_cp(fit, sigma2_full):\n    sse = np.sum(fit.resid ** 2)\n    p = fit.df_model + 1\n    n = fit.nobs\n    return sse / sigma2_full - (n - 2 * p)\n\n\nsubset_terms = [\n    \"horsepower\",\n    \"weight\",\n    \"acceleration\",\n    \"C(origin)\",\n]\n\nsubset_rows = []\nfor k in range(1, len(subset_terms) + 1):\n    for combo in itertools.combinations(subset_terms, k):\n        formula = \"mpg ~ \" + \" + \".join(combo)\n        fit = smf.ols(formula, data=mpg).fit()\n        row = {\"terms\": \" + \".join(combo), \"size\": k}\n        row.update(model_diagnostics(fit))\n        row[\"cp\"] = mallows_cp(fit, sigma2_full)\n        subset_rows.append(row)\n\nsubset_table = pd.DataFrame(subset_rows).sort_values([\"size\", \"aic\"])\nbest_subsets = subset_table.groupby(\"size\", as_index=False).first()\nbest_subsets[\n    [\"size\", \"terms\", \"r2\", \"adj_r2\", \"aic\", \"bic\", \"cp\", \"press\"]\n]\n\n\n\n\n\n\n\n\nsize\nterms\nr2\nadj_r2\naic\nbic\ncp\npress\n\n\n\n\n0\n1\nweight\n0.692630\n0.691842\n2263.938549\n2271.881072\n91.684205\n7389.831634\n\n\n1\n2\nhorsepower + weight\n0.706375\n0.704866\n2248.005210\n2259.918995\n72.233861\n7100.276149\n\n\n2\n3\nhorsepower + weight + C(origin)\n0.719279\n0.716378\n2234.387774\n2254.244083\n56.095634\n6881.064548\n\n\n3\n4\nhorsepower + weight + acceleration + C(origin)\n0.719326\n0.715691\n2236.322277\n2260.149848\n58.022441\n6934.286483\n\n\n\n\n\n\n\n\n\n2.6.16 Computing \\(R^2\\), Adjusted \\(R^2\\), SSE, MSE, AIC, BIC, \\(C_p\\), and PRESS\nThese quantities can be read from a fitted model, but it is useful to compute them directly from the residuals and leverage values.\n\nfit_metrics = fit_categorical\ny = fit_metrics.model.endog\nn = fit_metrics.nobs\np = fit_metrics.df_model + 1\n\nsse = np.sum(fit_metrics.resid ** 2)\nsst = np.sum((y - y.mean()) ** 2)\nmse = sse / fit_metrics.df_resid\nr2 = 1 - sse / sst\nadj_r2 = 1 - (sse / fit_metrics.df_resid) / (sst / (n - 1))\naic = fit_metrics.aic\nbic = fit_metrics.bic\ncp = mallows_cp(fit_metrics, sigma2_full)\npress = np.sum(\n    (fit_metrics.resid / (1 - fit_metrics.get_influence().hat_matrix_diag)) ** 2\n)\n\npd.Series(\n    {\n        \"R^2\": r2,\n        \"Adjusted R^2\": adj_r2,\n        \"SSE\": sse,\n        \"MSE\": mse,\n        \"AIC\": aic,\n        \"BIC\": bic,\n        \"Cp\": cp,\n        \"PRESS\": press,\n    }\n)\n\nR^2                0.755224\nAdjusted R^2       0.749457\nSSE             5830.317633\nMSE               15.262612\nAIC             2190.677259\nBIC             2230.389877\nCp                10.000000\nPRESS           6278.457491\ndtype: float64\n\n\nThese examples show how the same regression problem can be examined from several angles: fitting increasingly flexible models, testing nested terms, diagnosing influential observations, and comparing candidate models with both classical and predictive criteria.\n\n\n\n\n\n[1] Wilkinson, G. N. and Rogers, C. E. (1973). Symbolic descriptions of factorial models for analysis of variance. Applied Statistics 22 392–9.\n\n\n[2] Chambers, J. M. and Hastie, T. J. (1992). Statistical models in s. Wadsworth & Brooks/Cole.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html",
+    "href": "contents/1/glm.html",
+    "title": "3  Generalized linear models",
+    "section": "",
+    "text": "3.1 Strengths and Limitations\nLinear regression is often the first model to try because it is transparent and effective in many settings. However, it has limits.\nStrengths:\nLimitations:\nThese limitations motivate later methods such as GLMs, GAMs, ridge regression, and LASSO.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#strengths-and-limitations",
+    "href": "contents/1/glm.html#strengths-and-limitations",
+    "title": "3  Generalized linear models",
+    "section": "",
+    "text": "simple interpretation;\nfast computation;\nuseful baseline;\nstrong connection to statistical inference.\n\n\n\nassumes a linear mean structure unless we add transformed terms;\ncan be unstable under multicollinearity;\nmay overfit when many predictors are included;\nmay perform poorly when relationships are strongly nonlinear.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#what-is-a-glm",
+    "href": "contents/1/glm.html#what-is-a-glm",
+    "title": "3  Generalized linear models",
+    "section": "3.2 What Is a GLM?",
+    "text": "3.2 What Is a GLM?\nA generalized linear model (GLM) extends ordinary linear regression in two ways:\n\nthe response variable does not need to be normally distributed;\nthe mean of the response is connected to the predictors through a link function.\n\nA GLM has three components:\n\nA response distribution from the exponential family, such as Gaussian, Binomial, or Poisson.\nA linear predictor\n\n\\[\n\\eta = X\\beta.\n\\]\n\nA link function relating the mean \\(\\mu = \\mathbb{E}(Y \\mid X)\\) to the linear predictor:\n\n\\[\ng(\\mu) = \\eta = X\\beta.\n\\]\nThus, a GLM keeps the predictor linear in the coefficients, but it allows the response distribution and the mean-response relationship to be more flexible than in ordinary linear regression.\n\n\n\n\n\n\nNoteMain Idea\n\n\n\nLinear regression models the response directly under a Gaussian error assumption. A GLM models the mean of the response through a link function and can handle binary, count, and other non-Gaussian outcomes.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#why-do-we-need-glms",
+    "href": "contents/1/glm.html#why-do-we-need-glms",
+    "title": "3  Generalized linear models",
+    "section": "3.3 Why Do We Need GLMs?",
+    "text": "3.3 Why Do We Need GLMs?\nOrdinary linear regression is not always appropriate.\n\nFor binary outcomes, fitted values from linear regression may fall outside \\([0,1]\\).\nFor count data, the response is nonnegative and often right-skewed.\nThe variance may depend on the mean, which violates the constant-variance assumption of linear regression.\n\nGLMs address these issues by choosing a distribution and a link function suited to the data.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#common-examples",
+    "href": "contents/1/glm.html#common-examples",
+    "title": "3  Generalized linear models",
+    "section": "3.4 Common Examples",
+    "text": "3.4 Common Examples\n\n3.4.1 Linear Regression\nFor a Gaussian response with the identity link,\n\\[\n\\mu = X\\beta.\n\\]\nThis is the ordinary linear model.\n\n\n3.4.2 Logistic Regression\nFor binary data, logistic regression uses\n\\[\n\\log\\left(\\frac{\\mu}{1-\\mu}\\right) = X\\beta,\n\\]\nwhere \\(\\mu = \\mathbb{P}(Y=1 \\mid X)\\).\n\n\n3.4.3 Poisson Regression\nFor count data, Poisson regression uses\n\\[\n\\log(\\mu) = X\\beta,\n\\]\nwhere \\(\\mu = \\mathbb{E}(Y \\mid X)\\).",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#relation-to-linear-regression",
+    "href": "contents/1/glm.html#relation-to-linear-regression",
+    "title": "3  Generalized linear models",
+    "section": "3.5 Relation to Linear Regression",
+    "text": "3.5 Relation to Linear Regression\nA GLM is not the same as transforming the response and then applying ordinary least squares.\nFor example,\n\\[\n\\log(Y) = X\\beta + \\varepsilon\n\\]\nis a transformed linear model, whereas\n\\[\n\\log(\\mathbb{E}[Y \\mid X]) = X\\beta\n\\]\nis a GLM with a log link.\nThese models may look similar algebraically, but they differ in assumptions, interpretation, and estimation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#estimation",
+    "href": "contents/1/glm.html#estimation",
+    "title": "3  Generalized linear models",
+    "section": "3.6 Estimation",
+    "text": "3.6 Estimation\nUnlike ordinary least squares, GLMs are usually estimated by maximum likelihood, often using iteratively reweighted least squares (IRLS).\nThe details of the algorithm are usually less important than the modeling idea:\n\nchoose a suitable distribution;\nchoose a suitable link function;\ninterpret the fitted model on the correct scale.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#interpretation",
+    "href": "contents/1/glm.html#interpretation",
+    "title": "3  Generalized linear models",
+    "section": "3.7 Interpretation",
+    "text": "3.7 Interpretation\nThe coefficients in a GLM are interpreted through the link function.\n\nIn logistic regression, coefficients describe changes in log-odds.\nIn Poisson regression, coefficients describe changes in the log mean count.\nIn linear regression, coefficients describe direct changes in the mean response.\n\nTherefore, interpretation depends on both the response distribution and the link.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#relation-to-gams-and-regularization",
+    "href": "contents/1/glm.html#relation-to-gams-and-regularization",
+    "title": "3  Generalized linear models",
+    "section": "3.8 Relation to GAMs and Regularization",
+    "text": "3.8 Relation to GAMs and Regularization\nGLMs still assume that the predictor enters through the linear form \\(X\\beta\\). A generalized additive model (GAM) relaxes this by replacing linear terms with smooth functions:\n\\[\ng(\\mu) = \\beta_0 + f_1(x_1) + \\cdots + f_p(x_p).\n\\]\nRegularization methods such as ridge regression and LASSO can also be combined with GLMs, producing penalized logistic regression, penalized Poisson regression, and related models.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#python-example",
+    "href": "contents/1/glm.html#python-example",
+    "title": "3  Generalized linear models",
+    "section": "3.9 Python Example",
+    "text": "3.9 Python Example\nThe following example fits a logistic regression model in Python using the public titanic dataset from seaborn. It includes coefficient tables, fitted probabilities, a classification table, and standard residual and influence diagnostics.\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pandas as pd\nimport seaborn as sns\nimport statsmodels.api as sm\nimport statsmodels.formula.api as smf\n\nimport sys\n\nprint(sys.executable)\n\ntitanic = sns.load_dataset(\"titanic\").dropna(subset=[\"survived\", \"fare\", \"age\", \"sex\", \"pclass\"])\n\nfit = smf.glm(\n    \"survived ~ fare + age + C(sex) + C(pclass)\",\n    data=titanic,\n    family=sm.families.Binomial(),\n).fit()\n\n# Main GLM table\nprint(fit.summary())\n\n# Coefficient table with confidence intervals\ncoef_table = fit.summary2().tables[1]\ncoef_table[\"odds_ratio\"] = np.exp(coef_table[\"Coef.\"])\nprint(coef_table)\n\n# Fitted probabilities and residual diagnostics\ndiagnostics = titanic[[\"survived\", \"fare\", \"age\", \"sex\", \"pclass\"]].copy()\ndiagnostics[\"fitted_prob\"] = fit.fittedvalues\ndiagnostics[\"pearson_resid\"] = fit.resid_pearson\ndiagnostics[\"deviance_resid\"] = fit.resid_deviance\ndiagnostics[\"response_resid\"] = fit.resid_response\nprint(diagnostics.head())\n\n# Simple classification table at cutoff 0.5\ndiagnostics[\"pred_class\"] = (diagnostics[\"fitted_prob\"] &gt;= 0.5).astype(int)\nprint(pd.crosstab(diagnostics[\"survived\"], diagnostics[\"pred_class\"], margins=True))\n\n# Influence summary\ninfluence = fit.get_influence(observed=True)\nprint(influence.summary_frame().head())\n\n# Diagnostic plots\nfig, ax = plt.subplots(figsize=(6, 4))\nax.scatter(diagnostics[\"fitted_prob\"], diagnostics[\"deviance_resid\"], alpha=0.6)\nax.axhline(0, color=\"black\", linestyle=\"--\")\nax.set_xlabel(\"Fitted probability\")\nax.set_ylabel(\"Deviance residual\")\nax.set_title(\"Residuals vs fitted\")\nplt.tight_layout()\n\nfig = plt.figure(figsize=(6, 4))\nsm.qqplot(diagnostics[\"deviance_resid\"], line=\"45\", fit=True, ax=plt.gca())\nplt.tight_layout()\n\nfig, ax = plt.subplots(figsize=(6, 4))\nax.scatter(influence.hat_matrix_diag, diagnostics[\"deviance_resid\"], alpha=0.6)\nax.set_xlabel(\"Leverage\")\nax.set_ylabel(\"Deviance residual\")\nax.set_title(\"Residuals vs leverage\")\nplt.tight_layout()\nplt.show()\n\nd:\\Codes\\Notes\\sl26\\env\\Scripts\\python.exe\n                 Generalized Linear Model Regression Results                  \n==============================================================================\nDep. Variable:               survived   No. Observations:                  714\nModel:                            GLM   Df Residuals:                      708\nModel Family:                Binomial   Df Model:                            5\nLink Function:                  Logit   Scale:                          1.0000\nMethod:                          IRLS   Log-Likelihood:                -323.61\nDate:                Thu, 09 Apr 2026   Deviance:                       647.23\nTime:                        14:01:26   Pearson chi2:                     768.\nNo. Iterations:                     5   Pseudo R-squ. (CS):             0.3588\nCovariance Type:            nonrobust                                         \n==================================================================================\n                     coef    std err          z      P&gt;|z|      [0.025      0.975]\n----------------------------------------------------------------------------------\nIntercept          3.7225      0.465      8.014      0.000       2.812       4.633\nC(sex)[T.male]    -2.5185      0.208    -12.096      0.000      -2.927      -2.110\nC(pclass)[T.2]    -1.2766      0.313     -4.083      0.000      -1.889      -0.664\nC(pclass)[T.3]    -2.5416      0.328     -7.754      0.000      -3.184      -1.899\nfare               0.0005      0.002      0.231      0.817      -0.004       0.005\nage               -0.0367      0.008     -4.750      0.000      -0.052      -0.022\n==================================================================================\n                   Coef.  Std.Err.          z         P&gt;|z|    [0.025  \\\nIntercept       3.722505  0.464511   8.013809  1.112092e-15  2.812080   \nC(sex)[T.male] -2.518505  0.208202 -12.096470  1.102513e-33 -2.926573   \nC(pclass)[T.2] -1.276590  0.312637  -4.083299  4.440076e-05 -1.889348   \nC(pclass)[T.3] -2.541576  0.327768  -7.754200  8.890245e-15 -3.183989   \nfare            0.000523  0.002258   0.231436  8.169761e-01 -0.003903   \nage            -0.036730  0.007732  -4.750108  2.033082e-06 -0.051886   \n\n                  0.975]  odds_ratio  \nIntercept       4.632931   41.367901  \nC(sex)[T.male] -2.110437    0.080580  \nC(pclass)[T.2] -0.663833    0.278987  \nC(pclass)[T.3] -1.899163    0.078742  \nfare            0.004948    1.000523  \nage            -0.021575    0.963936  \n   survived     fare   age     sex  pclass  fitted_prob  pearson_resid  \\\n0         0   7.2500  22.0    male       3     0.105095      -0.342691   \n1         1  71.2833  38.0  female       1     0.914041       0.306664   \n2         1   7.9250  26.0  female       3     0.557269       0.891328   \n3         1  53.1000  35.0  female       1     0.921630       0.291607   \n4         0   8.0500  35.0    male       3     0.067930      -0.269965   \n\n   deviance_resid  response_resid  \n0       -0.471249       -0.105095  \n1        0.423980        0.085959  \n2        1.081395        0.442731  \n3        0.404010        0.078370  \n4       -0.375094       -0.067930  \npred_class    0    1  All\nsurvived                 \n0           357   67  424\n1            81  209  290\nAll         438  276  714\n   dfb_Intercept  dfb_C(sex)[T.male]  dfb_C(pclass)[T.2]  dfb_C(pclass)[T.3]  \\\n0       0.003637           -0.011179           -0.001059           -0.008898   \n1       0.014160           -0.014328           -0.013001           -0.013991   \n2       0.013733           -0.044640           -0.006971            0.020949   \n3       0.015903           -0.013461           -0.013956           -0.015310   \n4       0.007529           -0.007682           -0.003090           -0.009185   \n\n   dfb_fare   dfb_age   cooks_d  standard_resid  hat_diag  dffits_internal  \n0  0.000848 -0.000039  0.000062       -0.343235  0.003164        -0.019338  \n1 -0.002725 -0.002650  0.000077        0.307414  0.004875         0.021518  \n2 -0.008929  0.007979  0.001093        0.894969  0.008120         0.080975  \n3 -0.005975 -0.004698  0.000071        0.292332  0.004952         0.020622  \n4 -0.000537 -0.006890  0.000034       -0.270341  0.002776        -0.014264  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHere the response survived is binary, so a binomial GLM with a logit link is appropriate. The terms C(sex) and C(pclass) tell statsmodels to treat those variables as categorical predictors.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/glm.html#similarities-and-differences-between-lm-and-glm",
+    "href": "contents/1/glm.html#similarities-and-differences-between-lm-and-glm",
+    "title": "3  Generalized linear models",
+    "section": "3.10 Similarities and Differences Between LM and GLM",
+    "text": "3.10 Similarities and Differences Between LM and GLM\nA linear model (LM) and a generalized linear model (GLM) are closely related. In fact, the ordinary linear regression model can be viewed as a special case of a GLM.\nThey are similar in several important ways:\n\nboth relate a response variable to predictors;\nboth use a linear predictor of the form \\(X\\beta\\);\nboth allow categorical variables, interactions, and transformed predictors;\nboth produce coefficient estimates, fitted values, residuals, and model summaries.\n\nHowever, they differ in the way the response is modeled.\nIn a linear model, we write\n\\[\nY = X\\beta + \\varepsilon,\n\\]\nwith a Gaussian error assumption and constant variance.\nIn a GLM, we model the mean of the response through a link function:\n\\[\ng(\\mu) = X\\beta, \\qquad \\mu = \\mathbb{E}(Y \\mid X).\n\\]\nThus, the major differences are:\n\nan LM models the response directly;\na GLM models the mean of the response through a link function;\nan LM usually assumes Gaussian errors with constant variance;\na GLM allows other response distributions such as Binomial or Poisson;\nan LM is usually estimated by ordinary least squares;\na GLM is usually estimated by maximum likelihood.\n\n\n\n\n\n\n\nNoteA Useful Way to Think About It\n\n\n\nAn LM is appropriate when the response is quantitative and approximately normal with constant variance. A GLM is appropriate when the response has a different distributional form, such as binary outcomes or counts, but we still want a regression model built from the linear predictor \\(X\\beta\\).\n\n\nThe two models can also look algebraically similar. For example,\n\\[\n\\log(Y) = X\\beta + \\varepsilon\n\\]\nis a transformed linear model, whereas\n\\[\n\\log(\\mathbb{E}[Y \\mid X]) = X\\beta\n\\]\nis a GLM with a log link. These are not the same model, even though the equations look similar. They differ in interpretation, assumptions, and estimation.\nSo the main relationship is:\n\nan LM is a special case of a GLM;\na GLM keeps the linear predictor but generalizes the response distribution and the mean-response relationship.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Generalized linear models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html",
+    "href": "contents/1/gam.html",
+    "title": "4  Generalized additive models",
+    "section": "",
+    "text": "4.1 What Is a GAM?\nA generalized additive model (GAM) extends a generalized linear model by allowing the effect of a predictor to be a smooth function rather than a fixed linear term.\nInstead of writing\n\\[\ng(\\mu) = \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p,\n\\]\na GAM writes\n\\[\ng(\\mu) = \\beta_0 + f_1(x_1) + \\cdots + f_p(x_p),\n\\]\nwhere each \\(f_j\\) is a smooth function estimated from the data.\nHere \\(\\mu = \\mathbb{E}(Y \\mid X)\\) and \\(g\\) is a link function, just as in a GLM.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#what-is-a-gam",
+    "href": "contents/1/gam.html#what-is-a-gam",
+    "title": "4  Generalized additive models",
+    "section": "",
+    "text": "NoteMain Idea\n\n\n\nA GLM assumes a specific parametric form for each predictor effect. A GAM allows the shape of the effect to be learned from the data, subject to a smoothness constraint.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#why-do-we-need-gams",
+    "href": "contents/1/gam.html#why-do-we-need-gams",
+    "title": "4  Generalized additive models",
+    "section": "4.2 Why Do We Need GAMs?",
+    "text": "4.2 Why Do We Need GAMs?\nIn practice, relationships between predictors and response are often nonlinear.\nIn ordinary linear regression, one may try transformations such as:\n\n\\(\\log(x)\\),\n\\(\\sqrt{x}\\),\n\\(x^2\\).\n\nThese are still parametric choices made by the analyst. A GAM provides a more flexible alternative by estimating a smooth curve directly from the data.\nThis is useful when:\n\nthe true relationship is nonlinear;\nthe correct transformation is not known in advance;\nwe want flexibility without giving up interpretability completely.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#relation-to-linear-regression-and-glms",
+    "href": "contents/1/gam.html#relation-to-linear-regression-and-glms",
+    "title": "4  Generalized additive models",
+    "section": "4.3 Relation to Linear Regression and GLMs",
+    "text": "4.3 Relation to Linear Regression and GLMs\nThe progression is:\n\nLinear regression: linear mean function with Gaussian errors;\nGLM: linear predictor with a general response distribution and link function;\nGAM: additive smooth functions with a general response distribution and link function.\n\nSo a GAM is best viewed as a flexible extension of a GLM.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#smooth-functions",
+    "href": "contents/1/gam.html#smooth-functions",
+    "title": "4  Generalized additive models",
+    "section": "4.4 Smooth Functions",
+    "text": "4.4 Smooth Functions\nThe functions \\(f_j\\) are not arbitrary. They are usually represented by basis expansions, such as splines, and are estimated with a smoothness penalty.\nThe purpose of the penalty is to prevent the fitted curve from becoming too wiggly.\nThus, a GAM balances:\n\nfidelity to the data,\nsmoothness of the fitted functions.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#gam-versus-manual-transformations",
+    "href": "contents/1/gam.html#gam-versus-manual-transformations",
+    "title": "4  Generalized additive models",
+    "section": "4.5 GAM Versus Manual Transformations",
+    "text": "4.5 GAM Versus Manual Transformations\nSuppose in a linear model you try\n\\[\nY = \\beta_0 + \\beta_1 \\log(x) + \\varepsilon\n\\]\nor\n\\[\nY = \\beta_0 + \\beta_1 x + \\beta_2 x^2 + \\varepsilon.\n\\]\nThese are still linear models with chosen transformations.\nIn a GAM, by contrast, we write\n\\[\nY = \\beta_0 + f(x) + \\varepsilon\n\\]\nor, more generally,\n\\[\ng(\\mu) = \\beta_0 + f(x).\n\\]\nThe difference is that the shape of \\(f\\) is estimated from the data rather than fixed in advance as \\(\\log(x)\\) or \\(x^2\\).",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#estimation-and-inference",
+    "href": "contents/1/gam.html#estimation-and-inference",
+    "title": "4  Generalized additive models",
+    "section": "4.6 Estimation and Inference",
+    "text": "4.6 Estimation and Inference\nGAMs are usually fitted by penalized likelihood methods. The amount of smoothness is controlled by smoothing parameters, which are often selected automatically by criteria such as:\n\ngeneralized cross-validation (GCV),\nrestricted maximum likelihood (REML),\ncross-validation.\n\nBecause the model learns functional form from the data, inference should still be interpreted with care, especially if the analyst repeatedly changes the model after inspecting diagnostic plots.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/gam.html#relation-to-ridge-and-lasso",
+    "href": "contents/1/gam.html#relation-to-ridge-and-lasso",
+    "title": "4  Generalized additive models",
+    "section": "4.7 Relation to Ridge and LASSO",
+    "text": "4.7 Relation to Ridge and LASSO\nGAMs already use regularization through smoothness penalties. This is a different kind of regularization from ridge regression and LASSO:\n\nridge shrinks coefficients with an \\(L_2\\) penalty;\nLASSO shrinks coefficients with an \\(L_1\\) penalty and can set some exactly to zero;\nGAMs penalize the roughness of smooth functions.\n\nThere are also sparse versions of GAMs that combine smooth modeling with variable selection.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Generalized additive models</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html",
+    "href": "contents/1/ridge.html",
+    "title": "5  Ridge Regression",
+    "section": "",
+    "text": "5.1 A Short History of Ridge Regression\nRidge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from Tikhonov (1963) in numerical analysis, where a regularization term was added to ill-posed problems.\nIn statistics, Hoerl and Kennard (1970) formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#what-is-ridge-regression",
+    "href": "contents/1/ridge.html#what-is-ridge-regression",
+    "title": "5  Ridge Regression",
+    "section": "5.2 What Is Ridge Regression?",
+    "text": "5.2 What Is Ridge Regression?\nRidge regression is a regularized version of ordinary least squares (OLS). It is especially useful when predictors are highly correlated or when the matrix \\(X^\\top X\\) is nearly singular, because in such settings the OLS estimator can be unstable.\nRecall the linear model\n\\[\ny = X\\beta + \\varepsilon.\n\\]\nWhen \\(X^\\top X\\) is invertible, the OLS estimator is\n\\[\n\\hat{\\beta}_{\\mathrm{OLS}} = (X^\\top X)^{-1}X^\\top y.\n\\]\nRidge regression modifies the least-squares criterion by adding a quadratic penalty:\n\\[\n\\hat{\\beta}_{\\mathrm{ridge}}\n= \\arg\\min_{\\beta}\n\\left\\{\n\\lVert y - X\\beta \\rVert_2^2 + \\lambda \\lVert \\beta \\rVert_2^2\n\\right\\},\n\\]\nwhere \\(\\lambda \\ge 0\\) is a tuning parameter.\nEquivalently,\n\\[\n\\hat{\\beta}_{\\mathrm{ridge}} = (X^\\top X + \\lambda I)^{-1}X^\\top y.\n\\]\nThe penalty shrinks coefficients toward zero. Larger values of \\(\\lambda\\) produce stronger shrinkage.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#why-ridge-regression-helps",
+    "href": "contents/1/ridge.html#why-ridge-regression-helps",
+    "title": "5  Ridge Regression",
+    "section": "5.3 Why Ridge Regression Helps",
+    "text": "5.3 Why Ridge Regression Helps\nOLS is unbiased under the classical linear model assumptions, but it can have high variance when predictors are strongly correlated. Ridge regression introduces bias, but it often reduces variance enough to improve predictive performance.\nThis is a standard example of the bias-variance tradeoff.\n\n\n\n\n\n\nNoteKey Properties\n\n\n\n\nIf \\(\\lambda = 0\\), ridge regression reduces to OLS.\nIf \\(\\lambda &gt; 0\\), the matrix \\(X^\\top X + \\lambda I\\) is invertible even when \\(X^\\top X\\) is singular.\nRidge shrinks coefficients continuously toward zero.\nRidge usually does not set coefficients exactly to zero.\nRidge is particularly useful under multicollinearity.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#choosing-lambda",
+    "href": "contents/1/ridge.html#choosing-lambda",
+    "title": "5  Ridge Regression",
+    "section": "5.4 Choosing \\(\\lambda\\)",
+    "text": "5.4 Choosing \\(\\lambda\\)\nThe tuning parameter \\(\\lambda\\) determines how much shrinkage is applied.\n\nSmall \\(\\lambda\\) gives a model close to OLS.\nLarge \\(\\lambda\\) gives stronger regularization.\n\nIn practice, the modern standard is to choose \\(\\lambda\\) by cross-validation. If \\(\\mathrm{CV}(\\lambda)\\) denotes the cross-validation error, we choose\n\\[\n\\hat{\\lambda}\n= \\arg\\min_{\\lambda} \\mathrm{CV}(\\lambda).\n\\]\nClassical ridge analysis also uses ridge trace plots and generalized cross-validation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#fitting-ridge-regression-in-r",
+    "href": "contents/1/ridge.html#fitting-ridge-regression-in-r",
+    "title": "5  Ridge Regression",
+    "section": "5.5 Fitting Ridge Regression in R",
+    "text": "5.5 Fitting Ridge Regression in R\nThe glmnet package is a standard implementation:\nlibrary(glmnet)\n\nx &lt;- model.matrix(y ~ ., data = dat)[, -1]\ny &lt;- dat$y\n\nridge_fit &lt;- glmnet(x, y, alpha = 0)\nplot(ridge_fit)\nCross-validation is performed with:\ncv_fit &lt;- cv.glmnet(x, y, alpha = 0)\nplot(cv_fit)\ncoef(cv_fit, s = \"lambda.min\")\nHere alpha = 0 specifies ridge regression.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#scaling-issues-of-ridge-regression",
+    "href": "contents/1/ridge.html#scaling-issues-of-ridge-regression",
+    "title": "5  Ridge Regression",
+    "section": "5.6 Scaling Issues of Ridge Regression",
+    "text": "5.6 Scaling Issues of Ridge Regression\nRidge regression is sensitive to the scale of the predictors, so the variables are usually standardized before fitting the model.\nThe usual standardization is\n\\[\nx_j^* = \\frac{x_j - \\bar{x}_j}{s_j},\n\\]\nso that each predictor has mean \\(0\\) and standard deviation \\(1\\).\nThis matters because the penalty acts directly on the coefficients. If predictors are measured on very different scales, then the penalty will not be applied fairly across variables.\nIn practice:\n\nthe predictors are standardized before fitting the model;\nthe intercept is typically left unpenalized;\nsoftware such as glmnet usually performs standardization automatically.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#relation-to-tikhonov-regularization",
+    "href": "contents/1/ridge.html#relation-to-tikhonov-regularization",
+    "title": "5  Ridge Regression",
+    "section": "5.7 Relation to Tikhonov Regularization",
+    "text": "5.7 Relation to Tikhonov Regularization\nRidge regression is the statistical form of Tikhonov regularization. In inverse problems, Tikhonov regularization stabilizes an ill-posed problem by adding a quadratic penalty. Ridge regression applies the same idea to linear regression.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#summary",
+    "href": "contents/1/ridge.html#summary",
+    "title": "5  Ridge Regression",
+    "section": "5.8 Summary",
+    "text": "5.8 Summary\nThe main ideas of ridge regression are:\n\nit adds an \\(L_2\\) penalty to least squares;\nit shrinks coefficients toward zero;\nit reduces variance and can improve prediction;\nit is particularly useful when predictors are highly correlated;\nit usually keeps all variables in the model.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#references",
+    "href": "contents/1/ridge.html#references",
+    "title": "5  Ridge Regression",
+    "section": "5.9 References",
+    "text": "5.9 References\n\nHoerl, A. E., & Kennard, R. W. (1970). Ridge regression: Biased estimation for nonorthogonal problems. Technometrics, 12(1), 55-67.\nMarquardt, D. W. (1970). Generalized inverses, ridge regression, biased linear estimation, and nonlinear estimation. Technometrics, 12(3), 591-612.\nTibshirani, R. (1996). Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society Series B, 58(1), 267-288.\nTikhonov, A. N. (1963). Solution of incorrectly formulated problems and the regularization method. Soviet Mathematics Doklady, 4, 1035-1038.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html",
+    "href": "contents/1/lasso.html",
+    "title": "6  LASSO",
+    "section": "",
+    "text": "6.1 What Is LASSO?\nThe LASSO is a regularized version of linear regression that adds an \\(L_1\\) penalty to the least-squares criterion. Its name stands for least absolute shrinkage and selection operator.\nFor a linear model with response vector \\(y\\) and design matrix \\(X\\), the LASSO estimator is defined by\n\\[\n\\hat{\\beta}_{\\mathrm{lasso}}\n= \\arg\\min_{\\beta}\n\\left\\{\n\\lVert y - X\\beta \\rVert_2^2 + \\lambda \\sum_{j=1}^p |\\beta_j|\n\\right\\},\n\\]\nwhere \\(\\lambda \\ge 0\\) is a tuning parameter.\nWhen \\(\\lambda = 0\\), the method reduces to ordinary least squares. As \\(\\lambda\\) increases, the penalty becomes stronger and the coefficients are shrunk more aggressively.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#what-is-lasso",
+    "href": "contents/1/lasso.html#what-is-lasso",
+    "title": "6  LASSO",
+    "section": "",
+    "text": "NoteMain Point\n\n\n\nLike ridge regression, LASSO controls model complexity by shrinking coefficients. Unlike ridge regression, it can set some coefficients exactly equal to zero, so it also performs variable selection.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#why-lasso-is-useful",
+    "href": "contents/1/lasso.html#why-lasso-is-useful",
+    "title": "6  LASSO",
+    "section": "6.2 Why LASSO Is Useful",
+    "text": "6.2 Why LASSO Is Useful\nOrdinary least squares can become unstable when there are many predictors or when predictors are highly correlated. LASSO addresses this by introducing bias in exchange for lower variance and a simpler model.\nThis can improve prediction, especially when:\n\nonly a subset of predictors is truly important;\ninterpretability matters;\nthe number of predictors is moderately large.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#variable-selection-and-shrinkage",
+    "href": "contents/1/lasso.html#variable-selection-and-shrinkage",
+    "title": "6  LASSO",
+    "section": "6.3 Variable Selection and Shrinkage",
+    "text": "6.3 Variable Selection and Shrinkage\nThe defining feature of LASSO is that the \\(L_1\\) penalty can force some coefficient estimates to be exactly zero.\nAs a result:\n\nunimportant variables may be removed from the model;\nthe final model may be easier to interpret;\nprediction error may improve if irrelevant variables are excluded.\n\nRidge regression also shrinks coefficients, but it usually keeps all variables in the model. LASSO shrinks and selects at the same time.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#geometric-interpretation",
+    "href": "contents/1/lasso.html#geometric-interpretation",
+    "title": "6  LASSO",
+    "section": "6.4 Geometric Interpretation",
+    "text": "6.4 Geometric Interpretation\nThe geometric explanation of LASSO is useful for understanding why exact zeros occur.\nRidge regression can be written with an \\(L_2\\) constraint:\n\\[\n\\sum_{j=1}^p \\beta_j^2 \\le t.\n\\]\nThe corresponding constraint region is a circle in two dimensions, or a sphere in higher dimensions.\nLASSO can be written with an \\(L_1\\) constraint:\n\\[\n\\sum_{j=1}^p |\\beta_j| \\le t.\n\\]\nThe corresponding constraint region is a diamond in two dimensions.\nBecause the diamond has corners on the coordinate axes, the least-squares contours often touch the constraint region at a corner. At such a point, one or more coefficients are exactly zero.\n\n\n\n\n\n\nImportantComparison With Ridge\n\n\n\nRidge has a smooth constraint boundary, so coefficients are typically shrunk but remain nonzero. LASSO has corners aligned with the axes, so solutions often occur at points where some coefficients are exactly zero.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#bias-variance-tradeoff",
+    "href": "contents/1/lasso.html#bias-variance-tradeoff",
+    "title": "6  LASSO",
+    "section": "6.5 Bias-Variance Tradeoff",
+    "text": "6.5 Bias-Variance Tradeoff\nLASSO is a biased estimator. The penalty pulls coefficients toward zero, so the estimates are no longer unbiased in the classical sense.\nHowever, this bias can be worthwhile because it may greatly reduce variance. If the reduction in variance is large enough, the overall prediction error can decrease.\nThus, LASSO is another example of the bias-variance tradeoff:\n\nless flexibility may increase bias;\nless flexibility may also reduce variance;\nprediction may improve if the tradeoff is favorable.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#how-to-choose-lambda",
+    "href": "contents/1/lasso.html#how-to-choose-lambda",
+    "title": "6  LASSO",
+    "section": "6.6 How to Choose \\(\\lambda\\)",
+    "text": "6.6 How to Choose \\(\\lambda\\)\nThe tuning parameter \\(\\lambda\\) controls the amount of regularization in both ridge regression and LASSO.\n\nWhen \\(\\lambda = 0\\), both methods reduce to ordinary least squares.\nAs \\(\\lambda\\) increases, the coefficients are shrunk more strongly.\nIn ridge regression, coefficients move continuously toward zero.\nIn LASSO, some coefficients may become exactly zero.\n\nSo the practical question is: how should we choose \\(\\lambda\\)?\n\n\n\n\n\n\nNoteMain Idea\n\n\n\nThere is no single universally best value of \\(\\lambda\\). It is usually chosen to balance model fit and model complexity, with the goal of improving prediction and avoiding overfitting.\n\n\n\n6.6.1 A Simple Way\nThe simplest explanation is to treat \\(\\lambda\\) as a knob that controls the strength of shrinkage.\n\nA small \\(\\lambda\\) gives a model close to least squares.\nA large \\(\\lambda\\) gives a more heavily regularized model.\n\nIn an introductory discussion, one can fit the model over a grid of \\(\\lambda\\) values and inspect how the coefficients change. This gives an immediate visual understanding of the regularization path.\nFor ridge regression, the coefficients decrease smoothly as \\(\\lambda\\) grows. For LASSO, some coefficients drop to zero as \\(\\lambda\\) increases.\n\n\n6.6.2 The Traditional Classical Way\nA classical approach is to choose \\(\\lambda\\) using an analytic criterion that balances goodness of fit against model complexity.\nFor ridge regression, older literature often used:\n\ninspection of ridge trace plots,\nMallows’ \\(C_p\\),\nAkaike’s Information Criterion (AIC),\nBayesian Information Criterion (BIC),\ngeneralized cross-validation (GCV).\n\nFor LASSO, information criteria such as AIC or BIC can also be used, usually together with an estimate of the effective degrees of freedom.\n\n\n6.6.3 The Modern Way\nThe modern standard is to choose \\(\\lambda\\) by cross-validation, especially \\(K\\)-fold cross-validation.\nIf \\(\\mathrm{CV}(\\lambda)\\) denotes the cross-validation error, we choose\n\\[\n\\hat{\\lambda}\n= \\arg\\min_{\\lambda} \\mathrm{CV}(\\lambda).\n\\]\nIn practice, two values are often reported:\n\n\\(\\lambda_{\\min}\\), the value that minimizes cross-validation error;\n\\(\\lambda_{1se}\\), the largest value of \\(\\lambda\\) within one standard error of the minimum.\n\nUsually, \\(\\lambda_{\\min}\\) gives the most accurate prediction, while \\(\\lambda_{1se}\\) gives a simpler and more stable model.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#standardization",
+    "href": "contents/1/lasso.html#standardization",
+    "title": "6  LASSO",
+    "section": "6.7 Standardization",
+    "text": "6.7 Standardization\nFor both ridge regression and LASSO, the predictors are usually standardized before fitting the model.\nThe usual standardization is\n\\[\nx_j^* = \\frac{x_j - \\bar{x}_j}{s_j},\n\\]\nso that each predictor has mean \\(0\\) and standard deviation \\(1\\).\nThis is important because the penalty acts on the coefficient magnitudes. Without standardization, variables measured on different scales would be penalized unequally.\nIn practice:\n\nwe usually standardize the predictors \\(X\\);\nwe usually do not penalize the intercept;\nsoftware such as glmnet standardizes predictors automatically by default.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#fitting-lasso-with-glmnet",
+    "href": "contents/1/lasso.html#fitting-lasso-with-glmnet",
+    "title": "6  LASSO",
+    "section": "6.8 Fitting LASSO With glmnet",
+    "text": "6.8 Fitting LASSO With glmnet\nIn R, the most common implementation is the glmnet package.\nlibrary(glmnet)\n\nx &lt;- model.matrix(y ~ ., data = dat)[, -1]\ny &lt;- dat$y\n\nlasso_fit &lt;- glmnet(x, y, alpha = 1)\nplot(lasso_fit)\nTo choose \\(\\lambda\\) by cross-validation:\ncv_fit &lt;- cv.glmnet(x, y, alpha = 1)\nplot(cv_fit)\n\ncoef(cv_fit, s = \"lambda.min\")\ncoef(cv_fit, s = \"lambda.1se\")\nHere:\n\nalpha = 1 specifies LASSO;\nlambda.min gives the model with minimum CV error;\nlambda.1se gives a simpler model within one standard error of the minimum.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#relation-to-forward-stagewise-regression-and-elastic-net",
+    "href": "contents/1/lasso.html#relation-to-forward-stagewise-regression-and-elastic-net",
+    "title": "6  LASSO",
+    "section": "6.9 Relation to Forward Stagewise Regression and Elastic Net",
+    "text": "6.9 Relation to Forward Stagewise Regression and Elastic Net\nLASSO is closely related to forward stagewise regression because both build a model gradually and often produce similar coefficient paths.\nLASSO is also closely related to the elastic net, which combines the ridge and LASSO penalties:\n\\[\n\\lambda_1 \\sum_{j=1}^p |\\beta_j| + \\lambda_2 \\sum_{j=1}^p \\beta_j^2.\n\\]\nElastic net is often useful when predictors are highly correlated, because it combines variable selection with additional shrinkage.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lasso.html#summary",
+    "href": "contents/1/lasso.html#summary",
+    "title": "6  LASSO",
+    "section": "6.10 Summary",
+    "text": "6.10 Summary\nThe main ideas of LASSO are:\n\nit adds an \\(L_1\\) penalty to least squares;\nit shrinks coefficients toward zero;\nit can set some coefficients exactly to zero;\nit is useful for both prediction and variable selection;\nthe tuning parameter \\(\\lambda\\) is usually chosen by cross-validation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO</span>"
     ]
   },
   {
