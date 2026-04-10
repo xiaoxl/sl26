@@ -28,8 +28,10 @@ docs/            # KEEP if this contains your manual documentation
 .DS_Store
 Thumbs.db
 /.quarto/
-**/*.quarto_ipynb
+**/*.quarto_ipynb*
 
 
 
 /env/
+
+**/*.quarto_ipynb

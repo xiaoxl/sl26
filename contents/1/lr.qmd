@@ -337,20 +337,52 @@ fit_categorical = smf.ols(
 
 ### Generate a Summary Table
 
-To see the summary table, you can use `.summary()` or `.summary2()`. They provide the same infomortion but in different format.
+To see the summary table, you can use `.summary()` or `.summary2()`. They provide the same infomortion but in different format. 
 
-- `.summary()` is a R/SAS style direct output, which is easier for human to read directly.
-- `.summary2()` is a data structure that is easier for machine to extract data or turn into other output format like `DataFrame`. 
+- `.summary()` is the standard R/SAS style direct output, which is fixed, and easier for human to read directly. 
+- `.summary2()` is stated as "experimental summary function to summarize the regression results" in the official document. It uses DataFrames that are easier for machines to extract data and also provide some optional features that are more flexible than `.summary()`.
 
+Both of them consist of three tables that can be accessed through `.tables`. For example this is the second table from `fit_linear.summary()`.
 
+```{python}
+print(fit_linear.summary().tables[1])
+```
+
+This is the second table from `fit_linear.summary2()`.
+
+```{python}
+fit_linear.summary2().tables[1]
+```
+
+Their types are different.
+```{python}
+print(type(fit_linear.summary().tables[1]))
+print(type(fit_linear.summary2().tables[1]))
+```
+
+Since `.summary2()` provides a DataFrame, it is easier to extract results.
+
+```{python}
+fit_linear.summary2().tables[1].loc['Intercept', 't']
+```
+
+You can also modify the table slightly in `.summary2()`.
+
+- You may specify the names of variables by setting `xname` and `yname`.
+- You may change the confidence level by setting `alpha`.
+- You may specify the format of decimals by setting `float_format`. 
 
 
 ```{python}
-summary_table = fit_categorical.summary2().tables[1].copy()
-summary_table["CI 2.5%"] = fit_categorical.conf_int()[0]
-summary_table["CI 97.5%"] = fit_categorical.conf_int()[1]
-summary_table
+fit_linear.summary2(
+    yname="y",
+    xname=["b0", "b1", "b2", "b3"],
+    alpha=0.1,
+    float_format="%.2f",
+    )
 ```
+
+
 
 ### Generate ANOVA Tables: Type I, II, and III
 
