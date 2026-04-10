@@ -111,7 +111,7 @@ format:
     # linestretch: 1.1
 
     code-annotations: select
-
+    code-overflow: scroll
     code-block-bg: true
     code-block-border-left: true #"#31BAE9"
     # code-line-numbers: true

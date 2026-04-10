@@ -1,0 +1,1030 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Linear Regression\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "::: {.hidden}\n",
+        "<!-- Constants and basic symbols -->\n",
+        "\n",
+        "$$\n",
+        "\\require{physics}\n",
+        "\\require{braket}\n",
+        "$$\n",
+        "\n",
+        "$$\n",
+        "\\newcommand{\\dl}[1]{{\\hspace{#1mu}\\mathrm d}}\n",
+        "\\newcommand{\\me}{{\\mathrm e}}\n",
+        "\\newcommand{\\argmin}{\\operatorname{argmin}}\n",
+        "\\newcommand{\\rss}{\\mathrm{RSS}}\n",
+        "\\newcommand{\\ols}{\\mathrm{OLS}}\n",
+        "\\newcommand{\\mle}{\\mathrm{MLE}}\n",
+        "$$\n",
+        "\n",
+        "<!-- Probability -->\n",
+        "\n",
+        "$$\n",
+        " \\newcommand{\\Exp}{\\operatorname{E}}\n",
+        " \\newcommand{\\Var}{\\operatorname{Var}}\n",
+        "  \\newcommand{\\Cov}{\\operatorname{Cov}}\n",
+        " \\newcommand{\\Mode}{\\operatorname{mode}}\n",
+        " \\newcommand{\\cor}{\\operatorname{cor}}\n",
+        "\n",
+        " \\newcommand{\\nll}{\\operatorname{nll}}\n",
+        "$$\n",
+        "\n",
+        "<!-- Distributions pdf -->\n",
+        "\n",
+        "$$\n",
+        " \\newcommand{\\pdfbinom}{{\\tt binom}}\n",
+        " \\newcommand{\\pdfbeta}{{\\tt beta}}\n",
+        " \\newcommand{\\pdfpois}{{\\tt poisson}}\n",
+        " \\newcommand{\\pdfgamma}{{\\tt gamma}}\n",
+        " \\newcommand{\\pdfnormal}{{\\tt norm}}\n",
+        "  \\newcommand{\\pdfexp}{{\\tt expon}}\n",
+        "$$\n",
+        "\n",
+        "<!-- Distributions -->\n",
+        "\n",
+        "$$\n",
+        " \\newcommand{\\distbinom}{\\operatorname{B}}\n",
+        " \\newcommand{\\distbeta}{\\operatorname{Beta}}\n",
+        " \\newcommand{\\distgamma}{\\operatorname{Gamma}}\n",
+        " \\newcommand{\\distexp}{\\operatorname{Exp}}\n",
+        " \\newcommand{\\distpois}{\\operatorname{Poisson}}\n",
+        " \\newcommand{\\distnormal}{\\operatorname{\\mathcal N}}\n",
+        "$$\n",
+        ":::\n",
+        "\n",
+        "\n",
+        "\n",
+        "This section offers a brief review of linear regression, with the main emphasis on its Python implementation through examples.\n",
+        "\n",
+        "## Quick Overview\n",
+        "\n",
+        "Linear regression is the fundamental supervised learning method for a quantitative response. It models the conditional mean of the response as a linear function of the predictors:\n",
+        "$$\n",
+        "y = \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p + \\varepsilon.\n",
+        "$$\n",
+        "\n",
+        "In matrix notation, this can be written as\n",
+        "$$\n",
+        "\\vb y = \\vb X\\beta + \\varepsilon.\n",
+        "$$\n",
+        "Here, $\\vb X$ is the design matrix, whose first column is a column of ones representing the intercept.\n",
+        "\n",
+        "## The Ordinary Least Squares Estimator\n",
+        "\n",
+        "The most common fitting method is ordinary least squares (OLS). It chooses the coefficient vector $\\beta$ that minimizes the residual sum of squares:\n",
+        "\n",
+        "$$\n",
+        "\\rss(\\beta) = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\n",
+        "= \\norm{\\vb y - \\vb X\\beta }_2^2.\n",
+        "$$\n",
+        "\n",
+        "The OLS estimator is\n",
+        "\n",
+        "$$\n",
+        "\\hat{\\beta}_{\\ols} = (\\vb X^\\top \\vb X)^{-1}\\vb X^\\top \\vb y,\n",
+        "$$\n",
+        "\n",
+        "provided that $\\vb X^\\top \\vb X$ is invertible.\n",
+        "\n",
+        "Once the coefficients are estimated, the fitted value for observation $i$ is\n",
+        "\n",
+        "$$\n",
+        "\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\cdots + \\hat{\\beta}_p x_{ip}.\n",
+        "$$\n",
+        "\n",
+        "\n",
+        "\n",
+        "Interpretation is one of the main strengths of linear regression.\n",
+        "\n",
+        "1. The coefficient $\\beta_j$ represents the change in the mean response associated with a one-unit increase in $x_j$, holding the other predictors fixed.\n",
+        "2. When interactions are present, a main effect should not be interpreted in isolation. Its meaning depends on the values of the interacting variables.\n",
+        "3. If the predictors are centered so that a value of 0 corresponds to the average of the original variable, then the main-effect coefficient can be interpreted as the change in the mean response associated with a one-unit increase in $x_j$, while holding the other predictors at their average levels.\n",
+        "4. A confidence interval gives a range of plausible values for a coefficient or for the mean response at a given combination of predictors.\n",
+        "5. A prediction interval is wider than a confidence interval because it must account for both uncertainty in the estimated mean response, and random variation in a future observation.\n",
+        "\n",
+        "\n",
+        "## Assessing Model Fit\n",
+        "\n",
+        "The classical assumptions of a linear regression model are:\n",
+        "\n",
+        "1. The random errors are independent.\n",
+        "2. The errors follow a normal distribution.\n",
+        "3. The mean of the error distribution is $0$.\n",
+        "4. The variance of the error distribution is constant across observations.\n",
+        "\n",
+        "Several tools are commonly used to assess a linear regression fit. These diagnostics do not prove that a model is correct, but they help identify potential problems.\n",
+        "\n",
+        "- residual plots and partial residual plots,\n",
+        "- Q-Q plots,\n",
+        "- leverage and influence diagnostics,\n",
+        "- summary measures such as $R^2$, adjusted $R^2$, and the residual standard error.\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "## Formula language\n",
+        "\n",
+        "The formula language was developed based on the Wilkinson-Rogers notations introduced in @wilkinson1973symbolic, and was later implemented in the S language at Bell Labs by John Chambers and colleagues in the 1980s @chambers1992statistical. It has since become the standard way to specify linear models in statistical software such as R and Python (`statsmodels`).\n",
+        "\n",
+        "The following table summarizes the basic syntax and provides examples. Note that it differs slightly from the R version because Python and R use different syntax.\n",
+        "\n",
+        "\n",
+        "| Formula | Meaning |\n",
+        "|---|---|\n",
+        "| `y ~ x` | Response $y$ regressed on predictor $x$ |\n",
+        "| `y ~ x1 + x2` | Include predictors $x_1$ and $x_2$ |\n",
+        "| `y ~ .` | Include all available predictors in the dataset |\n",
+        "| `y ~ x1:x2` | Interaction between $x_1$ and $x_2$ only |\n",
+        "| `y ~ x1 * x2` | Main effects and interaction (`x1 + x2 + x1:x2`) |\n",
+        "| `y ~ x1 + x2 + x3 - x2` | Include all listed variables except `x2` |\n",
+        "| `y ~ (x1 + x2 + x3)^2` | All main effects and two-way interactions |\n",
+        "| `y ~ I(x**2)` | Include a mathematical transformation of $x$ |\n",
+        "| `y ~ C(group)` | Treat `group` as a categorical variable |\n",
+        "| `y ~ np.log(x)` | Include the transformation $\\log(x)$ using a Python function |\n",
+        "| `y ~ 1` | Model with intercept only |\n",
+        "| `y ~ x - 1` | Remove the intercept |\n",
+        "\n",
+        "\n",
+        "::: {.callout-note}\n",
+        "## Categorical Predictors\n",
+        "\n",
+        "Categorical predictors are represented through indicator (dummy) variables. If a factor has $k$ levels, the model usually includes $k-1$ dummy variables.\n",
+        "\n",
+        "In Python when using `statsmodels` to fit linear regression models, categorical variables are automatically converted into dummy variables. To indicate that a variable is categorical, you may either:\n",
+        "\n",
+        "- explicitly convert the variable in the dataset to a categorical type using `.astype(\"category\")`, or\n",
+        "- use the `C()` function in the formula language.\n",
+        "\n",
+        ":::\n",
+        "\n",
+        "\n",
+        "\n",
+        "## Model Selection\n",
+        "\n",
+        "In traditional multiple regression, several competing sets of predictors may be plausible. Model selection compares these models using criteria that balance goodness of fit with model complexity.\n",
+        "\n",
+        "\n",
+        "\n",
+        "### Some Criteria\n",
+        "\n",
+        "These criteria reward good fit but penalize model complexity.\n",
+        "\n",
+        "- AIC tends to prefer somewhat larger models.\n",
+        "- BIC penalizes complexity more strongly and often prefers smaller models.\n",
+        "- Mallows' $C_p$ compares a candidate model to a larger reference model.\n",
+        "- PRESS uses leave-one-out data to measure test performance.\n",
+        "  \n",
+        "The first three methods use training results to estimate test performance, whereas PRESS directly approximates the test error through leave-one-out validation. These tools are useful for comparing models, but they should not replace subject-matter reasoning.\n",
+        "\n",
+        "\n",
+        "### Traditional variable selection methods\n",
+        "\n",
+        "\n",
+        "- Best Subset Selection: Best subset selection compares all models of a given size and then chooses the best one according to a criterion such as AIC, BIC, adjusted $R^2$, $C_p$, or PRESS. It is conceptually simple, but it becomes computationally expensive when the number of predictors is large.\n",
+        "- Stepwise Selection: Stepwise procedures add or remove variables sequentially rather than searching all possible models. These methods are faster than best subset selection, but they are greedy procedures and do not guarantee the globally best model.\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "## Python Code\n",
+        "\n",
+        "\n",
+        "The main library for linear regression is `statsmodels`. We will also use `pandas` to deal with dataset and `seaborn` to deal with data visualization.\n",
+        "\n",
+        "\n",
+        "### Setup\n",
+        "\n",
+        "As an example we use the public `mpg` dataset from `seaborn` to demonstrate the workflow of the standard linear regression. \n",
+        "\n",
+        "This is a dataset for cars manufactured between 1970-82 in USA, Europe., and Japan. It was taken from the StatLib library which is maintained at Carnegie Mellon University. The dataset was used in the 1983 American Statistical Association Exposition. More info can be found [here](https://data.world/dataman-udit/cars-data). \n"
+      ],
+      "id": "d903d9ea"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import seaborn as sns\n",
+        "sns.set_theme() # <1>\n",
+        "\n",
+        "mpg = sns.load_dataset(\"mpg\")\n",
+        "mpg.head()"
+      ],
+      "id": "f7ce60ca",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "1. We use the `sns` theme to obtain cleaner and more visually appealing plots compared to the default `matplotlib` style."
+      ],
+      "id": "8f68a741"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mpg.shape"
+      ],
+      "id": "9fd9a064",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mpg.columns"
+      ],
+      "id": "675b7c94",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "There are 9 variables and 398 observations in the dataset: \n",
+        "\n",
+        "- `mpg`  :   continuous\n",
+        "- `cylinders`  :  multi-valued discrete\n",
+        "- `displacement`  :   continuous\n",
+        "- `horsepower`  :   continuous\n",
+        "- `weight`  :   continuous\n",
+        "- `acceleration`  :  continuous\n",
+        "- `model_year`  :   multi-valued discrete\n",
+        "- `origin`  :   multi-valued discrete\n",
+        "- `name`  :   string (Unique values)"
+      ],
+      "id": "d83c6753"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mpg.info()"
+      ],
+      "id": "9515c962",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "This table shows that `horsepower` contains some missing values. We would like to drop them."
+      ],
+      "id": "c2d0a180"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mpg = mpg.dropna()"
+      ],
+      "id": "2363e85f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "The goal is to predict `mpg` using the other features of the car. We remove `name` because it does not provide meaningful information about vehicle performance. We also treat `cylinders` and `origin` as categorical variables.\n",
+        "\n",
+        "For `model_year`, it could reasonably be treated as either a numerical or a categorical variable. For simplicity, we treat it as numerical here, since it has 13 unique values and using 13 categories would make the model less parsimonious."
+      ],
+      "id": "68816a71"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mpg[\"cylinders\"] = mpg[\"cylinders\"].astype(\"category\")\n",
+        "mpg[\"origin\"] = mpg[\"origin\"].astype(\"category\") # <1>\n",
+        "mpg = mpg.drop(columns=[\"name\"])"
+      ],
+      "id": "097a167d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "1. Like mentioned before, we could also indicate categorical variables in the formula using `C()`.\n",
+        "\n",
+        "\n",
+        "Now we could see the summary of the cleaned dataset. The default `describe()` will only show the distribution of numerical values. If we want to see categorical variables, we need to add the argument `include=\"category\"'. "
+      ],
+      "id": "74e414c4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mpg.describe()"
+      ],
+      "id": "a3daf014",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mpg.describe(include=\"category\")"
+      ],
+      "id": "f7571157",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### EDA\n",
+        "\n",
+        "We mainly use three types of plots for exploratory data analysis.\n"
+      ],
+      "id": "7d8ff413"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | column: page\n",
+        "import seaborn as sns\n",
+        "import matplotlib.pyplot as plt\n",
+        "\n",
+        "sns.pairplot(mpg)\n",
+        "plt.gcf().set_size_inches(14, 9)  # <1>"
+      ],
+      "id": "ab635eb9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "1. `plt.gcf()` returns the current figure object. Once we have the figure object, we can modify its properties, such as resizing the figure or setting the DPI.\n",
+        "\n",
+        "<details>\n",
+        "<summary><strong>Click to expand.</strong></summary>\n",
+        "\n",
+        "We can use hue to visualize the effect of categorical variables."
+      ],
+      "id": "42a395d7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.pairplot(mpg, hue = \"cylinders\")"
+      ],
+      "id": "6074a0c5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "sns.pairplot(mpg, hue = \"origin\")"
+      ],
+      "id": "27aa3d9b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "</details>\n",
+        "\n",
+        "---\n",
+        "\n",
+        "\n",
+        "To display the correlation matrix heatmap, we first compute the correlation matrix and then use `sns.heatmap()` to visualize it."
+      ],
+      "id": "4ac9b5b0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "corr = mpg.corr(numeric_only=True)\n",
+        "sns.heatmap(corr, annot=True, cmap=\"coolwarm\", fmt=\".2f\")\n",
+        "plt.gcf().set_size_inches(8, 8)  "
+      ],
+      "id": "55432235",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "\n",
+        "Finally, we may also want to examine the histogram of each variable, although this information is already reflected in the pair plot."
+      ],
+      "id": "884920b5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mpg.hist(\n",
+        "    bins=20,  \n",
+        "    figsize=(10, 8), # <1>\n",
+        ");   # <2>"
+      ],
+      "id": "027b9472",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "1. The `hist()` method provides a built-in `figsize` argument, so there is no need to call `plt.gcf()` in this case.\n",
+        "2. The `hist()` method returns an array of axes objects, which would normally produce text output. The `;` suppresses this output.\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "### Fit a Basic Model\n"
+      ],
+      "id": "add3c273"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "import itertools\n",
+        "\n",
+        "import matplotlib.pyplot as plt\n",
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "import seaborn as sns\n",
+        "import statsmodels.api as sm\n",
+        "import statsmodels.formula.api as smf\n",
+        "from statsmodels.stats.anova import anova_lm\n",
+        "\n",
+        "response = \"mpg\"\n",
+        "predictors = [\"horsepower\", \"weight\", \"acceleration\"]"
+      ],
+      "id": "a3c2ec80",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import statsmodels.formula.api as smf"
+      ],
+      "id": "a56abb2b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "We use `smf.ols(formula)` to fit a linear model described by the formula.  \n"
+      ],
+      "id": "db66da7f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import statsmodels.formula.api as smf\n",
+        "\n",
+        "fit_linear = smf.ols(\n",
+        "    \"mpg ~ horsepower + weight + acceleration\",\n",
+        "    data=mpg,\n",
+        ").fit()\n",
+        "\n",
+        "print(fit_linear.summary())"
+      ],
+      "id": "2fab481b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Fit a Higher-Degree Model"
+      ],
+      "id": "8cbe7f62"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fit_poly = smf.ols(\n",
+        "    \"mpg ~ horsepower + I(horsepower**2) + weight + I(weight**2) + acceleration\",\n",
+        "    data=mpg,\n",
+        ").fit()\n",
+        "\n",
+        "print(fit_poly.summary())"
+      ],
+      "id": "6b948bcc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Fit a Model With Interactions"
+      ],
+      "id": "370ec76b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fit_interaction = smf.ols(\n",
+        "    \"mpg ~ horsepower * weight + acceleration\",\n",
+        "    data=mpg,\n",
+        ").fit()\n",
+        "\n",
+        "print(fit_interaction.summary())"
+      ],
+      "id": "6bd02b66",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Fit a Model With Categorical Variables"
+      ],
+      "id": "ac15e1c1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fit_categorical = smf.ols(\n",
+        "    \"mpg ~ horsepower + weight + acceleration + C(origin) + C(cylinders)\",\n",
+        "    data=mpg,\n",
+        ").fit()\n",
+        "\n",
+        "print(fit_categorical.summary())"
+      ],
+      "id": "e441e5b5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Generate a Summary Table"
+      ],
+      "id": "fc8f90e5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "summary_table = fit_categorical.summary2().tables[1].copy()\n",
+        "summary_table[\"CI 2.5%\"] = fit_categorical.conf_int()[0]\n",
+        "summary_table[\"CI 97.5%\"] = fit_categorical.conf_int()[1]\n",
+        "summary_table"
+      ],
+      "id": "ff220a39",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Generate ANOVA Tables: Type I, II, and III\n",
+        "\n",
+        "Type I sums of squares depend on the order in which the terms enter the model. Type II and Type III tables are order-invariant under the usual model-coding assumptions, but they answer slightly different questions."
+      ],
+      "id": "35750a3c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fit_anova = smf.ols(\n",
+        "    \"mpg ~ horsepower + weight + acceleration + C(origin)\",\n",
+        "    data=mpg,\n",
+        ").fit()\n",
+        "\n",
+        "print(\"Type I ANOVA\")\n",
+        "print(anova_lm(fit_anova, typ=1))\n",
+        "\n",
+        "print(\"\\nType II ANOVA\")\n",
+        "print(anova_lm(fit_anova, typ=2))\n",
+        "\n",
+        "print(\"\\nType III ANOVA\")\n",
+        "print(anova_lm(fit_anova, typ=3))"
+      ],
+      "id": "2bb9f3ec",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Generate a Nested ANOVA Table\n",
+        "\n",
+        "Nested ANOVA compares a smaller model with a larger model that contains all of its terms plus additional predictors."
+      ],
+      "id": "41196a04"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fit_nested_small = smf.ols(\"mpg ~ horsepower + weight\", data=mpg).fit()\n",
+        "fit_nested_large = smf.ols(\n",
+        "    \"mpg ~ horsepower + weight + acceleration + C(origin)\",\n",
+        "    data=mpg,\n",
+        ").fit()\n",
+        "\n",
+        "anova_lm(fit_nested_small, fit_nested_large)"
+      ],
+      "id": "dfdb0fe4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Residual Plots"
+      ],
+      "id": "02197c5c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "diagnostics = mpg[[\"mpg\", \"horsepower\", \"weight\", \"acceleration\", \"origin\"]].copy()\n",
+        "diagnostics[\"fitted\"] = fit_categorical.fittedvalues\n",
+        "diagnostics[\"resid\"] = fit_categorical.resid\n",
+        "diagnostics[\"student_resid\"] = fit_categorical.get_influence().resid_studentized_internal\n",
+        "\n",
+        "fig, axes = plt.subplots(1, 2, figsize=(11, 4))\n",
+        "\n",
+        "axes[0].scatter(diagnostics[\"fitted\"], diagnostics[\"resid\"], alpha=0.6)\n",
+        "axes[0].axhline(0, color=\"black\", linestyle=\"--\")\n",
+        "axes[0].set_xlabel(\"Fitted values\")\n",
+        "axes[0].set_ylabel(\"Residuals\")\n",
+        "axes[0].set_title(\"Residuals vs fitted\")\n",
+        "\n",
+        "sm.qqplot(diagnostics[\"resid\"], line=\"45\", fit=True, ax=axes[1])\n",
+        "axes[1].set_title(\"Normal Q-Q plot\")\n",
+        "\n",
+        "plt.tight_layout()\n",
+        "plt.show()"
+      ],
+      "id": "9e97530c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Partial Residual Plots\n",
+        "\n",
+        "Component-plus-residual plots help assess whether the linear contribution of a predictor is adequate after controlling for the other variables."
+      ],
+      "id": "9616c478"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = plt.figure(figsize=(10, 8))\n",
+        "sm.graphics.plot_ccpr_grid(fit_categorical, fig=fig)\n",
+        "plt.tight_layout()\n",
+        "plt.show()"
+      ],
+      "id": "54f32a38",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Pair Plots"
+      ],
+      "id": "a2f1f08d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "pair_data = mpg[\n",
+        "    [\"mpg\", \"horsepower\", \"weight\", \"acceleration\", \"origin\"]\n",
+        "].sample(n=min(120, len(mpg)), random_state=1)\n",
+        "\n",
+        "sns.pairplot(pair_data, hue=\"origin\", diag_kind=\"hist\")\n",
+        "plt.show()"
+      ],
+      "id": "e917f4c1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Leverage and Cook's Distance Plots"
+      ],
+      "id": "eb10e164"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "influence = fit_categorical.get_influence()\n",
+        "influence_frame = influence.summary_frame()\n",
+        "\n",
+        "fig, axes = plt.subplots(1, 2, figsize=(12, 4))\n",
+        "\n",
+        "axes[0].scatter(influence_frame[\"hat_diag\"], diagnostics[\"student_resid\"], alpha=0.6)\n",
+        "axes[0].axhline(0, color=\"black\", linestyle=\"--\")\n",
+        "axes[0].set_xlabel(\"Leverage\")\n",
+        "axes[0].set_ylabel(\"Studentized residual\")\n",
+        "axes[0].set_title(\"Residuals vs leverage\")\n",
+        "\n",
+        "axes[1].stem(\n",
+        "    np.arange(len(influence_frame)),\n",
+        "    influence_frame[\"cooks_d\"],\n",
+        "    basefmt=\" \",\n",
+        ")\n",
+        "axes[1].set_xlabel(\"Observation\")\n",
+        "axes[1].set_ylabel(\"Cook's distance\")\n",
+        "axes[1].set_title(\"Cook's distance\")\n",
+        "\n",
+        "plt.tight_layout()\n",
+        "plt.show()"
+      ],
+      "id": "2f6612ae",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Stepwise Selection\n",
+        "\n",
+        "The following simple forward-selection routine uses AIC as the selection criterion. It is easy to implement, but it is still a greedy search rather than a global optimum."
+      ],
+      "id": "6d65a503"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def forward_selection(data, response, candidates):\n",
+        "    remaining = list(candidates)\n",
+        "    selected = []\n",
+        "    current_aic = np.inf\n",
+        "    history = []\n",
+        "\n",
+        "    while remaining:\n",
+        "        scored = []\n",
+        "        for term in remaining:\n",
+        "            formula = f\"{response} ~ {' + '.join(selected + [term])}\"\n",
+        "            fit = smf.ols(formula, data=data).fit()\n",
+        "            scored.append((fit.aic, term, fit))\n",
+        "        scored.sort(key=lambda x: x[0])\n",
+        "        best_aic, best_term, best_fit = scored[0]\n",
+        "        if best_aic + 1e-8 < current_aic:\n",
+        "            selected.append(best_term)\n",
+        "            remaining.remove(best_term)\n",
+        "            current_aic = best_aic\n",
+        "            history.append((best_term, best_aic))\n",
+        "        else:\n",
+        "            break\n",
+        "\n",
+        "    return selected, current_aic, pd.DataFrame(history, columns=[\"added_term\", \"aic\"])\n",
+        "\n",
+        "\n",
+        "candidate_terms = [\n",
+        "    \"horsepower\",\n",
+        "    \"weight\",\n",
+        "    \"acceleration\",\n",
+        "    \"C(origin)\",\n",
+        "    \"C(cylinders)\",\n",
+        "]\n",
+        "\n",
+        "selected_terms, selected_aic, stepwise_path = forward_selection(\n",
+        "    mpg, \"mpg\", candidate_terms\n",
+        ")\n",
+        "\n",
+        "print(\"Selected terms:\", selected_terms)\n",
+        "print(\"Final AIC:\", selected_aic)\n",
+        "stepwise_path"
+      ],
+      "id": "5d5c9351",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Best Subset Selection\n",
+        "\n",
+        "Best subset selection fits every model of a given size and records the best one according to a chosen criterion."
+      ],
+      "id": "809d2be9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def model_diagnostics(fit):\n",
+        "    y = fit.model.endog\n",
+        "    n = fit.nobs\n",
+        "    p = fit.df_model + 1\n",
+        "    sse = np.sum(fit.resid ** 2)\n",
+        "    mse = sse / fit.df_resid\n",
+        "    press = np.sum((fit.resid / (1 - fit.get_influence().hat_matrix_diag)) ** 2)\n",
+        "    return {\n",
+        "        \"r2\": fit.rsquared,\n",
+        "        \"adj_r2\": fit.rsquared_adj,\n",
+        "        \"sse\": sse,\n",
+        "        \"mse\": mse,\n",
+        "        \"aic\": fit.aic,\n",
+        "        \"bic\": fit.bic,\n",
+        "        \"press\": press,\n",
+        "        \"n\": n,\n",
+        "        \"p\": p,\n",
+        "    }\n",
+        "\n",
+        "\n",
+        "full_formula = \"mpg ~ horsepower + weight + acceleration + C(origin) + C(cylinders)\"\n",
+        "full_fit = smf.ols(full_formula, data=mpg).fit()\n",
+        "sigma2_full = np.sum(full_fit.resid ** 2) / full_fit.df_resid\n",
+        "\n",
+        "\n",
+        "def mallows_cp(fit, sigma2_full):\n",
+        "    sse = np.sum(fit.resid ** 2)\n",
+        "    p = fit.df_model + 1\n",
+        "    n = fit.nobs\n",
+        "    return sse / sigma2_full - (n - 2 * p)\n",
+        "\n",
+        "\n",
+        "subset_terms = [\n",
+        "    \"horsepower\",\n",
+        "    \"weight\",\n",
+        "    \"acceleration\",\n",
+        "    \"C(origin)\",\n",
+        "]\n",
+        "\n",
+        "subset_rows = []\n",
+        "for k in range(1, len(subset_terms) + 1):\n",
+        "    for combo in itertools.combinations(subset_terms, k):\n",
+        "        formula = \"mpg ~ \" + \" + \".join(combo)\n",
+        "        fit = smf.ols(formula, data=mpg).fit()\n",
+        "        row = {\"terms\": \" + \".join(combo), \"size\": k}\n",
+        "        row.update(model_diagnostics(fit))\n",
+        "        row[\"cp\"] = mallows_cp(fit, sigma2_full)\n",
+        "        subset_rows.append(row)\n",
+        "\n",
+        "subset_table = pd.DataFrame(subset_rows).sort_values([\"size\", \"aic\"])\n",
+        "best_subsets = subset_table.groupby(\"size\", as_index=False).first()\n",
+        "best_subsets[\n",
+        "    [\"size\", \"terms\", \"r2\", \"adj_r2\", \"aic\", \"bic\", \"cp\", \"press\"]\n",
+        "]"
+      ],
+      "id": "59f9eca7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Computing $R^2$, Adjusted $R^2$, SSE, MSE, AIC, BIC, $C_p$, and PRESS\n",
+        "\n",
+        "These quantities can be read from a fitted model, but it is useful to compute them directly from the residuals and leverage values."
+      ],
+      "id": "e60201e6"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fit_metrics = fit_categorical\n",
+        "y = fit_metrics.model.endog\n",
+        "n = fit_metrics.nobs\n",
+        "p = fit_metrics.df_model + 1\n",
+        "\n",
+        "sse = np.sum(fit_metrics.resid ** 2)\n",
+        "sst = np.sum((y - y.mean()) ** 2)\n",
+        "mse = sse / fit_metrics.df_resid\n",
+        "r2 = 1 - sse / sst\n",
+        "adj_r2 = 1 - (sse / fit_metrics.df_resid) / (sst / (n - 1))\n",
+        "aic = fit_metrics.aic\n",
+        "bic = fit_metrics.bic\n",
+        "cp = mallows_cp(fit_metrics, sigma2_full)\n",
+        "press = np.sum(\n",
+        "    (fit_metrics.resid / (1 - fit_metrics.get_influence().hat_matrix_diag)) ** 2\n",
+        ")\n",
+        "\n",
+        "pd.Series(\n",
+        "    {\n",
+        "        \"R^2\": r2,\n",
+        "        \"Adjusted R^2\": adj_r2,\n",
+        "        \"SSE\": sse,\n",
+        "        \"MSE\": mse,\n",
+        "        \"AIC\": aic,\n",
+        "        \"BIC\": bic,\n",
+        "        \"Cp\": cp,\n",
+        "        \"PRESS\": press,\n",
+        "    }\n",
+        ")"
+      ],
+      "id": "a1b0f6f7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "These examples show how the same regression problem can be examined from several angles: fitting increasingly flexible models, testing nested terms, diagnosing influential observations, and comparing candidate models with both classical and predictive criteria.\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "<!-- \n",
+        "### Transformed Terms\n",
+        "\n",
+        "We may also include nonlinear transformations such as:\n",
+        "\n",
+        "- $x^2$,\n",
+        "- $\\log(x)$,\n",
+        "- $\\sqrt{x}$.\n",
+        "\n",
+        "The model remains a linear model because it remains linear in the coefficients $\\beta$.\n",
+        "\n",
+        "These transformations can be created in two ways:\n",
+        "\n",
+        "- Explicitly in the dataset, by defining a new variable;\n",
+        "- Directly in the formula language using functions. -->"
+      ],
+      "id": "61f3b975"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "d:\\Codes\\Notes\\sl26\\env\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

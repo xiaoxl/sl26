@@ -6,7 +6,7 @@
 {{< include ../math.qmd >}}
 
 
-
+This section offers a brief review of linear regression, with the main emphasis on its Python implementation through examples.
 
 ## Quick Overview
 
@@ -198,14 +198,10 @@ For `model_year`, it could reasonably be treated as either a numerical or a cate
 
 ```{python}
 mpg["cylinders"] = mpg["cylinders"].astype("category")
-mpg["origin"] = mpg["origin"].astype("category")
+mpg["origin"] = mpg["origin"].astype("category") # <1>
 mpg = mpg.drop(columns=["name"])
 ```
-
-
-::: {.callout-tip}
-For categorical data, we could explicitly change the datatype in the dataset as shown above using `.astype("category")`, or we could indicate it in the formula language using `C()`. For example, we could later try `C(model_year)` to test what would happen if we treat `model_year` as a numerical value.
-:::
+1. Like mentioned before, we could also indicate categorical variables in the formula using `C()`.
 
 
 Now we could see the summary of the cleaned dataset. The default `describe()` will only show the distribution of numerical values. If we want to see categorical variables, we need to add the argument `include="category"'. 
@@ -247,6 +243,9 @@ sns.pairplot(mpg, hue = "origin")
 
 </details>
 
+---
+
+
 To display the correlation matrix heatmap, we first compute the correlation matrix and then use `sns.heatmap()` to visualize it.
 
 ```{python}
@@ -254,6 +253,8 @@ corr = mpg.corr(numeric_only=True)
 sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
 plt.gcf().set_size_inches(8, 8)  
 ```
+
+---
 
 Finally, we may also want to examine the histogram of each variable, although this information is already reflected in the pair plot.
 
@@ -274,6 +275,7 @@ mpg.hist(
 
 
 ```{python}
+#| echo: false
 import itertools
 
 import matplotlib.pyplot as plt
@@ -289,9 +291,11 @@ predictors = ["horsepower", "weight", "acceleration"]
 ```
 
 
+```{python}
+import statsmodels.formula.api as smf
+```
 
-
-
+We use `smf.ols(formula).fit()` to fit a linear model described by the formula, and use `.summary()` to get the summary table for the model. 
 
 
 
@@ -306,40 +310,40 @@ fit_linear = smf.ols(
 print(fit_linear.summary())
 ```
 
-### Fit a Higher-Degree Model
+### More complicated models
+
+We could write more complicated formulas to get more complicated models.
 
 ```{python}
 fit_poly = smf.ols(
     "mpg ~ horsepower + I(horsepower**2) + weight + I(weight**2) + acceleration",
     data=mpg,
-).fit()
+).fit() # <1>
 
-print(fit_poly.summary())
-```
-
-### Fit a Model With Interactions
-
-```{python}
 fit_interaction = smf.ols(
     "mpg ~ horsepower * weight + acceleration",
     data=mpg,
-).fit()
+).fit() # <2>
 
-print(fit_interaction.summary())
-```
-
-### Fit a Model With Categorical Variables
-
-```{python}
 fit_categorical = smf.ols(
     "mpg ~ horsepower + weight + acceleration + C(origin) + C(cylinders)",
     data=mpg,
-).fit()
+).fit() # <3>
 
-print(fit_categorical.summary())
 ```
+1. Higher degree models
+2. Interaction models
+3. Models with categorical variables. Note that since we already turn `origin` and `cylinders` into categorical variables, we don't have to add `C()` here.
 
 ### Generate a Summary Table
+
+To see the summary table, you can use `.summary()` or `.summary2()`. They provide the same infomortion but in different format.
+
+- `.summary()` is a R/SAS style direct output, which is easier for human to read directly.
+- `.summary2()` is a data structure that is easier for machine to extract data or turn into other output format like `DataFrame`. 
+
+
+
 
 ```{python}
 summary_table = fit_categorical.summary2().tables[1].copy()
