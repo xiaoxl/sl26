@@ -132,10 +132,7 @@ div.csl-indent {
 }</script>
 <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
-
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -472,13 +469,14 @@ window.Quarto = {
   <li><a href="#more-complicated-models" id="toc-more-complicated-models" class="nav-link" data-scroll-target="#more-complicated-models"><span class="header-section-number">2.6.4</span> More complicated models</a></li>
   <li><a href="#generate-a-summary-table" id="toc-generate-a-summary-table" class="nav-link" data-scroll-target="#generate-a-summary-table"><span class="header-section-number">2.6.5</span> Generate a Summary Table</a></li>
   <li><a href="#generate-anova-tables-type-i-ii-and-iii" id="toc-generate-anova-tables-type-i-ii-and-iii" class="nav-link" data-scroll-target="#generate-anova-tables-type-i-ii-and-iii"><span class="header-section-number">2.6.6</span> Generate ANOVA Tables: Type I, II, and III</a></li>
-  <li><a href="#residual-plots" id="toc-residual-plots" class="nav-link" data-scroll-target="#residual-plots"><span class="header-section-number">2.6.7</span> Residual Plots</a></li>
-  <li><a href="#partial-residual-plots" id="toc-partial-residual-plots" class="nav-link" data-scroll-target="#partial-residual-plots"><span class="header-section-number">2.6.8</span> Partial Residual Plots</a></li>
-  <li><a href="#pair-plots" id="toc-pair-plots" class="nav-link" data-scroll-target="#pair-plots"><span class="header-section-number">2.6.9</span> Pair Plots</a></li>
-  <li><a href="#leverage-and-cooks-distance-plots" id="toc-leverage-and-cooks-distance-plots" class="nav-link" data-scroll-target="#leverage-and-cooks-distance-plots"><span class="header-section-number">2.6.10</span> Leverage and Cook’s Distance Plots</a></li>
-  <li><a href="#stepwise-selection" id="toc-stepwise-selection" class="nav-link" data-scroll-target="#stepwise-selection"><span class="header-section-number">2.6.11</span> Stepwise Selection</a></li>
-  <li><a href="#best-subset-selection" id="toc-best-subset-selection" class="nav-link" data-scroll-target="#best-subset-selection"><span class="header-section-number">2.6.12</span> Best Subset Selection</a></li>
-  <li><a href="#computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press" id="toc-computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press" class="nav-link" data-scroll-target="#computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press"><span class="header-section-number">2.6.13</span> Computing <span class="math inline">\(R^2\)</span>, Adjusted <span class="math inline">\(R^2\)</span>, SSE, MSE, AIC, BIC, <span class="math inline">\(C_p\)</span>, and PRESS</a></li>
+  <li><a href="#generate-a-nested-anova-table" id="toc-generate-a-nested-anova-table" class="nav-link" data-scroll-target="#generate-a-nested-anova-table"><span class="header-section-number">2.6.7</span> Generate a Nested ANOVA Table</a></li>
+  <li><a href="#residual-plots" id="toc-residual-plots" class="nav-link" data-scroll-target="#residual-plots"><span class="header-section-number">2.6.8</span> Residual Plots</a></li>
+  <li><a href="#partial-residual-plots" id="toc-partial-residual-plots" class="nav-link" data-scroll-target="#partial-residual-plots"><span class="header-section-number">2.6.9</span> Partial Residual Plots</a></li>
+  <li><a href="#pair-plots" id="toc-pair-plots" class="nav-link" data-scroll-target="#pair-plots"><span class="header-section-number">2.6.10</span> Pair Plots</a></li>
+  <li><a href="#leverage-and-cooks-distance-plots" id="toc-leverage-and-cooks-distance-plots" class="nav-link" data-scroll-target="#leverage-and-cooks-distance-plots"><span class="header-section-number">2.6.11</span> Leverage and Cook’s Distance Plots</a></li>
+  <li><a href="#stepwise-selection" id="toc-stepwise-selection" class="nav-link" data-scroll-target="#stepwise-selection"><span class="header-section-number">2.6.12</span> Stepwise Selection</a></li>
+  <li><a href="#best-subset-selection" id="toc-best-subset-selection" class="nav-link" data-scroll-target="#best-subset-selection"><span class="header-section-number">2.6.13</span> Best Subset Selection</a></li>
+  <li><a href="#computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press" id="toc-computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press" class="nav-link" data-scroll-target="#computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press"><span class="header-section-number">2.6.14</span> Computing <span class="math inline">\(R^2\)</span>, Adjusted <span class="math inline">\(R^2\)</span>, SSE, MSE, AIC, BIC, <span class="math inline">\(C_p\)</span>, and PRESS</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -708,7 +706,7 @@ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">2.6.1</span> Setup</h3>
 <p>As an example we use the public <code>mpg</code> dataset from <code>seaborn</code> to demonstrate the workflow of the standard linear regression.</p>
 <p>This is a dataset for cars manufactured between 1970-82 in USA, Europe., and Japan. It was taken from the StatLib library which is maintained at Carnegie Mellon University. The dataset was used in the 1983 American Statistical Association Exposition. More info can be found <a href="https://data.world/dataman-udit/cars-data">here</a>.</p>
-<div id="1f3838b6" class="cell" data-execution_count="1">
+<div id="79ad7556" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -722,7 +720,7 @@ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 </dd>
 </dl>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="136">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 
 
@@ -808,15 +806,15 @@ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 </div>
 </div>
 </div>
-<div id="ecadac61" class="cell" data-execution_count="2">
+<div id="25b69e26" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mpg.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="137">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>(398, 9)</code></pre>
 </div>
 </div>
-<div id="5779994e" class="cell" data-execution_count="3">
+<div id="8505ca44" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mpg.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="138">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Index(['mpg', 'cylinders', 'displacement', 'horsepower', 'weight',
        'acceleration', 'model_year', 'origin', 'name'],
       dtype='str')</code></pre>
@@ -834,7 +832,7 @@ y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon.
 <li><code>origin</code> : multi-valued discrete</li>
 <li><code>name</code> : string (Unique values)</li>
 </ul>
-<div id="b767e559" class="cell" data-execution_count="4">
+<div id="54a80f38" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mpg.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.DataFrame'&gt;
@@ -856,12 +854,12 @@ memory usage: 28.1 KB</code></pre>
 </div>
 </div>
 <p>This table shows that <code>horsepower</code> contains some missing values. We would like to drop them.</p>
-<div id="da2238e5" class="cell" data-execution_count="5">
+<div id="4c019687" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="op">=</span> mpg.dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The goal is to predict <code>mpg</code> using the other features of the car. We remove <code>name</code> because it does not provide meaningful information about vehicle performance. We also treat <code>cylinders</code> and <code>origin</code> as categorical variables.</p>
 <p>For <code>model_year</code>, it could reasonably be treated as either a numerical or a categorical variable. For simplicity, we treat it as numerical here, since it has 13 unique values and using 13 categories would make the model less parsimonious.</p>
-<div id="cbd2566e" class="cell" data-execution_count="6">
+<div id="9c2334d1" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>mpg[<span class="st">"cylinders"</span>] <span class="op">=</span> mpg[<span class="st">"cylinders"</span>].astype(<span class="st">"category"</span>)</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>mpg[<span class="st">"origin"</span>] <span class="op">=</span> mpg[<span class="st">"origin"</span>].astype(<span class="st">"category"</span>)</span>
 <span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="op">=</span> mpg.drop(columns<span class="op">=</span>[<span class="st">"name"</span>])</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -875,9 +873,9 @@ memory usage: 28.1 KB</code></pre>
 </div>
 </div>
 <p>Now we could see the summary of the cleaned dataset. The default <code>describe()</code> will only show the distribution of numerical values. If we want to see categorical variables, we need to add the argument `include=“category”’.</p>
-<div id="f7819676" class="cell" data-execution_count="7">
+<div id="18246aa9" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mpg.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="142">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -972,9 +970,9 @@ memory usage: 28.1 KB</code></pre>
 </div>
 </div>
 </div>
-<div id="4f9f5741" class="cell" data-execution_count="8">
+<div id="51bf0455" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mpg.describe(include<span class="op">=</span><span class="st">"category"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="143">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -1017,7 +1015,7 @@ memory usage: 28.1 KB</code></pre>
 <section id="eda" class="level3 page-columns page-full" data-number="2.6.2">
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="eda"><span class="header-section-number">2.6.2</span> EDA</h3>
 <p>We mainly use three types of plots for exploratory data analysis.</p>
-<div id="e7ab3e87" class="cell page-columns page-full" data-execution_count="9">
+<div id="c5490554" class="cell page-columns page-full" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1044,7 +1042,7 @@ memory usage: 28.1 KB</code></pre>
 <strong>Click to expand.</strong>
 </summary>
 <p>We can use hue to visualize the effect of categorical variables.</p>
-<div id="07f9de93" class="cell" data-execution_count="10">
+<div id="2560479a" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(mpg, hue <span class="op">=</span> <span class="st">"cylinders"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1054,7 +1052,7 @@ memory usage: 28.1 KB</code></pre>
 </div>
 </div>
 </div>
-<div id="7ac960ab" class="cell" data-execution_count="11">
+<div id="0bbe7b96" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(mpg, hue <span class="op">=</span> <span class="st">"origin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1067,7 +1065,7 @@ memory usage: 28.1 KB</code></pre>
 </details>
 <hr>
 <p>To display the correlation matrix heatmap, we first compute the correlation matrix and then use <code>sns.heatmap()</code> to visualize it.</p>
-<div id="76584f9f" class="cell" data-execution_count="12">
+<div id="d43c123d" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> mpg.corr(numeric_only<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"coolwarm"</span>, fmt<span class="op">=</span><span class="st">".2f"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.gcf().set_size_inches(<span class="dv">8</span>, <span class="dv">8</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1081,7 +1079,7 @@ memory usage: 28.1 KB</code></pre>
 </div>
 <hr>
 <p>Finally, we may also want to examine the histogram of each variable, although this information is already reflected in the pair plot.</p>
-<div id="bc2cf524" class="cell" data-execution_count="13">
+<div id="6db6ddea" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a>mpg.hist(</span>
 <span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span><span class="dv">20</span>,  </span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>),</span>
@@ -1109,11 +1107,11 @@ memory usage: 28.1 KB</code></pre>
 </section>
 <section id="fit-a-basic-model" class="level3" data-number="2.6.3">
 <h3 data-number="2.6.3" class="anchored" data-anchor-id="fit-a-basic-model"><span class="header-section-number">2.6.3</span> Fit a Basic Model</h3>
-<div id="92a5f6ae" class="cell" data-execution_count="14">
+<div id="b227982f" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We use <code>smf.ols(formula).fit()</code> to fit a linear model described by the formula, and use <code>.summary()</code> to get the summary table for the model.</p>
-<div id="8387d5ec" class="cell" data-execution_count="15">
+<div id="90def898" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>fit_linear <span class="op">=</span> smf.ols(</span>
@@ -1129,7 +1127,7 @@ Dep. Variable:                    mpg   R-squared:                       0.706
 Model:                            OLS   Adj. R-squared:                  0.704
 Method:                 Least Squares   F-statistic:                     311.1
 Date:                Sat, 11 Apr 2026   Prob (F-statistic):          7.48e-103
-Time:                        15:46:47   Log-Likelihood:                -1121.0
+Time:                        17:06:36   Log-Likelihood:                -1121.0
 No. Observations:                 392   AIC:                             2250.
 Df Residuals:                     388   BIC:                             2266.
 Df Model:                           3                                         
@@ -1158,7 +1156,7 @@ strong multicollinearity or other numerical problems.</code></pre>
 <section id="more-complicated-models" class="level3" data-number="2.6.4">
 <h3 data-number="2.6.4" class="anchored" data-anchor-id="more-complicated-models"><span class="header-section-number">2.6.4</span> More complicated models</h3>
 <p>We could write more complicated formulas to get more complicated models.</p>
-<div id="f5999785" class="cell" data-execution_count="16">
+<div id="bda3bec3" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a>fit_poly <span class="op">=</span> smf.ols(</span>
 <span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mpg ~ horsepower + I(horsepower**2) + weight + I(weight**2) + acceleration"</span>,</span>
 <span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>mpg,</span>
@@ -1199,7 +1197,7 @@ strong multicollinearity or other numerical problems.</code></pre>
 <li><code>.summary2()</code> is stated as “experimental summary function to summarize the regression results” in the official document. It uses DataFrames that are easier for machines to extract data and also provide some optional features that are more flexible than <code>.summary()</code>.</li>
 </ul>
 <p>Both of them consist of three tables that can be accessed through <code>.tables</code>. For example this is the second table from <code>fit_linear.summary()</code>.</p>
-<div id="574217a3" class="cell" data-execution_count="17">
+<div id="ec81026a" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fit_linear.summary().tables[<span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>================================================================================
@@ -1213,9 +1211,9 @@ acceleration    -0.0021      0.123     -0.017      0.987      -0.245       0.240
 </div>
 </div>
 <p>This is the second table from <code>fit_linear.summary2()</code>.</p>
-<div id="bf311424" class="cell" data-execution_count="18">
+<div id="831a67bb" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fit_linear.summary2().tables[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="153">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 
 
@@ -1275,7 +1273,7 @@ acceleration    -0.0021      0.123     -0.017      0.987      -0.245       0.240
 </div>
 </div>
 <p>Their types are different.</p>
-<div id="651c272c" class="cell" data-execution_count="19">
+<div id="f2c66068" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(fit_linear.summary().tables[<span class="dv">1</span>]))</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(fit_linear.summary2().tables[<span class="dv">1</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1284,9 +1282,9 @@ acceleration    -0.0021      0.123     -0.017      0.987      -0.245       0.240
 </div>
 </div>
 <p>Since <code>.summary2()</code> provides a DataFrame, it is easier to extract results.</p>
-<div id="d41454a6" class="cell" data-execution_count="20">
+<div id="352c6822" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit_linear.summary2().tables[<span class="dv">1</span>].loc[<span class="st">'Intercept'</span>, <span class="st">'t'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="155">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>np.float64(18.9651134409763)</code></pre>
 </div>
 </div>
@@ -1295,7 +1293,7 @@ acceleration    -0.0021      0.123     -0.017      0.987      -0.245       0.240
 <li>You may specify the names of variables by setting <code>xname</code> and <code>yname</code>.</li>
 <li>You may change the confidence level by setting <code>alpha</code>.</li>
 </ul>
-<div id="584f0ffc" class="cell" data-execution_count="21">
+<div id="26542690" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fit_linear.summary(yname<span class="op">=</span><span class="st">"y"</span>, xname<span class="op">=</span>[<span class="st">"b0"</span>, <span class="st">"b1"</span>, <span class="st">"b2"</span>, <span class="st">"b3"</span>], alpha<span class="op">=</span><span class="fl">0.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                            OLS Regression Results                            
@@ -1304,7 +1302,7 @@ Dep. Variable:                      y   R-squared:                       0.706
 Model:                            OLS   Adj. R-squared:                  0.704
 Method:                 Least Squares   F-statistic:                     311.1
 Date:                Sat, 11 Apr 2026   Prob (F-statistic):          7.48e-103
-Time:                        15:46:47   Log-Likelihood:                -1121.0
+Time:                        17:06:36   Log-Likelihood:                -1121.0
 No. Observations:                 392   AIC:                             2250.
 Df Residuals:                     388   BIC:                             2266.
 Df Model:                           3                                         
@@ -1329,9 +1327,9 @@ Notes:
 strong multicollinearity or other numerical problems.</code></pre>
 </div>
 </div>
-<div id="a0cb4077" class="cell" data-execution_count="22">
+<div id="64dd6479" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fit_linear.summary2(yname<span class="op">=</span><span class="st">"y"</span>, xname<span class="op">=</span>[<span class="st">"b0"</span>, <span class="st">"b1"</span>, <span class="st">"b2"</span>, <span class="st">"b3"</span>], alpha<span class="op">=</span><span class="fl">0.2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="157">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <table class="simpletable caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
@@ -1348,7 +1346,7 @@ strong multicollinearity or other numerical problems.</code></pre>
 </tr>
 <tr class="odd">
 <td>Date:</td>
-<td>2026-04-11 15:46</td>
+<td>2026-04-11 17:06</td>
 <td>BIC:</td>
 <td>2265.8900</td>
 </tr>
@@ -1468,244 +1466,65 @@ Notes:<br>
 </section>
 <section id="generate-anova-tables-type-i-ii-and-iii" class="level3" data-number="2.6.6">
 <h3 data-number="2.6.6" class="anchored" data-anchor-id="generate-anova-tables-type-i-ii-and-iii"><span class="header-section-number">2.6.6</span> Generate ANOVA Tables: Type I, II, and III</h3>
-<div id="b2a13825" class="cell" data-execution_count="23">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.anova <span class="im">import</span> anova_lm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The <code>anova_lm()</code> is usded to generate ANOVA tables.</p>
-<div class="cell" data-tbl-cap="Type I ANOVA" data-execution_count="24">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>anova_lm(fit_categorical, typ<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="159">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<caption>Type I ANOVA</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">df</th>
-<th data-quarto-table-cell-role="th">sum_sq</th>
-<th data-quarto-table-cell-role="th">mean_sq</th>
-<th data-quarto-table-cell-role="th">F</th>
-<th data-quarto-table-cell-role="th">PR(&gt;F)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">C(origin)</th>
-<td>2.0</td>
-<td>7904.291038</td>
-<td>3952.145519</td>
-<td>258.942940</td>
-<td>8.400435e-72</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">C(cylinders)</th>
-<td>4.0</td>
-<td>8032.303594</td>
-<td>2008.075899</td>
-<td>131.568302</td>
-<td>1.594721e-70</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">horsepower</th>
-<td>1.0</td>
-<td>1436.228431</td>
-<td>1436.228431</td>
-<td>94.101093</td>
-<td>4.917669e-20</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">weight</th>
-<td>1.0</td>
-<td>604.070449</td>
-<td>604.070449</td>
-<td>39.578446</td>
-<td>8.636873e-10</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">acceleration</th>
-<td>1.0</td>
-<td>11.782324</td>
-<td>11.782324</td>
-<td>0.771973</td>
-<td>3.801597e-01</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Residual</th>
-<td>382.0</td>
-<td>5830.317633</td>
-<td>15.262612</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div class="cell" data-tbl-cap="Type II ANOVA" data-execution_count="25">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>anova_lm(fit_categorical, typ<span class="op">=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="160">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<caption>Type II ANOVA</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">sum_sq</th>
-<th data-quarto-table-cell-role="th">df</th>
-<th data-quarto-table-cell-role="th">F</th>
-<th data-quarto-table-cell-role="th">PR(&gt;F)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">C(origin)</th>
-<td>305.548219</td>
-<td>2.0</td>
-<td>10.009696</td>
-<td>5.793282e-05</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">C(cylinders)</th>
-<td>855.048753</td>
-<td>4.0</td>
-<td>14.005610</td>
-<td>1.131411e-10</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">horsepower</th>
-<td>349.242819</td>
-<td>1.0</td>
-<td>22.882245</td>
-<td>2.464202e-06</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">weight</th>
-<td>399.693658</td>
-<td>1.0</td>
-<td>26.187763</td>
-<td>4.916772e-07</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">acceleration</th>
-<td>11.782324</td>
-<td>1.0</td>
-<td>0.771973</td>
-<td>3.801597e-01</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Residual</th>
-<td>5830.317633</td>
-<td>382.0</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div class="cell" data-tbl-cap="Type III ANOVA" data-execution_count="26">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>anova_lm(fit_categorical, typ<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="161">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<caption>Type III ANOVA</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">sum_sq</th>
-<th data-quarto-table-cell-role="th">df</th>
-<th data-quarto-table-cell-role="th">F</th>
-<th data-quarto-table-cell-role="th">PR(&gt;F)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Intercept</th>
-<td>2027.986791</td>
-<td>1.0</td>
-<td>132.872856</td>
-<td>1.383458e-26</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">C(origin)</th>
-<td>305.548219</td>
-<td>2.0</td>
-<td>10.009696</td>
-<td>5.793282e-05</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">C(cylinders)</th>
-<td>855.048753</td>
-<td>4.0</td>
-<td>14.005610</td>
-<td>1.131411e-10</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">horsepower</th>
-<td>349.242819</td>
-<td>1.0</td>
-<td>22.882245</td>
-<td>2.464202e-06</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">weight</th>
-<td>399.693658</td>
-<td>1.0</td>
-<td>26.187763</td>
-<td>4.916772e-07</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">acceleration</th>
-<td>11.782324</td>
-<td>1.0</td>
-<td>0.771973</td>
-<td>3.801597e-01</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Residual</th>
-<td>5830.317633</td>
-<td>382.0</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<p>Nested ANOVA compares a smaller model with a larger model that contains all of its terms plus additional predictors. Note that by default the information of the two models won’t be shown. Therefore it is recommended to print out the model information.</p>
-<div class="cell" data-tbl-cap="Nested ANOVA" data-execution_count="27">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fit_nested_small <span class="op">=</span> smf.ols(<span class="st">"mpg ~ horsepower + weight"</span>, data<span class="op">=</span>mpg).fit()</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>fit_nested_large <span class="op">=</span> smf.ols(</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mpg ~ horsepower + weight + acceleration + C(origin)"</span>,</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>mpg,</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>).fit()</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Reduced model: </span><span class="sc">{</span>fit_nested_small<span class="sc">.</span>model<span class="sc">.</span>formula<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Full model:    </span><span class="sc">{</span>fit_nested_large<span class="sc">.</span>model<span class="sc">.</span>formula<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>anova_lm(fit_nested_small, fit_nested_large)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Type I sums of squares depend on the order in which the terms enter the model. Type II and Type III tables are order-invariant under the usual model-coding assumptions, but they answer slightly different questions.</p>
+<div id="3e232925" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fit_anova <span class="op">=</span> smf.ols(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mpg ~ horsepower + weight + acceleration + C(origin)"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>mpg,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>).fit()</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Type I ANOVA"</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(anova_lm(fit_anova, typ<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Type II ANOVA"</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(anova_lm(fit_anova, typ<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Type III ANOVA"</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(anova_lm(fit_anova, typ<span class="op">=</span><span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Reduced model: mpg ~ horsepower + weight
-Full model:    mpg ~ horsepower + weight + acceleration + C(origin)</code></pre>
+<pre><code>Type I ANOVA
+                 df       sum_sq      mean_sq           F        PR(&gt;F)
+C(origin)       2.0  7904.291038  3952.145519  228.189165  3.876707e-66
+horsepower      1.0  7866.315428  7866.315428  454.185692  3.531103e-67
+weight          1.0  1361.903501  1361.903501   78.633649  2.803996e-17
+acceleration    1.0     1.117117     1.117117    0.064500  7.996549e-01
+Residual      386.0  6685.366385    17.319602         NaN           NaN
+
+Type II ANOVA
+                   sum_sq     df          F        PR(&gt;F)
+C(origin)      308.473996    2.0   8.905343  1.655896e-04
+horsepower     220.431050    1.0  12.727258  4.056969e-04
+weight        1017.752738    1.0  58.763056  1.456535e-13
+acceleration     1.117117    1.0   0.064500  7.996549e-01
+Residual      6685.366385  386.0        NaN           NaN
+
+Type III ANOVA
+                   sum_sq     df           F        PR(&gt;F)
+Intercept     5797.808250    1.0  334.754126  2.704249e-54
+C(origin)      308.473996    2.0    8.905343  1.655896e-04
+horsepower     220.431050    1.0   12.727258  4.056969e-04
+weight        1017.752738    1.0   58.763056  1.456535e-13
+acceleration     1.117117    1.0    0.064500  7.996549e-01
+Residual      6685.366385  386.0         NaN           NaN</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="162">
+</div>
+</section>
+<section id="generate-a-nested-anova-table" class="level3" data-number="2.6.7">
+<h3 data-number="2.6.7" class="anchored" data-anchor-id="generate-a-nested-anova-table"><span class="header-section-number">2.6.7</span> Generate a Nested ANOVA Table</h3>
+<p>Nested ANOVA compares a smaller model with a larger model that contains all of its terms plus additional predictors.</p>
+<div id="5af17323" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fit_nested_small <span class="op">=</span> smf.ols(<span class="st">"mpg ~ horsepower + weight"</span>, data<span class="op">=</span>mpg).fit()</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>fit_nested_large <span class="op">=</span> smf.ols(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mpg ~ horsepower + weight + acceleration + C(origin)"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>mpg,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>).fit()</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>anova_lm(fit_nested_small, fit_nested_large)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
 <div>
 
 
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<caption>Nested ANOVA</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1743,178 +1562,154 @@ Full model:    mpg ~ horsepower + weight + acceleration + C(origin)</code></pre>
 </div>
 </div>
 </section>
-<section id="residual-plots" class="level3" data-number="2.6.7">
-<h3 data-number="2.6.7" class="anchored" data-anchor-id="residual-plots"><span class="header-section-number">2.6.7</span> Residual Plots</h3>
-<p>Residual plots are a set of diagnotic tools to verify models. Doesn’t like <code>plot(fit)</code> in R, <code>statsmodels</code> in Python provides several functions for residual analysis.</p>
-<div id="613170a4" class="cell" data-execution_count="28">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sm.graphics.plot_partregress_grid(fit_poly)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="163">
-<div>
-<figure class="figure">
-<p><img src="lr_files/figure-html/cell-29-output-1.png" width="656" height="472" class="figure-img"></p>
-</figure>
-</div>
-</div>
+<section id="residual-plots" class="level3" data-number="2.6.8">
+<h3 data-number="2.6.8" class="anchored" data-anchor-id="residual-plots"><span class="header-section-number">2.6.8</span> Residual Plots</h3>
+<div id="ee174b9f" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>diagnostics <span class="op">=</span> mpg[[<span class="st">"mpg"</span>, <span class="st">"horsepower"</span>, <span class="st">"weight"</span>, <span class="st">"acceleration"</span>, <span class="st">"origin"</span>]].copy()</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"fitted"</span>] <span class="op">=</span> fit_categorical.fittedvalues</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"resid"</span>] <span class="op">=</span> fit_categorical.resid</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"student_resid"</span>] <span class="op">=</span> fit_categorical.get_influence().resid_studentized_internal</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">4</span>))</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(diagnostics[<span class="st">"fitted"</span>], diagnostics[<span class="st">"resid"</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Fitted values"</span>)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Residuals"</span>)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Residuals vs fitted"</span>)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>sm.qqplot(diagnostics[<span class="st">"resid"</span>], line<span class="op">=</span><span class="st">"45"</span>, fit<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Normal Q-Q plot"</span>)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lr_files/figure-html/cell-29-output-2.png" width="656" height="472" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="2a04e69d" class="cell" data-execution_count="29">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>diagnostics <span class="op">=</span> mpg[[<span class="st">"mpg"</span>, <span class="st">"horsepower"</span>, <span class="st">"weight"</span>, <span class="st">"acceleration"</span>, <span class="st">"origin"</span>]].copy()</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"fitted"</span>] <span class="op">=</span> fit_categorical.fittedvalues</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"resid"</span>] <span class="op">=</span> fit_categorical.resid</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>diagnostics[<span class="st">"student_resid"</span>] <span class="op">=</span> fit_categorical.get_influence().resid_studentized_internal</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">11</span>, <span class="dv">4</span>))</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(diagnostics[<span class="st">"fitted"</span>], diagnostics[<span class="st">"resid"</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Fitted values"</span>)</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Residuals"</span>)</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Residuals vs fitted"</span>)</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>sm.qqplot(diagnostics[<span class="st">"resid"</span>], line<span class="op">=</span><span class="st">"45"</span>, fit<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Normal Q-Q plot"</span>)</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="lr_files/figure-html/cell-30-output-1.png" width="1040" height="368" class="figure-img"></p>
+<p><img src="lr_files/figure-html/cell-27-output-1.png" width="1040" height="368" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="partial-residual-plots" class="level3" data-number="2.6.8">
-<h3 data-number="2.6.8" class="anchored" data-anchor-id="partial-residual-plots"><span class="header-section-number">2.6.8</span> Partial Residual Plots</h3>
+<section id="partial-residual-plots" class="level3" data-number="2.6.9">
+<h3 data-number="2.6.9" class="anchored" data-anchor-id="partial-residual-plots"><span class="header-section-number">2.6.9</span> Partial Residual Plots</h3>
 <p>Component-plus-residual plots help assess whether the linear contribution of a predictor is adequate after controlling for the other variables.</p>
-<div id="487efb45" class="cell" data-execution_count="30">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sm.graphics.plot_ccpr_grid(fit_categorical, fig<span class="op">=</span>fig)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ea37cb5d" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>sm.graphics.plot_ccpr_grid(fit_categorical, fig<span class="op">=</span>fig)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lr_files/figure-html/cell-31-output-1.png" width="944" height="754" class="figure-img"></p>
+<p><img src="lr_files/figure-html/cell-28-output-1.png" width="944" height="754" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="pair-plots" class="level3" data-number="2.6.9">
-<h3 data-number="2.6.9" class="anchored" data-anchor-id="pair-plots"><span class="header-section-number">2.6.9</span> Pair Plots</h3>
-<div id="2edb8bc9" class="cell" data-execution_count="31">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pair_data <span class="op">=</span> mpg[</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"mpg"</span>, <span class="st">"horsepower"</span>, <span class="st">"weight"</span>, <span class="st">"acceleration"</span>, <span class="st">"origin"</span>]</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>].sample(n<span class="op">=</span><span class="bu">min</span>(<span class="dv">120</span>, <span class="bu">len</span>(mpg)), random_state<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>sns.pairplot(pair_data, hue<span class="op">=</span><span class="st">"origin"</span>, diag_kind<span class="op">=</span><span class="st">"hist"</span>)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="pair-plots" class="level3" data-number="2.6.10">
+<h3 data-number="2.6.10" class="anchored" data-anchor-id="pair-plots"><span class="header-section-number">2.6.10</span> Pair Plots</h3>
+<div id="a6fffd04" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pair_data <span class="op">=</span> mpg[</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"mpg"</span>, <span class="st">"horsepower"</span>, <span class="st">"weight"</span>, <span class="st">"acceleration"</span>, <span class="st">"origin"</span>]</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>].sample(n<span class="op">=</span><span class="bu">min</span>(<span class="dv">120</span>, <span class="bu">len</span>(mpg)), random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>sns.pairplot(pair_data, hue<span class="op">=</span><span class="st">"origin"</span>, diag_kind<span class="op">=</span><span class="st">"hist"</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lr_files/figure-html/cell-32-output-1.png" width="1051" height="943" class="figure-img"></p>
+<p><img src="lr_files/figure-html/cell-29-output-1.png" width="1051" height="943" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="leverage-and-cooks-distance-plots" class="level3" data-number="2.6.10">
-<h3 data-number="2.6.10" class="anchored" data-anchor-id="leverage-and-cooks-distance-plots"><span class="header-section-number">2.6.10</span> Leverage and Cook’s Distance Plots</h3>
-<div id="3060fd10" class="cell" data-execution_count="32">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>influence <span class="op">=</span> fit_categorical.get_influence()</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>influence_frame <span class="op">=</span> influence.summary_frame()</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(influence_frame[<span class="st">"hat_diag"</span>], diagnostics[<span class="st">"student_resid"</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Leverage"</span>)</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Studentized residual"</span>)</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Residuals vs leverage"</span>)</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].stem(</span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>    np.arange(<span class="bu">len</span>(influence_frame)),</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>    influence_frame[<span class="st">"cooks_d"</span>],</span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>    basefmt<span class="op">=</span><span class="st">" "</span>,</span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Observation"</span>)</span>
-<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Cook's distance"</span>)</span>
-<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Cook's distance"</span>)</span>
-<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="leverage-and-cooks-distance-plots" class="level3" data-number="2.6.11">
+<h3 data-number="2.6.11" class="anchored" data-anchor-id="leverage-and-cooks-distance-plots"><span class="header-section-number">2.6.11</span> Leverage and Cook’s Distance Plots</h3>
+<div id="811aaadc" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>influence <span class="op">=</span> fit_categorical.get_influence()</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>influence_frame <span class="op">=</span> influence.summary_frame()</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(influence_frame[<span class="st">"hat_diag"</span>], diagnostics[<span class="st">"student_resid"</span>], alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Leverage"</span>)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Studentized residual"</span>)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Residuals vs leverage"</span>)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].stem(</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    np.arange(<span class="bu">len</span>(influence_frame)),</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    influence_frame[<span class="st">"cooks_d"</span>],</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    basefmt<span class="op">=</span><span class="st">" "</span>,</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Observation"</span>)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Cook's distance"</span>)</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Cook's distance"</span>)</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lr_files/figure-html/cell-33-output-1.png" width="1134" height="368" class="figure-img"></p>
+<p><img src="lr_files/figure-html/cell-30-output-1.png" width="1134" height="368" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="stepwise-selection" class="level3" data-number="2.6.11">
-<h3 data-number="2.6.11" class="anchored" data-anchor-id="stepwise-selection"><span class="header-section-number">2.6.11</span> Stepwise Selection</h3>
+<section id="stepwise-selection" class="level3" data-number="2.6.12">
+<h3 data-number="2.6.12" class="anchored" data-anchor-id="stepwise-selection"><span class="header-section-number">2.6.12</span> Stepwise Selection</h3>
 <p>The following simple forward-selection routine uses AIC as the selection criterion. It is easy to implement, but it is still a greedy search rather than a global optimum.</p>
-<div id="0621349a" class="cell" data-execution_count="33">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward_selection(data, response, candidates):</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    remaining <span class="op">=</span> <span class="bu">list</span>(candidates)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    selected <span class="op">=</span> []</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    current_aic <span class="op">=</span> np.inf</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> []</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> remaining:</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>        scored <span class="op">=</span> []</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> term <span class="kw">in</span> remaining:</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>            formula <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>response<span class="sc">}</span><span class="ss"> ~ </span><span class="sc">{</span><span class="st">' + '</span><span class="sc">.</span>join(selected <span class="op">+</span> [term])<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>            fit <span class="op">=</span> smf.ols(formula, data<span class="op">=</span>data).fit()</span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>            scored.append((fit.aic, term, fit))</span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>        scored.sort(key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">0</span>])</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>        best_aic, best_term, best_fit <span class="op">=</span> scored[<span class="dv">0</span>]</span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> best_aic <span class="op">+</span> <span class="fl">1e-8</span> <span class="op">&lt;</span> current_aic:</span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>            selected.append(best_term)</span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>            remaining.remove(best_term)</span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>            current_aic <span class="op">=</span> best_aic</span>
-<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>            history.append((best_term, best_aic))</span>
-<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
-<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> selected, current_aic, pd.DataFrame(history, columns<span class="op">=</span>[<span class="st">"added_term"</span>, <span class="st">"aic"</span>])</span>
-<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>candidate_terms <span class="op">=</span> [</span>
-<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"horsepower"</span>,</span>
-<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"weight"</span>,</span>
-<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceleration"</span>,</span>
-<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C(origin)"</span>,</span>
-<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C(cylinders)"</span>,</span>
-<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>selected_terms, selected_aic, stepwise_path <span class="op">=</span> forward_selection(mpg, <span class="st">"mpg"</span>, candidate_terms)</span>
-<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Selected terms:"</span>, selected_terms)</span>
-<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Final AIC:"</span>, selected_aic)</span>
-<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a>stepwise_path</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="3c4cb284" class="cell" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward_selection(data, response, candidates):</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    remaining <span class="op">=</span> <span class="bu">list</span>(candidates)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    selected <span class="op">=</span> []</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    current_aic <span class="op">=</span> np.inf</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> []</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> remaining:</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>        scored <span class="op">=</span> []</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> term <span class="kw">in</span> remaining:</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>            formula <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>response<span class="sc">}</span><span class="ss"> ~ </span><span class="sc">{</span><span class="st">' + '</span><span class="sc">.</span>join(selected <span class="op">+</span> [term])<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>            fit <span class="op">=</span> smf.ols(formula, data<span class="op">=</span>data).fit()</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>            scored.append((fit.aic, term, fit))</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>        scored.sort(key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">0</span>])</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>        best_aic, best_term, best_fit <span class="op">=</span> scored[<span class="dv">0</span>]</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> best_aic <span class="op">+</span> <span class="fl">1e-8</span> <span class="op">&lt;</span> current_aic:</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>            selected.append(best_term)</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>            remaining.remove(best_term)</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>            current_aic <span class="op">=</span> best_aic</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>            history.append((best_term, best_aic))</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> selected, current_aic, pd.DataFrame(history, columns<span class="op">=</span>[<span class="st">"added_term"</span>, <span class="st">"aic"</span>])</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>candidate_terms <span class="op">=</span> [</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"horsepower"</span>,</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"weight"</span>,</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceleration"</span>,</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C(origin)"</span>,</span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C(cylinders)"</span>,</span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>selected_terms, selected_aic, stepwise_path <span class="op">=</span> forward_selection(</span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>    mpg, <span class="st">"mpg"</span>, candidate_terms</span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Selected terms:"</span>, selected_terms)</span>
+<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Final AIC:"</span>, selected_aic)</span>
+<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a>stepwise_path</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Selected terms: ['weight', 'C(cylinders)', 'horsepower', 'C(origin)']
 Final AIC: 2189.4686412079573</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="168">
+<div class="cell-output cell-output-display" data-execution_count="30">
 <div>
 
 
@@ -1954,67 +1749,65 @@ Final AIC: 2189.4686412079573</code></pre>
 </div>
 </div>
 </section>
-<section id="best-subset-selection" class="level3" data-number="2.6.12">
-<h3 data-number="2.6.12" class="anchored" data-anchor-id="best-subset-selection"><span class="header-section-number">2.6.12</span> Best Subset Selection</h3>
+<section id="best-subset-selection" class="level3" data-number="2.6.13">
+<h3 data-number="2.6.13" class="anchored" data-anchor-id="best-subset-selection"><span class="header-section-number">2.6.13</span> Best Subset Selection</h3>
 <p>Best subset selection fits every model of a given size and records the best one according to a chosen criterion.</p>
-<div id="0fe73d13" class="cell" data-execution_count="34">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model_diagnostics(fit):</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> fit.model.endog</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> fit.nobs</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> fit.df_model <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    sse <span class="op">=</span> np.<span class="bu">sum</span>(fit.resid <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> sse <span class="op">/</span> fit.df_resid</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    press <span class="op">=</span> np.<span class="bu">sum</span>((fit.resid <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> fit.get_influence().hat_matrix_diag)) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"r2"</span>: fit.rsquared,</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"adj_r2"</span>: fit.rsquared_adj,</span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sse"</span>: sse,</span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mse"</span>: mse,</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"aic"</span>: fit.aic,</span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"bic"</span>: fit.bic,</span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"press"</span>: press,</span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"n"</span>: n,</span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"p"</span>: p,</span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>full_formula <span class="op">=</span> <span class="st">"mpg ~ horsepower + weight + acceleration + C(origin) + C(cylinders)"</span></span>
-<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>full_fit <span class="op">=</span> smf.ols(full_formula, data<span class="op">=</span>mpg).fit()</span>
-<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>sigma2_full <span class="op">=</span> np.<span class="bu">sum</span>(full_fit.resid <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> full_fit.df_resid</span>
-<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mallows_cp(fit, sigma2_full):</span>
-<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>    sse <span class="op">=</span> np.<span class="bu">sum</span>(fit.resid <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> fit.df_model <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> fit.nobs</span>
-<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sse <span class="op">/</span> sigma2_full <span class="op">-</span> (n <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> p)</span>
-<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>subset_terms <span class="op">=</span> [</span>
-<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"horsepower"</span>,</span>
-<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"weight"</span>,</span>
-<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceleration"</span>,</span>
-<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C(origin)"</span>,</span>
-<span id="cb39-40"><a href="#cb39-40" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb39-41"><a href="#cb39-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-42"><a href="#cb39-42" aria-hidden="true" tabindex="-1"></a>subset_rows <span class="op">=</span> []</span>
-<span id="cb39-43"><a href="#cb39-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(subset_terms) <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb39-44"><a href="#cb39-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> combo <span class="kw">in</span> itertools.combinations(subset_terms, k):</span>
-<span id="cb39-45"><a href="#cb39-45" aria-hidden="true" tabindex="-1"></a>        formula <span class="op">=</span> <span class="st">"mpg ~ "</span> <span class="op">+</span> <span class="st">" + "</span>.join(combo)</span>
-<span id="cb39-46"><a href="#cb39-46" aria-hidden="true" tabindex="-1"></a>        fit <span class="op">=</span> smf.ols(formula, data<span class="op">=</span>mpg).fit()</span>
-<span id="cb39-47"><a href="#cb39-47" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> {<span class="st">"terms"</span>: <span class="st">" + "</span>.join(combo), <span class="st">"size"</span>: k}</span>
-<span id="cb39-48"><a href="#cb39-48" aria-hidden="true" tabindex="-1"></a>        row.update(model_diagnostics(fit))</span>
-<span id="cb39-49"><a href="#cb39-49" aria-hidden="true" tabindex="-1"></a>        row[<span class="st">"cp"</span>] <span class="op">=</span> mallows_cp(fit, sigma2_full)</span>
-<span id="cb39-50"><a href="#cb39-50" aria-hidden="true" tabindex="-1"></a>        subset_rows.append(row)</span>
-<span id="cb39-51"><a href="#cb39-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-52"><a href="#cb39-52" aria-hidden="true" tabindex="-1"></a>subset_table <span class="op">=</span> pd.DataFrame(subset_rows).sort_values([<span class="st">"size"</span>, <span class="st">"aic"</span>])</span>
-<span id="cb39-53"><a href="#cb39-53" aria-hidden="true" tabindex="-1"></a>best_subsets <span class="op">=</span> subset_table.groupby(<span class="st">"size"</span>, as_index<span class="op">=</span><span class="va">False</span>).first()</span>
-<span id="cb39-54"><a href="#cb39-54" aria-hidden="true" tabindex="-1"></a>best_subsets[</span>
-<span id="cb39-55"><a href="#cb39-55" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"size"</span>, <span class="st">"terms"</span>, <span class="st">"r2"</span>, <span class="st">"adj_r2"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span>, <span class="st">"cp"</span>, <span class="st">"press"</span>]</span>
-<span id="cb39-56"><a href="#cb39-56" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="169">
+<div id="519e731a" class="cell" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model_diagnostics(fit):</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> fit.model.endog</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> fit.nobs</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> fit.df_model <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    sse <span class="op">=</span> np.<span class="bu">sum</span>(fit.resid <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> sse <span class="op">/</span> fit.df_resid</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    press <span class="op">=</span> np.<span class="bu">sum</span>((fit.resid <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> fit.get_influence().hat_matrix_diag)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"r2"</span>: fit.rsquared,</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"adj_r2"</span>: fit.rsquared_adj,</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sse"</span>: sse,</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mse"</span>: mse,</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"aic"</span>: fit.aic,</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"bic"</span>: fit.bic,</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"press"</span>: press,</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"n"</span>: n,</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"p"</span>: p,</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>full_formula <span class="op">=</span> <span class="st">"mpg ~ horsepower + weight + acceleration + C(origin) + C(cylinders)"</span></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>full_fit <span class="op">=</span> smf.ols(full_formula, data<span class="op">=</span>mpg).fit()</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>sigma2_full <span class="op">=</span> np.<span class="bu">sum</span>(full_fit.resid <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> full_fit.df_resid</span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mallows_cp(fit, sigma2_full):</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>    sse <span class="op">=</span> np.<span class="bu">sum</span>(fit.resid <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> fit.df_model <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> fit.nobs</span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sse <span class="op">/</span> sigma2_full <span class="op">-</span> (n <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> p)</span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a>subset_terms <span class="op">=</span> [</span>
+<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"horsepower"</span>,</span>
+<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"weight"</span>,</span>
+<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceleration"</span>,</span>
+<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C(origin)"</span>,</span>
+<span id="cb35-38"><a href="#cb35-38" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a>subset_rows <span class="op">=</span> []</span>
+<span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(subset_terms) <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb35-42"><a href="#cb35-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> combo <span class="kw">in</span> itertools.combinations(subset_terms, k):</span>
+<span id="cb35-43"><a href="#cb35-43" aria-hidden="true" tabindex="-1"></a>        formula <span class="op">=</span> <span class="st">"mpg ~ "</span> <span class="op">+</span> <span class="st">" + "</span>.join(combo)</span>
+<span id="cb35-44"><a href="#cb35-44" aria-hidden="true" tabindex="-1"></a>        fit <span class="op">=</span> smf.ols(formula, data<span class="op">=</span>mpg).fit()</span>
+<span id="cb35-45"><a href="#cb35-45" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> {<span class="st">"terms"</span>: <span class="st">" + "</span>.join(combo), <span class="st">"size"</span>: k}</span>
+<span id="cb35-46"><a href="#cb35-46" aria-hidden="true" tabindex="-1"></a>        row.update(model_diagnostics(fit))</span>
+<span id="cb35-47"><a href="#cb35-47" aria-hidden="true" tabindex="-1"></a>        row[<span class="st">"cp"</span>] <span class="op">=</span> mallows_cp(fit, sigma2_full)</span>
+<span id="cb35-48"><a href="#cb35-48" aria-hidden="true" tabindex="-1"></a>        subset_rows.append(row)</span>
+<span id="cb35-49"><a href="#cb35-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-50"><a href="#cb35-50" aria-hidden="true" tabindex="-1"></a>subset_table <span class="op">=</span> pd.DataFrame(subset_rows).sort_values([<span class="st">"size"</span>, <span class="st">"aic"</span>])</span>
+<span id="cb35-51"><a href="#cb35-51" aria-hidden="true" tabindex="-1"></a>best_subsets <span class="op">=</span> subset_table.groupby(<span class="st">"size"</span>, as_index<span class="op">=</span><span class="va">False</span>).first()</span>
+<span id="cb35-52"><a href="#cb35-52" aria-hidden="true" tabindex="-1"></a>best_subsets[</span>
+<span id="cb35-53"><a href="#cb35-53" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"size"</span>, <span class="st">"terms"</span>, <span class="st">"r2"</span>, <span class="st">"adj_r2"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span>, <span class="st">"cp"</span>, <span class="st">"press"</span>]</span>
+<span id="cb35-54"><a href="#cb35-54" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
 <div>
 
 
@@ -2084,40 +1877,40 @@ Final AIC: 2189.4686412079573</code></pre>
 </div>
 </div>
 </section>
-<section id="computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press" class="level3" data-number="2.6.13">
-<h3 data-number="2.6.13" class="anchored" data-anchor-id="computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press"><span class="header-section-number">2.6.13</span> Computing <span class="math inline">\(R^2\)</span>, Adjusted <span class="math inline">\(R^2\)</span>, SSE, MSE, AIC, BIC, <span class="math inline">\(C_p\)</span>, and PRESS</h3>
+<section id="computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press" class="level3" data-number="2.6.14">
+<h3 data-number="2.6.14" class="anchored" data-anchor-id="computing-r2-adjusted-r2-sse-mse-aic-bic-c_p-and-press"><span class="header-section-number">2.6.14</span> Computing <span class="math inline">\(R^2\)</span>, Adjusted <span class="math inline">\(R^2\)</span>, SSE, MSE, AIC, BIC, <span class="math inline">\(C_p\)</span>, and PRESS</h3>
 <p>These quantities can be read from a fitted model, but it is useful to compute them directly from the residuals and leverage values.</p>
-<div id="1f2d9310" class="cell" data-execution_count="35">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fit_metrics <span class="op">=</span> fit_categorical</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> fit_metrics.model.endog</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> fit_metrics.nobs</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> fit_metrics.df_model <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>sse <span class="op">=</span> np.<span class="bu">sum</span>(fit_metrics.resid <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>sst <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> sse <span class="op">/</span> fit_metrics.df_resid</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> sse <span class="op">/</span> sst</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>adj_r2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> (sse <span class="op">/</span> fit_metrics.df_resid) <span class="op">/</span> (sst <span class="op">/</span> (n <span class="op">-</span> <span class="dv">1</span>))</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>aic <span class="op">=</span> fit_metrics.aic</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>bic <span class="op">=</span> fit_metrics.bic</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>cp <span class="op">=</span> mallows_cp(fit_metrics, sigma2_full)</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>press <span class="op">=</span> np.<span class="bu">sum</span>(</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>    (fit_metrics.resid <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> fit_metrics.get_influence().hat_matrix_diag)) <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>pd.Series(</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"R^2"</span>: r2,</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Adjusted R^2"</span>: adj_r2,</span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SSE"</span>: sse,</span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"MSE"</span>: mse,</span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"AIC"</span>: aic,</span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"BIC"</span>: bic,</span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Cp"</span>: cp,</span>
-<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PRESS"</span>: press,</span>
-<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="170">
+<div id="417681b9" class="cell" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fit_metrics <span class="op">=</span> fit_categorical</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> fit_metrics.model.endog</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> fit_metrics.nobs</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> fit_metrics.df_model <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>sse <span class="op">=</span> np.<span class="bu">sum</span>(fit_metrics.resid <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>sst <span class="op">=</span> np.<span class="bu">sum</span>((y <span class="op">-</span> y.mean()) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> sse <span class="op">/</span> fit_metrics.df_resid</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> sse <span class="op">/</span> sst</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>adj_r2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> (sse <span class="op">/</span> fit_metrics.df_resid) <span class="op">/</span> (sst <span class="op">/</span> (n <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>aic <span class="op">=</span> fit_metrics.aic</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>bic <span class="op">=</span> fit_metrics.bic</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>cp <span class="op">=</span> mallows_cp(fit_metrics, sigma2_full)</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>press <span class="op">=</span> np.<span class="bu">sum</span>(</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>    (fit_metrics.resid <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> fit_metrics.get_influence().hat_matrix_diag)) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>pd.Series(</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"R^2"</span>: r2,</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Adjusted R^2"</span>: adj_r2,</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SSE"</span>: sse,</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"MSE"</span>: mse,</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"AIC"</span>: aic,</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"BIC"</span>: bic,</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Cp"</span>: cp,</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PRESS"</span>: press,</span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
 <pre><code>R^2                0.755224
 Adjusted R^2       0.749457
 SSE             5830.317633
