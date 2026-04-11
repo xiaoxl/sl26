@@ -275,23 +275,6 @@ mpg.hist(
 
 
 ```{python}
-#| echo: false
-import itertools
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import statsmodels.api as sm
-import statsmodels.formula.api as smf
-from statsmodels.stats.anova import anova_lm
-
-response = "mpg"
-predictors = ["horsepower", "weight", "acceleration"]
-```
-
-
-```{python}
 import statsmodels.formula.api as smf
 ```
 
@@ -366,59 +349,87 @@ Since `.summary2()` provides a DataFrame, it is easier to extract results.
 fit_linear.summary2().tables[1].loc['Intercept', 't']
 ```
 
-You can also modify the table slightly in `.summary2()`.
+You can also modify the table slightly in both `.summary()` and `.summary2()`.
 
 - You may specify the names of variables by setting `xname` and `yname`.
 - You may change the confidence level by setting `alpha`.
-- You may specify the format of decimals by setting `float_format`. 
 
 
 ```{python}
-fit_linear.summary2(
-    yname="y",
-    xname=["b0", "b1", "b2", "b3"],
-    alpha=0.1,
-    float_format="%.2f",
-    )
+print(fit_linear.summary(yname="y", xname=["b0", "b1", "b2", "b3"], alpha=0.1))
+```
+
+```{python}
+fit_linear.summary2(yname="y", xname=["b0", "b1", "b2", "b3"], alpha=0.2)
 ```
 
 
 
 ### Generate ANOVA Tables: Type I, II, and III
 
-Type I sums of squares depend on the order in which the terms enter the model. Type II and Type III tables are order-invariant under the usual model-coding assumptions, but they answer slightly different questions.
 
 ```{python}
-fit_anova = smf.ols(
-    "mpg ~ horsepower + weight + acceleration + C(origin)",
-    data=mpg,
-).fit()
-
-print("Type I ANOVA")
-print(anova_lm(fit_anova, typ=1))
-
-print("\nType II ANOVA")
-print(anova_lm(fit_anova, typ=2))
-
-print("\nType III ANOVA")
-print(anova_lm(fit_anova, typ=3))
+from statsmodels.stats.anova import anova_lm
 ```
 
-### Generate a Nested ANOVA Table
 
-Nested ANOVA compares a smaller model with a larger model that contains all of its terms plus additional predictors.
+The `anova_lm()` is usded to generate ANOVA tables.
 
 ```{python}
+# | tbl-cap: "Type I ANOVA"
+anova_lm(fit_categorical, typ=1)
+```
+
+
+```{python}
+# | tbl-cap: "Type II ANOVA"
+anova_lm(fit_categorical, typ=2)
+```
+
+```{python}
+# | tbl-cap: "Type III ANOVA"
+anova_lm(fit_categorical, typ=3)
+```
+
+Nested ANOVA compares a smaller model with a larger model that contains all of its terms plus additional predictors. Note that by default the information of the two models won't be shown. Therefore it is recommended to print out the model information.
+
+```{python}
+# | tbl-cap: "Nested ANOVA"
 fit_nested_small = smf.ols("mpg ~ horsepower + weight", data=mpg).fit()
 fit_nested_large = smf.ols(
     "mpg ~ horsepower + weight + acceleration + C(origin)",
     data=mpg,
 ).fit()
 
+print(f"Reduced model: {fit_nested_small.model.formula}")
+print(f"Full model:    {fit_nested_large.model.formula}")
+
 anova_lm(fit_nested_small, fit_nested_large)
 ```
 
+
+
+
 ### Residual Plots
+
+Residual plots are a set of diagnotic tools to verify models. Doesn't like `plot(fit)` in R, `statsmodels` in Python provides several functions for residual analysis.
+
+
+```{python}
+import statsmodels.api as sm
+
+fig = sm.graphics.plot_ccpr_grid(fit_linear)
+# fig = sm.graphics.plot_ccpr_grid(fit)
+
+for i, ax in enumerate(fig.axes):
+    print(i, len(ax.lines), len(ax.collections))
+
+plt.show()
+```
+
+
+
+
 
 ```{python}
 diagnostics = mpg[["mpg", "horsepower", "weight", "acceleration", "origin"]].copy()
@@ -466,6 +477,10 @@ plt.show()
 ### Leverage and Cook's Distance Plots
 
 ```{python}
+import numpy as np
+
+
+
 influence = fit_categorical.get_influence()
 influence_frame = influence.summary_frame()
 
@@ -495,6 +510,8 @@ plt.show()
 The following simple forward-selection routine uses AIC as the selection criterion. It is easy to implement, but it is still a greedy search rather than a global optimum.
 
 ```{python}
+import pandas as pd
+
 def forward_selection(data, response, candidates):
     remaining = list(candidates)
     selected = []
@@ -528,9 +545,7 @@ candidate_terms = [
     "C(cylinders)",
 ]
 
-selected_terms, selected_aic, stepwise_path = forward_selection(
-    mpg, "mpg", candidate_terms
-)
+selected_terms, selected_aic, stepwise_path = forward_selection(mpg, "mpg", candidate_terms)
 
 print("Selected terms:", selected_terms)
 print("Final AIC:", selected_aic)
@@ -542,6 +557,8 @@ stepwise_path
 Best subset selection fits every model of a given size and records the best one according to a chosen criterion.
 
 ```{python}
+import itertools
+
 def model_diagnostics(fit):
     y = fit.model.endog
     n = fit.nobs
