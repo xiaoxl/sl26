@@ -259,12 +259,23 @@ sns.regplot(
 Note that `sns.set_theme()` is used to make the plots prettier, even if `sns` is not used.
 :::
 
-### More complicated models
+### Feature engineering
 
-There are two ways to build more complicated models in Python. The first is to directly modify the feature matrix `X`. For example, assuming we are adding the squared term of `x2`.
+
+Feature engineering refers to modifying or creating predictors in order to better represent the relationship between the predictors and the response. In linear regression, the model is linear in the coefficients, but the predictors themselves can be transformed. By constructing appropriate features, a linear model can capture nonlinear relationships and interactions between variables. 
+
+Common types of feature engineering include
+
+- polynomial terms,
+- interaction terms,
+- transformations of variables,
+- encoding categorical variables.
+
+The usual way to generate terms is to directly modify the feature matrix `X`. For example, assuming we are adding the squared term of $x_2$ and the interaction term $x_1x_2$.
 
 ```{python}
 X["x2_sq"] = X["x2"] ** 2
+X["x1_x2"] = X["x1"] * X["x2"]
 model2 = LinearRegression()
 model2.fit(X, y)
 
@@ -273,11 +284,16 @@ print(f"coefficients: {model2.coef_}")
 ```
 
 
+::: {.callout-note}
+Although the model is called linear regression, it can represent nonlinear relationships by including transformed predictors such as $x^2$, $\log x$, or $\sqrt{x}$. The model remains linear because it is linear in the coefficients $\beta$.
+:::
+
+
+
 
 ::: {.callout-note collapse="true"}
-## Fancy way
-
-Another way to generate a more complicated model is to use `PolynomialFeatures` from `sklearn.preprocessing`, which can automatically create higher-degree terms and interaction terms. This is especially useful when there are many predictors and it becomes tedious to write all transformed terms by hand.
+## Automatic Feature Generation
+When many predictors are present, manually creating polynomial and interaction terms can become tedious. In such cases we can use `PolynomialFeatures` from `sklearn.preprocessing`, which automatically generates polynomial and interaction terms up to the specified degree.
 
 
 ```{python}
@@ -304,7 +320,6 @@ poly2.fit_transform(X_original)
 ```
 Here `interaction_only=True` means that only interaction terms are added, while powers such as $x_1^2$ and $x_2^2$ are excluded. Also, `include_bias=False` means that the constant column of 1's is not included.
 
-We can then use the resulting matrix as the feature matrix in a regression model.
 :::
 
 ### Measure the performance
@@ -321,3 +336,29 @@ print(f"R2: {r2_score(y, y_pred)}")
 print(f"RMSE: {root_mean_squared_error(y, y_pred)}")
 ```
 
+### Train-test split
+
+### Cross validation
+
+
+### Pipeline
+
+In many modeling workflows, several steps must be performed before fitting the model. These steps may include
+
+- feature transformations,
+- scaling variables,
+- generating polynomial features.
+
+A pipeline combines these steps into a single object. Using pipelines helps ensure that the same transformations are applied consistently during training and prediction.
+
+
+::: {#exm-}
+## Generating polynomial features and then fit a model
+
+
+:::
+
+
+::: {.callout-note}
+Pipelines are particularly useful when combined with cross-validation and hyperparameter tuning, since they ensure that preprocessing steps are applied within each training fold.
+:::
