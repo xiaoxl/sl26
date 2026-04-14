@@ -435,15 +435,14 @@ window.Quarto = {
   <li><a href="#assessing-model-fit" id="toc-assessing-model-fit" class="nav-link" data-scroll-target="#assessing-model-fit"><span class="header-section-number">2.3</span> Assessing Model Fit</a>
   <ul class="collapse">
   <li><a href="#training-error-and-test-error" id="toc-training-error-and-test-error" class="nav-link" data-scroll-target="#training-error-and-test-error"><span class="header-section-number">2.3.1</span> Training Error and Test Error</a></li>
-  <li><a href="#information-criteria-and-estimated-test-error" id="toc-information-criteria-and-estimated-test-error" class="nav-link" data-scroll-target="#information-criteria-and-estimated-test-error"><span class="header-section-number">2.3.2</span> Information Criteria and Estimated Test Error</a></li>
-  <li><a href="#direct-evaluation-using-test-data" id="toc-direct-evaluation-using-test-data" class="nav-link" data-scroll-target="#direct-evaluation-using-test-data"><span class="header-section-number">2.3.3</span> Direct Evaluation Using Test Data</a></li>
-  <li><a href="#training-validation-and-test-sets" id="toc-training-validation-and-test-sets" class="nav-link" data-scroll-target="#training-validation-and-test-sets"><span class="header-section-number">2.3.4</span> Training, Validation, and Test Sets</a></li>
-  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation"><span class="header-section-number">2.3.5</span> Cross-Validation</a></li>
+  <li><a href="#trainning-set-test-set-and-validation-set" id="toc-trainning-set-test-set-and-validation-set" class="nav-link" data-scroll-target="#trainning-set-test-set-and-validation-set"><span class="header-section-number">2.3.2</span> Trainning set, Test set and Validation set</a></li>
+  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation"><span class="header-section-number">2.3.3</span> Cross-Validation</a></li>
   </ul></li>
   <li><a href="#python-code" id="toc-python-code" class="nav-link" data-scroll-target="#python-code"><span class="header-section-number">2.4</span> Python code</a>
   <ul class="collapse">
   <li><a href="#regular-linear-models" id="toc-regular-linear-models" class="nav-link" data-scroll-target="#regular-linear-models"><span class="header-section-number">2.4.1</span> Regular linear models</a></li>
-  <li><a href="#measure-the-performance" id="toc-measure-the-performance" class="nav-link" data-scroll-target="#measure-the-performance"><span class="header-section-number">2.4.2</span> Measure the performance</a></li>
+  <li><a href="#more-complicated-models" id="toc-more-complicated-models" class="nav-link" data-scroll-target="#more-complicated-models"><span class="header-section-number">2.4.2</span> More complicated models</a></li>
+  <li><a href="#measure-the-performance" id="toc-measure-the-performance" class="nav-link" data-scroll-target="#measure-the-performance"><span class="header-section-number">2.4.3</span> Measure the performance</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -575,10 +574,17 @@ Note
 <p>Prediction error can be decomposed conceptually into two components: bias and variance. Simple models may have high bias but low variance, while very flexible models may have low bias but high variance. Model selection aims to balance these two effects to minimize prediction error. This part will be discussed in more details in later sections.</p>
 </div>
 </div>
-</section>
-<section id="information-criteria-and-estimated-test-error" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="information-criteria-and-estimated-test-error"><span class="header-section-number">2.3.2</span> Information Criteria and Estimated Test Error</h3>
-<p>To compare models with different numbers of predictors, classical regression often uses criteria that balance goodness of fit with model complexity. These criteria reward good fit but penalize models with many predictors.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Information Criteria and Estimated Test Error
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Classical regression tends to estimate expected test error using only training data. These criteria reward good fit but penalize models with many predictors.</p>
 <p>Some commonly used criteria are:</p>
 <ul>
 <li>AIC (Akaike Information Criterion)<br>
@@ -586,11 +592,12 @@ Note
 <li>BIC (Bayesian Information Criterion)</li>
 <li>Mallows’ <span class="math inline">\(C_p\)</span></li>
 </ul>
-<p>A key idea behind these methods is that they attempt to estimate expected test error using only training data. In other words, they adjust the training error to approximate how well the model will perform on unseen observations.</p>
 <p>Although these criteria are useful for model comparison, they still rely on approximations derived from the training sample.</p>
+</div>
+</div>
 </section>
-<section id="direct-evaluation-using-test-data" class="level3" data-number="2.3.3">
-<h3 data-number="2.3.3" class="anchored" data-anchor-id="direct-evaluation-using-test-data"><span class="header-section-number">2.3.3</span> Direct Evaluation Using Test Data</h3>
+<section id="trainning-set-test-set-and-validation-set" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="trainning-set-test-set-and-validation-set"><span class="header-section-number">2.3.2</span> Trainning set, Test set and Validation set</h3>
 <p>Instead of estimating test performance indirectly from the training data, we can evaluate a model more directly by using data that were not used to fit the model. This leads to the idea of data splitting:</p>
 <p>The dataset is divided into two parts:</p>
 <ul>
@@ -599,9 +606,6 @@ Note
 </ul>
 <p>After fitting the model on the training set, predictions are made on the test set, and performance measures such as MSE are computed.</p>
 <p>This provides a more realistic estimate of how the model performs on new data.</p>
-</section>
-<section id="training-validation-and-test-sets" class="level3" data-number="2.3.4">
-<h3 data-number="2.3.4" class="anchored" data-anchor-id="training-validation-and-test-sets"><span class="header-section-number">2.3.4</span> Training, Validation, and Test Sets</h3>
 <p>In many situations we also need to choose between several competing models or tuning parameters. To avoid using the test data for model selection, a third subset is often introduced.</p>
 <ul>
 <li>Training set: used to fit models.</li>
@@ -610,8 +614,8 @@ Note
 </ul>
 <p>This separation helps prevent overly optimistic performance estimates.</p>
 </section>
-<section id="cross-validation" class="level3" data-number="2.3.5">
-<h3 data-number="2.3.5" class="anchored" data-anchor-id="cross-validation"><span class="header-section-number">2.3.5</span> Cross-Validation</h3>
+<section id="cross-validation" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="cross-validation"><span class="header-section-number">2.3.3</span> Cross-Validation</h3>
 <p>When the dataset is not large, splitting the data into separate training, validation, and test sets may leave too little data for model fitting. In such cases, cross-validation is commonly used to estimate validation performance more efficiently.</p>
 <p>The most common form is <span class="math inline">\(k\)</span>-fold cross-validation.</p>
 <ol type="1">
@@ -635,46 +639,214 @@ Note
 <h2 data-number="2.4" class="anchored" data-anchor-id="python-code"><span class="header-section-number">2.4</span> Python code</h2>
 <p>There are many Python libraries that can fit linear regression models. In this course we use <a href="https://scikit-learn.org/"><code>scikit-learn</code></a> as the primary modeling tool, with support from <code>pandas</code>/<code>numpy</code> for data manipulation and <code>matplotlib</code>/<code>seaborn</code> for visualization.</p>
 <p>To demonstrate the code we use a generated dataset with 2 predictors and 1 response variable, while <span class="math inline">\(\beta_0=1\)</span>, <span class="math inline">\(\beta_1=2\)</span> and <span class="math inline">\(\beta_2=3\)</span>.</p>
-<div id="34614f9b" class="cell" data-execution_count="1">
+<div id="83ad9d70" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">1</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>beta0 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="dv">3</span>])</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.rand(n, <span class="dv">2</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> beta0 <span class="op">+</span> X <span class="op">@</span> beta <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.5</span>, size<span class="op">=</span>n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">1</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>beta0 <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>beta1 <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>beta2 <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> np.random.normal(<span class="dv">1</span>, <span class="fl">0.1</span>, size<span class="op">=</span>n)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, size<span class="op">=</span>n)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> beta0 <span class="op">+</span> beta1 <span class="op">*</span> x1 <span class="op">+</span> beta2 <span class="op">*</span> x2<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.5</span>, size<span class="op">=</span>n)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.DataFrame({<span class="st">'x1'</span>: x1, <span class="st">'x2'</span>: x2})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When using <code>sklearn</code>, a dataset consists of the features <code>X</code> and the target <code>y</code>. In general <code>X</code> is of dimension 2 and <code>y</code> is either of dimension 1 or 2. Both of them can be either <code>numpy</code> arrays or <code>pandas</code> DataFrames. In this example we make <code>X</code> a DataFrame since it is easier for us to modify variables in model building stage.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When using <code>sklearn</code>, a dataset is typically represented by features <code>X</code> and a target variable <code>y</code>.</p>
+<ul>
+<li><code>X</code> usually has 2 dimensions (number of samples × features).</li>
+<li><code>y</code> is usually 1 dimensional, though it may also be represented as a 2 dimensional vector with only one column.</li>
+</ul>
+<p>Both <code>X</code> and <code>y</code> can be stored as either <code>numpy</code> arrays or <code>pandas</code> objects.</p>
+<p>In this example we construct <code>X</code> as a DataFrame, since column names make it easier to modify variables during the model-building stage, e.g.&nbsp;when adding interactions or transformations.</p>
+</div>
 </div>
 <section id="regular-linear-models" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="regular-linear-models"><span class="header-section-number">2.4.1</span> Regular linear models</h3>
-<div id="fb8d8db8" class="cell" data-execution_count="2">
+<div id="1c257d47" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'intercept: </span><span class="sc">{</span>model<span class="sc">.</span>intercept_<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'coefficients: </span><span class="sc">{</span>model<span class="sc">.</span>coef_<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"intercept: </span><span class="sc">{</span>model<span class="sc">.</span>intercept_<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"coefficients: </span><span class="sc">{</span>model<span class="sc">.</span>coef_<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>intercept: 1.046110727182504
-coefficients: [1.85300538 3.13130346]</code></pre>
+<pre><code>intercept: 3.0641289702051857
+coefficients: [2.529201   0.55143693]</code></pre>
 </div>
 </div>
-<p>We could use the fitted model to generate predictions.</p>
-<div id="284a0071" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model.predict(X[:<span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>array([4.07440932, 1.99301769, 1.60719034, 2.4733074 , 3.46852169])</code></pre>
+<p>We could use the fitted model to generate predictions and compute residuals.</p>
+<div id="b6897128" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> y <span class="op">-</span> y_pred</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="4b2a4eab" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(y_pred, res)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lr_files/figure-html/cell-5-output-1.png" width="590" height="415" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Fancy way
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If we use <code>seaborn</code> for plotting, we could get more information being computed autmoatically. In order to use it, we need to put data into a DataFrame.</p>
+<div id="b1b8073d" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model_output <span class="op">=</span> pd.DataFrame({<span class="st">"y"</span>: y, <span class="st">"y_hat"</span>: y_pred, <span class="st">"res"</span>: res})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then the scatter plot with lowess smooth curve is computed and shown (<code>lowess=True</code>).</p>
+<div id="489d4bab" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>sns.regplot(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>model_output,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"y_hat"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"res"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    lowess<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    scatter_kws<span class="op">=</span>{<span class="st">"alpha"</span>: <span class="fl">0.6</span>},</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    line_kws<span class="op">=</span>{<span class="st">"color"</span>: <span class="st">"red"</span>, <span class="st">"linestyle"</span>: <span class="st">"--"</span>}</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lr_files/figure-html/cell-7-output-1.png" width="610" height="435" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that <code>sns.set_theme()</code> is used to make the plots prettier, even if <code>sns</code> is not used.</p>
+</div>
 </div>
 </div>
 </section>
-<section id="measure-the-performance" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="measure-the-performance"><span class="header-section-number">2.4.2</span> Measure the performance</h3>
-<p><code>sklearn</code> provide many measures. You can find most of them from <code>sklearn.metrics</code>. Here we consider the following.</p>
-<div id="02317b2f" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, root_mean_squared_error, r2_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="more-complicated-models" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="more-complicated-models"><span class="header-section-number">2.4.2</span> More complicated models</h3>
+<p>There are two ways to build more complicated models in Python. The first is to directly modify the feature matrix <code>X</code>. For example, assuming we are adding the squared term of <code>x2</code>.</p>
+<div id="1501ebc1" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X[<span class="st">"x2_sq"</span>] <span class="op">=</span> X[<span class="st">"x2"</span>] <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> LinearRegression()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>model2.fit(X, y)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"intercept: </span><span class="sc">{</span>model2<span class="sc">.</span>intercept_<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"coefficients: </span><span class="sc">{</span>model2<span class="sc">.</span>coef_<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercept: 1.2997456281780062
+coefficients: [1.69058818 0.1092249  2.9997339 ]</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Fancy way
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Another way to generate a more complicated model is to use <code>PolynomialFeatures</code> from <code>sklearn.preprocessing</code>, which can automatically create higher-degree terms and interaction terms. This is especially useful when there are many predictors and it becomes tedious to write all transformed terms by hand.</p>
+<div id="a08c7fd6" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>X_original <span class="op">=</span> np.arange(<span class="dv">6</span>).reshape(<span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>X_original</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>array([[0, 1],
+       [2, 3],
+       [4, 5]])</code></pre>
+</div>
+</div>
+<div id="ae3f6ac8" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>poly <span class="op">=</span> PolynomialFeatures(degree<span class="op">=</span><span class="dv">2</span>, interaction_only<span class="op">=</span><span class="va">False</span>, include_bias<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>poly.fit_transform(X_original)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>array([[ 1.,  0.,  1.,  0.,  0.,  1.],
+       [ 1.,  2.,  3.,  4.,  6.,  9.],
+       [ 1.,  4.,  5., 16., 20., 25.]])</code></pre>
+</div>
+</div>
+<p>The argument <code>interaction_only=False</code> means that both squared terms and interaction terms are included. For example, if the original variables are <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>, then the transformed matrix contains terms such as <span class="math display">\[
+1,x_1,x_2,x_1^2,x_1x_2,x_2^2.
+\]</span></p>
+<div id="daae84ab" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>poly2 <span class="op">=</span> PolynomialFeatures(degree<span class="op">=</span><span class="dv">2</span>, interaction_only<span class="op">=</span><span class="va">True</span>, include_bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>poly2.fit_transform(X_original)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>array([[ 0.,  1.,  0.],
+       [ 2.,  3.,  6.],
+       [ 4.,  5., 20.]])</code></pre>
+</div>
+</div>
+<p>Here <code>interaction_only=True</code> means that only interaction terms are added, while powers such as <span class="math inline">\(x_1^2\)</span> and <span class="math inline">\(x_2^2\)</span> are excluded. Also, <code>include_bias=False</code> means that the constant column of 1’s is not included.</p>
+<p>We can then use the resulting matrix as the feature matrix in a regression model.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="measure-the-performance" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="measure-the-performance"><span class="header-section-number">2.4.3</span> Measure the performance</h3>
+<p><code>sklearn</code> provide many measures. You can find most of them from <code>sklearn.metrics</code>. Here we consider the following. The general syntax is <code>metric(y_true, y_pred)</code>.</p>
+<div id="06bbf139" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score, root_mean_squared_error</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model2.predict(X)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE: </span><span class="sc">{</span>mean_squared_error(y, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R2: </span><span class="sc">{</span>r2_score(y, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>root_mean_squared_error(y, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MSE: 0.2418738855436019
+R2: 0.9841464101682263
+RMSE: 0.49180675630129556</code></pre>
+</div>
 </div>
 
 
