@@ -718,100 +718,100 @@
   {
     "objectID": "contents/1/ridge.html",
     "href": "contents/1/ridge.html",
-    "title": "5  Ridge Regression",
+    "title": "3  Ridge Regression",
     "section": "",
-    "text": "5.1 A Short History of Ridge Regression\nRidge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from Tikhonov (1963) in numerical analysis, where a regularization term was added to ill-posed problems.\nIn statistics, Hoerl and Kennard (1970) formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.",
+    "text": "3.1 A Short History of Ridge Regression\nRidge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from Tikhonov (1963) in numerical analysis, where a regularization term was added to ill-posed problems.\nIn statistics, Hoerl and Kennard (1970) formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   },
   {
     "objectID": "contents/1/ridge.html#what-is-ridge-regression",
     "href": "contents/1/ridge.html#what-is-ridge-regression",
-    "title": "5  Ridge Regression",
-    "section": "5.2 What Is Ridge Regression?",
-    "text": "5.2 What Is Ridge Regression?\nRidge regression is a regularized version of ordinary least squares (OLS). It is especially useful when predictors are highly correlated or when the matrix \\(X^\\top X\\) is nearly singular, because in such settings the OLS estimator can be unstable.\nRecall the linear model\n\\[\ny = X\\beta + \\varepsilon.\n\\]\nWhen \\(X^\\top X\\) is invertible, the OLS estimator is\n\\[\n\\hat{\\beta}_{\\mathrm{OLS}} = (X^\\top X)^{-1}X^\\top y.\n\\]\nRidge regression modifies the least-squares criterion by adding a quadratic penalty:\n\\[\n\\hat{\\beta}_{\\mathrm{ridge}}\n= \\arg\\min_{\\beta}\n\\left\\{\n\\lVert y - X\\beta \\rVert_2^2 + \\lambda \\lVert \\beta \\rVert_2^2\n\\right\\},\n\\]\nwhere \\(\\lambda \\ge 0\\) is a tuning parameter.\nEquivalently,\n\\[\n\\hat{\\beta}_{\\mathrm{ridge}} = (X^\\top X + \\lambda I)^{-1}X^\\top y.\n\\]\nThe penalty shrinks coefficients toward zero. Larger values of \\(\\lambda\\) produce stronger shrinkage.",
+    "title": "3  Ridge Regression",
+    "section": "3.2 What Is Ridge Regression?",
+    "text": "3.2 What Is Ridge Regression?\nRidge regression is a regularized version of ordinary least squares (OLS). It is especially useful when predictors are highly correlated or when the matrix \\(X^\\top X\\) is nearly singular, because in such settings the OLS estimator can be unstable.\nRecall the linear model\n\\[\ny = X\\beta + \\varepsilon.\n\\]\nWhen \\(X^\\top X\\) is invertible, the OLS estimator is\n\\[\n\\hat{\\beta}_{\\mathrm{OLS}} = (X^\\top X)^{-1}X^\\top y.\n\\]\nRidge regression modifies the least-squares criterion by adding a quadratic penalty:\n\\[\n\\hat{\\beta}_{\\mathrm{ridge}}\n= \\arg\\min_{\\beta}\n\\left\\{\n\\lVert y - X\\beta \\rVert_2^2 + \\lambda \\lVert \\beta \\rVert_2^2\n\\right\\},\n\\]\nwhere \\(\\lambda \\ge 0\\) is a tuning parameter.\nEquivalently,\n\\[\n\\hat{\\beta}_{\\mathrm{ridge}} = (X^\\top X + \\lambda I)^{-1}X^\\top y.\n\\]\nThe penalty shrinks coefficients toward zero. Larger values of \\(\\lambda\\) produce stronger shrinkage.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   },
   {
     "objectID": "contents/1/ridge.html#why-ridge-regression-helps",
     "href": "contents/1/ridge.html#why-ridge-regression-helps",
-    "title": "5  Ridge Regression",
-    "section": "5.3 Why Ridge Regression Helps",
-    "text": "5.3 Why Ridge Regression Helps\nOLS is unbiased under the classical linear model assumptions, but it can have high variance when predictors are strongly correlated. Ridge regression introduces bias, but it often reduces variance enough to improve predictive performance.\nThis is a standard example of the bias-variance tradeoff.\n\n\n\n\n\n\nNoteKey Properties\n\n\n\n\nIf \\(\\lambda = 0\\), ridge regression reduces to OLS.\nIf \\(\\lambda &gt; 0\\), the matrix \\(X^\\top X + \\lambda I\\) is invertible even when \\(X^\\top X\\) is singular.\nRidge shrinks coefficients continuously toward zero.\nRidge usually does not set coefficients exactly to zero.\nRidge is particularly useful under multicollinearity.",
+    "title": "3  Ridge Regression",
+    "section": "3.3 Why Ridge Regression Helps",
+    "text": "3.3 Why Ridge Regression Helps\nOLS is unbiased under the classical linear model assumptions, but it can have high variance when predictors are strongly correlated. Ridge regression introduces bias, but it often reduces variance enough to improve predictive performance.\nThis is a standard example of the bias-variance tradeoff.\n\n\n\n\n\n\nNoteKey Properties\n\n\n\n\nIf \\(\\lambda = 0\\), ridge regression reduces to OLS.\nIf \\(\\lambda &gt; 0\\), the matrix \\(X^\\top X + \\lambda I\\) is invertible even when \\(X^\\top X\\) is singular.\nRidge shrinks coefficients continuously toward zero.\nRidge usually does not set coefficients exactly to zero.\nRidge is particularly useful under multicollinearity.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   },
   {
     "objectID": "contents/1/ridge.html#choosing-lambda",
     "href": "contents/1/ridge.html#choosing-lambda",
-    "title": "5  Ridge Regression",
-    "section": "5.4 Choosing \\(\\lambda\\)",
-    "text": "5.4 Choosing \\(\\lambda\\)\nThe tuning parameter \\(\\lambda\\) determines how much shrinkage is applied.\n\nSmall \\(\\lambda\\) gives a model close to OLS.\nLarge \\(\\lambda\\) gives stronger regularization.\n\nIn practice, the modern standard is to choose \\(\\lambda\\) by cross-validation. If \\(\\mathrm{CV}(\\lambda)\\) denotes the cross-validation error, we choose\n\\[\n\\hat{\\lambda}\n= \\arg\\min_{\\lambda} \\mathrm{CV}(\\lambda).\n\\]\nClassical ridge analysis also uses ridge trace plots and generalized cross-validation.",
+    "title": "3  Ridge Regression",
+    "section": "3.4 Choosing \\(\\lambda\\)",
+    "text": "3.4 Choosing \\(\\lambda\\)\nThe tuning parameter \\(\\lambda\\) determines how much shrinkage is applied.\n\nSmall \\(\\lambda\\) gives a model close to OLS.\nLarge \\(\\lambda\\) gives stronger regularization.\n\nIn practice, the modern standard is to choose \\(\\lambda\\) by cross-validation. If \\(\\mathrm{CV}(\\lambda)\\) denotes the cross-validation error, we choose\n\\[\n\\hat{\\lambda}\n= \\arg\\min_{\\lambda} \\mathrm{CV}(\\lambda).\n\\]\nClassical ridge analysis also uses ridge trace plots and generalized cross-validation.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   },
   {
     "objectID": "contents/1/ridge.html#fitting-ridge-regression-in-r",
     "href": "contents/1/ridge.html#fitting-ridge-regression-in-r",
-    "title": "5  Ridge Regression",
-    "section": "5.5 Fitting Ridge Regression in R",
-    "text": "5.5 Fitting Ridge Regression in R\nThe glmnet package is a standard implementation:\nlibrary(glmnet)\n\nx &lt;- model.matrix(y ~ ., data = dat)[, -1]\ny &lt;- dat$y\n\nridge_fit &lt;- glmnet(x, y, alpha = 0)\nplot(ridge_fit)\nCross-validation is performed with:\ncv_fit &lt;- cv.glmnet(x, y, alpha = 0)\nplot(cv_fit)\ncoef(cv_fit, s = \"lambda.min\")\nHere alpha = 0 specifies ridge regression.",
+    "title": "3  Ridge Regression",
+    "section": "3.5 Fitting Ridge Regression in R",
+    "text": "3.5 Fitting Ridge Regression in R\nThe glmnet package is a standard implementation:\n\nHere alpha = 0 specifies ridge regression.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   },
   {
     "objectID": "contents/1/ridge.html#scaling-issues-of-ridge-regression",
     "href": "contents/1/ridge.html#scaling-issues-of-ridge-regression",
-    "title": "5  Ridge Regression",
-    "section": "5.6 Scaling Issues of Ridge Regression",
-    "text": "5.6 Scaling Issues of Ridge Regression\nRidge regression is sensitive to the scale of the predictors, so the variables are usually standardized before fitting the model.\nThe usual standardization is\n\\[\nx_j^* = \\frac{x_j - \\bar{x}_j}{s_j},\n\\]\nso that each predictor has mean \\(0\\) and standard deviation \\(1\\).\nThis matters because the penalty acts directly on the coefficients. If predictors are measured on very different scales, then the penalty will not be applied fairly across variables.\nIn practice:\n\nthe predictors are standardized before fitting the model;\nthe intercept is typically left unpenalized;\nsoftware such as glmnet usually performs standardization automatically.",
+    "title": "3  Ridge Regression",
+    "section": "3.6 Scaling Issues of Ridge Regression",
+    "text": "3.6 Scaling Issues of Ridge Regression\nRidge regression is sensitive to the scale of the predictors, so the variables are usually standardized before fitting the model.\nThe usual standardization is\n\\[\nx_j^* = \\frac{x_j - \\bar{x}_j}{s_j},\n\\]\nso that each predictor has mean \\(0\\) and standard deviation \\(1\\).\nThis matters because the penalty acts directly on the coefficients. If predictors are measured on very different scales, then the penalty will not be applied fairly across variables.\nIn practice:\n\nthe predictors are standardized before fitting the model;\nthe intercept is typically left unpenalized;\nsoftware such as glmnet usually performs standardization automatically.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   },
   {
     "objectID": "contents/1/ridge.html#relation-to-tikhonov-regularization",
     "href": "contents/1/ridge.html#relation-to-tikhonov-regularization",
-    "title": "5  Ridge Regression",
-    "section": "5.7 Relation to Tikhonov Regularization",
-    "text": "5.7 Relation to Tikhonov Regularization\nRidge regression is the statistical form of Tikhonov regularization. In inverse problems, Tikhonov regularization stabilizes an ill-posed problem by adding a quadratic penalty. Ridge regression applies the same idea to linear regression.",
+    "title": "3  Ridge Regression",
+    "section": "3.7 Relation to Tikhonov Regularization",
+    "text": "3.7 Relation to Tikhonov Regularization\nRidge regression is the statistical form of Tikhonov regularization. In inverse problems, Tikhonov regularization stabilizes an ill-posed problem by adding a quadratic penalty. Ridge regression applies the same idea to linear regression.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   },
   {
     "objectID": "contents/1/ridge.html#summary",
     "href": "contents/1/ridge.html#summary",
-    "title": "5  Ridge Regression",
-    "section": "5.8 Summary",
-    "text": "5.8 Summary\nThe main ideas of ridge regression are:\n\nit adds an \\(L_2\\) penalty to least squares;\nit shrinks coefficients toward zero;\nit reduces variance and can improve prediction;\nit is particularly useful when predictors are highly correlated;\nit usually keeps all variables in the model.",
+    "title": "3  Ridge Regression",
+    "section": "3.8 Summary",
+    "text": "3.8 Summary\nThe main ideas of ridge regression are:\n\nit adds an \\(L_2\\) penalty to least squares;\nit shrinks coefficients toward zero;\nit reduces variance and can improve prediction;\nit is particularly useful when predictors are highly correlated;\nit usually keeps all variables in the model.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   },
   {
     "objectID": "contents/1/ridge.html#references",
     "href": "contents/1/ridge.html#references",
-    "title": "5  Ridge Regression",
-    "section": "5.9 References",
-    "text": "5.9 References\n\nHoerl, A. E., & Kennard, R. W. (1970). Ridge regression: Biased estimation for nonorthogonal problems. Technometrics, 12(1), 55-67.\nMarquardt, D. W. (1970). Generalized inverses, ridge regression, biased linear estimation, and nonlinear estimation. Technometrics, 12(3), 591-612.\nTibshirani, R. (1996). Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society Series B, 58(1), 267-288.\nTikhonov, A. N. (1963). Solution of incorrectly formulated problems and the regularization method. Soviet Mathematics Doklady, 4, 1035-1038.",
+    "title": "3  Ridge Regression",
+    "section": "3.9 References",
+    "text": "3.9 References\n\nHoerl, A. E., & Kennard, R. W. (1970). Ridge regression: Biased estimation for nonorthogonal problems. Technometrics, 12(1), 55-67.\nMarquardt, D. W. (1970). Generalized inverses, ridge regression, biased linear estimation, and nonlinear estimation. Technometrics, 12(3), 591-612.\nTibshirani, R. (1996). Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society Series B, 58(1), 267-288.\nTikhonov, A. N. (1963). Solution of incorrectly formulated problems and the regularization method. Soviet Mathematics Doklady, 4, 1035-1038.",
     "crumbs": [
       "Regression",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Ridge Regression</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   },
   {
@@ -955,6 +955,72 @@
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Quick intro to R</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#ridge-regression",
+    "href": "contents/1/ridge.html#ridge-regression",
+    "title": "3  Ridge Regression",
+    "section": "3.10 Ridge Regression",
+    "text": "3.10 Ridge Regression\nRidge regression was proposed by Hoerl and Kennard (1970), and is also a special case of Tikhonov regularization. The essential idea is simple: knowing that the ordinary least squares (OLS) solution is not unique in an ill-posed problem (i.e., \\(\\mathbf{X}^\\top\\mathbf{X}\\) is not invertible), ridge regression adds a ridge (diagonal matrix) to \\(\\mathbf{X}^\\top\\mathbf{X}\\):\n\\[\n\\widehat{\\boldsymbol{\\beta}}^{\\text{ridge}} = (\\mathbf{X}^\\top\\mathbf{X} + n\\lambda \\mathbf{I})^{-1} \\mathbf{X}^\\top\\mathbf{y}\n\\]\nIt provides a solution to linear regression when multicollinearity occurs, especially when the number of variables \\(p\\) is larger than the sample size \\(n\\). Alternatively, this is the solution of a regularized least squares estimator — we add an \\(\\ell_2\\) penalty to the residual sum of squares:\n\\[\n\\begin{align}\n\\widehat{\\boldsymbol{\\beta}}^{\\text{ridge}} &= \\arg\\min_{\\boldsymbol{\\beta}} \\|\\mathbf{y} - \\mathbf{X}\\boldsymbol{\\beta}\\|_2^2 + n\\lambda\\|\\boldsymbol{\\beta}\\|_2^2 \\\\\n&= \\arg\\min_{\\boldsymbol{\\beta}} \\frac{1}{n}\\sum_{i=1}^n (y_i - x_i^\\top \\boldsymbol{\\beta})^2 + \\lambda\\sum_{j=1}^p \\beta_j^2\n\\end{align}\n\\]\nfor some penalty \\(\\lambda &gt; 0\\). Ridge regression is used extensively in genetic analyses to address “small-\\(n\\)-large-\\(p\\)” problems. We will start with a motivation example and then discuss the crucial topic: the bias-variance trade-off.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#motivation-correlated-variables-convexity-and-variance",
+    "href": "contents/1/ridge.html#motivation-correlated-variables-convexity-and-variance",
+    "title": "3  Ridge Regression",
+    "section": "3.11 Motivation: Correlated Variables, Convexity and Variance",
+    "text": "3.11 Motivation: Correlated Variables, Convexity and Variance\nRidge regression has many advantages. Most notably, it can address highly correlated variables. When variables are highly correlated, the \\(\\ell_2\\) loss becomes “flat” along certain directions in the parameter space.\nIn the example below, the true parameters are both \\(1\\), but OLS concludes almost all effects belong to the first variable. Ridge regression produces more stable estimates.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.linear_model import Ridge, LinearRegression\n\nrng = np.random.default_rng(2)\nn = 30\n\n# Covariance matrix with high correlation (rho = 0.99)\nSigma = np.array([[1, 0.99], [0.99, 1]])\nmean = np.array([0, 0])\n\n# Generate correlated predictors\nX = rng.multivariate_normal(mean, Sigma, size=n)\ny = rng.normal(loc=X[:, 0] + X[:, 1], scale=1)\n\n# OLS estimate\nols = LinearRegression(fit_intercept=False).fit(X, y)\nprint(\"OLS estimates (true = [1, 1]):\")\nprint(f\"  beta_1 = {ols.coef_[0]:.4f}\")\nprint(f\"  beta_2 = {ols.coef_[1]:.4f}\")\n\n# Ridge estimate (lambda=5/n to match R's lm.ridge(lambda=5))\nridge = Ridge(alpha=5, fit_intercept=False).fit(X, y)\nprint(\"\\nRidge estimates (alpha=5, true = [1, 1]):\")\nprint(f\"  beta_1 = {ridge.coef_[0]:.4f}\")\nprint(f\"  beta_2 = {ridge.coef_[1]:.4f}\")\n\nOLS estimates (true = [1, 1]):\n  beta_1 = 0.9964\n  beta_2 = 0.8597\n\nRidge estimates (alpha=5, true = [1, 1]):\n  beta_1 = 0.8577\n  beta_2 = 0.8496\n\n\nThe variance of both \\(\\hat{\\beta}_1\\) and \\(\\hat{\\beta}_2\\) is quite large under OLS. This is because the variance of \\(\\widehat{\\boldsymbol{\\beta}}\\) is \\(\\sigma^2(\\mathbf{X}^\\top\\mathbf{X})^{-1}\\). Since the columns of \\(\\mathbf{X}\\) are highly correlated, the smallest eigenvalue of \\(\\mathbf{X}^\\top\\mathbf{X}\\) is close to zero, making the largest eigenvalue of \\((\\mathbf{X}^\\top\\mathbf{X})^{-1}\\) very large.\n\n# Contour plot of OLS objective function\nbeta1_vals = np.linspace(-1, 3, 200)\nbeta2_vals = np.linspace(-1, 3, 200)\nB1, B2 = np.meshgrid(beta1_vals, beta2_vals)\n\n# Compute RSS over grid\nRSS = np.array([\n    np.sum((y - X @ np.array([b1, b2]))**2)\n    for b1, b2 in zip(B1.ravel(), B2.ravel())\n]).reshape(B1.shape)\n\n# Quantile levels for contours\nquant_levels = np.quantile(RSS, [0.01, 0.025, 0.05, 0.2, 0.5, 0.75])\n\nfig, ax = plt.subplots(figsize=(6, 5))\ncs = ax.contour(B1, B2, RSS, levels=quant_levels, colors='steelblue')\nax.clabel(cs, inline=True, fontsize=8, fmt='%.0f')\n\n# True parameter values\nax.plot(1, 1, 'ro', markersize=10, label='True (1, 1)')\n# OLS estimate\nax.plot(ols.coef_[0], ols.coef_[1], 'bs', markersize=10, label='OLS estimate')\n\nax.set_xlabel(r'$\\beta_1$')\nax.set_ylabel(r'$\\beta_2$')\nax.set_title('OLS Objective Function Contours\\n(Flat valley due to high correlation)')\nax.legend()\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nWe can see a relatively “flat” valley in the objective function. This is because the covariance matrix of \\(X\\) has a very small eigenvalue.\n\n# Eigenstructure of the population covariance matrix\neig_vals, eig_vecs = np.linalg.eigh(Sigma)\nprint(\"Eigenvalues of X^T X (population):\", np.sort(eig_vals)[::-1])\nprint(\"  -&gt; Smallest eigenvalue ≈\", round(min(eig_vals), 4))\n\ninv_Sigma = np.linalg.inv(Sigma)\neig_vals_inv, _ = np.linalg.eigh(inv_Sigma)\nprint(\"\\nEigenvalues of (X^T X)^{-1}:\", np.sort(eig_vals_inv)[::-1])\nprint(\"  -&gt; Largest eigenvalue ≈\", round(max(eig_vals_inv), 2))\n\nEigenvalues of X^T X (population): [1.99 0.01]\n  -&gt; Smallest eigenvalue ≈ 0.01\n\nEigenvalues of (X^T X)^{-1}: [100.           0.50251256]\n  -&gt; Largest eigenvalue ≈ 100.0\n\n\nEach time we observe a dataset, it represents a perturbed version of this objective function — lying on a valley centered around the truth.\n\n# Multiple datasets showing variability of OLS\nfig, ax = plt.subplots(figsize=(6, 5))\n\n# Draw contour for each of several seeds\nfor seed in range(10):\n    rng_i = np.random.default_rng(seed)\n    X_i = rng_i.multivariate_normal(mean, Sigma, size=n)\n    y_i = rng_i.normal(loc=X_i[:, 0] + X_i[:, 1], scale=1)\n    RSS_i = np.array([\n        np.sum((y_i - X_i @ np.array([b1, b2]))**2)\n        for b1, b2 in zip(B1.ravel(), B2.ravel())\n    ]).reshape(B1.shape)\n    lvl = np.quantile(RSS_i, 0.025)\n    ax.contour(B1, B2, RSS_i, levels=[lvl], colors='steelblue', alpha=0.5)\n\nax.plot(1, 1, 'ro', markersize=12, zorder=5, label='True (1, 1)')\nax.set_xlabel(r'$\\beta_1$')\nax.set_ylabel(r'$\\beta_2$')\nax.set_title('OLS Contours from Multiple Datasets\\n(Valley centered around truth)')\nax.legend()\nplt.tight_layout()\nplt.show()",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#bias-variance-trade-off",
+    "href": "contents/1/ridge.html#bias-variance-trade-off",
+    "title": "3  Ridge Regression",
+    "section": "3.12 Bias-Variance Trade-off",
+    "text": "3.12 Bias-Variance Trade-off\n\n3.12.1 Decomposition\nFor any estimator \\(\\hat{f}(x)\\) of the true function \\(f(x)\\), the expected prediction error can be decomposed as:\n\\[\n\\mathbb{E}[(y - \\hat{f}(x))^2] = \\underbrace{\\text{Bias}^2[\\hat{f}(x)]}_{\\text{systematic error}} + \\underbrace{\\text{Var}[\\hat{f}(x)]}_{\\text{random error}} + \\underbrace{\\sigma^2}_{\\text{irreducible noise}}\n\\]\n\nBias = how far off the expected prediction is from the truth\n\nVariance = how much the prediction changes with different training data\n\n\\(\\sigma^2\\) = irreducible noise, cannot be reduced\n\n\n\n3.12.2 Ridge vs OLS: Analytical Perspective\nFor OLS: unbiased, but can have high variance (especially when \\(\\mathbf{X}^\\top\\mathbf{X}\\) is near-singular).\nFor Ridge: - Bias is introduced (predictions are shrunk toward zero) - Variance is reduced (the added ridge stabilizes \\((\\mathbf{X}^\\top\\mathbf{X} + n\\lambda\\mathbf{I})^{-1}\\))\nThe bias-variance trade-off means that a small increase in bias can yield a large decrease in variance, reducing overall prediction error.\n\n# Demonstrate bias-variance trade-off numerically\nn_sim = 500\nn_train = 30\nlambdas = np.logspace(-3, 2, 50)\n\n# True coefficients\nbeta_true = np.array([1.0, 1.0])\n\nbias2_list = []\nvar_list = []\nmse_list = []\n\nfor lam in lambdas:\n    preds_at_x = []\n    x_test = np.array([[1.0, 1.0]])  # test point\n\n    for _ in range(n_sim):\n        rng_s = np.random.default_rng()\n        X_s = rng_s.multivariate_normal(mean, Sigma, size=n_train)\n        y_s = rng_s.normal(loc=X_s @ beta_true, scale=1)\n        model = Ridge(alpha=lam * n_train, fit_intercept=False).fit(X_s, y_s)\n        preds_at_x.append(model.predict(x_test)[0])\n\n    preds = np.array(preds_at_x)\n    true_val = x_test @ beta_true\n\n    bias2 = (np.mean(preds) - true_val[0])**2\n    var = np.var(preds)\n    mse = bias2 + var  # + sigma^2 (ignored here, same for all lambda)\n\n    bias2_list.append(bias2)\n    var_list.append(var)\n    mse_list.append(mse)\n\nfig, ax = plt.subplots(figsize=(8, 5))\nax.semilogx(lambdas, bias2_list, 'r-', label='Bias²', linewidth=2)\nax.semilogx(lambdas, var_list, 'b-', label='Variance', linewidth=2)\nax.semilogx(lambdas, mse_list, 'k--', label='MSE (Bias² + Var)', linewidth=2)\nax.axvline(lambdas[np.argmin(mse_list)], color='gray', linestyle=':', label=f'Optimal λ ≈ {lambdas[np.argmin(mse_list)]:.3f}')\nax.set_xlabel(r'Regularization parameter $\\lambda$ (log scale)')\nax.set_ylabel('Error')\nax.set_title('Bias-Variance Trade-off in Ridge Regression')\nax.legend()\nplt.tight_layout()\nplt.show()\n\nprint(f\"Optimal lambda: {lambdas[np.argmin(mse_list)]:.4f}\")\nprint(f\"Min MSE: {min(mse_list):.4f}\")\n\n\n\n\n\n\n\n\nOptimal lambda: 0.0429\nMin MSE: 0.0305",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#selecting-lambda-via-cross-validation",
+    "href": "contents/1/ridge.html#selecting-lambda-via-cross-validation",
+    "title": "3  Ridge Regression",
+    "section": "3.13 Selecting \\(\\lambda\\) via Cross-Validation",
+    "text": "3.13 Selecting \\(\\lambda\\) via Cross-Validation\nIn practice, \\(\\lambda\\) is chosen by cross-validation — minimizing the held-out prediction error.\n\nfrom sklearn.linear_model import RidgeCV\nfrom sklearn.model_selection import KFold\n\n# Candidate lambda values (sklearn uses alpha = n*lambda)\nalphas = np.logspace(-2, 4, 100)\n\nrng_cv = np.random.default_rng(42)\nX_cv = rng_cv.multivariate_normal(mean, Sigma, size=100)\ny_cv = rng_cv.normal(loc=X_cv @ beta_true, scale=1)\n\nridge_cv = RidgeCV(alphas=alphas, cv=5, fit_intercept=False).fit(X_cv, y_cv)\n\nprint(f\"Best alpha (= n*lambda): {ridge_cv.alpha_:.4f}\")\nprint(f\"Best lambda: {ridge_cv.alpha_ / len(X_cv):.4f}\")\nprint(f\"Fitted coefficients: {ridge_cv.coef_}\")\n\nBest alpha (= n*lambda): 4.0370\nBest lambda: 0.0404\nFitted coefficients: [1.03405656 1.05497857]",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#ridge-regression-path",
+    "href": "contents/1/ridge.html#ridge-regression-path",
+    "title": "3  Ridge Regression",
+    "section": "3.14 Ridge Regression Path",
+    "text": "3.14 Ridge Regression Path\nThe regularization path shows how coefficients shrink as \\(\\lambda\\) increases.\n\nfrom sklearn.linear_model import Ridge\n\n# Fit ridge for many alpha values and track coefficients\nalphas_path = np.logspace(-2, 5, 200)\ncoefs = []\n\nrng_path = np.random.default_rng(2)\nX_path = rng_path.multivariate_normal(mean, Sigma, size=50)\ny_path = rng_path.normal(loc=X_path @ beta_true, scale=1)\n\nfor a in alphas_path:\n    r = Ridge(alpha=a, fit_intercept=False).fit(X_path, y_path)\n    coefs.append(r.coef_)\n\ncoefs = np.array(coefs)\n\nfig, ax = plt.subplots(figsize=(8, 5))\nax.semilogx(alphas_path, coefs[:, 0], 'b-', label=r'$\\hat{\\beta}_1$', linewidth=2)\nax.semilogx(alphas_path, coefs[:, 1], 'r-', label=r'$\\hat{\\beta}_2$', linewidth=2)\nax.axhline(1.0, color='gray', linestyle='--', alpha=0.6, label='True value = 1')\nax.axhline(0.0, color='black', linestyle=':', alpha=0.4)\nax.set_xlabel(r'$\\alpha$ = $n\\lambda$ (log scale)')\nax.set_ylabel('Coefficient value')\nax.set_title('Ridge Regression Path\\n(Coefficients shrink toward 0 as λ increases)')\nax.legend()\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nAs \\(\\lambda \\to 0\\), the ridge estimates approach OLS. As \\(\\lambda \\to \\infty\\), all coefficients shrink to zero. The optimal \\(\\lambda\\) balances bias and variance.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/ridge.html#summary-1",
+    "href": "contents/1/ridge.html#summary-1",
+    "title": "3  Ridge Regression",
+    "section": "3.15 Summary",
+    "text": "3.15 Summary\n\n\n\nProperty\nOLS\nRidge\n\n\n\n\nBias\n0 (unbiased)\n&gt; 0 (biased toward 0)\n\n\nVariance\nCan be very high\nReduced\n\n\nWorks when \\(p &gt; n\\)?\nNo\nYes\n\n\nHandles multicollinearity?\nPoorly\nWell\n\n\nSolution\nClosed-form\nClosed-form\n\n\nPenalty\nNone\n\\(\\lambda \\|\\boldsymbol{\\beta}\\|_2^2\\)\n\n\n\nRidge regression is particularly useful when:\n\nVariables are highly correlated (multicollinearity)\nThe number of predictors exceeds the sample size (\\(p &gt; n\\))\nWe want to trade a small bias for a large reduction in variance\n\nThe regularization parameter \\(\\lambda\\) is typically chosen by cross-validation.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ridge Regression</span>"
     ]
   }
 ]

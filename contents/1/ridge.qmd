@@ -6,9 +6,9 @@
 
 ## A Short History of Ridge Regression
 
-Ridge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from **Tikhonov (1963)** in numerical analysis, where a regularization term was added to ill-posed problems.
+Ridge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from Tikhonov (1963) in numerical analysis, where a regularization term was added to ill-posed problems.
 
-In statistics, **Hoerl and Kennard (1970)** formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.
+In statistics, Hoerl and Kennard (1970) formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.
 
 
 ## What Is Ridge Regression?
@@ -86,7 +86,7 @@ Classical ridge analysis also uses ridge trace plots and generalized cross-valid
 
 The `glmnet` package is a standard implementation:
 
-```r
+<!-- ```r
 library(glmnet)
 
 x <- model.matrix(y ~ ., data = dat)[, -1]
@@ -102,7 +102,7 @@ Cross-validation is performed with:
 cv_fit <- cv.glmnet(x, y, alpha = 0)
 plot(cv_fit)
 coef(cv_fit, s = "lambda.min")
-```
+``` -->
 
 Here `alpha = 0` specifies ridge regression.
 
@@ -155,10 +155,6 @@ The main ideas of ridge regression are:
 <!--
 Archived draft sections
 
-```{r}
-#| eval: false
-fit <- lm(y ~ ., data = dat)
-```
 
 ## Correlated Variables, Convexity and Variance
 
@@ -182,3 +178,301 @@ fit <- lm(y ~ ., data = dat)
 
 A large teaching-scope draft was removed from the active chapter and archived here.
 -->
+
+
+
+
+
+
+
+
+## Ridge Regression
+
+Ridge regression was proposed by Hoerl and Kennard (1970), and is also a special case of [Tikhonov regularization](https://en.wikipedia.org/wiki/Tikhonov_regularization). The essential idea is simple: knowing that the ordinary least squares (OLS) solution is not unique in an ill-posed problem (i.e., $\mathbf{X}^\top\mathbf{X}$ is not invertible), ridge regression adds a ridge (diagonal matrix) to $\mathbf{X}^\top\mathbf{X}$:
+
+$$
+\widehat{\boldsymbol{\beta}}^{\text{ridge}} = (\mathbf{X}^\top\mathbf{X} + n\lambda \mathbf{I})^{-1} \mathbf{X}^\top\mathbf{y}
+$$
+
+It provides a solution to linear regression when multicollinearity occurs, especially when the number of variables $p$ is larger than the sample size $n$. Alternatively, this is the solution of a regularized least squares estimator — we add an $\ell_2$ penalty to the residual sum of squares:
+
+$$
+\begin{align}
+\widehat{\boldsymbol{\beta}}^{\text{ridge}} &= \arg\min_{\boldsymbol{\beta}} \|\mathbf{y} - \mathbf{X}\boldsymbol{\beta}\|_2^2 + n\lambda\|\boldsymbol{\beta}\|_2^2 \\
+&= \arg\min_{\boldsymbol{\beta}} \frac{1}{n}\sum_{i=1}^n (y_i - x_i^\top \boldsymbol{\beta})^2 + \lambda\sum_{j=1}^p \beta_j^2
+\end{align}
+$$
+
+for some penalty $\lambda > 0$. Ridge regression is used extensively in genetic analyses to address "small-$n$-large-$p$" problems. We will start with a motivation example and then discuss the crucial topic: the **bias-variance trade-off**.
+
+---
+
+## Motivation: Correlated Variables, Convexity and Variance
+
+Ridge regression has many advantages. Most notably, it can address highly correlated variables. When variables are highly correlated, the $\ell_2$ loss becomes "flat" along certain directions in the parameter space.
+
+In the example below, the true parameters are both $1$, but OLS concludes almost all effects belong to the first variable. Ridge regression produces more stable estimates.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import Ridge, LinearRegression
+
+rng = np.random.default_rng(2)
+n = 30
+
+# Covariance matrix with high correlation (rho = 0.99)
+Sigma = np.array([[1, 0.99], [0.99, 1]])
+mean = np.array([0, 0])
+
+# Generate correlated predictors
+X = rng.multivariate_normal(mean, Sigma, size=n)
+y = rng.normal(loc=X[:, 0] + X[:, 1], scale=1)
+
+# OLS estimate
+ols = LinearRegression(fit_intercept=False).fit(X, y)
+print("OLS estimates (true = [1, 1]):")
+print(f"  beta_1 = {ols.coef_[0]:.4f}")
+print(f"  beta_2 = {ols.coef_[1]:.4f}")
+
+# Ridge estimate (lambda=5/n to match R's lm.ridge(lambda=5))
+ridge = Ridge(alpha=5, fit_intercept=False).fit(X, y)
+print("\nRidge estimates (alpha=5, true = [1, 1]):")
+print(f"  beta_1 = {ridge.coef_[0]:.4f}")
+print(f"  beta_2 = {ridge.coef_[1]:.4f}")
+```
+
+The variance of both $\hat{\beta}_1$ and $\hat{\beta}_2$ is quite large under OLS. This is because the variance of $\widehat{\boldsymbol{\beta}}$ is $\sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}$. Since the columns of $\mathbf{X}$ are highly correlated, the smallest eigenvalue of $\mathbf{X}^\top\mathbf{X}$ is close to zero, making the largest eigenvalue of $(\mathbf{X}^\top\mathbf{X})^{-1}$ very large.
+
+```{python}
+# Contour plot of OLS objective function
+beta1_vals = np.linspace(-1, 3, 200)
+beta2_vals = np.linspace(-1, 3, 200)
+B1, B2 = np.meshgrid(beta1_vals, beta2_vals)
+
+# Compute RSS over grid
+RSS = np.array([
+    np.sum((y - X @ np.array([b1, b2]))**2)
+    for b1, b2 in zip(B1.ravel(), B2.ravel())
+]).reshape(B1.shape)
+
+# Quantile levels for contours
+quant_levels = np.quantile(RSS, [0.01, 0.025, 0.05, 0.2, 0.5, 0.75])
+
+fig, ax = plt.subplots(figsize=(6, 5))
+cs = ax.contour(B1, B2, RSS, levels=quant_levels, colors='steelblue')
+ax.clabel(cs, inline=True, fontsize=8, fmt='%.0f')
+
+# True parameter values
+ax.plot(1, 1, 'ro', markersize=10, label='True (1, 1)')
+# OLS estimate
+ax.plot(ols.coef_[0], ols.coef_[1], 'bs', markersize=10, label='OLS estimate')
+
+ax.set_xlabel(r'$\beta_1$')
+ax.set_ylabel(r'$\beta_2$')
+ax.set_title('OLS Objective Function Contours\n(Flat valley due to high correlation)')
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+
+We can see a relatively **"flat" valley** in the objective function. This is because the covariance matrix of $X$ has a very small eigenvalue.
+
+```{python}
+# Eigenstructure of the population covariance matrix
+eig_vals, eig_vecs = np.linalg.eigh(Sigma)
+print("Eigenvalues of X^T X (population):", np.sort(eig_vals)[::-1])
+print("  -> Smallest eigenvalue ≈", round(min(eig_vals), 4))
+
+inv_Sigma = np.linalg.inv(Sigma)
+eig_vals_inv, _ = np.linalg.eigh(inv_Sigma)
+print("\nEigenvalues of (X^T X)^{-1}:", np.sort(eig_vals_inv)[::-1])
+print("  -> Largest eigenvalue ≈", round(max(eig_vals_inv), 2))
+```
+
+Each time we observe a dataset, it represents a perturbed version of this objective function — lying on a valley centered around the truth.
+
+```{python}
+# Multiple datasets showing variability of OLS
+fig, ax = plt.subplots(figsize=(6, 5))
+
+# Draw contour for each of several seeds
+for seed in range(10):
+    rng_i = np.random.default_rng(seed)
+    X_i = rng_i.multivariate_normal(mean, Sigma, size=n)
+    y_i = rng_i.normal(loc=X_i[:, 0] + X_i[:, 1], scale=1)
+    RSS_i = np.array([
+        np.sum((y_i - X_i @ np.array([b1, b2]))**2)
+        for b1, b2 in zip(B1.ravel(), B2.ravel())
+    ]).reshape(B1.shape)
+    lvl = np.quantile(RSS_i, 0.025)
+    ax.contour(B1, B2, RSS_i, levels=[lvl], colors='steelblue', alpha=0.5)
+
+ax.plot(1, 1, 'ro', markersize=12, zorder=5, label='True (1, 1)')
+ax.set_xlabel(r'$\beta_1$')
+ax.set_ylabel(r'$\beta_2$')
+ax.set_title('OLS Contours from Multiple Datasets\n(Valley centered around truth)')
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Bias-Variance Trade-off
+
+### Decomposition
+
+For any estimator $\hat{f}(x)$ of the true function $f(x)$, the expected prediction error can be decomposed as:
+
+$$
+\mathbb{E}[(y - \hat{f}(x))^2] = \underbrace{\text{Bias}^2[\hat{f}(x)]}_{\text{systematic error}} + \underbrace{\text{Var}[\hat{f}(x)]}_{\text{random error}} + \underbrace{\sigma^2}_{\text{irreducible noise}}
+$$
+
+- **Bias** = how far off the expected prediction is from the truth  
+- **Variance** = how much the prediction changes with different training data  
+- **$\sigma^2$** = irreducible noise, cannot be reduced
+
+### Ridge vs OLS: Analytical Perspective
+
+For OLS: **unbiased**, but can have **high variance** (especially when $\mathbf{X}^\top\mathbf{X}$ is near-singular).
+
+For Ridge:
+- **Bias** is introduced (predictions are shrunk toward zero)
+- **Variance** is reduced (the added ridge stabilizes $(\mathbf{X}^\top\mathbf{X} + n\lambda\mathbf{I})^{-1}$)
+
+The bias-variance trade-off means that a small increase in bias can yield a large decrease in variance, reducing overall prediction error.
+
+```{python}
+# Demonstrate bias-variance trade-off numerically
+n_sim = 500
+n_train = 30
+lambdas = np.logspace(-3, 2, 50)
+
+# True coefficients
+beta_true = np.array([1.0, 1.0])
+
+bias2_list = []
+var_list = []
+mse_list = []
+
+for lam in lambdas:
+    preds_at_x = []
+    x_test = np.array([[1.0, 1.0]])  # test point
+
+    for _ in range(n_sim):
+        rng_s = np.random.default_rng()
+        X_s = rng_s.multivariate_normal(mean, Sigma, size=n_train)
+        y_s = rng_s.normal(loc=X_s @ beta_true, scale=1)
+        model = Ridge(alpha=lam * n_train, fit_intercept=False).fit(X_s, y_s)
+        preds_at_x.append(model.predict(x_test)[0])
+
+    preds = np.array(preds_at_x)
+    true_val = x_test @ beta_true
+
+    bias2 = (np.mean(preds) - true_val[0])**2
+    var = np.var(preds)
+    mse = bias2 + var  # + sigma^2 (ignored here, same for all lambda)
+
+    bias2_list.append(bias2)
+    var_list.append(var)
+    mse_list.append(mse)
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.semilogx(lambdas, bias2_list, 'r-', label='Bias²', linewidth=2)
+ax.semilogx(lambdas, var_list, 'b-', label='Variance', linewidth=2)
+ax.semilogx(lambdas, mse_list, 'k--', label='MSE (Bias² + Var)', linewidth=2)
+ax.axvline(lambdas[np.argmin(mse_list)], color='gray', linestyle=':', label=f'Optimal λ ≈ {lambdas[np.argmin(mse_list)]:.3f}')
+ax.set_xlabel(r'Regularization parameter $\lambda$ (log scale)')
+ax.set_ylabel('Error')
+ax.set_title('Bias-Variance Trade-off in Ridge Regression')
+ax.legend()
+plt.tight_layout()
+plt.show()
+
+print(f"Optimal lambda: {lambdas[np.argmin(mse_list)]:.4f}")
+print(f"Min MSE: {min(mse_list):.4f}")
+```
+
+---
+
+## Selecting $\lambda$ via Cross-Validation
+
+In practice, $\lambda$ is chosen by **cross-validation** — minimizing the held-out prediction error.
+
+```{python}
+from sklearn.linear_model import RidgeCV
+from sklearn.model_selection import KFold
+
+# Candidate lambda values (sklearn uses alpha = n*lambda)
+alphas = np.logspace(-2, 4, 100)
+
+rng_cv = np.random.default_rng(42)
+X_cv = rng_cv.multivariate_normal(mean, Sigma, size=100)
+y_cv = rng_cv.normal(loc=X_cv @ beta_true, scale=1)
+
+ridge_cv = RidgeCV(alphas=alphas, cv=5, fit_intercept=False).fit(X_cv, y_cv)
+
+print(f"Best alpha (= n*lambda): {ridge_cv.alpha_:.4f}")
+print(f"Best lambda: {ridge_cv.alpha_ / len(X_cv):.4f}")
+print(f"Fitted coefficients: {ridge_cv.coef_}")
+```
+
+---
+
+## Ridge Regression Path
+
+The **regularization path** shows how coefficients shrink as $\lambda$ increases.
+
+```{python}
+from sklearn.linear_model import Ridge
+
+# Fit ridge for many alpha values and track coefficients
+alphas_path = np.logspace(-2, 5, 200)
+coefs = []
+
+rng_path = np.random.default_rng(2)
+X_path = rng_path.multivariate_normal(mean, Sigma, size=50)
+y_path = rng_path.normal(loc=X_path @ beta_true, scale=1)
+
+for a in alphas_path:
+    r = Ridge(alpha=a, fit_intercept=False).fit(X_path, y_path)
+    coefs.append(r.coef_)
+
+coefs = np.array(coefs)
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.semilogx(alphas_path, coefs[:, 0], 'b-', label=r'$\hat{\beta}_1$', linewidth=2)
+ax.semilogx(alphas_path, coefs[:, 1], 'r-', label=r'$\hat{\beta}_2$', linewidth=2)
+ax.axhline(1.0, color='gray', linestyle='--', alpha=0.6, label='True value = 1')
+ax.axhline(0.0, color='black', linestyle=':', alpha=0.4)
+ax.set_xlabel(r'$\alpha$ = $n\lambda$ (log scale)')
+ax.set_ylabel('Coefficient value')
+ax.set_title('Ridge Regression Path\n(Coefficients shrink toward 0 as λ increases)')
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+
+As $\lambda \to 0$, the ridge estimates approach OLS. As $\lambda \to \infty$, all coefficients shrink to zero. The optimal $\lambda$ balances bias and variance.
+
+---
+
+## Summary
+
+| Property | OLS | Ridge |
+|---|---|---|
+| **Bias** | 0 (unbiased) | > 0 (biased toward 0) |
+| **Variance** | Can be very high | Reduced |
+| **Works when $p > n$?** | No | Yes |
+| **Handles multicollinearity?** | Poorly | Well |
+| **Solution** | Closed-form | Closed-form |
+| **Penalty** | None | $\lambda \|\boldsymbol{\beta}\|_2^2$ |
+
+Ridge regression is particularly useful when:
+
+- Variables are **highly correlated** (multicollinearity)
+- The number of predictors **exceeds the sample size** ($p > n$)
+- We want to **trade a small bias for a large reduction in variance**
+
+The regularization parameter $\lambda$ is typically chosen by cross-validation.
