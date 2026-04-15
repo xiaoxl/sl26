@@ -724,12 +724,149 @@ preprocess.fit_transform(X)
 ## Train-test split
 
 
+In `sklearn`, the function `train_test_split()` from `sklearn.model_selection` is commonly used to split the data into a training set and a test set.
+
+```{python}
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+np.random.seed(1)
+
+n = 10
+
+x1 = np.random.normal(1, 0.1, size=n)
+x2 = np.random.normal(0, 1, size=n)
+y = 1 + 2 * x1 + 3 * x2 + np.random.normal(0, 0.5, size=n)
+
+X = pd.DataFrame({'x1': x1, 'x2': x2})
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+```
+
+The argument `test_size=0.2` means that 20% of the data are used as the test set, while the remaining 80% are used as the training set. The argument `random_state=0` ensures reproducibility.
 
 
+### k-Fold Cross-Validation 
+
+In `sklearn`, there are several ways to perform $k$-fold cross-validation. From `KFold` to `cross_validate` and then to `cross_val_score`, the interface becomes easier to use, but also less flexible.
+
+::: {.callout-note collapse="true"}
+## `KFold`
+`KFold` from `sklearn.model.selection` is used to split the dataset into $k$ groups, called folds. In each iteration, one fold is used as the validation set and the remaining folds are used as the training set.
 
 
+```{python}
+from sklearn.model_selection import KFold
 
-### Cross validation
+kf = KFold(n_splits=5)
+
+for train_idx, val_idx in kf.split(range(10)):
+    print(train_idx, val_idx)
+```
+
+- Here I use `range(10)` inside `kf.split()` because only the indices are needed. If a dataset is passed instead, the output is still the indices for the training set and validation set.
+- If you want the split to be randomized, set `shuffle=True` when creating `KFold`. In that case, you may also specify `random_state` to make the result reproducible.
+
+Let us now apply `KFold` to our simulated dataset.
+
+
+```{python}
+from sklearn.model_selection import KFold
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+kf = KFold(n_splits=5, shuffle=True, random_state=1)
+
+cv_scores = []
+for train_idx, val_idx in kf.split(X):
+    X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
+    y_train, y_val = y[train_idx], y[val_idx]
+
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_val)
+    mse = mean_squared_error(y_val, y_pred)
+
+    cv_scores.append(mse)
+
+print(cv_scores)
+print(sum(cv_scores) / len(cv_scores))
+```
+
+This gives the validation MSE for each fold, together with their average.
+:::
+
+
+::: {.callout-note collapse="true"}
+## `cross_validate`
+Using `KFold` directly is somewhat manual. We may use `cross_validate()` to automate the cross-validation process. Depending on the arguments supplied, `cross_validate()` may internally use `KFold`.
+
+```{python}
+from sklearn.model_selection import cross_validate
+
+model = LinearRegression()
+cv_result = cross_validate(
+    model, X, y,
+    scoring="neg_mean_squared_error",
+    cv=5
+)
+
+cv_result
+```
+If you are only interested in the validation scores, you may extract them directly.
+
+```{python}
+cv_result['test_score']
+```
+
+
+- You may choose different scoring methods. More info can be found in [the document](https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter).
+- Here the MSE values are negative because `sklearn` follows the convention that larger scores are better.
+- If `cv=5`, then `KFold(5, shuffle=False)` is used by default. If you want randomized folds, you may pass a `KFold` object explicitly.
+
+```{python}
+cv_result = cross_validate(
+    model, X, y,
+    scoring="neg_mean_squared_error",
+    cv=KFold(5, shuffle=True, random_state=1)
+)
+
+cv_result["test_score"]
+```
+You may compare these scores with the ones obtained in the `KFold` section. Usually, the overall cross-validation score is taken to be the mean of the fold scores.
+
+```{python}
+cv_result['test_score'].mean()
+```
+
+
+:::
+
+::: {.callout-note collapse="true"}
+## `cross_val_score`
+`cross_val_score()` is a shorter way to obtain `cv_result["test_score"]` from the `cross_validate()` section. The arguments `cv` and `scoring` work in the same way.
+
+```{python}
+from sklearn.model_selection import cross_val_score
+
+cv_scores = cross_val_score(
+    model, X, y,
+    scoring="neg_mean_squared_error",
+    cv=KFold(5, shuffle=True, random_state=1)
+)
+
+cv_scores
+```
+
+```{python}
+cv_scores.mean()
+```
+
+So `cross_val_score()` is convenient when you only need the validation scores and do not need the extra information returned by `cross_validate()`.
+:::
+
 
 
 ### Pipeline
@@ -747,3 +884,46 @@ A pipeline combines these steps into a single object. Using pipelines helps ensu
 ::: {.callout-note}
 Pipelines are particularly useful when combined with cross-validation and hyperparameter tuning, since they ensure that preprocessing steps are applied within each training fold.
 :::
+
+
+
+
+### Using data pipeline
+We may organize the above process in a neater way. After we get a data, the usual process is to apply several transforms to the data before we really get to the model part. Using terminolgies from `sklearn`, the former are called *transforms*, and the latter is called an *estimator*. In this example, we have exactly one tranform which is the normalization. The estimator here we use is the k-NN classifier. 
+
+`sklearn` provides a standard way to write these codes, which is called `pipeline`. We may chain the transforms and estimators in a sequence and let the data go through the pipeline. In this example, the pipeline contains two steps:
+1. The normalization transform `sklearn.preprocessing.MinMaxScaler`. 
+2. The k-NN classifier `sklearn.neighbors.KNeighborsClassifier`. This is the same one as we use previously.
+
+The code is as follows. It is a straightforward code. Note that the `()` after the class in each step of `steps` is very important. The codes cannot run if you miss it.
+
+After we setup the pipeline, we may use it as other estimators since it is an estimator. Here we may also use the accuracy function provided by `sklearn` to perform the computation. It is essentially the same as our `acc` computation.
+
+
+```{python}
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import accuracy_score
+
+n_neighbors = 10
+steps = [('scaler', MinMaxScaler()),
+         ('knn', KNeighborsClassifier(n_neighbors, weights="uniform",
+                                      metric="euclidean", algorithm='brute'))]
+pipe = Pipeline(steps=steps)
+pipe.fit(X_train, y_train)
+y_pipe = pipe.predict(X_test)
+accuracy_score(y_pipe, y_test)
+```
+
+Once a pipeline is set, you may use `step name` with TWO underscores `__` with `parameter name` to get access to a specific parameter. Please check the following code.
+
+```{python}
+pipe.get_params()['knn__n_neighbors']
+```
+
+
+```{python}
+pipe.set_params(knn__n_neighbors=5)
+pipe.get_params()['knn__n_neighbors']
+```
