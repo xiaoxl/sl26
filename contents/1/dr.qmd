@@ -1,0 +1,5 @@
+# Dimension reduction 
+
+## PCR
+
+## PLS

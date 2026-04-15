@@ -1,6 +1,6 @@
-# Ridge Regression
+# Regularization
 
-
+ridge + lasso
 {{< include ../math.qmd >}}
 
 
@@ -9,6 +9,549 @@
 Ridge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from Tikhonov (1963) in numerical analysis, where a regularization term was added to ill-posed problems.
 
 In statistics, Hoerl and Kennard (1970) formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.
+
+
+
+
+
+```{python}
+import numpy as np
+
+np.random.seed(1)
+
+n = 100
+p = 20
+
+X = np.random.randn(n, p)
+X[:, 1:] += 0.8 * X[:, :-1]  # introduce correlation
+
+beta = np.zeros(p)
+beta[:5] = [5, 4, 3, 2, 1]
+
+y = X @ beta + np.random.randn(n)
+```
+
+
+
+```{python}
+from sklearn.linear_model import Ridge, Lasso
+
+ridge = Ridge(alpha=1.0)
+lasso = Lasso(alpha=0.1)
+
+ridge.fit(X, y)
+lasso.fit(X, y)
+
+print("Ridge coefficients:")
+print(ridge.coef_)
+
+print("\nLasso coefficients:")
+print(lasso.coef_)
+```
+
+
+
+
+## Ridge and Lasso in sklearn
+1. Big picture
+
+Both ridge and lasso are regularized versions of linear regression.
+
+Ordinary least squares minimizes
+
+RSS
+
+Ridge adds an L2 penalty:
+
+Lasso adds an L1 penalty:
+
+Main effect:
+
+- ridge shrinks coefficients toward 0
+- lasso shrinks coefficients and may set some exactly to 0
+
+So:
+
+- ridge is mainly for shrinkage
+- lasso is mainly for shrinkage + variable selection
+
+2. When to use them
+
+Use ridge when
+
+- many predictors contribute a little
+- predictors are strongly correlated
+- prediction is more important than variable selection
+
+Use lasso when
+
+- you believe only a subset of predictors matter
+- you want a sparser model
+- interpretability matters
+
+A common practical rule:
+
+- start with ridge if you want stability
+- start with lasso if you want selection
+
+
+
+3. Important preprocessing: standardization
+
+For ridge and lasso, predictors should usually be standardized first.
+
+Reason: the penalty acts on coefficient size, so variables on larger scales would otherwise be penalized differently.
+
+In sklearn, the cleanest way is a pipeline.
+
+4. Exmaple
+
+
+
+
+```{python}
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+np.random.seed(1)
+
+n = 100
+p = 20
+
+X = np.random.randn(n, p)
+X[:, 1:] += 0.8 * X[:, :-1]  # introduce correlation
+
+beta = np.zeros(p)
+beta[:5] = [5, 4, 3, 2, 1]
+
+y = X @ beta + np.random.randn(n)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+```
+
+
+
+```{python}
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+rng = np.random.default_rng(0)
+
+n = 120
+p = 200
+
+# latent factors to induce strong correlation
+Z = rng.normal(size=(n, 10))
+A = rng.normal(size=(10, p))
+X = Z @ A + 0.5 * rng.normal(size=(n, p))
+
+# true coefficients: only a few are nonzero
+beta = np.zeros(p)
+beta[:10] = [8, 7, 6, 5, 4, 3, 2, 1.5, 1, 0.5]
+
+# response with larger noise
+y = X @ beta + 15 * rng.normal(size=n)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+```
+
+
+```{python}
+#| eval: false
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+rng = np.random.default_rng(0)
+
+n = 150
+p = 100
+k = 12
+
+# moderately correlated predictors
+Z = rng.normal(size=(n, k))
+A = rng.normal(size=(k, p))
+X = Z @ A + 0.8 * rng.normal(size=(n, p))
+
+# sparse true coefficients
+beta = np.zeros(p)
+beta[:10] = [8, 7, 6, 5, 4, 3, 2, 1.5, 1, 0.5]
+
+# moderate noise
+y = X @ beta + 12 * rng.normal(size=n)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+```
+
+
+5. baseline: OLS
+
+
+```{python}
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+ols_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", LinearRegression()),
+    ]
+)
+
+ols_pipe.fit(X_train, y_train)
+y_pred_ols = ols_pipe.predict(X_test)
+
+print("OLS")
+print("Test RMSE:", mean_squared_error(y_test, y_pred_ols))
+print("Test R^2 :", r2_score(y_test, y_pred_ols))
+```
+
+
+
+```{python}
+from sklearn.linear_model import Ridge, Lasso
+
+ridge_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", Ridge(alpha=1.0)),
+    ]
+)
+
+lasso_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", Lasso(alpha=0.1, max_iter=10000)),
+    ]
+)
+
+ridge_pipe.fit(X_train, y_train)
+lasso_pipe.fit(X_train, y_train)
+
+y_pred_ridge = ridge_pipe.predict(X_test)
+y_pred_lasso = lasso_pipe.predict(X_test)
+
+print("Ridge")
+print("Test RMSE:", mean_squared_error(y_test, y_pred_ridge))
+print("Test R^2 :", r2_score(y_test, y_pred_ridge))
+
+print("\nLasso")
+print("Test RMSE:", mean_squared_error(y_test, y_pred_lasso))
+print("Test R^2 :", r2_score(y_test, y_pred_lasso))
+```
+
+To inspect coefficients:
+
+```{python}
+ridge_coef = ridge_pipe.named_steps["model"].coef_
+lasso_coef = lasso_pipe.named_steps["model"].coef_
+
+print("Number of nonzero ridge coefficients:", np.sum(ridge_coef != 0))
+print("Number of nonzero lasso coefficients:", np.sum(lasso_coef != 0))
+
+print("\nRidge coefficients:")
+print(ridge_coef)
+
+print("\nLasso coefficients:")
+print(lasso_coef)
+```
+You will usually see:
+
+- ridge: almost all coefficients nonzero
+- lasso: some coefficients exactly zero
+
+
+
+
+7. Tuning with cross-validation
+
+
+
+```{python}
+from sklearn.linear_model import RidgeCV
+
+alphas = np.logspace(-4, 4, 100)
+
+ridge_cv_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", RidgeCV(alphas=alphas, cv=5)),
+    ]
+)
+
+ridge_cv_pipe.fit(X_train, y_train)
+y_pred_ridge_cv = ridge_cv_pipe.predict(X_test)
+
+best_alpha_ridge = ridge_cv_pipe.named_steps["model"].alpha_
+
+print("Best ridge alpha:", best_alpha_ridge)
+print("RidgeCV Test RMSE:", mean_squared_error(y_test, y_pred_ridge_cv))
+print("RidgeCV Test R^2 :", r2_score(y_test, y_pred_ridge_cv))
+```
+
+
+
+
+```{python}
+from sklearn.linear_model import LassoCV
+
+lasso_cv_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", LassoCV(cv=5, max_iter=10000, random_state=0)),
+    ]
+)
+
+lasso_cv_pipe.fit(X_train, y_train)
+y_pred_lasso_cv = lasso_cv_pipe.predict(X_test)
+
+best_alpha_lasso = lasso_cv_pipe.named_steps["model"].alpha_
+
+print("Best lasso alpha:", best_alpha_lasso)
+print("LassoCV Test RMSE:", mean_squared_error(y_test, y_pred_lasso_cv))
+print("LassoCV Test R^2 :", r2_score(y_test, y_pred_lasso_cv))
+```
+
+
+
+
+
+```{python}
+from sklearn.model_selection import GridSearchCV
+
+ridge_grid_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", Ridge()),
+    ]
+)
+
+param_grid = {"model__alpha": np.logspace(-4, 4, 100)}
+
+ridge_grid = GridSearchCV(
+    ridge_grid_pipe,
+    param_grid=param_grid,
+    cv=5,
+    scoring="neg_root_mean_squared_error",
+)
+
+ridge_grid.fit(X_train, y_train)
+
+print("Best ridge alpha from GridSearchCV:", ridge_grid.best_params_["model__alpha"])
+print("Best CV score:", ridge_grid.best_score_)
+
+best_ridge_grid = ridge_grid.best_estimator_
+y_pred_best_ridge_grid = best_ridge_grid.predict(X_test)
+
+print("Test RMSE:", mean_squared_error(y_test, y_pred_best_ridge_grid))
+print("Test R^2 :", r2_score(y_test, y_pred_best_ridge_grid))
+```
+
+
+
+```{python}
+#| warning: false
+lasso_grid_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", Lasso(max_iter=10000)),
+    ]
+)
+
+param_grid = {"model__alpha": np.logspace(-4, 1, 100)}
+
+lasso_grid = GridSearchCV(
+    lasso_grid_pipe,
+    param_grid=param_grid,
+    cv=5,
+    scoring="neg_root_mean_squared_error",
+)
+
+lasso_grid.fit(X_train, y_train)
+
+print("Best lasso alpha from GridSearchCV:", lasso_grid.best_params_["model__alpha"])
+print("Best CV score:", lasso_grid.best_score_)
+
+best_lasso_grid = lasso_grid.best_estimator_
+y_pred_best_lasso_grid = best_lasso_grid.predict(X_test)
+
+print("Test RMSE:", mean_squared_error(y_test, y_pred_best_lasso_grid))
+print("Test R^2 :", r2_score(y_test, y_pred_best_lasso_grid))
+```
+
+
+9. plot coeffient path
+
+
+```{python}
+import matplotlib.pyplot as plt
+from sklearn.linear_model import lasso_path
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+
+alphas_lasso, coefs_lasso, _ = lasso_path(X_train_scaled, y_train)
+
+plt.figure(figsize=(8, 5))
+plt.plot(alphas_lasso, coefs_lasso.T)
+plt.xscale("log")
+plt.gca().invert_xaxis()
+plt.xlabel("alpha")
+plt.ylabel("coefficient")
+plt.title("Lasso coefficient paths")
+plt.axhline(0, linestyle="--", linewidth=1)
+plt.show()
+```
+
+
+```{python}
+alphas_ridge = np.logspace(-4, 4, 100)
+coefs_ridge = []
+
+for a in alphas_ridge:
+    ridge = Ridge(alpha=a)
+    ridge.fit(X_train_scaled, y_train)
+    coefs_ridge.append(ridge.coef_)
+
+coefs_ridge = np.array(coefs_ridge)
+
+plt.figure(figsize=(8, 5))
+plt.plot(alphas_ridge, coefs_ridge)
+plt.xscale("log")
+plt.gca().invert_xaxis()
+plt.xlabel("alpha")
+plt.ylabel("coefficient")
+plt.title("Ridge coefficient paths")
+plt.axhline(0, linestyle="--", linewidth=1)
+plt.show()
+```
+
+10 cv error
+
+
+
+```{python}
+from sklearn.model_selection import cross_val_score
+
+alphas = np.logspace(-4, 4, 60)
+cv_rmse_ridge = []
+
+for a in alphas:
+    pipe = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("model", Ridge(alpha=a)),
+        ]
+    )
+    scores = cross_val_score(
+        pipe,
+        X_train,
+        y_train,
+        cv=5,
+        scoring="neg_root_mean_squared_error",
+    )
+    cv_rmse_ridge.append(-scores.mean())
+
+plt.figure(figsize=(8, 5))
+plt.plot(alphas, cv_rmse_ridge)
+plt.xscale("log")
+plt.xlabel("alpha")
+plt.ylabel("CV RMSE")
+plt.title("Ridge tuning curve")
+plt.show()
+```
+
+
+
+```{python}
+#| warning: false
+alphas = np.logspace(-4, 1, 60)
+cv_rmse_lasso = []
+
+for a in alphas:
+    pipe = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("model", Lasso(alpha=a, max_iter=10000)),
+        ]
+    )
+    scores = cross_val_score(
+        pipe,
+        X_train,
+        y_train,
+        cv=5,
+        scoring="neg_root_mean_squared_error",
+    )
+    cv_rmse_lasso.append(-scores.mean())
+
+plt.figure(figsize=(8, 5))
+plt.plot(alphas, cv_rmse_lasso)
+plt.xscale("log")
+plt.xlabel("alpha")
+plt.ylabel("CV RMSE")
+plt.title("Lasso tuning curve")
+plt.show()
+```
+
+
+11. a comparble table
+
+```{python}
+results = []
+
+models = {
+    "OLS": ols_pipe,
+    "RidgeCV": ridge_cv_pipe,
+    "LassoCV": lasso_cv_pipe,
+}
+
+for name, model in models.items():
+    y_pred = model.predict(X_test)
+    rmse = mean_squared_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
+
+    if name == "OLS":
+        n_nonzero = np.sum(model.named_steps["model"].coef_ != 0)
+        alpha = None
+    else:
+        n_nonzero = np.sum(model.named_steps["model"].coef_ != 0)
+        alpha = model.named_steps["model"].alpha_
+
+    results.append((name, alpha, rmse, r2, n_nonzero))
+
+for row in results:
+    print(row)
+
+import pandas as pd
+
+df_results = pd.DataFrame(
+    results,
+    columns=["Model", "Best alpha", "Test RMSE", "Test R^2", "Nonzero coefficients"],
+)
+
+df_results
+```
+
+
+12. 12. Interpreting alpha
+
+A larger alpha means a stronger penalty.
+
+As alpha increases:
+
+ridge coefficients shrink more
+lasso coefficients shrink more, and more of them become zero
+
+Special cases:
+
+alpha = 0 corresponds to ordinary least squares in theory
+in practice, for OLS just use LinearRegression()
+
+
+
+
 
 
 ## What Is Ridge Regression?
@@ -86,23 +629,7 @@ Classical ridge analysis also uses ridge trace plots and generalized cross-valid
 
 The `glmnet` package is a standard implementation:
 
-<!-- ```r
-library(glmnet)
 
-x <- model.matrix(y ~ ., data = dat)[, -1]
-y <- dat$y
-
-ridge_fit <- glmnet(x, y, alpha = 0)
-plot(ridge_fit)
-```
-
-Cross-validation is performed with:
-
-```r
-cv_fit <- cv.glmnet(x, y, alpha = 0)
-plot(cv_fit)
-coef(cv_fit, s = "lambda.min")
-``` -->
 
 Here `alpha = 0` specifies ridge regression.
 
@@ -152,36 +679,6 @@ The main ideas of ridge regression are:
 - Tikhonov, A. N. (1963). *Solution of incorrectly formulated problems and the regularization method*. Soviet Mathematics Doklady, 4, 1035-1038.
 
 
-<!--
-Archived draft sections
-
-
-## Correlated Variables, Convexity and Variance
-
-## tradeoff
-
-## A Biased Estimator
-
-## Bias Caused by the Ridge Penalty
-
-## lm.ridge()
-
-## cross-validation
-
-## Generalized cross-validation
-
-## glmnet
-
-## PCA
-
-# Ridge and Lasso Regression: Teaching Scope
-
-A large teaching-scope draft was removed from the active chapter and archived here.
--->
-
-
-
-
 
 
 
@@ -213,11 +710,13 @@ Ridge regression has many advantages. Most notably, it can address highly correl
 
 In the example below, the true parameters are both $1$, but OLS concludes almost all effects belong to the first variable. Ridge regression produces more stable estimates.
 
+
+
+
+
+
 ```{python}
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.linear_model import Ridge, LinearRegression
-
 rng = np.random.default_rng(2)
 n = 30
 
@@ -228,15 +727,33 @@ mean = np.array([0, 0])
 # Generate correlated predictors
 X = rng.multivariate_normal(mean, Sigma, size=n)
 y = rng.normal(loc=X[:, 0] + X[:, 1], scale=1)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+```{python}
+
+import matplotlib.pyplot as plt
+from sklearn.linear_model import Ridge, LinearRegression
+
 
 # OLS estimate
-ols = LinearRegression(fit_intercept=False).fit(X, y)
+ols = LinearRegression(fit_intercept=True).fit(X, y)
 print("OLS estimates (true = [1, 1]):")
 print(f"  beta_1 = {ols.coef_[0]:.4f}")
 print(f"  beta_2 = {ols.coef_[1]:.4f}")
 
 # Ridge estimate (lambda=5/n to match R's lm.ridge(lambda=5))
-ridge = Ridge(alpha=5, fit_intercept=False).fit(X, y)
+ridge = Ridge(alpha=5, fit_intercept=True).fit(X, y)
 print("\nRidge estimates (alpha=5, true = [1, 1]):")
 print(f"  beta_1 = {ridge.coef_[0]:.4f}")
 print(f"  beta_2 = {ridge.coef_[1]:.4f}")

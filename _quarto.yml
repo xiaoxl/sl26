@@ -36,8 +36,8 @@ book:
       chapters:
       - contents/1/basic.qmd
       - contents/1/lr.qmd
-      - contents/1/ridge.qmd      
-      - contents/1/lasso.qmd
+      - contents/1/shrinkage.qmd      
+      - contents/1/dr.qmd
       - contents/1/glm.qmd
       - contents/1/gam.qmd
     # - part: "Simple Linear regression"
