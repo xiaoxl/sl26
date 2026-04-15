@@ -52,24 +52,18 @@ $$
 
 
 
-Interpretation is one of the main advantages of linear regression compared with many more complex models.
+Interpretability is one of the main advantages of linear regression compared with many more complex models.
 
 1. The coefficient $\beta_j$ describes how the predicted response changes when $x_j$ increases by one unit, while the other predictors are held fixed.
 2. When interaction terms are present, a main effect cannot be interpreted in isolation. The effect of a predictor depends on the values of the variables with which it interacts.
 3. If predictors are centered so that $0$ corresponds to the average of the original variable, the intercept represents the predicted response at the average predictor levels.
 
 
-## Assessing Model Fit
-
-In linear regression we want to understand how well a model explains the data and how well it is expected to perform on new observations.
-
-Classical regression focuses heavily on checking model assumptions, such as independence of errors, constant variance, and approximate normality. Various diagnostic tools—such as residual plots, Q-Q plots, and leverage statistics—are commonly used to examine whether these assumptions are reasonable.
-
-In statistical learning, however, the primary goal is predictive performance rather than formal inference. As a result, these diagnostic tools play a secondary role. While they can still help reveal serious problems such as nonlinearity or influential observations, the main evaluation of a model is based on how well it predicts new data.
 
 ### Training Error and Test Error
 
 
+Classical regression focuses heavily on checking model assumptions, such as independence of errors, constant variance, and approximate normality. In statistical learning, however, the primary goal is predictive performance rather than formal inference. As a result, these diagnostic tools play a secondary role. While they can still help reveal serious problems such as nonlinearity or influential observations, the main evaluation of a model is based on how well it predicts new data.
 
 ::: {#def-}
 ## Training Error
@@ -103,7 +97,7 @@ Model selection methods attempt to balance model complexity and prediction accur
 
 
 ::: {.callout-note}
-Prediction error can be decomposed conceptually into two components: bias and variance. Simple models may have high bias but low variance, while very flexible models may have low bias but high variance. Model selection aims to balance these two effects to minimize prediction error. This part will be discussed in more details in later sections.
+Prediction error can be decomposed conceptually into two components: bias and variance. Simple models may have high bias but low variance, while very flexible models may have low bias but high variance. Model selection aims to balance these two effects to minimize prediction error. This will be discussed in more detail in later sections.
 :::
 
 
@@ -122,49 +116,13 @@ Although these criteria are useful for model comparison, they still rely on appr
 :::
 
 
-### Trainning set, Test set and Validation set
-
-Instead of estimating test performance indirectly from the training data, we can evaluate a model more directly by using data that were not used to fit the model. This leads to the idea of data splitting:
-
-The dataset is divided into two parts:
-
-- Training set: used to fit the model.
-- Test set: used to evaluate prediction performance.
-
-After fitting the model on the training set, predictions are made on the test set, and performance measures such as MSE are computed.
-
-This provides a more realistic estimate of how the model performs on new data.
-
-In many situations we also need to choose between several competing models or tuning parameters. To avoid using the test data for model selection, a third subset is often introduced.
-
-- Training set: used to fit models.
-- Validation set: used to compare models and select tuning parameters.
-- Test set: used only once at the end to estimate the final model's performance.
-
-This separation helps prevent overly optimistic performance estimates.
 
 
-### Cross-Validation
-
-When the dataset is not large, splitting the data into separate training, validation, and test sets may leave too little data for model fitting. In such cases, cross-validation is commonly used to estimate validation performance more efficiently.
-
-The most common form is $k$-fold cross-validation.
 
 
-1. The available training data are divided into $k$ roughly equal parts (called folds).
-2. For each fold:
-   - The model is trained on $k-1$ folds.
-   - The remaining fold is used as a validation set.
-3. This process is repeated $k$ times so that each fold serves once as the validation set.
-4. The validation errors from all folds are averaged to estimate the model's expected test error.
-
-Cross-validation is primarily used to estimate test error or to compare competing models. When it is used for model selection, two additional steps are typically performed. Note that cross-validation uses only the training data and does not involve the test set.
-
-5. After the best model configuration has been selected, the model is retrained on the entire training data.
-6. The final model is then evaluated once on the test set, providing an unbiased estimate of its performance on new data.
 
 
-## Python code
+## Linear Regression in Python
 
 
 
@@ -203,6 +161,8 @@ In this example we construct `X` as a DataFrame, since column names make it easi
 
 
 ### Linear regression models
+
+We fit a linear regression model using `LinearRegression`.
 ```{python}
 from sklearn.linear_model import LinearRegression
 
@@ -351,7 +311,7 @@ stats.probplot(res, dist="norm", plot=plt);
 
 
 ::: {.callout-note collapse="true"}
-## Scale-lcation plot
+## Scale-location plot
 
 ```{python}
 import numpy as np
@@ -444,14 +404,7 @@ for ax in fig.axes:
         ax.plot(smooth[:, 0], smooth[:, 1], color="red")
 ```
 
-
-
-
 :::
-
-
-
-
 
 </details>
 
@@ -461,267 +414,35 @@ for ax in fig.axes:
 
 
 
-## Feature engineering
 
 
-Feature engineering refers to modifying or creating predictors in order to better represent the relationship between the predictors and the response. Here we mainly cover the `sklearn` way to perform feature engineering.
 
 
-::: {.callout-note}
-## Modeling Perspective
 
-In statistical learning (commonly implemented using `sklearn`), the primary goal is predictive performance. Models are therefore typically constructed by building a feature matrix, and modifying a model usually means modifying the feature matrix rather than changing a model formula.
+## Model evaluation
 
-In contrast, traditional regression analysis (commonly implemented using `statsmodels`) allows explicit specification of statistical models through a formula language. This approach is convenient when precise control of model terms and statistical inference are required.
 
-:::
+### Train-Test Split
 
-Before introducing automated tools, we can always create new predictors directly by modifying the original dataset.
-```{python}
-import pandas as pd
+Instead of estimating test performance indirectly from the training data, we can evaluate a model more directly by using data that were not used to fit the model. This leads to the idea of data splitting:
 
-X = pd.DataFrame({'x1': [0, 2, 4], 'x2': [1, 3, 5]})
-X
-```
+The dataset is divided into two parts:
 
-For example, we can add the squared term of $x_2$ and the interaction term $x_1x_2$ to form a new feature matrix `X2`.
+- Training set: used to fit the model.
+- Test set: used to evaluate prediction performance.
 
+After fitting the model on the training set, predictions are made on the test set, and performance measures such as MSE are computed.
 
-```{python}
-X2 = X.copy()
-X2["x2_sq"] = X["x2"] ** 2
-X2["x1_x2"] = X["x1"] * X["x2"]
-X2
-```
-This corresponds to fitting a model of the form
-$$
-y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_2^2+\beta_4x_1x_2+\varepsilon.
-$$
+This provides a more realistic estimate of how the model performs on new data.
 
-::: {.callout-tip}
-Although the model is called linear regression, it can represent nonlinear relationships by including transformed predictors such as $x^2$, $\log x$, or $\sqrt{x}$. The model remains linear because it is linear in the coefficients $\beta$.
-:::
+In many situations we also need to choose between several competing models or tuning parameters. To avoid using the test data for model selection, a third subset is often introduced.
 
+- Training set: used to fit models.
+- Validation set: used to compare models and select tuning parameters.
+- Test set: used only once at the end to estimate the final model's performance.
 
-::: {.callout-caution}
-## Dummy Variable Trap
-Including all dummy variables together with an intercept creates perfect multicollinearity because the dummy variables sum to one. Therefore, when creating dummy variables with $k$ categories, we typically include only $k-1$ variables.
+This separation helps prevent overly optimistic performance estimates.
 
-:::
-
-
-
-::: {.callout-note collapse="true"}
-## Polynomial Features
-When many predictors are present, manually creating polynomial and interaction terms can become tedious. In such cases we can use `PolynomialFeatures` from `sklearn.preprocessing`, which automatically generates polynomial and interaction terms up to the specified degree.
-
-
-```{python}
-from sklearn.preprocessing import PolynomialFeatures
-
-poly = PolynomialFeatures(degree=2, interaction_only=False, include_bias=True)
-poly.fit_transform(X)
-```
-The argument `interaction_only=False` means that both squared terms and interaction terms are included. For example, if the original variables are $x_1$ and $x_2$, then the transformed matrix contains terms such as
-$$
-1,x_1,x_2,x_1^2,x_1x_2,x_2^2.
-$$
-
-```{python}
-poly2 = PolynomialFeatures(degree=2, interaction_only=True, include_bias=False)
-poly2.fit_transform(X)
-```
-Here `interaction_only=True` means that only interaction terms are added, while powers such as $x_1^2$ and $x_2^2$ are excluded. In addition, the argument `include_bias=False` removes the constant column of ones.
-
-:::
-
-
-::: {.callout-note collapse="true"}
-## Categorical variables (`pandas` version)
-
-We could use `pd.get_dummies()` to directly modify the dataset. 
-```{python}
-df = pd.DataFrame({"color": ["red", "blue", "green", "red"]})
-
-pd.get_dummies(df, drop_first=True)
-```
-The argument `drop_first=True` removes the base category column to avoid the dummy variable trap described above. If you want to keep the base column, you may set it to `False` (which is the default).
-
-`pd.get_dummies()` automatically detects categorical variables and leaves numerical variables unchanged.
-
-```{python}
-X = pd.DataFrame({"x": [1, 2, 3, 4, 5, 6], "group": ["A", "A", "B", "B", "C", "C"]})
-
-pd.get_dummies(X, drop_first=True)
-```
-
-If you want to convert numeric variables into dummy variables, you may manually cast them to categorical variables.
-
-```{python}
-X["x"] = X["x"].astype("category")
-pd.get_dummies(X, drop_first=True)
-```
-
-
-:::
-
-
-
-::: {.callout-note collapse="true"}
-
-## Categorical variables (`sklearn` version)
-
-`OneHotEncoder` from `sklearn` is another tool for converting categorical variables into dummy variables. It follows the standard `sklearn` API. Compared with `pd.get_dummies()`, which is convenient for quick data analysis, `OneHotEncoder` is better suited for statistical learning pipelines because it can be fitted on training data and then applied consistently to new data.
-
-```{python}
-from sklearn.preprocessing import OneHotEncoder
-
-df = pd.DataFrame({"color": ["red", "blue", "green", "red"]})
-encoder = OneHotEncoder(drop="first", sparse_output=False) 
-
-encoder.fit_transform(df)
-```
-The argument `sparse_output=False` controls the output format. If `False`, the output is a regular matrix. If `True`, the output is a sparse matrix.
-
-
-```{python}
-from sklearn.preprocessing import OneHotEncoder
-
-X = pd.DataFrame({"x": [1, 2, 3, 4, 5, 6], "group": ["A", "A", "B", "B", "C", "C"]})
-encoder = OneHotEncoder(drop="first", sparse_output=False)
-
-encoder.fit_transform(X)
-```
-When applied to a DataFrame with multiple columns, unlike the `pandas` version, `OneHotEncoder` converts each column into dummy variables. In the example above, the first five columns correspond to `x` and the last two correspond to `group`.
-
-If you want to apply `OneHotEncoder` only to certain columns, you need to use a `ColumnTransformer`, which will be introduced later.
-
-:::
-
-
-
-
-
-
-
-::: {.callout-note collapse="true"}
-## Centralization, standardization and normalization
-
-In regression and statistical learning, these transformations are typically applied to the predictors $X$ to control their location and scale. They are rarely applied to the response $y$, unless there is a specific modeling reason.
-
-- Centralization: Subtract the sample mean so that the variable has mean $0$.
-- Standardization: Subtract the sample mean and divide by the sample standard deviation so that the variable has mean $0$ and standard deviation $1$.
-- Normalization: Rescale the variable so that its values lie between $0$ and $1$.
-
-Standardization is especially useful when predictors are measured on very different scales. It is commonly used in statistical learning, particularly for methods such as ridge regression and lasso.
-
-
-```{python}
-import numpy as np
-import pandas as pd
-
-np.random.seed(1)
-
-X = pd.DataFrame({"x1": np.random.normal(10, 2, size=8), "x2": np.random.normal(100, 20, size=8)})
-X
-```
-
-Standardization:
-
-```{python}
-from sklearn.preprocessing import StandardScaler
-
-scaler = StandardScaler()
-scaler.fit_transform(X)
-```
-
-Centralization (standardization without scaling):
-
-```{python}
-scaler = StandardScaler(with_std=False)
-scaler.fit_transform(X)
-```
-
-Normalization:
-
-
-```{python}
-from sklearn.preprocessing import MinMaxScaler
-
-minmax = MinMaxScaler()
-minmax.fit_transform(X)
-```
-
-Note that scaling is not required for ordinary least squares (OLS). However, it is essential for regularization methods such as ridge and lasso because the penalty depends on the scale of the coefficients.
-:::
-
-
-
-::: {.callout-tip}
-## Estimator, Predictor and Transformer
-
-In `sklearn`, all models are called estimators. An estimator is any object that can be trained using the `.fit()` method.
-
-
-Once an estimator is fitted,
-
-- if it can transform input data using `.transform()`, it is called a transformer;
-- if it can generate predictions using `.predict()`, it is called a predictor.
-
-Typical examples include
-
-- Transformers: `StandardScaler`, `MinMaxScaler`, `PolynomialFeatures`, `OneHotEncoder`, etc.
-- Predictors: `LinearRegression` and most other machine learning models.
-
-Usually a model is applied in two steps: 
-
-1. `.fit()` learns the parameters from the training data.
-2. `.transform()` or `.predict()` applies the model to data.
-
-For transformers, the combined method `.fit_transform()` performs both steps in one call.
-
-
-:::
-
-
-
-::: {.callout-note collapse="true"}
-## Column transform
-To apply different transformations to different columns, we can use `ColumnTransformer`. `ColumnTransformer` consists of multiple transformations. Each transformation is specified by a triple containing:
-
-- a name (identifier),
-- the transformer,
-- the columns to which it applies.
-
-
-```{python}
-# | eval: false
-from sklearn.compose import ColumnTransformer
-
-preprocess = ColumnTransformer(
-    transformers=[
-        ("cat", OneHotEncoder(drop="first", sparse_output=False), ["group"]),
-        ("x", "passthrough", ["x"]),
-        ("x_std", StandardScaler(), ["x"]),
-    ]
-)
-
-X = pd.DataFrame({"x": [1, 2, 3, 4, 5, 6], "group": ["A", "A", "B", "B", "C", "C"]})
-preprocess.fit_transform(X)
-```
-
-:::
-
-
-
-
-
-
-
-
-
-
-## Train-test split
 
 
 In `sklearn`, the function `train_test_split()` from `sklearn.model_selection` is commonly used to split the data into a training set and a test set.
@@ -747,13 +468,36 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 The argument `test_size=0.2` means that 20% of the data are used as the test set, while the remaining 80% are used as the training set. The argument `random_state=0` ensures reproducibility.
 
 
-### k-Fold Cross-Validation 
+
+
+### Cross-Validation
+
+When the dataset is not large, splitting the data into separate training, validation, and test sets may leave too little data for model fitting. In such cases, cross-validation is commonly used to estimate validation performance more efficiently.
+
+The most common form is $k$-fold cross-validation.
+
+
+1. The available training data are divided into $k$ roughly equal parts (called folds).
+2. For each fold:
+   - The model is trained on $k-1$ folds.
+   - The remaining fold is used as a validation set.
+3. This process is repeated $k$ times so that each fold serves once as the validation set.
+4. The validation errors from all folds are averaged to estimate the model's expected test error.
+
+Cross-validation is primarily used to estimate test error or to compare competing models. When it is used for model selection, two additional steps are typically performed. Note that cross-validation uses only the training data and does not involve the test set.
+
+5. After the best model configuration has been selected, the model is retrained on the entire training data.
+6. The final model is then evaluated once on the test set, providing an unbiased estimate of its performance on new data.
+
+
 
 In `sklearn`, there are several ways to perform $k$-fold cross-validation. From `KFold` to `cross_validate` and then to `cross_val_score`, the interface becomes easier to use, but also less flexible.
 
+The three approaches perform essentially the same task, but at different levels of abstraction.
+
 ::: {.callout-note collapse="true"}
 ## `KFold`
-`KFold` from `sklearn.model.selection` is used to split the dataset into $k$ groups, called folds. In each iteration, one fold is used as the validation set and the remaining folds are used as the training set.
+`KFold` from `sklearn.model_selection` is used to split the dataset into $k$ groups, called folds. In each iteration, one fold is used as the validation set and the remaining folds are used as the training set.
 
 
 ```{python}
@@ -807,11 +551,7 @@ Using `KFold` directly is somewhat manual. We may use `cross_validate()` to auto
 from sklearn.model_selection import cross_validate
 
 model = LinearRegression()
-cv_result = cross_validate(
-    model, X, y,
-    scoring="neg_mean_squared_error",
-    cv=5
-)
+cv_result = cross_validate(model, X, y, scoring="neg_mean_squared_error", cv=5)
 
 cv_result
 ```
@@ -869,7 +609,297 @@ So `cross_val_score()` is convenient when you only need the validation scores an
 
 
 
-### Pipeline
+
+
+
+
+
+
+
+
+
+
+## Feature Engineering and Preprocessing
+
+
+Feature engineering refers to modifying or creating predictors in order to better represent the relationship between the predictors and the response. Here we mainly cover the `sklearn` way to perform feature engineering.
+
+
+::: {.callout-note}
+## Modeling Perspective
+
+In statistical learning (commonly implemented using `sklearn`), the primary goal is predictive performance. Models are therefore typically constructed by building a feature matrix, and modifying a model usually means modifying the feature matrix rather than changing a model formula.
+
+In contrast, traditional regression analysis (commonly implemented using `statsmodels`) allows explicit specification of statistical models through a formula language. This approach is convenient when precise control of model terms and statistical inference are required.
+
+:::
+
+
+### Creating Features Manually
+
+Before introducing automated tools, we can always create new predictors directly by modifying the original dataset.
+```{python}
+import pandas as pd
+
+X = pd.DataFrame({'x1': [0, 2, 4], 'x2': [1, 3, 5]})
+X
+```
+
+For example, we can add the squared term of $x_2$ and the interaction term $x_1x_2$ to form a new feature matrix `X2`.
+
+
+```{python}
+X2 = X.copy()
+X2["x2_sq"] = X["x2"] ** 2
+X2["x1_x2"] = X["x1"] * X["x2"]
+X2
+```
+This corresponds to fitting a model of the form
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_2^2+\beta_4x_1x_2+\varepsilon.
+$$
+
+::: {.callout-tip}
+Although the model is called linear regression, it can represent nonlinear relationships by including transformed predictors such as $x^2$, $\log x$, or $\sqrt{x}$. The model remains linear because it is linear in the coefficients $\beta$.
+:::
+
+
+
+### Polynomial Features
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+When many predictors are present, manually creating polynomial and interaction terms can become tedious. In such cases we can use `PolynomialFeatures` from `sklearn.preprocessing`, which automatically generates polynomial and interaction terms up to the specified degree.
+
+
+```{python}
+from sklearn.preprocessing import PolynomialFeatures
+
+poly = PolynomialFeatures(degree=2, interaction_only=False, include_bias=True)
+poly.fit_transform(X)
+```
+The argument `interaction_only=False` means that both squared terms and interaction terms are included. For example, if the original variables are $x_1$ and $x_2$, then the transformed matrix contains terms such as
+$$
+1,x_1,x_2,x_1^2,x_1x_2,x_2^2.
+$$
+
+```{python}
+poly2 = PolynomialFeatures(degree=2, interaction_only=True, include_bias=False)
+poly2.fit_transform(X)
+```
+Here `interaction_only=True` means that only interaction terms are added, while powers such as $x_1^2$ and $x_2^2$ are excluded. In addition, the argument `include_bias=False` removes the constant column of ones.
+</details>
+
+
+### Categorical Variables
+
+
+::: {.callout-caution}
+## Dummy Variable Trap
+Including all dummy variables together with an intercept creates perfect multicollinearity because the dummy variables sum to one. Therefore, when creating dummy variables with $k$ categories, we typically include only $k-1$ variables.
+
+:::
+
+
+<details>
+<summary><strong>`pandas` version</strong></summary>
+
+
+We could use `pd.get_dummies()` to directly modify the dataset. 
+```{python}
+df = pd.DataFrame({"color": ["red", "blue", "green", "red"]})
+
+pd.get_dummies(df, drop_first=True)
+```
+The argument `drop_first=True` removes the base category column to avoid the dummy variable trap described above. If you want to keep the base column, you may set it to `False` (which is the default).
+
+`pd.get_dummies()` automatically detects categorical variables and leaves numerical variables unchanged.
+
+```{python}
+X = pd.DataFrame({"x": [1, 2, 3, 4, 5, 6], "group": ["A", "A", "B", "B", "C", "C"]})
+
+pd.get_dummies(X, drop_first=True)
+```
+
+If you want to convert numeric variables into dummy variables, you may manually cast them to categorical variables.
+
+```{python}
+X["x"] = X["x"].astype("category")
+pd.get_dummies(X, drop_first=True)
+```
+</details>
+
+
+<details>
+<summary><strong>`sklearn` version</strong></summary>
+
+
+`OneHotEncoder` from `sklearn` is another tool for converting categorical variables into dummy variables. It follows the standard `sklearn` API. Compared with `pd.get_dummies()`, which is convenient for quick data analysis, `OneHotEncoder` is better suited for statistical learning pipelines because it can be fitted on training data and then applied consistently to new data.
+
+```{python}
+from sklearn.preprocessing import OneHotEncoder
+
+df = pd.DataFrame({"color": ["red", "blue", "green", "red"]})
+encoder = OneHotEncoder(drop="first", sparse_output=False) 
+
+encoder.fit_transform(df)
+```
+The argument `sparse_output=False` controls the output format. If `False`, the output is a regular matrix. If `True`, the output is a sparse matrix.
+
+
+```{python}
+from sklearn.preprocessing import OneHotEncoder
+
+X = pd.DataFrame({"x": [1, 2, 3, 4, 5, 6], "group": ["A", "A", "B", "B", "C", "C"]})
+encoder = OneHotEncoder(drop="first", sparse_output=False)
+
+encoder.fit_transform(X)
+```
+When applied to a DataFrame with multiple columns, unlike the `pandas` version, `OneHotEncoder` converts each column into dummy variables. In the example above, the first five columns correspond to `x` and the last two correspond to `group`.
+
+If you want to apply `OneHotEncoder` only to certain columns, you need to use a `ColumnTransformer`, which will be introduced later.
+
+</details>
+
+
+
+
+### Scaling Variables
+
+
+<details>
+<summary><strong>Centralization, standardization and normalization</strong></summary>
+
+
+In regression and statistical learning, these transformations are typically applied to the predictors $X$ to control their location and scale. They are rarely applied to the response $y$, unless there is a specific modeling reason.
+
+- Centralization: Subtract the sample mean so that the variable has mean $0$.
+- Standardization: Subtract the sample mean and divide by the sample standard deviation so that the variable has mean $0$ and standard deviation $1$.
+- Normalization: Rescale the variable so that its values lie between $0$ and $1$.
+
+Standardization is especially useful when predictors are measured on very different scales. It is commonly used in statistical learning, particularly for methods such as ridge regression and lasso.
+
+
+```{python}
+import numpy as np
+import pandas as pd
+
+np.random.seed(1)
+
+X = pd.DataFrame({"x1": np.random.normal(10, 2, size=8), "x2": np.random.normal(100, 20, size=8)})
+X
+```
+
+Standardization:
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+scaler.fit_transform(X)
+```
+
+Centralization (standardization without scaling):
+
+```{python}
+scaler = StandardScaler(with_std=False)
+scaler.fit_transform(X)
+```
+
+Normalization:
+
+
+```{python}
+from sklearn.preprocessing import MinMaxScaler
+
+minmax = MinMaxScaler()
+minmax.fit_transform(X)
+```
+
+Note that scaling is not required for ordinary least squares (OLS). However, it is essential for regularization methods such as ridge and lasso because the penalty depends on the scale of the coefficients.
+</details>
+
+
+
+
+### `ColumnTransformer`
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+To apply different transformations to different columns, we can use `ColumnTransformer`. `ColumnTransformer` consists of multiple transformations. Each transformation is specified by a triple containing:
+
+- a name (identifier),
+- the transformer,
+- the columns to which it applies.
+
+
+```{python}
+from sklearn.compose import ColumnTransformer
+
+prep = ColumnTransformer(
+    transformers=[
+        ("cat", OneHotEncoder(drop="first", sparse_output=False), ["group"]),
+        ("x", "passthrough", ["x"]),
+        ("x_std", StandardScaler(), ["x"]),
+    ]
+)
+
+X = pd.DataFrame({"x": [1, 2, 3, 4, 5, 6], "group": ["A", "A", "B", "B", "C", "C"]})
+prep.fit_transform(X)
+```
+
+You may use the id to get into each transformer.
+
+
+```{python}
+prep.transformers_
+```
+
+```{python}
+prep.named_transformers_['x_std']
+```
+
+
+</details>
+
+
+
+
+::: {.callout-tip}
+## Estimator, Predictor and Transformer
+
+In `sklearn`, all models are called estimators. An estimator is any object that can be trained using the `.fit()` method.
+
+
+Once an estimator is fitted,
+
+- if it can transform input data using `.transform()`, it is called a transformer;
+- if it can generate predictions using `.predict()`, it is called a predictor.
+
+Typical examples include
+
+- Transformers: `StandardScaler`, `MinMaxScaler`, `PolynomialFeatures`, `OneHotEncoder`, etc.
+- Predictors: `LinearRegression` and most other machine learning models.
+
+Usually a model is applied in two steps: 
+
+1. `.fit()` learns the parameters from the training data.
+2. `.transform()` or `.predict()` applies the model to data.
+
+For transformers, the combined method `.fit_transform()` performs both steps in one call.
+
+
+:::
+
+
+
+
+## Pipelines
+
 
 In many modeling workflows, several steps must be performed before fitting the model. These steps may include
 
@@ -877,8 +907,36 @@ In many modeling workflows, several steps must be performed before fitting the m
 - scaling variables,
 - generating polynomial features.
 
-A pipeline combines these steps into a single object. Using pipelines helps ensure that the same transformations are applied consistently during training and prediction.
+A `pipeline` combines these steps into a single object. Using pipelines ensures that the same transformations are applied consistently during training, cross-validation, and prediction, and helps prevent data leakage.
 
+Here is a typical `pipeline`. Each step is indicated by a pair consisting of
+
+- a name (identifier) of the step
+- the estimator
+
+
+```{python}
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+
+steps = [
+    ("scaler", StandardScaler()),
+    ("linear_model", LinearRegression()),
+]
+pipe = Pipeline(steps=steps)
+```
+
+This `pipe` object behaves like a `model` object. You may use the step names to access the internal components.
+
+
+```{python}
+pipe.steps
+```
+
+```{python}
+pipe.named_steps['scaler']
+```
 
 
 ::: {.callout-note}
@@ -886,44 +944,117 @@ Pipelines are particularly useful when combined with cross-validation and hyperp
 :::
 
 
+### Full Pipeline Example
 
+<details>
+<summary><strong>Click to expand.</strong></summary>
 
-### Using data pipeline
-We may organize the above process in a neater way. After we get a data, the usual process is to apply several transforms to the data before we really get to the model part. Using terminolgies from `sklearn`, the former are called *transforms*, and the latter is called an *estimator*. In this example, we have exactly one tranform which is the normalization. The estimator here we use is the k-NN classifier. 
+In this example we build a more complicated pipeline.
 
-`sklearn` provides a standard way to write these codes, which is called `pipeline`. We may chain the transforms and estimators in a sequence and let the data go through the pipeline. In this example, the pipeline contains two steps:
-1. The normalization transform `sklearn.preprocessing.MinMaxScaler`. 
-2. The k-NN classifier `sklearn.neighbors.KNeighborsClassifier`. This is the same one as we use previously.
+```{python}
+import numpy as np
+import pandas as pd
 
-The code is as follows. It is a straightforward code. Note that the `()` after the class in each step of `steps` is very important. The codes cannot run if you miss it.
+np.random.seed(1)
 
-After we setup the pipeline, we may use it as other estimators since it is an estimator. Here we may also use the accuracy function provided by `sklearn` to perform the computation. It is essentially the same as our `acc` computation.
+n = 100
+
+X = pd.DataFrame(
+    {
+        "x1": np.random.normal(0, 1, n),
+        "x2": np.random.normal(5, 2, n),
+        "group": np.random.choice(["A", "B", "C"], size=n),
+    }
+)
+
+y = 1 + 2 * X["x1"] - 1.5 * X["x2"] + 3 * (X["group"] == "B") - 2 * (X["group"] == "C") + np.random.normal(0, 1, n)
+```
+The pipeline is illustrated as follows.
+
+1. `ColumnTransformer` separates numeric and categorical features.
+2. Numeric features go through: `StandardScaler` → `PolynomialFeatures`.
+3. Categorical features go through `OneHotEncoder`.
+4. The transformed features are combined into a single feature matrix.
+5. The model `LinearRegression` is fitted to the transformed data.
+6. The fitted model can then be used to generate predictions.
+
+```{mermaid}
+flowchart TB
+
+A[Input Data X]
+
+subgraph P[Pipeline]
+
+direction TB
+
+B[ColumnTransformer]
+
+subgraph N[Numeric Features: x1, x2]
+direction TB
+N1[StandardScaler]
+N2[PolynomialFeatures]
+N1 --> N2
+end
+
+subgraph C[Categorical Feature: group]
+direction TB
+C1[OneHotEncoder]
+end
+
+B --> N
+B --> C
+
+N2 --> D[Combined Feature Matrix]
+C1 --> D
+
+D --> E[LinearRegression]
+
+end
+
+A --> B
+E --> F[Predictions]
+```
 
 
 ```{python}
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, PolynomialFeatures
+from sklearn.linear_model import LinearRegression
 
-n_neighbors = 10
-steps = [('scaler', MinMaxScaler()),
-         ('knn', KNeighborsClassifier(n_neighbors, weights="uniform",
-                                      metric="euclidean", algorithm='brute'))]
-pipe = Pipeline(steps=steps)
-pipe.fit(X_train, y_train)
-y_pipe = pipe.predict(X_test)
-accuracy_score(y_pipe, y_test)
+
+numeric_features = ["x1", "x2"]
+categorical_features = ["group"]
+
+numeric_pipe = Pipeline([("scaler", StandardScaler()), ("poly", PolynomialFeatures(degree=2, include_bias=False))])
+
+preprocessor = ColumnTransformer(
+    [("num", numeric_pipe, numeric_features), ("cat", OneHotEncoder(drop="first"), categorical_features)]
+)
+
+pipe = Pipeline([("preprocess", preprocessor), ("model", LinearRegression())])
 ```
 
-Once a pipeline is set, you may use `step name` with TWO underscores `__` with `parameter name` to get access to a specific parameter. Please check the following code.
+
+The entire `pipeline` is trained on the training set and then evaluated on the validation set, where the training and validation sets are determined by cross-validation.
+
 
 ```{python}
-pipe.get_params()['knn__n_neighbors']
+from sklearn.model_selection import cross_validate
+
+cv_result = cross_validate(
+    pipe, X, y, cv=KFold(5, shuffle=True, random_state=1), scoring=["r2", "neg_mean_squared_error"]
+)
+
+print(f"test R2: {cv_result['test_r2'].mean()}")
+print(f"test neg mse: {cv_result['test_neg_mean_squared_error'].mean()}")
 ```
 
 
-```{python}
-pipe.set_params(knn__n_neighbors=5)
-pipe.get_params()['knn__n_neighbors']
-```
+</details>
+
+
+
+## Exercises
+
+

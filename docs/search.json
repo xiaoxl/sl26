@@ -1,68 +1,322 @@
 [
   {
-    "objectID": "contents/1/lr.html",
-    "href": "contents/1/lr.html",
-    "title": "2  Linear Regression",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Statistical Learning",
     "section": "",
-    "text": "2.1 Quick Overview\nThis section offers a brief review of linear regression, with the main emphasis on its Python implementation through examples.\nLinear regression is the fundamental supervised learning method for a quantitative response. It models the conditional mean of the response as a linear function of the predictors: \\[\ny = \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p + \\varepsilon.\n\\]\nIn matrix notation, this can be written as \\[\n\\vb y = \\vb X\\beta + \\varepsilon.\n\\] Here, \\(\\vb X\\) is the design matrix, whose first column is a column of ones representing the intercept.",
+    "text": "Preface\nThese are notes for STAT 3113 Regression 2026 Summer at Arkansas Tech University. If you have any questions please contact me through email.\nArchived draft material from earlier notes",
     "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+      "Preface"
     ]
   },
   {
-    "objectID": "contents/1/lr.html#the-ordinary-least-squares-estimator",
-    "href": "contents/1/lr.html#the-ordinary-least-squares-estimator",
-    "title": "2  Linear Regression",
-    "section": "2.2 The Ordinary Least Squares Estimator",
-    "text": "2.2 The Ordinary Least Squares Estimator\nThe most common fitting method is ordinary least squares (OLS). It chooses the coefficient vector \\(\\beta\\) that minimizes the residual sum of squares (\\(\\rss\\)):\n\\[\n\\rss(\\beta) = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\n= \\norm{\\vb y - \\vb X\\beta }_2^2.\n\\]\n\nTheorem 2.1 (OLS Estimator) The coefficient vector that minimizes \\(\\rss\\) is \\[\n\\hat{\\beta}_{\\ols} = (\\vb X^\\top \\vb X)^{-1}\\vb X^\\top \\vb y,\n\\] provided that \\(\\vb X^\\top \\vb X\\) is invertible. This estimator is called the ordinary least squares (OLS) estimator.\n\nOnce the coefficients are estimated, the fitted value for observation \\(i\\) is\n\\[\n\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\cdots + \\hat{\\beta}_p x_{ip}.\n\\]\nInterpretation is one of the main advantages of linear regression compared with many more complex models.\n\nThe coefficient \\(\\beta_j\\) describes how the predicted response changes when \\(x_j\\) increases by one unit, while the other predictors are held fixed.\nWhen interaction terms are present, a main effect cannot be interpreted in isolation. The effect of a predictor depends on the values of the variables with which it interacts.\nIf predictors are centered so that \\(0\\) corresponds to the average of the original variable, the intercept represents the predicted response at the average predictor levels.",
+    "objectID": "index.html#main-topics",
+    "href": "index.html#main-topics",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nWhat is statistical learning?\nSupervised vs unsupervised learning\nParametric vs nonparametric methods\nPrediction vs explanation\nBias–variance tradeoff",
     "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+      "Preface"
     ]
   },
   {
-    "objectID": "contents/1/lr.html#assessing-model-fit",
-    "href": "contents/1/lr.html#assessing-model-fit",
-    "title": "2  Linear Regression",
-    "section": "2.3 Assessing Model Fit",
-    "text": "2.3 Assessing Model Fit\nIn linear regression we want to understand how well a model explains the data and how well it is expected to perform on new observations.\nClassical regression focuses heavily on checking model assumptions, such as independence of errors, constant variance, and approximate normality. Various diagnostic tools—such as residual plots, Q-Q plots, and leverage statistics—are commonly used to examine whether these assumptions are reasonable.\nIn statistical learning, however, the primary goal is predictive performance rather than formal inference. As a result, these diagnostic tools play a secondary role. While they can still help reveal serious problems such as nonlinearity or influential observations, the main evaluation of a model is based on how well it predicts new data.\n\n2.3.1 Training Error and Test Error\n\nDefinition 2.1 (Training Error) The training error measures how well a model fits the training data.\n\n\nDefinition 2.2 (Test Error) The test error measures prediction error on new observations not used to fit the model.\n\nFor example, for a fitted model, we can measure its performance using the mean squared error (MSE). The training MSE measures how well the model fits the training data: \\[\n\\text{MSE}_{train}=\\frac{1}{n}\\sum_{i=1}^{n}(y_i-\\hat y_i)^2 .\n\\]\nHowever, a model that fits the training data very well may perform poorly on new observations. The more relevant quantity is the test MSE, which measures prediction error on new data drawn from the same population.\nThe goal of statistical learning is to build models with small test error, not merely small training error.\n\nDefinition 2.3 (Overfitting) Overfitting occurs when a model fits the training data very closely but fails to generalize well to new data. In this case, the model captures random noise or idiosyncrasies in the training sample rather than the underlying relationship.\n\nModel selection methods attempt to balance model complexity and prediction accuracy in order to avoid overfitting.\n\n\n\n\n\n\nNote\n\n\n\nPrediction error can be decomposed conceptually into two components: bias and variance. Simple models may have high bias but low variance, while very flexible models may have low bias but high variance. Model selection aims to balance these two effects to minimize prediction error. This part will be discussed in more details in later sections.\n\n\n\n\n\n\n\n\nNoteInformation Criteria and Estimated Test Error\n\n\n\n\n\nClassical regression tends to estimate expected test error using only training data. These criteria reward good fit but penalize models with many predictors.\nSome commonly used criteria are:\n\nAIC (Akaike Information Criterion)\n\nBIC (Bayesian Information Criterion)\nMallows’ \\(C_p\\)\n\nAlthough these criteria are useful for model comparison, they still rely on approximations derived from the training sample.\n\n\n\n\n\n2.3.2 Trainning set, Test set and Validation set\nInstead of estimating test performance indirectly from the training data, we can evaluate a model more directly by using data that were not used to fit the model. This leads to the idea of data splitting:\nThe dataset is divided into two parts:\n\nTraining set: used to fit the model.\nTest set: used to evaluate prediction performance.\n\nAfter fitting the model on the training set, predictions are made on the test set, and performance measures such as MSE are computed.\nThis provides a more realistic estimate of how the model performs on new data.\nIn many situations we also need to choose between several competing models or tuning parameters. To avoid using the test data for model selection, a third subset is often introduced.\n\nTraining set: used to fit models.\nValidation set: used to compare models and select tuning parameters.\nTest set: used only once at the end to estimate the final model’s performance.\n\nThis separation helps prevent overly optimistic performance estimates.\n\n\n2.3.3 Cross-Validation\nWhen the dataset is not large, splitting the data into separate training, validation, and test sets may leave too little data for model fitting. In such cases, cross-validation is commonly used to estimate validation performance more efficiently.\nThe most common form is \\(k\\)-fold cross-validation.\n\nThe available training data are divided into \\(k\\) roughly equal parts (called folds).\nFor each fold:\n\nThe model is trained on \\(k-1\\) folds.\nThe remaining fold is used as a validation set.\n\nThis process is repeated \\(k\\) times so that each fold serves once as the validation set.\nThe validation errors from all folds are averaged to estimate the model’s expected test error.\n\nCross-validation is primarily used to estimate test error or to compare competing models. When it is used for model selection, two additional steps are typically performed. Note that cross-validation uses only the training data and does not involve the test set.\n\nAfter the best model configuration has been selected, the model is retrained on the entire training data.\nThe final model is then evaluated once on the test set, providing an unbiased estimate of its performance on new data.",
+    "objectID": "index.html#teaching-goals",
+    "href": "index.html#teaching-goals",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand that the main goal of statistical learning is good prediction on new data, not simply fitting the observed sample as closely as possible.",
     "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+      "Preface"
     ]
   },
   {
-    "objectID": "contents/1/lr.html#formula-language",
-    "href": "contents/1/lr.html#formula-language",
-    "title": "2  Linear Regression",
-    "section": "2.4 Formula language",
-    "text": "2.4 Formula language\nThe formula language was developed based on the Wilkinson-Rogers notations introduced in [1], and was later implemented in the S language at Bell Labs by John Chambers and colleagues in the 1980s [2]. It has since become the standard way to specify linear models in statistical software such as R and Python (statsmodels).\nThe following table summarizes the basic syntax and provides examples. Note that it differs slightly from the R version because Python and R use different syntax.\n\n\n\n\n\n\n\nFormula\nMeaning\n\n\n\n\ny ~ x\nResponse \\(y\\) regressed on predictor \\(x\\)\n\n\ny ~ x1 + x2\nInclude predictors \\(x_1\\) and \\(x_2\\)\n\n\ny ~ .\nInclude all available predictors in the dataset\n\n\ny ~ x1:x2\nInteraction between \\(x_1\\) and \\(x_2\\) only\n\n\ny ~ x1 * x2\nMain effects and interaction (x1 + x2 + x1:x2)\n\n\ny ~ x1 + x2 + x3 - x2\nInclude all listed variables except x2\n\n\ny ~ (x1 + x2 + x3)^2\nAll main effects and two-way interactions\n\n\ny ~ I(x**2)\nInclude a mathematical transformation of \\(x\\)\n\n\ny ~ C(group)\nTreat group as a categorical variable\n\n\ny ~ np.log(x)\nInclude the transformation \\(\\log(x)\\) using a Python function\n\n\ny ~ 1\nModel with intercept only\n\n\ny ~ x - 1\nRemove the intercept\n\n\n\n\n\n\n\n\n\nNoteCategorical Predictors\n\n\n\nCategorical predictors are represented through indicator (dummy) variables. If a factor has \\(k\\) levels, the model usually includes \\(k-1\\) dummy variables.\nIn Python when using statsmodels to fit linear regression models, categorical variables are automatically converted into dummy variables. To indicate that a variable is categorical, you may either:\n\nexplicitly convert the variable in the dataset to a categorical type using .astype(\"category\"), or\nuse the C() function in the formula language.",
+    "objectID": "index.html#suggested-emphasis",
+    "href": "index.html#suggested-emphasis",
+    "title": "Statistical Learning",
+    "section": "Suggested Emphasis",
+    "text": "Suggested Emphasis\n\nIntroduce the overall modeling problem first.\nUse simple real-world examples such as house prices, medical diagnosis, or spam filtering.\nMake overfitting a central theme from the beginning.",
     "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+      "Preface"
     ]
   },
   {
-    "objectID": "contents/1/lr.html#model-selection",
-    "href": "contents/1/lr.html#model-selection",
-    "title": "2  Linear Regression",
-    "section": "2.5 Model Selection",
-    "text": "2.5 Model Selection\nIn traditional multiple regression, several competing sets of predictors may be plausible. Model selection compares these models using criteria that balance goodness of fit with model complexity.\n\n2.5.1 Some Criteria\nThese criteria reward good fit but penalize model complexity.\n\nAIC tends to prefer somewhat larger models.\nBIC penalizes complexity more strongly and often prefers smaller models.\nMallows’ \\(C_p\\) compares a candidate model to a larger reference model.\nPRESS uses leave-one-out data to measure test performance.\n\nThe first three methods use training results to estimate test performance, whereas PRESS directly approximates the test error through leave-one-out validation. These tools are useful for comparing models, but they should not replace subject-matter reasoning.\n\n\n2.5.2 Traditional variable selection methods\n\nBest Subset Selection: Best subset selection compares all models of a given size and then chooses the best one according to a criterion such as AIC, BIC, adjusted \\(R^2\\), \\(C_p\\), or PRESS. It is conceptually simple, but it becomes computationally expensive when the number of predictors is large.\nStepwise Selection: Stepwise procedures add or remove variables sequentially rather than searching all possible models. These methods are faster than best subset selection, but they are greedy procedures and do not guarantee the globally best model.",
+    "objectID": "index.html#main-topics-1",
+    "href": "index.html#main-topics-1",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nLinear regression as a prediction tool\nInterpreting fitted relationships\nStrengths and weaknesses of linear models\nLinear models as a baseline for comparison",
     "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+      "Preface"
     ]
   },
   {
-    "objectID": "contents/1/lr.html#python-code",
-    "href": "contents/1/lr.html#python-code",
-    "title": "2  Linear Regression",
-    "section": "2.4 Python code",
-    "text": "2.4 Python code\nThere are many Python libraries for fitting linear regression models. In this course, we use scikit-learn as the primary modeling tool, with support from pandas and numpy for data manipulation, and matplotlib and seaborn for visualization.\nTo demonstrate the code, we generate a dataset with 2 predictors and 1 response variable, where \\(\\beta_0 = 1\\), \\(\\beta_1 = 2\\), and \\(\\beta_2 = 3\\).\n\nimport numpy as np\nimport pandas as pd\n\nnp.random.seed(1)\n\nn = 100\n\nx1 = np.random.normal(1, 0.1, size=n)\nx2 = np.random.normal(0, 1, size=n)\ny = 1 + 2 * x1 + 3 * x2 + np.random.normal(0, 0.5, size=n)\n\nX = pd.DataFrame({'x1': x1, 'x2': x2})\n\nWhen using sklearn, a dataset is typically represented by features X and a target variable y.\n\nX usually has 2 dimensions (number of samples × features).\ny is usually 1-dimensional, though it may also be represented as a 2-dimensional array with a single column.\n\nBoth X and y can be stored as either numpy arrays or pandas objects.\nIn this example we construct X as a DataFrame, since column names make it easier to modify variables during the model-building stage, e.g. when adding interactions or transformations.\n\n2.4.1 Linear regression models\n\nfrom sklearn.linear_model import LinearRegression\n\nmodel = LinearRegression()\nmodel.fit(X, y)\n\nprint(f\"intercept: {model.intercept_}\")\nprint(f\"coefficients: {model.coef_}\")\n\nintercept: 1.2995891152586192\ncoefficients: [1.69051379 3.10918568]\n\n\nWe can then use the fitted model to generate predictions and compute residuals.\n\ny_pred = model.predict(X)\nres = y - y_pred\n\n\n\n2.4.2 Measure model performance\nsklearn provides many performance measures, most of which can be found in sklearn.metrics. A common syntax is metric(y_true, y_pred).\n\nfrom sklearn.metrics import mean_squared_error, r2_score, root_mean_squared_error\n\ny_pred = model.predict(X)\n\nprint(f\"MSE: {mean_squared_error(y, y_pred)}\")\nprint(f\"R2: {r2_score(y, y_pred)}\")\nprint(f\"RMSE: {root_mean_squared_error(y, y_pred)}\")\n\n\n\n2.4.3 Model Diagnostics\nIn traditional regression, diagnostic plots are powerful tools for detecting potential problems in a fitted model. However, statistical learning primarily focuses on prediction performance rather than model assumptions. Therefore, diagnostics are not our primary focus in this course, and this section is optional.\n\n\nClick for more details.\n\nIn Python there is no single function that automatically produces all diagnostic plots. Instead, we usually combine tools from several libraries. In these notes we focus on basic tools from statsmodels, scipy, seaborn, and matplotlib.\nWe can also use seaborn’s theme to improve the appearance of plots produced by matplotlib-based tools.\n\nimport seaborn as sns\nsns.set_theme()\n\nWe compute several quantities needed for residual analysis. Although our primary modeling tool is sklearn, residual diagnostics are easier with statsmodels. Therefore we construct a statsmodels model that holds the same data.\nSince we already have the feature matrix and the target vector, the fastest way to use statsmodels is through statsmodels.api (as opposed to the R-style interface statsmodels.formula.api).\n\nimport statsmodels.api as sm\nX_sm = sm.add_constant(X)\nmodel = sm.OLS(y, X_sm).fit()\nmodel.params\n\nconst    1.299589\nx1       1.690514\nx2       3.109186\ndtype: float64\n\n\nThe fitted values, residuals, leverage, Cook’s distance, and other quantities can be extracted directly from this model object. We wrap them into DataFrames for easier plotting.\n\ny_pred = model.fittedvalues\nres = model.resid\n\nmodel_output = pd.DataFrame({\n    \"y_true\": y,\n    \"y_pred\": y_pred,\n    \"res\": res\n})\n\n\ninfluence = model.get_influence()\n\nstd_resid = influence.resid_studentized_internal\nsqrt_std_resid = np.sqrt(np.abs(std_resid))\nleverage = influence.hat_matrix_diag\ncooks = influence.cooks_distance[0]\n\ndf_diag = pd.DataFrame({\n    \"leverage\": leverage,\n    \"std_resid\": std_resid,\n    \"sqrt_std_resid\": sqrt_std_resid,\n    \"cooks\": cooks\n})\n\n\n\n\n\n\n\nNoteResidual plots\n\n\n\n\n\nThe most basic residual plot is simply residuals versus fitted values.\n\nimport matplotlib.pyplot as plt\n\nplt.scatter(y_pred, res)\nplt.axhline(0, linestyle=\"--\")\n\n\n\n\n\n\n\n\nIf we use seaborn, additional features are computed automatically. For example, setting lowess=True will display a smooth trend curve.\n\nimport seaborn as sns\n\nsns.regplot(\n    data=model_output,\n    x=\"y_pred\",\n    y=\"res\",\n    lowess=True,\n    scatter_kws={\"alpha\": 0.6},\n    line_kws={\"color\": \"red\", \"linestyle\": \"--\"},\n)\n\nplt.axhline(0, linestyle=\"--\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteQ-Q plot\n\n\n\n\n\n\nimport scipy.stats as stats\n\nstats.probplot(res, dist=\"norm\", plot=plt);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteScale-lcation plot\n\n\n\n\n\n\nimport numpy as np\n\n\nsns.scatterplot(x=y_pred, y=sqrt_std_resid, data=df_diag)\n\nsns.regplot(\n    x=y_pred,\n    y=sqrt_std_resid,\n    data=df_diag,\n    lowess=True,\n    scatter=False,\n    line_kws={\"color\": \"red\"}\n)\n\nplt.xlabel(\"Fitted values\")\nplt.ylabel(\"√|Standardized residuals|\")\nplt.title(\"Scale-Location\");\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteLeverage with Cook’s distance\n\n\n\n\n\n\nsns.scatterplot(\n    x=leverage,\n    y=std_resid,\n    data=df_diag,\n    size=cooks,\n    sizes=(20, 200),\n    alpha=0.7\n)\n\nplt.axhline(0, linestyle=\"--\", color=\"gray\")\n\nplt.xlabel(\"Leverage\")\nplt.ylabel(\"Standardized Residuals\")\nplt.title(\"Residuals vs Leverage\");\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNotePartial residual plots\n\n\n\n\n\nPartial residual plots help visualize the relationship between a predictor and the response after adjusting for the effects of other predictors. plot_ccpr() from sm.graphics can be used to generate partial residual plots.\n\nsm.graphics.plot_ccpr(model, \"x1\");\n\n\n\n\n\n\n\n\nTo generate plots for all predictors at once, we can use\n\nsm.graphics.plot_ccpr_grid(model);\n\n\n\n\n\n\n\n\nThe default plot_ccpr() does not include a smooth curve. If a smooth trend line is desired, we can compute it using the lowess() function and add it manually.\n\nfrom statsmodels.nonparametric.smoothers_lowess import lowess\n\nfig = sm.graphics.plot_ccpr(model, \"x1\")\n\nax = fig.axes[0]\nx = ax.lines[0].get_xdata()\ny = ax.lines[0].get_ydata()\n\nsmooth = lowess(y, x, frac=0.5)\nax.plot(smooth[:, 0], smooth[:, 1], color=\"red\")\n\n\n\n\n\n\n\n\nThe same idea can be applied to the grid version.\n\nfig = sm.graphics.plot_ccpr_grid(model)\n\nfor ax in fig.axes:\n    if len(ax.lines) != 0:\n        x = ax.lines[0].get_xdata()\n        y = ax.lines[0].get_ydata()\n\n        smooth = lowess(y, x, frac=0.5)\n        ax.plot(smooth[:, 0], smooth[:, 1], color=\"red\")",
+    "objectID": "index.html#teaching-goals-1",
+    "href": "index.html#teaching-goals-1",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should see linear regression as the starting point of predictive modeling: simple, interpretable, and useful, but limited in flexibility.",
     "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#suggested-emphasis-1",
+    "href": "index.html#suggested-emphasis-1",
+    "title": "Statistical Learning",
+    "section": "Suggested Emphasis",
+    "text": "Suggested Emphasis\n\nPresent linear regression mainly as a predictive model.\nKeep inference light unless needed for context.\nHighlight when linear models fail to capture nonlinear structure.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-2",
+    "href": "index.html#main-topics-2",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nFlexible regression methods\nK-nearest neighbors regression\nSmoothers and local fitting ideas\nModel flexibility and overfitting",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-2",
+    "href": "index.html#teaching-goals-2",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should learn that more flexible models can better capture complicated patterns, but at the cost of increased variance. ## Suggested Emphasis - Connect this unit directly to bias–variance tradeoff. - Compare flexible and inflexible models visually. - Use plots to show underfitting and overfitting.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-3",
+    "href": "index.html#main-topics-3",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nClassification as a prediction problem\nLogistic regression\nDecision boundaries\nK-nearest neighbors classification",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-3",
+    "href": "index.html#teaching-goals-3",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand that classification uses the same modeling logic as regression, but with categorical outcomes. ## Suggested Emphasis - Stress the difference between predicting a class and predicting a numeric response. - Introduce class probabilities early. - Use confusion matrices and classification error as evaluation tools.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-4",
+    "href": "index.html#main-topics-4",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nLogistic regression in more detail\nInterpreting probabilities\nThresholds and classification decisions\nComparing classifiers",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-4",
+    "href": "index.html#teaching-goals-4",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should learn how binary classification models convert predictors into class probabilities and final decisions. ## Suggested Emphasis - Distinguish between probability estimation and hard classification. - Discuss how different thresholds change predictions. - Use practical examples such as disease detection or spam filtering.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-5",
+    "href": "index.html#main-topics-5",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nLDA\nQDA\nNaive Bayes\nDiscriminative vs generative modeling",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-5",
+    "href": "index.html#teaching-goals-5",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand the idea of modeling class distributions directly and then using Bayes’ rule for prediction. ## Suggested Emphasis - Compare logistic regression with LDA and QDA conceptually. - Emphasize assumptions and when they matter. - Use side-by-side model comparisons.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-6",
+    "href": "index.html#main-topics-6",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nValidation set approach\nCross-validation\nBootstrap\nEstimating test error",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-6",
+    "href": "index.html#teaching-goals-6",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nThis unit is the conceptual center of the course. Students must understand that training error is not enough, and that model performance must be evaluated using principled estimates of test error. ## Suggested Emphasis - Make cross-validation a central practical tool. - Show why naive comparison by training error is misleading. - Use repeated examples across multiple methods.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-7",
+    "href": "index.html#main-topics-7",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nRidge regression\nLasso\nElastic net\nShrinkage and complexity control",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-7",
+    "href": "index.html#teaching-goals-7",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should understand how regularization controls complexity and improves prediction without exhaustively searching across models. ## Suggested Emphasis - Present regularization as a modern answer to overfitting in linear models. - Compare subset selection and shrinkage conceptually. - Use coefficient path plots when possible.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-8",
+    "href": "index.html#main-topics-8",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nDecision trees\nBagging\nRandom forests\nBoosting",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-8",
+    "href": "index.html#teaching-goals-8",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should learn that combining many unstable or weak learners can create a stronger predictive model. ## Suggested Emphasis - Start with a single tree and its limitations. - Then motivate bagging as variance reduction. - Finally introduce random forests and boosting as improved ensemble ideas.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#main-topics-9",
+    "href": "index.html#main-topics-9",
+    "title": "Statistical Learning",
+    "section": "Main Topics",
+    "text": "Main Topics\n\nEnd-to-end modeling workflow\nData preprocessing\nModel tuning\nModel comparison\nPractical considerations on real datasets",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#teaching-goals-9",
+    "href": "index.html#teaching-goals-9",
+    "title": "Statistical Learning",
+    "section": "Teaching Goals",
+    "text": "Teaching Goals\nStudents should be able to complete a full predictive analysis from data setup through final model comparison and interpretation. ## Suggested Emphasis - Organize this unit around a full case study. - Show how preprocessing, resampling, tuning, and comparison fit together. - Emphasize reproducible workflow and communication.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#midterm-i",
+    "href": "index.html#midterm-i",
+    "title": "Statistical Learning",
+    "section": "Midterm I",
+    "text": "Midterm I\nSuggested coverage:\n\nfoundations of statistical learning,\nlinear regression,\nnonparametric regression,\nearly classification concepts.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#midterm-ii",
+    "href": "index.html#midterm-ii",
+    "title": "Statistical Learning",
+    "section": "Midterm II",
+    "text": "Midterm II\nSuggested coverage:\n\nclassification,\ngenerative models,\nresampling,\nregularization.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#final-assessment-or-project",
+    "href": "index.html#final-assessment-or-project",
+    "title": "Statistical Learning",
+    "section": "Final Assessment or Project",
+    "text": "Final Assessment or Project\nSuggested format:\n\na real dataset,\nseveral competing methods,\nmodel comparison using validation or cross-validation,\nwritten interpretation of results.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#lecture-2",
+    "href": "index.html#lecture-2",
+    "title": "Statistical Learning",
+    "section": "Lecture 2",
+    "text": "Lecture 2\n\nimplementation,\nmodel fitting,\ncomparison with earlier methods,\nshort applied example.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#theme-1-model-flexibility",
+    "href": "index.html#theme-1-model-flexibility",
+    "title": "Statistical Learning",
+    "section": "Theme 1: Model Flexibility",
+    "text": "Theme 1: Model Flexibility\nStudents should repeatedly ask: &gt; How flexible is this model, and what does that flexibility buy us? ## Theme 2: Generalization Students should repeatedly ask: &gt; How do we know whether this model will work on new data? ## Theme 3: Comparison Students should repeatedly ask: &gt; Is this method better than what we already had? # Recommended Course Message to Students A useful recurring message for students is: &gt; Statistical learning is about building models that perform well on new data, understanding the tradeoff between simplicity and flexibility, and choosing methods based on predictive performance. # Condensed Teaching Calendar\n\n\n\n\n\n\n\n\nUnit\nTopic\nMain Goal\n\n\n\n\n1\nFoundations\nIntroduce statistical learning and bias–variance\n\n\n2\nLinear Regression\nEstablish a simple predictive baseline\n\n\n3\nNonparametric Regression\nIntroduce flexibility\n\n\n4\nClassification\nShift from numeric to categorical prediction\n\n\n5\nBinary Classification\nDevelop logistic and classification ideas\n\n\n6\nGenerative Models\nCompare generative and discriminative methods\n\n\n7\nResampling\nLearn to estimate test error\n\n\n8\nRegularization\nControl complexity and improve prediction\n\n\n9\nEnsemble Methods\nCombine models to improve performance\n\n\n10\nML in Practice\nExecute a complete workflow",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#model-selection-regularization",
+    "href": "index.html#model-selection-regularization",
+    "title": "Statistical Learning",
+    "section": "2. Model Selection & Regularization",
+    "text": "2. Model Selection & Regularization\nPython’s scikit-learn (sklearn) is the powerhouse for cross-validation and penalized regression.\n\n\n\n\n\n\n\n\n\nFeature\nR Code (Package)\nPython Library\nPython Counterpart\n\n\n\n\nLasso / Ridge\nglmnet(x, y)\nsklearn\nLassoCV() or RidgeCV()\n\n\nStepwise (AIC/BIC)\nstep(fit)\nsklearn\nSequentialFeatureSelector\n\n\nBest Subset\nregsubsets() (leaps)\nmlxtend\nExhaustiveFeatureSelector\n\n\nValidation Split\nsample() / createDataPartition\nsklearn\ntrain_test_split()\n\n\nK-Fold CV\ncv.glmnet()\nsklearn\ncross_val_score() or GridSearchCV()",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#diagnostics-residuals",
+    "href": "index.html#diagnostics-residuals",
+    "title": "Statistical Learning",
+    "section": "3. Diagnostics & Residuals",
+    "text": "3. Diagnostics & Residuals\nIn R, plot(fit) automatically generates four diagnostic plots. In Python, you access these via the .resid attribute or statsmodels.graphics.\n\n\n\n\n\n\n\n\nMetric / Plot\nR Code\nPython Code\n\n\n\n\nResiduals\nresiduals(fit)\nfit.resid\n\n\nFitted Values\nfitted(fit)\nfit.fittedvalues\n\n\nQ-Q Plot\nqqnorm(fit$resid)\nsm.qqplot(fit.resid, line='s')\n\n\nLeverage Plot\nplot(fit, which=4)\nsm.graphics.influence_plot(fit)\n\n\nResidual Plot\nplot(fit, which=1)\nsns.residplot(x=fit.fittedvalues, y=df['y'])",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#required-libraries-for-the-course",
+    "href": "index.html#required-libraries-for-the-course",
+    "title": "Statistical Learning",
+    "section": "4. Required Libraries for the Course",
+    "text": "4. Required Libraries for the Course\nTo set up a Python environment equivalent to the R statistical suite, run:",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Statistical Learning",
+    "section": "References",
+    "text": "References",
+    "crumbs": [
+      "Preface"
     ]
   },
   {
@@ -173,6 +427,83 @@
     "crumbs": [
       "Regression",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Statistical Learning Basics</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html",
+    "href": "contents/1/lr.html",
+    "title": "2  Linear Regression",
+    "section": "",
+    "text": "2.1 Quick Overview\nThis section offers a brief review of linear regression, with the main emphasis on its Python implementation through examples.\nLinear regression is the fundamental supervised learning method for a quantitative response. It models the conditional mean of the response as a linear function of the predictors: \\[\ny = \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p + \\varepsilon.\n\\]\nIn matrix notation, this can be written as \\[\n\\vb y = \\vb X\\beta + \\varepsilon.\n\\] Here, \\(\\vb X\\) is the design matrix, whose first column is a column of ones representing the intercept.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#the-ordinary-least-squares-estimator",
+    "href": "contents/1/lr.html#the-ordinary-least-squares-estimator",
+    "title": "2  Linear Regression",
+    "section": "2.2 The Ordinary Least Squares Estimator",
+    "text": "2.2 The Ordinary Least Squares Estimator\nThe most common fitting method is ordinary least squares (OLS). It chooses the coefficient vector \\(\\beta\\) that minimizes the residual sum of squares (\\(\\rss\\)):\n\\[\n\\rss(\\beta) = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\n= \\norm{\\vb y - \\vb X\\beta }_2^2.\n\\]\n\nTheorem 2.1 (OLS Estimator) The coefficient vector that minimizes \\(\\rss\\) is \\[\n\\hat{\\beta}_{\\ols} = (\\vb X^\\top \\vb X)^{-1}\\vb X^\\top \\vb y,\n\\] provided that \\(\\vb X^\\top \\vb X\\) is invertible. This estimator is called the ordinary least squares (OLS) estimator.\n\nOnce the coefficients are estimated, the fitted value for observation \\(i\\) is\n\\[\n\\hat{y}_i = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\cdots + \\hat{\\beta}_p x_{ip}.\n\\]\nInterpretability is one of the main advantages of linear regression compared with many more complex models.\n\nThe coefficient \\(\\beta_j\\) describes how the predicted response changes when \\(x_j\\) increases by one unit, while the other predictors are held fixed.\nWhen interaction terms are present, a main effect cannot be interpreted in isolation. The effect of a predictor depends on the values of the variables with which it interacts.\nIf predictors are centered so that \\(0\\) corresponds to the average of the original variable, the intercept represents the predicted response at the average predictor levels.\n\n\n2.2.1 Training Error and Test Error\nClassical regression focuses heavily on checking model assumptions, such as independence of errors, constant variance, and approximate normality. In statistical learning, however, the primary goal is predictive performance rather than formal inference. As a result, these diagnostic tools play a secondary role. While they can still help reveal serious problems such as nonlinearity or influential observations, the main evaluation of a model is based on how well it predicts new data.\n\nDefinition 2.1 (Training Error) The training error measures how well a model fits the training data.\n\n\nDefinition 2.2 (Test Error) The test error measures prediction error on new observations not used to fit the model.\n\nFor example, for a fitted model, we can measure its performance using the mean squared error (MSE). The training MSE measures how well the model fits the training data: \\[\n\\text{MSE}_{train}=\\frac{1}{n}\\sum_{i=1}^{n}(y_i-\\hat y_i)^2 .\n\\]\nHowever, a model that fits the training data very well may perform poorly on new observations. The more relevant quantity is the test MSE, which measures prediction error on new data drawn from the same population.\nThe goal of statistical learning is to build models with small test error, not merely small training error.\n\nDefinition 2.3 (Overfitting) Overfitting occurs when a model fits the training data very closely but fails to generalize well to new data. In this case, the model captures random noise or idiosyncrasies in the training sample rather than the underlying relationship.\n\nModel selection methods attempt to balance model complexity and prediction accuracy in order to avoid overfitting.\n\n\n\n\n\n\nNote\n\n\n\nPrediction error can be decomposed conceptually into two components: bias and variance. Simple models may have high bias but low variance, while very flexible models may have low bias but high variance. Model selection aims to balance these two effects to minimize prediction error. This will be discussed in more detail in later sections.\n\n\n\n\n\n\n\n\nNoteInformation Criteria and Estimated Test Error\n\n\n\n\n\nClassical regression tends to estimate expected test error using only training data. These criteria reward good fit but penalize models with many predictors.\nSome commonly used criteria are:\n\nAIC (Akaike Information Criterion)\n\nBIC (Bayesian Information Criterion)\nMallows’ \\(C_p\\)\n\nAlthough these criteria are useful for model comparison, they still rely on approximations derived from the training sample.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#linear-regression-in-python",
+    "href": "contents/1/lr.html#linear-regression-in-python",
+    "title": "2  Linear Regression",
+    "section": "2.3 Linear Regression in Python",
+    "text": "2.3 Linear Regression in Python\nThere are many Python libraries for fitting linear regression models. In this course, we use scikit-learn as the primary modeling tool, with support from pandas and numpy for data manipulation, and matplotlib and seaborn for visualization.\nTo demonstrate the code, we generate a dataset with 2 predictors and 1 response variable, where \\(\\beta_0 = 1\\), \\(\\beta_1 = 2\\), and \\(\\beta_2 = 3\\).\n\nimport numpy as np\nimport pandas as pd\n\nnp.random.seed(1)\n\nn = 100\n\nx1 = np.random.normal(1, 0.1, size=n)\nx2 = np.random.normal(0, 1, size=n)\ny = 1 + 2 * x1 + 3 * x2 + np.random.normal(0, 0.5, size=n)\n\nX = pd.DataFrame({'x1': x1, 'x2': x2})\n\nWhen using sklearn, a dataset is typically represented by features X and a target variable y.\n\nX usually has 2 dimensions (number of samples × features).\ny is usually 1-dimensional, though it may also be represented as a 2-dimensional array with a single column.\n\nBoth X and y can be stored as either numpy arrays or pandas objects.\nIn this example we construct X as a DataFrame, since column names make it easier to modify variables during the model-building stage, e.g. when adding interactions or transformations.\n\n2.3.1 Linear regression models\nWe fit a linear regression model using LinearRegression.\n\nfrom sklearn.linear_model import LinearRegression\n\nmodel = LinearRegression()\nmodel.fit(X, y)\n\nprint(f\"intercept: {model.intercept_}\")\nprint(f\"coefficients: {model.coef_}\")\n\nintercept: 1.2995891152586192\ncoefficients: [1.69051379 3.10918568]\n\n\nWe can then use the fitted model to generate predictions and compute residuals.\n\ny_pred = model.predict(X)\nres = y - y_pred\n\n\n\n2.3.2 Measure model performance\nsklearn provides many performance measures, most of which can be found in sklearn.metrics. A common syntax is metric(y_true, y_pred).\n\nfrom sklearn.metrics import mean_squared_error, r2_score, root_mean_squared_error\n\ny_pred = model.predict(X)\n\nprint(f\"MSE: {mean_squared_error(y, y_pred)}\")\nprint(f\"R2: {r2_score(y, y_pred)}\")\nprint(f\"RMSE: {root_mean_squared_error(y, y_pred)}\")\n\n\n\n2.3.3 Model Diagnostics\nIn traditional regression, diagnostic plots are powerful tools for detecting potential problems in a fitted model. However, statistical learning primarily focuses on prediction performance rather than model assumptions. Therefore, diagnostics are not our primary focus in this course, and this section is optional.\n\n\nClick for more details.\n\nIn Python there is no single function that automatically produces all diagnostic plots. Instead, we usually combine tools from several libraries. In these notes we focus on basic tools from statsmodels, scipy, seaborn, and matplotlib.\nWe can also use seaborn’s theme to improve the appearance of plots produced by matplotlib-based tools.\n\nimport seaborn as sns\nsns.set_theme()\n\nWe compute several quantities needed for residual analysis. Although our primary modeling tool is sklearn, residual diagnostics are easier with statsmodels. Therefore we construct a statsmodels model that holds the same data.\nSince we already have the feature matrix and the target vector, the fastest way to use statsmodels is through statsmodels.api (as opposed to the R-style interface statsmodels.formula.api).\n\nimport statsmodels.api as sm\nX_sm = sm.add_constant(X)\nmodel = sm.OLS(y, X_sm).fit()\nmodel.params\n\nconst    1.299589\nx1       1.690514\nx2       3.109186\ndtype: float64\n\n\nThe fitted values, residuals, leverage, Cook’s distance, and other quantities can be extracted directly from this model object. We wrap them into DataFrames for easier plotting.\n\ny_pred = model.fittedvalues\nres = model.resid\n\nmodel_output = pd.DataFrame({\n    \"y_true\": y,\n    \"y_pred\": y_pred,\n    \"res\": res\n})\n\n\ninfluence = model.get_influence()\n\nstd_resid = influence.resid_studentized_internal\nsqrt_std_resid = np.sqrt(np.abs(std_resid))\nleverage = influence.hat_matrix_diag\ncooks = influence.cooks_distance[0]\n\ndf_diag = pd.DataFrame({\n    \"leverage\": leverage,\n    \"std_resid\": std_resid,\n    \"sqrt_std_resid\": sqrt_std_resid,\n    \"cooks\": cooks\n})\n\n\n\n\n\n\n\nNoteResidual plots\n\n\n\n\n\nThe most basic residual plot is simply residuals versus fitted values.\n\nimport matplotlib.pyplot as plt\n\nplt.scatter(y_pred, res)\nplt.axhline(0, linestyle=\"--\")\n\n\n\n\n\n\n\n\nIf we use seaborn, additional features are computed automatically. For example, setting lowess=True will display a smooth trend curve.\n\nimport seaborn as sns\n\nsns.regplot(\n    data=model_output,\n    x=\"y_pred\",\n    y=\"res\",\n    lowess=True,\n    scatter_kws={\"alpha\": 0.6},\n    line_kws={\"color\": \"red\", \"linestyle\": \"--\"},\n)\n\nplt.axhline(0, linestyle=\"--\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteQ-Q plot\n\n\n\n\n\n\nimport scipy.stats as stats\n\nstats.probplot(res, dist=\"norm\", plot=plt);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteScale-location plot\n\n\n\n\n\n\nimport numpy as np\n\n\nsns.scatterplot(x=y_pred, y=sqrt_std_resid, data=df_diag)\n\nsns.regplot(\n    x=y_pred,\n    y=sqrt_std_resid,\n    data=df_diag,\n    lowess=True,\n    scatter=False,\n    line_kws={\"color\": \"red\"}\n)\n\nplt.xlabel(\"Fitted values\")\nplt.ylabel(\"√|Standardized residuals|\")\nplt.title(\"Scale-Location\");\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteLeverage with Cook’s distance\n\n\n\n\n\n\nsns.scatterplot(\n    x=leverage,\n    y=std_resid,\n    data=df_diag,\n    size=cooks,\n    sizes=(20, 200),\n    alpha=0.7\n)\n\nplt.axhline(0, linestyle=\"--\", color=\"gray\")\n\nplt.xlabel(\"Leverage\")\nplt.ylabel(\"Standardized Residuals\")\nplt.title(\"Residuals vs Leverage\");\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNotePartial residual plots\n\n\n\n\n\nPartial residual plots help visualize the relationship between a predictor and the response after adjusting for the effects of other predictors. plot_ccpr() from sm.graphics can be used to generate partial residual plots.\n\nsm.graphics.plot_ccpr(model, \"x1\");\n\n\n\n\n\n\n\n\nTo generate plots for all predictors at once, we can use\n\nsm.graphics.plot_ccpr_grid(model);\n\n\n\n\n\n\n\n\nThe default plot_ccpr() does not include a smooth curve. If a smooth trend line is desired, we can compute it using the lowess() function and add it manually.\n\nfrom statsmodels.nonparametric.smoothers_lowess import lowess\n\nfig = sm.graphics.plot_ccpr(model, \"x1\")\n\nax = fig.axes[0]\nx = ax.lines[0].get_xdata()\ny = ax.lines[0].get_ydata()\n\nsmooth = lowess(y, x, frac=0.5)\nax.plot(smooth[:, 0], smooth[:, 1], color=\"red\")\n\n\n\n\n\n\n\n\nThe same idea can be applied to the grid version.\n\nfig = sm.graphics.plot_ccpr_grid(model)\n\nfor ax in fig.axes:\n    if len(ax.lines) != 0:\n        x = ax.lines[0].get_xdata()\n        y = ax.lines[0].get_ydata()\n\n        smooth = lowess(y, x, frac=0.5)\n        ax.plot(smooth[:, 0], smooth[:, 1], color=\"red\")",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#model-evaluation",
+    "href": "contents/1/lr.html#model-evaluation",
+    "title": "2  Linear Regression",
+    "section": "2.4 Model evaluation",
+    "text": "2.4 Model evaluation\n\n2.4.1 Train-Test Split\nInstead of estimating test performance indirectly from the training data, we can evaluate a model more directly by using data that were not used to fit the model. This leads to the idea of data splitting:\nThe dataset is divided into two parts:\n\nTraining set: used to fit the model.\nTest set: used to evaluate prediction performance.\n\nAfter fitting the model on the training set, predictions are made on the test set, and performance measures such as MSE are computed.\nThis provides a more realistic estimate of how the model performs on new data.\nIn many situations we also need to choose between several competing models or tuning parameters. To avoid using the test data for model selection, a third subset is often introduced.\n\nTraining set: used to fit models.\nValidation set: used to compare models and select tuning parameters.\nTest set: used only once at the end to estimate the final model’s performance.\n\nThis separation helps prevent overly optimistic performance estimates.\nIn sklearn, the function train_test_split() from sklearn.model_selection is commonly used to split the data into a training set and a test set.\n\nimport numpy as np\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\n\nnp.random.seed(1)\n\nn = 10\n\nx1 = np.random.normal(1, 0.1, size=n)\nx2 = np.random.normal(0, 1, size=n)\ny = 1 + 2 * x1 + 3 * x2 + np.random.normal(0, 0.5, size=n)\n\nX = pd.DataFrame({'x1': x1, 'x2': x2})\n\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)\n\nThe argument test_size=0.2 means that 20% of the data are used as the test set, while the remaining 80% are used as the training set. The argument random_state=0 ensures reproducibility.\n\n\n2.4.2 Cross-Validation\nWhen the dataset is not large, splitting the data into separate training, validation, and test sets may leave too little data for model fitting. In such cases, cross-validation is commonly used to estimate validation performance more efficiently.\nThe most common form is \\(k\\)-fold cross-validation.\n\nThe available training data are divided into \\(k\\) roughly equal parts (called folds).\nFor each fold:\n\nThe model is trained on \\(k-1\\) folds.\nThe remaining fold is used as a validation set.\n\nThis process is repeated \\(k\\) times so that each fold serves once as the validation set.\nThe validation errors from all folds are averaged to estimate the model’s expected test error.\n\nCross-validation is primarily used to estimate test error or to compare competing models. When it is used for model selection, two additional steps are typically performed. Note that cross-validation uses only the training data and does not involve the test set.\n\nAfter the best model configuration has been selected, the model is retrained on the entire training data.\nThe final model is then evaluated once on the test set, providing an unbiased estimate of its performance on new data.\n\nIn sklearn, there are several ways to perform \\(k\\)-fold cross-validation. From KFold to cross_validate and then to cross_val_score, the interface becomes easier to use, but also less flexible.\nThe three approaches perform essentially the same task, but at different levels of abstraction.\n\n\n\n\n\n\nNoteKFold\n\n\n\n\n\nKFold from sklearn.model_selection is used to split the dataset into \\(k\\) groups, called folds. In each iteration, one fold is used as the validation set and the remaining folds are used as the training set.\n\nfrom sklearn.model_selection import KFold\n\nkf = KFold(n_splits=5)\n\nfor train_idx, val_idx in kf.split(range(10)):\n    print(train_idx, val_idx)\n\n[2 3 4 5 6 7 8 9] [0 1]\n[0 1 4 5 6 7 8 9] [2 3]\n[0 1 2 3 6 7 8 9] [4 5]\n[0 1 2 3 4 5 8 9] [6 7]\n[0 1 2 3 4 5 6 7] [8 9]\n\n\n\nHere I use range(10) inside kf.split() because only the indices are needed. If a dataset is passed instead, the output is still the indices for the training set and validation set.\nIf you want the split to be randomized, set shuffle=True when creating KFold. In that case, you may also specify random_state to make the result reproducible.\n\nLet us now apply KFold to our simulated dataset.\n\nfrom sklearn.model_selection import KFold\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error\n\nkf = KFold(n_splits=5, shuffle=True, random_state=1)\n\ncv_scores = []\nfor train_idx, val_idx in kf.split(X):\n    X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]\n    y_train, y_val = y[train_idx], y[val_idx]\n\n    model = LinearRegression()\n    model.fit(X_train, y_train)\n\n    y_pred = model.predict(X_val)\n    mse = mean_squared_error(y_val, y_pred)\n\n    cv_scores.append(mse)\n\nprint(cv_scores)\nprint(sum(cv_scores) / len(cv_scores))\n\n[0.23261702266705048, 0.2346058855171412, 0.3434535974710986, 0.3219288879448363, 0.3374118532558169]\n0.2940034493711887\n\n\nThis gives the validation MSE for each fold, together with their average.\n\n\n\n\n\n\n\n\n\nNotecross_validate\n\n\n\n\n\nUsing KFold directly is somewhat manual. We may use cross_validate() to automate the cross-validation process. Depending on the arguments supplied, cross_validate() may internally use KFold.\n\nfrom sklearn.model_selection import cross_validate\n\nmodel = LinearRegression()\ncv_result = cross_validate(model, X, y, scoring=\"neg_mean_squared_error\", cv=5)\n\ncv_result\n\n{'fit_time': array([0.00113153, 0.00103164, 0.00189495, 0.00154734, 0.00088787]),\n 'score_time': array([0.00115037, 0.00052953, 0.00131011, 0.00052977, 0.00124907]),\n 'test_score': array([-1.49301227, -0.18529675, -0.55593863, -0.32038859, -0.07377976])}\n\n\nIf you are only interested in the validation scores, you may extract them directly.\n\ncv_result['test_score']\n\narray([-1.49301227, -0.18529675, -0.55593863, -0.32038859, -0.07377976])\n\n\n\nYou may choose different scoring methods. More info can be found in the document.\nHere the MSE values are negative because sklearn follows the convention that larger scores are better.\nIf cv=5, then KFold(5, shuffle=False) is used by default. If you want randomized folds, you may pass a KFold object explicitly.\n\n\ncv_result = cross_validate(\n    model, X, y,\n    scoring=\"neg_mean_squared_error\",\n    cv=KFold(5, shuffle=True, random_state=1)\n)\n\ncv_result[\"test_score\"]\n\narray([-0.23261702, -0.23460589, -0.3434536 , -0.32192889, -0.33741185])\n\n\nYou may compare these scores with the ones obtained in the KFold section. Usually, the overall cross-validation score is taken to be the mean of the fold scores.\n\ncv_result['test_score'].mean()\n\nnp.float64(-0.2940034493711887)\n\n\n\n\n\n\n\n\n\n\n\nNotecross_val_score\n\n\n\n\n\ncross_val_score() is a shorter way to obtain cv_result[\"test_score\"] from the cross_validate() section. The arguments cv and scoring work in the same way.\n\nfrom sklearn.model_selection import cross_val_score\n\ncv_scores = cross_val_score(\n    model, X, y,\n    scoring=\"neg_mean_squared_error\",\n    cv=KFold(5, shuffle=True, random_state=1)\n)\n\ncv_scores\n\narray([-0.23261702, -0.23460589, -0.3434536 , -0.32192889, -0.33741185])\n\n\n\ncv_scores.mean()\n\nnp.float64(-0.2940034493711887)\n\n\nSo cross_val_score() is convenient when you only need the validation scores and do not need the extra information returned by cross_validate().",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#feature-engineering-and-preprocessing",
+    "href": "contents/1/lr.html#feature-engineering-and-preprocessing",
+    "title": "2  Linear Regression",
+    "section": "2.5 Feature Engineering and Preprocessing",
+    "text": "2.5 Feature Engineering and Preprocessing\nFeature engineering refers to modifying or creating predictors in order to better represent the relationship between the predictors and the response. Here we mainly cover the sklearn way to perform feature engineering.\n\n\n\n\n\n\nNoteModeling Perspective\n\n\n\nIn statistical learning (commonly implemented using sklearn), the primary goal is predictive performance. Models are therefore typically constructed by building a feature matrix, and modifying a model usually means modifying the feature matrix rather than changing a model formula.\nIn contrast, traditional regression analysis (commonly implemented using statsmodels) allows explicit specification of statistical models through a formula language. This approach is convenient when precise control of model terms and statistical inference are required.\n\n\n\n2.5.1 Creating Features Manually\nBefore introducing automated tools, we can always create new predictors directly by modifying the original dataset.\n\nimport pandas as pd\n\nX = pd.DataFrame({'x1': [0, 2, 4], 'x2': [1, 3, 5]})\nX\n\n\n\n\n\n\n\n\nx1\nx2\n\n\n\n\n0\n0\n1\n\n\n1\n2\n3\n\n\n2\n4\n5\n\n\n\n\n\n\n\nFor example, we can add the squared term of \\(x_2\\) and the interaction term \\(x_1x_2\\) to form a new feature matrix X2.\n\nX2 = X.copy()\nX2[\"x2_sq\"] = X[\"x2\"] ** 2\nX2[\"x1_x2\"] = X[\"x1\"] * X[\"x2\"]\nX2\n\n\n\n\n\n\n\n\nx1\nx2\nx2_sq\nx1_x2\n\n\n\n\n0\n0\n1\n1\n0\n\n\n1\n2\n3\n9\n6\n\n\n2\n4\n5\n25\n20\n\n\n\n\n\n\n\nThis corresponds to fitting a model of the form \\[\ny=\\beta_0+\\beta_1x_1+\\beta_2x_2+\\beta_3x_2^2+\\beta_4x_1x_2+\\varepsilon.\n\\]\n\n\n\n\n\n\nTip\n\n\n\nAlthough the model is called linear regression, it can represent nonlinear relationships by including transformed predictors such as \\(x^2\\), \\(\\log x\\), or \\(\\sqrt{x}\\). The model remains linear because it is linear in the coefficients \\(\\beta\\).\n\n\n\n\n2.5.2 Polynomial Features\n\n\nClick to expand.\n\nWhen many predictors are present, manually creating polynomial and interaction terms can become tedious. In such cases we can use PolynomialFeatures from sklearn.preprocessing, which automatically generates polynomial and interaction terms up to the specified degree.\n\nfrom sklearn.preprocessing import PolynomialFeatures\n\npoly = PolynomialFeatures(degree=2, interaction_only=False, include_bias=True)\npoly.fit_transform(X)\n\narray([[ 1.,  0.,  1.,  0.,  0.,  1.],\n       [ 1.,  2.,  3.,  4.,  6.,  9.],\n       [ 1.,  4.,  5., 16., 20., 25.]])\n\n\nThe argument interaction_only=False means that both squared terms and interaction terms are included. For example, if the original variables are \\(x_1\\) and \\(x_2\\), then the transformed matrix contains terms such as \\[\n1,x_1,x_2,x_1^2,x_1x_2,x_2^2.\n\\]\n\npoly2 = PolynomialFeatures(degree=2, interaction_only=True, include_bias=False)\npoly2.fit_transform(X)\n\narray([[ 0.,  1.,  0.],\n       [ 2.,  3.,  6.],\n       [ 4.,  5., 20.]])\n\n\nHere interaction_only=True means that only interaction terms are added, while powers such as \\(x_1^2\\) and \\(x_2^2\\) are excluded. In addition, the argument include_bias=False removes the constant column of ones.\n\n\n\n2.5.3 Categorical Variables\n\n\n\n\n\n\nCautionDummy Variable Trap\n\n\n\nIncluding all dummy variables together with an intercept creates perfect multicollinearity because the dummy variables sum to one. Therefore, when creating dummy variables with \\(k\\) categories, we typically include only \\(k-1\\) variables.\n\n\n\n\npandas version\n\nWe could use pd.get_dummies() to directly modify the dataset.\n\ndf = pd.DataFrame({\"color\": [\"red\", \"blue\", \"green\", \"red\"]})\n\npd.get_dummies(df, drop_first=True)\n\n\n\n\n\n\n\n\ncolor_green\ncolor_red\n\n\n\n\n0\nFalse\nTrue\n\n\n1\nFalse\nFalse\n\n\n2\nTrue\nFalse\n\n\n3\nFalse\nTrue\n\n\n\n\n\n\n\nThe argument drop_first=True removes the base category column to avoid the dummy variable trap described above. If you want to keep the base column, you may set it to False (which is the default).\npd.get_dummies() automatically detects categorical variables and leaves numerical variables unchanged.\n\nX = pd.DataFrame({\"x\": [1, 2, 3, 4, 5, 6], \"group\": [\"A\", \"A\", \"B\", \"B\", \"C\", \"C\"]})\n\npd.get_dummies(X, drop_first=True)\n\n\n\n\n\n\n\n\nx\ngroup_B\ngroup_C\n\n\n\n\n0\n1\nFalse\nFalse\n\n\n1\n2\nFalse\nFalse\n\n\n2\n3\nTrue\nFalse\n\n\n3\n4\nTrue\nFalse\n\n\n4\n5\nFalse\nTrue\n\n\n5\n6\nFalse\nTrue\n\n\n\n\n\n\n\nIf you want to convert numeric variables into dummy variables, you may manually cast them to categorical variables.\n\nX[\"x\"] = X[\"x\"].astype(\"category\")\npd.get_dummies(X, drop_first=True)\n\n\n\n\n\n\n\n\nx_2\nx_3\nx_4\nx_5\nx_6\ngroup_B\ngroup_C\n\n\n\n\n0\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\n\n\n1\nTrue\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\n\n\n2\nFalse\nTrue\nFalse\nFalse\nFalse\nTrue\nFalse\n\n\n3\nFalse\nFalse\nTrue\nFalse\nFalse\nTrue\nFalse\n\n\n4\nFalse\nFalse\nFalse\nTrue\nFalse\nFalse\nTrue\n\n\n5\nFalse\nFalse\nFalse\nFalse\nTrue\nFalse\nTrue\n\n\n\n\n\n\n\n\n\n\nsklearn version\n\nOneHotEncoder from sklearn is another tool for converting categorical variables into dummy variables. It follows the standard sklearn API. Compared with pd.get_dummies(), which is convenient for quick data analysis, OneHotEncoder is better suited for statistical learning pipelines because it can be fitted on training data and then applied consistently to new data.\n\nfrom sklearn.preprocessing import OneHotEncoder\n\ndf = pd.DataFrame({\"color\": [\"red\", \"blue\", \"green\", \"red\"]})\nencoder = OneHotEncoder(drop=\"first\", sparse_output=False) \n\nencoder.fit_transform(df)\n\narray([[0., 1.],\n       [0., 0.],\n       [1., 0.],\n       [0., 1.]])\n\n\nThe argument sparse_output=False controls the output format. If False, the output is a regular matrix. If True, the output is a sparse matrix.\n\nfrom sklearn.preprocessing import OneHotEncoder\n\nX = pd.DataFrame({\"x\": [1, 2, 3, 4, 5, 6], \"group\": [\"A\", \"A\", \"B\", \"B\", \"C\", \"C\"]})\nencoder = OneHotEncoder(drop=\"first\", sparse_output=False)\n\nencoder.fit_transform(X)\n\narray([[0., 0., 0., 0., 0., 0., 0.],\n       [1., 0., 0., 0., 0., 0., 0.],\n       [0., 1., 0., 0., 0., 1., 0.],\n       [0., 0., 1., 0., 0., 1., 0.],\n       [0., 0., 0., 1., 0., 0., 1.],\n       [0., 0., 0., 0., 1., 0., 1.]])\n\n\nWhen applied to a DataFrame with multiple columns, unlike the pandas version, OneHotEncoder converts each column into dummy variables. In the example above, the first five columns correspond to x and the last two correspond to group.\nIf you want to apply OneHotEncoder only to certain columns, you need to use a ColumnTransformer, which will be introduced later.\n\n\n\n2.5.4 Scaling Variables\n\n\nCentralization, standardization and normalization\n\nIn regression and statistical learning, these transformations are typically applied to the predictors \\(X\\) to control their location and scale. They are rarely applied to the response \\(y\\), unless there is a specific modeling reason.\n\nCentralization: Subtract the sample mean so that the variable has mean \\(0\\).\nStandardization: Subtract the sample mean and divide by the sample standard deviation so that the variable has mean \\(0\\) and standard deviation \\(1\\).\nNormalization: Rescale the variable so that its values lie between \\(0\\) and \\(1\\).\n\nStandardization is especially useful when predictors are measured on very different scales. It is commonly used in statistical learning, particularly for methods such as ridge regression and lasso.\n\nimport numpy as np\nimport pandas as pd\n\nnp.random.seed(1)\n\nX = pd.DataFrame({\"x1\": np.random.normal(10, 2, size=8), \"x2\": np.random.normal(100, 20, size=8)})\nX\n\n\n\n\n\n\n\n\nx1\nx2\n\n\n\n\n0\n13.248691\n106.380782\n\n\n1\n8.776487\n95.012592\n\n\n2\n8.943656\n129.242159\n\n\n3\n7.854063\n58.797186\n\n\n4\n11.730815\n93.551656\n\n\n5\n5.396923\n92.318913\n\n\n6\n13.489624\n122.675389\n\n\n7\n8.477586\n78.002175\n\n\n\n\n\n\n\nStandardization:\n\nfrom sklearn.preprocessing import StandardScaler\n\nscaler = StandardScaler()\nscaler.fit_transform(X)\n\narray([[ 1.32733855,  0.43959384],\n       [-0.36436724, -0.09299622],\n       [-0.3011319 ,  1.51063   ],\n       [-0.71329383, -1.78965739],\n       [ 0.75316998, -0.16143987],\n       [-1.64275917, -0.21919283],\n       [ 1.41847649,  1.20298239],\n       [-0.47743287, -0.88991991]])\n\n\nCentralization (standardization without scaling):\n\nscaler = StandardScaler(with_std=False)\nscaler.fit_transform(X)\n\narray([[  3.50896013,   9.38317551],\n       [ -0.96324342,  -1.98501392],\n       [ -0.7960741 ,  32.24455233],\n       [ -1.88566784, -38.2004206 ],\n       [  1.99108467,  -3.44595049],\n       [ -4.34280799,  -4.6786935 ],\n       [  3.74989294,  25.67778244],\n       [ -1.26214439, -18.99543176]])\n\n\nNormalization:\n\nfrom sklearn.preprocessing import MinMaxScaler\n\nminmax = MinMaxScaler()\nminmax.fit_transform(X)\n\narray([[0.97022838, 0.67547185],\n       [0.41760651, 0.51409498],\n       [0.43826331, 1.        ],\n       [0.30362424, 0.        ],\n       [0.78266733, 0.49335628],\n       [0.        , 0.47585691],\n       [1.        , 0.90678157],\n       [0.38067187, 0.27262398]])\n\n\nNote that scaling is not required for ordinary least squares (OLS). However, it is essential for regularization methods such as ridge and lasso because the penalty depends on the scale of the coefficients.\n\n\n\n2.5.5 ColumnTransformer\n\n\nClick to expand.\n\nTo apply different transformations to different columns, we can use ColumnTransformer. ColumnTransformer consists of multiple transformations. Each transformation is specified by a triple containing:\n\na name (identifier),\nthe transformer,\nthe columns to which it applies.\n\n\nfrom sklearn.compose import ColumnTransformer\n\nprep = ColumnTransformer(\n    transformers=[\n        (\"cat\", OneHotEncoder(drop=\"first\", sparse_output=False), [\"group\"]),\n        (\"x\", \"passthrough\", [\"x\"]),\n        (\"x_std\", StandardScaler(), [\"x\"]),\n    ]\n)\n\nX = pd.DataFrame({\"x\": [1, 2, 3, 4, 5, 6], \"group\": [\"A\", \"A\", \"B\", \"B\", \"C\", \"C\"]})\nprep.fit_transform(X)\n\narray([[ 0.        ,  0.        ,  1.        , -1.46385011],\n       [ 0.        ,  0.        ,  2.        , -0.87831007],\n       [ 1.        ,  0.        ,  3.        , -0.29277002],\n       [ 1.        ,  0.        ,  4.        ,  0.29277002],\n       [ 0.        ,  1.        ,  5.        ,  0.87831007],\n       [ 0.        ,  1.        ,  6.        ,  1.46385011]])\n\n\nYou may use the id to get into each transformer.\n\nprep.transformers_\n\n[('cat', OneHotEncoder(drop='first', sparse_output=False), ['group']),\n ('x',\n  FunctionTransformer(accept_sparse=True, check_inverse=False,\n                      feature_names_out='one-to-one'),\n  ['x']),\n ('x_std', StandardScaler(), ['x'])]\n\n\n\nprep.named_transformers_['x_std']\n\nStandardScaler()In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.StandardScaler?Documentation for StandardScaleriFitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\ncopy copy: bool, default=True\n\nIf False, try to avoid a copy and do inplace scaling instead.\nThis is not guaranteed to always work inplace; e.g. if the data is\nnot a NumPy array or scipy.sparse CSR matrix, a copy may still be\nreturned.\nTrue\n\n\n\nwith_mean with_mean: bool, default=True\n\nIf True, center the data before scaling.\nThis does not work (and will raise an exception) when attempted on\nsparse matrices, because centering them entails building a dense\nmatrix which in common use cases is likely to be too large to fit in\nmemory.\nTrue\n\n\n\nwith_std with_std: bool, default=True\n\nIf True, scale the data to unit variance (or equivalently,\nunit standard deviation).\nTrue\n\n\n\n\n            \n        \n    \n\n\n\n\n\n\n\n\n\nTipEstimator, Predictor and Transformer\n\n\n\nIn sklearn, all models are called estimators. An estimator is any object that can be trained using the .fit() method.\nOnce an estimator is fitted,\n\nif it can transform input data using .transform(), it is called a transformer;\nif it can generate predictions using .predict(), it is called a predictor.\n\nTypical examples include\n\nTransformers: StandardScaler, MinMaxScaler, PolynomialFeatures, OneHotEncoder, etc.\nPredictors: LinearRegression and most other machine learning models.\n\nUsually a model is applied in two steps:\n\n.fit() learns the parameters from the training data.\n.transform() or .predict() applies the model to data.\n\nFor transformers, the combined method .fit_transform() performs both steps in one call.",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#pipelines",
+    "href": "contents/1/lr.html#pipelines",
+    "title": "2  Linear Regression",
+    "section": "2.6 Pipelines",
+    "text": "2.6 Pipelines\nIn many modeling workflows, several steps must be performed before fitting the model. These steps may include\n\nfeature transformations,\nscaling variables,\ngenerating polynomial features.\n\nA pipeline combines these steps into a single object. Using pipelines ensures that the same transformations are applied consistently during training, cross-validation, and prediction, and helps prevent data leakage.\nHere is a typical pipeline. Each step is indicated by a pair consisting of\n\na name (identifier) of the step\nthe estimator\n\n\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LinearRegression\n\nsteps = [\n    (\"scaler\", StandardScaler()),\n    (\"linear_model\", LinearRegression()),\n]\npipe = Pipeline(steps=steps)\n\nThis pipe object behaves like a model object. You may use the step names to access the internal components.\n\npipe.steps\n\n[('scaler', StandardScaler()), ('linear_model', LinearRegression())]\n\n\n\npipe.named_steps['scaler']\n\nStandardScaler()In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.StandardScaler?Documentation for StandardScaleriNot fitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\ncopy copy: bool, default=True\n\nIf False, try to avoid a copy and do inplace scaling instead.\nThis is not guaranteed to always work inplace; e.g. if the data is\nnot a NumPy array or scipy.sparse CSR matrix, a copy may still be\nreturned.\nTrue\n\n\n\nwith_mean with_mean: bool, default=True\n\nIf True, center the data before scaling.\nThis does not work (and will raise an exception) when attempted on\nsparse matrices, because centering them entails building a dense\nmatrix which in common use cases is likely to be too large to fit in\nmemory.\nTrue\n\n\n\nwith_std with_std: bool, default=True\n\nIf True, scale the data to unit variance (or equivalently,\nunit standard deviation).\nTrue\n\n\n\n\n            \n        \n    \n\n\n\n\n\n\n\n\nNote\n\n\n\nPipelines are particularly useful when combined with cross-validation and hyperparameter tuning, since they ensure that preprocessing steps are applied within each training fold.\n\n\n\n2.6.1 Full Pipeline Example\n\n\nClick to expand.\n\nIn this example we build a more complicated pipeline.\n\nimport numpy as np\nimport pandas as pd\n\nnp.random.seed(1)\n\nn = 100\n\nX = pd.DataFrame(\n    {\n        \"x1\": np.random.normal(0, 1, n),\n        \"x2\": np.random.normal(5, 2, n),\n        \"group\": np.random.choice([\"A\", \"B\", \"C\"], size=n),\n    }\n)\n\ny = 1 + 2 * X[\"x1\"] - 1.5 * X[\"x2\"] + 3 * (X[\"group\"] == \"B\") - 2 * (X[\"group\"] == \"C\") + np.random.normal(0, 1, n)\n\nThe pipeline is illustrated as follows.\n\nColumnTransformer separates numeric and categorical features.\nNumeric features go through: StandardScaler → PolynomialFeatures.\nCategorical features go through OneHotEncoder.\nThe transformed features are combined into a single feature matrix.\nThe model LinearRegression is fitted to the transformed data.\nThe fitted model can then be used to generate predictions.\n\n\n\n\n\n\nflowchart TB\n\nA[Input Data X]\n\nsubgraph P[Pipeline]\n\ndirection TB\n\nB[ColumnTransformer]\n\nsubgraph N[Numeric Features: x1, x2]\ndirection TB\nN1[StandardScaler]\nN2[PolynomialFeatures]\nN1 --&gt; N2\nend\n\nsubgraph C[Categorical Feature: group]\ndirection TB\nC1[OneHotEncoder]\nend\n\nB --&gt; N\nB --&gt; C\n\nN2 --&gt; D[Combined Feature Matrix]\nC1 --&gt; D\n\nD --&gt; E[LinearRegression]\n\nend\n\nA --&gt; B\nE --&gt; F[Predictions]\n\n\n\n\n\n\n\nfrom sklearn.compose import ColumnTransformer\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler, OneHotEncoder, PolynomialFeatures\nfrom sklearn.linear_model import LinearRegression\n\n\nnumeric_features = [\"x1\", \"x2\"]\ncategorical_features = [\"group\"]\n\nnumeric_pipe = Pipeline([(\"scaler\", StandardScaler()), (\"poly\", PolynomialFeatures(degree=2, include_bias=False))])\n\npreprocessor = ColumnTransformer(\n    [(\"num\", numeric_pipe, numeric_features), (\"cat\", OneHotEncoder(drop=\"first\"), categorical_features)]\n)\n\npipe = Pipeline([(\"preprocess\", preprocessor), (\"model\", LinearRegression())])\n\nThe entire pipeline is trained on the training set and then evaluated on the validation set, where the training and validation sets are determined by cross-validation.\n\nfrom sklearn.model_selection import cross_validate\n\ncv_result = cross_validate(\n    pipe, X, y, cv=KFold(5, shuffle=True, random_state=1), scoring=[\"r2\", \"neg_mean_squared_error\"]\n)\n\nprint(f\"test R2: {cv_result['test_r2'].mean()}\")\nprint(f\"test neg mse: {cv_result['test_neg_mean_squared_error'].mean()}\")\n\ntest R2: 0.9092762998061948\ntest neg mse: -1.0197334955585529",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/1/lr.html#exercises",
+    "href": "contents/1/lr.html#exercises",
+    "title": "2  Linear Regression",
+    "section": "2.7 Exercises",
+    "text": "2.7 Exercises",
+    "crumbs": [
+      "Regression",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
     ]
   },
   {
@@ -624,61 +955,6 @@
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Quick intro to R</span>"
-    ]
-  },
-  {
-    "objectID": "contents/1/lr.html#information-criteria-and-estimated-test-error",
-    "href": "contents/1/lr.html#information-criteria-and-estimated-test-error",
-    "title": "2  Linear Regression",
-    "section": "2.4 Information Criteria and Estimated Test Error",
-    "text": "2.4 Information Criteria and Estimated Test Error\nTo compare models with different numbers of predictors, classical regression often uses criteria that balance goodness of fit with model complexity.\nSome commonly used criteria are:\n\nAIC (Akaike Information Criterion)\n\nBIC (Bayesian Information Criterion)\n\nMallows’ \\(C_p\\)\n\nThese criteria reward good fit but penalize models with many predictors.\n\nAIC tends to prefer somewhat larger models.\nBIC penalizes complexity more strongly and often prefers smaller models.\nMallows’ \\(C_p\\) compares a candidate model to a larger reference model.\n\nA key idea behind these methods is that they attempt to estimate test error using only training data. In other words, they adjust the training error to approximate how well the model will perform on unseen observations.\nAlthough these criteria are useful for model comparison, they still rely on approximations derived from the training sample.",
-    "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
-    ]
-  },
-  {
-    "objectID": "contents/1/lr.html#direct-evaluation-using-test-data",
-    "href": "contents/1/lr.html#direct-evaluation-using-test-data",
-    "title": "2  Linear Regression",
-    "section": "2.5 Direct Evaluation Using Test Data",
-    "text": "2.5 Direct Evaluation Using Test Data\nInstead of estimating test performance indirectly from the training data, we can evaluate a model more directly by using data that were not used to fit the model.\nThis leads to the idea of data splitting.\n\n2.5.1 Train–Test Split\nThe dataset is divided into two parts:\n\nTraining set – used to fit the model.\nTest set – used to evaluate prediction performance.\n\nAfter fitting the model on the training set, predictions are made on the test set, and performance measures such as mean squared error (MSE) are computed.\nThis provides a more realistic estimate of how the model performs on new data.",
-    "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
-    ]
-  },
-  {
-    "objectID": "contents/1/lr.html#training-validation-and-test-sets",
-    "href": "contents/1/lr.html#training-validation-and-test-sets",
-    "title": "2  Linear Regression",
-    "section": "2.6 Training, Validation, and Test Sets",
-    "text": "2.6 Training, Validation, and Test Sets\nIn many situations we also need to choose between several competing models or tuning parameters. To avoid using the test data for model selection, a third subset is often introduced.\n\nTraining set – used to fit models.\nValidation set – used to compare models and select tuning parameters.\nTest set – used only once at the end to estimate the final model’s performance.\n\nThis separation helps prevent overly optimistic performance estimates.",
-    "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
-    ]
-  },
-  {
-    "objectID": "contents/1/lr.html#cross-validation",
-    "href": "contents/1/lr.html#cross-validation",
-    "title": "2  Linear Regression",
-    "section": "2.7 Cross-Validation",
-    "text": "2.7 Cross-Validation\nWhen the dataset is not large, splitting the data into separate validation and test sets may waste too much information. In such cases, cross-validation is commonly used.\nThe most common form is \\(k\\)-fold cross-validation:\n\nThe data are divided into \\(k\\) roughly equal parts.\nThe model is trained on \\(k-1\\) parts.\nThe remaining part is used as a validation set.\nThe process is repeated \\(k\\) times so that each part is used once as validation data.\n\nThe validation errors from all folds are then averaged to estimate the model’s prediction performance.\nCross-validation provides a more stable estimate of test error and is widely used in statistical learning for model comparison and tuning.",
-    "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
-    ]
-  },
-  {
-    "objectID": "contents/1/lr.html#feature-engineering",
-    "href": "contents/1/lr.html#feature-engineering",
-    "title": "2  Linear Regression",
-    "section": "2.5 Feature engineering",
-    "text": "2.5 Feature engineering\nFeature engineering refers to modifying or creating predictors in order to better represent the relationship between the predictors and the response. Here we mainly cover the sklearn way to perform feature engineering.\n\n\n\n\n\n\nNoteModeling Perspective\n\n\n\nIn statistical learning (commonly implemented using sklearn), the primary goal is predictive performance. Models are therefore typically constructed by building a feature matrix, and modifying a model usually means modifying the feature matrix rather than changing a model formula.\nIn contrast, traditional regression analysis (commonly implemented using statsmodels) allows explicit specification of statistical models through a formula language. This approach is convenient when precise control of model terms and statistical inference are required.\n\n\nBefore introducing automated tools, we can always create new predictors directly by modifying the original dataset.\n\nimport pandas as pd\n\nX = pd.DataFrame({'x1': [0, 2, 4], 'x2': [1, 3, 5]})\nX\n\n\n\n\n\n\n\n\nx1\nx2\n\n\n\n\n0\n0\n1\n\n\n1\n2\n3\n\n\n2\n4\n5\n\n\n\n\n\n\n\nFor example, we can add the squared term of \\(x_2\\) and the interaction term \\(x_1x_2\\) to form a new feature matrix X2.\n\nX2 = X.copy()\nX2[\"x2_sq\"] = X[\"x2\"] ** 2\nX2[\"x1_x2\"] = X[\"x1\"] * X[\"x2\"]\nX2\n\n\n\n\n\n\n\n\nx1\nx2\nx2_sq\nx1_x2\n\n\n\n\n0\n0\n1\n1\n0\n\n\n1\n2\n3\n9\n6\n\n\n2\n4\n5\n25\n20\n\n\n\n\n\n\n\nThis corresponds to fitting a model of the form \\[\ny=\\beta_0+\\beta_1x_1+\\beta_2x_2+\\beta_3x_2^2+\\beta_4x_1x_2+\\varepsilon.\n\\]\n\n\n\n\n\n\nTip\n\n\n\nAlthough the model is called linear regression, it can represent nonlinear relationships by including transformed predictors such as \\(x^2\\), \\(\\log x\\), or \\(\\sqrt{x}\\). The model remains linear because it is linear in the coefficients \\(\\beta\\).\n\n\n\n\n\n\n\n\nCautionDummy Variable Trap\n\n\n\nIncluding all dummy variables together with an intercept creates perfect multicollinearity because the dummy variables sum to one. Therefore, when creating dummy variables with \\(k\\) categories, we typically include only \\(k-1\\) variables.\n\n\n\n\n\n\n\n\nNotePolynomial Features\n\n\n\n\n\nWhen many predictors are present, manually creating polynomial and interaction terms can become tedious. In such cases we can use PolynomialFeatures from sklearn.preprocessing, which automatically generates polynomial and interaction terms up to the specified degree.\n\nfrom sklearn.preprocessing import PolynomialFeatures\n\npoly = PolynomialFeatures(degree=2, interaction_only=False, include_bias=True)\npoly.fit_transform(X)\n\narray([[ 1.,  0.,  1.,  0.,  0.,  1.],\n       [ 1.,  2.,  3.,  4.,  6.,  9.],\n       [ 1.,  4.,  5., 16., 20., 25.]])\n\n\nThe argument interaction_only=False means that both squared terms and interaction terms are included. For example, if the original variables are \\(x_1\\) and \\(x_2\\), then the transformed matrix contains terms such as \\[\n1,x_1,x_2,x_1^2,x_1x_2,x_2^2.\n\\]\n\npoly2 = PolynomialFeatures(degree=2, interaction_only=True, include_bias=False)\npoly2.fit_transform(X)\n\narray([[ 0.,  1.,  0.],\n       [ 2.,  3.,  6.],\n       [ 4.,  5., 20.]])\n\n\nHere interaction_only=True means that only interaction terms are added, while powers such as \\(x_1^2\\) and \\(x_2^2\\) are excluded. In addition, the argument include_bias=False removes the constant column of ones.\n\n\n\n\n\n\n\n\n\nNoteCategorical variables (pandas version)\n\n\n\n\n\nWe could use pd.get_dummies() to directly modify the dataset.\n\ndf = pd.DataFrame({\"color\": [\"red\", \"blue\", \"green\", \"red\"]})\n\npd.get_dummies(df, drop_first=True)\n\n\n\n\n\n\n\n\ncolor_green\ncolor_red\n\n\n\n\n0\nFalse\nTrue\n\n\n1\nFalse\nFalse\n\n\n2\nTrue\nFalse\n\n\n3\nFalse\nTrue\n\n\n\n\n\n\n\nThe argument drop_first=True removes the base category column to avoid the dummy variable trap described above. If you want to keep the base column, you may set it to False (which is the default).\npd.get_dummies() automatically detects categorical variables and leaves numerical variables unchanged.\n\nX = pd.DataFrame({\"x\": [1, 2, 3, 4, 5, 6], \"group\": [\"A\", \"A\", \"B\", \"B\", \"C\", \"C\"]})\n\npd.get_dummies(X, drop_first=True)\n\n\n\n\n\n\n\n\nx\ngroup_B\ngroup_C\n\n\n\n\n0\n1\nFalse\nFalse\n\n\n1\n2\nFalse\nFalse\n\n\n2\n3\nTrue\nFalse\n\n\n3\n4\nTrue\nFalse\n\n\n4\n5\nFalse\nTrue\n\n\n5\n6\nFalse\nTrue\n\n\n\n\n\n\n\nIf you want to convert numeric variables into dummy variables, you may manually cast them to categorical variables.\n\nX[\"x\"] = X[\"x\"].astype(\"category\")\npd.get_dummies(X, drop_first=True)\n\n\n\n\n\n\n\n\nx_2\nx_3\nx_4\nx_5\nx_6\ngroup_B\ngroup_C\n\n\n\n\n0\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\n\n\n1\nTrue\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\n\n\n2\nFalse\nTrue\nFalse\nFalse\nFalse\nTrue\nFalse\n\n\n3\nFalse\nFalse\nTrue\nFalse\nFalse\nTrue\nFalse\n\n\n4\nFalse\nFalse\nFalse\nTrue\nFalse\nFalse\nTrue\n\n\n5\nFalse\nFalse\nFalse\nFalse\nTrue\nFalse\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteCategorical variables (sklearn version)\n\n\n\n\n\nOneHotEncoder from sklearn is another tool for converting categorical variables into dummy variables. It follows the standard sklearn API. Compared with pd.get_dummies(), which is convenient for quick data analysis, OneHotEncoder is better suited for statistical learning pipelines because it can be fitted on training data and then applied consistently to new data.\n\nfrom sklearn.preprocessing import OneHotEncoder\n\ndf = pd.DataFrame({\"color\": [\"red\", \"blue\", \"green\", \"red\"]})\nencoder = OneHotEncoder(drop=\"first\", sparse_output=False) \n\nencoder.fit_transform(df)\n\narray([[0., 1.],\n       [0., 0.],\n       [1., 0.],\n       [0., 1.]])\n\n\nThe argument sparse_output=False controls the output format. If False, the output is a regular matrix. If True, the output is a sparse matrix.\n\nfrom sklearn.preprocessing import OneHotEncoder\n\nX = pd.DataFrame({\"x\": [1, 2, 3, 4, 5, 6], \"group\": [\"A\", \"A\", \"B\", \"B\", \"C\", \"C\"]})\nencoder = OneHotEncoder(drop=\"first\", sparse_output=False)\n\nencoder.fit_transform(X)\n\narray([[0., 0., 0., 0., 0., 0., 0.],\n       [1., 0., 0., 0., 0., 0., 0.],\n       [0., 1., 0., 0., 0., 1., 0.],\n       [0., 0., 1., 0., 0., 1., 0.],\n       [0., 0., 0., 1., 0., 0., 1.],\n       [0., 0., 0., 0., 1., 0., 1.]])\n\n\nWhen applied to a DataFrame with multiple columns, unlike the pandas version, OneHotEncoder converts each column into dummy variables. In the example above, the first five columns correspond to x and the last two correspond to group.\nIf you want to apply OneHotEncoder only to certain columns, you need to use a ColumnTransformer, which will be introduced later.\n\n\n\n\n\n\n\n\n\nNoteCentralization, standardization and normalization\n\n\n\n\n\nIn regression and statistical learning, these transformations are typically applied to the predictors \\(X\\) to control their location and scale. They are rarely applied to the response \\(y\\), unless there is a specific modeling reason.\n\nCentralization: Subtract the sample mean so that the variable has mean \\(0\\).\nStandardization: Subtract the sample mean and divide by the sample standard deviation so that the variable has mean \\(0\\) and standard deviation \\(1\\).\nNormalization: Rescale the variable so that its values lie between \\(0\\) and \\(1\\).\n\nStandardization is especially useful when predictors are measured on very different scales. It is commonly used in statistical learning, particularly for methods such as ridge regression and lasso.\n\nimport numpy as np\nimport pandas as pd\n\nnp.random.seed(1)\n\nX = pd.DataFrame({\"x1\": np.random.normal(10, 2, size=8), \"x2\": np.random.normal(100, 20, size=8)})\nX\n\n\n\n\n\n\n\n\nx1\nx2\n\n\n\n\n0\n13.248691\n106.380782\n\n\n1\n8.776487\n95.012592\n\n\n2\n8.943656\n129.242159\n\n\n3\n7.854063\n58.797186\n\n\n4\n11.730815\n93.551656\n\n\n5\n5.396923\n92.318913\n\n\n6\n13.489624\n122.675389\n\n\n7\n8.477586\n78.002175\n\n\n\n\n\n\n\nStandardization:\n\nfrom sklearn.preprocessing import StandardScaler\n\nscaler = StandardScaler()\nscaler.fit_transform(X)\n\narray([[ 1.32733855,  0.43959384],\n       [-0.36436724, -0.09299622],\n       [-0.3011319 ,  1.51063   ],\n       [-0.71329383, -1.78965739],\n       [ 0.75316998, -0.16143987],\n       [-1.64275917, -0.21919283],\n       [ 1.41847649,  1.20298239],\n       [-0.47743287, -0.88991991]])\n\n\nCentralization (standardization without scaling):\n\nscaler = StandardScaler(with_std=False)\nscaler.fit_transform(X)\n\narray([[  3.50896013,   9.38317551],\n       [ -0.96324342,  -1.98501392],\n       [ -0.7960741 ,  32.24455233],\n       [ -1.88566784, -38.2004206 ],\n       [  1.99108467,  -3.44595049],\n       [ -4.34280799,  -4.6786935 ],\n       [  3.74989294,  25.67778244],\n       [ -1.26214439, -18.99543176]])\n\n\nNormalization:\n\nfrom sklearn.preprocessing import MinMaxScaler\n\nminmax = MinMaxScaler()\nminmax.fit_transform(X)\n\narray([[0.97022838, 0.67547185],\n       [0.41760651, 0.51409498],\n       [0.43826331, 1.        ],\n       [0.30362424, 0.        ],\n       [0.78266733, 0.49335628],\n       [0.        , 0.47585691],\n       [1.        , 0.90678157],\n       [0.38067187, 0.27262398]])\n\n\nNote that scaling is not required for ordinary least squares (OLS). However, it is essential for regularization methods such as ridge and lasso because the penalty depends on the scale of the coefficients.\n\n\n\n\n\n\n\n\n\nTipEstimator, Predictor and Transformer\n\n\n\nIn sklearn, all models are called estimators. An estimator is any object that can be trained using the .fit() method.\nOnce an estimator is fitted,\n\nif it can transform input data using .transform(), it is called a transformer;\nif it can generate predictions using .predict(), it is called a predictor.\n\nTypical examples include\n\nTransformers: StandardScaler, MinMaxScaler, PolynomialFeatures, OneHotEncoder, etc.\nPredictors: LinearRegression and most other machine learning models.\n\nUsually a model is applied in two steps:\n\n.fit() learns the parameters from the training data.\n.transform() or .predict() applies the model to data.\n\nFor transformers, the combined method .fit_transform() performs both steps in one call.\n\n\n\n\n\n\n\n\nNoteColumn transform\n\n\n\n\n\nTo apply different transformations to different columns, we can use ColumnTransformer. ColumnTransformer consists of multiple transformations. Each transformation is specified by a triple containing:\n\na name (identifier),\nthe transformer,\nthe columns to which it applies.\n\n\nfrom sklearn.compose import ColumnTransformer\n\npreprocess = ColumnTransformer(\n    transformers=[\n        (\"cat\", OneHotEncoder(drop=\"first\", sparse_output=False), [\"group\"]),\n        (\"x\", \"passthrough\", [\"x\"]),\n        (\"x_std\", StandardScaler(), [\"x\"]),\n    ]\n)\n\nX = pd.DataFrame({\"x\": [1, 2, 3, 4, 5, 6], \"group\": [\"A\", \"A\", \"B\", \"B\", \"C\", \"C\"]})\npreprocess.fit_transform(X)\n\n\n\n\n\n2.5.1 Train-test split\n\n\n2.5.2 Cross validation\n\n\n2.5.3 Pipeline\nIn many modeling workflows, several steps must be performed before fitting the model. These steps may include\n\nfeature transformations,\nscaling variables,\ngenerating polynomial features.\n\nA pipeline combines these steps into a single object. Using pipelines helps ensure that the same transformations are applied consistently during training and prediction.\n\nExample 2.1 (Generating polynomial features and then fit a model)  \n\n\n\n\n\n\n\nNote\n\n\n\nPipelines are particularly useful when combined with cross-validation and hyperparameter tuning, since they ensure that preprocessing steps are applied within each training fold.",
-    "crumbs": [
-      "Regression",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Linear Regression</span>"
     ]
   }
 ]

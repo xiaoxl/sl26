@@ -1,8 +1,1916 @@
-<html xmlns="http://www.w3.org/1999/xhtml">    
-  <head>      
-    <title>Redirect to index.html</title>      
-    <meta http-equiv="refresh" content="0;URL='index.html'" />    
-  </head>    
-  <body> 
-  </body>  
-</html>     
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Xinli Xiao">
+<meta name="dcterms.date" content="2026-04-14">
+
+<title>Statistical Learning</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./contents/1/basic.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-31b7339fbb7181fdc9e579268dd0afcf.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6330868e63fab1dee7d28dead4d7cc03.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-31b7339fbb7181fdc9e579268dd0afcf.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-34c91892f896ce4854c4dcc1026a7fe2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-7e342b42b1d8244df6d5a8d63372ab02.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-34c91892f896ce4854c4dcc1026a7fe2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles/fonts.css">
+<link rel="stylesheet" href="styles/blocks.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">Statistical Learning</h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Learning</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Regression</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contents/1/basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contents/1/lr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contents/1/glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalized linear models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contents/1/gam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Generalized additive models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contents/1/ridge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ridge Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contents/1/lasso.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contents/app/r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Quick intro to R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#week-course-plan-simplified" id="toc-week-course-plan-simplified" class="nav-link" data-scroll-target="#week-course-plan-simplified">6-Week Course Plan (Simplified)</a></li>
+  <li><a href="#course-overview" id="toc-course-overview" class="nav-link" data-scroll-target="#course-overview">Course Overview</a></li>
+  <li><a href="#course-narrative" id="toc-course-narrative" class="nav-link" data-scroll-target="#course-narrative">Course Narrative</a></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
+  <li><a href="#condensed-teaching-calendar" id="toc-condensed-teaching-calendar" class="nav-link" data-scroll-target="#condensed-teaching-calendar">Condensed Teaching Calendar</a></li>
+  <li><a href="#final-summary" id="toc-final-summary" class="nav-link" data-scroll-target="#final-summary">Final Summary</a></li>
+  <li><a href="#gemini" id="toc-gemini" class="nav-link" data-scroll-target="#gemini">Gemini</a></li>
+  <li><a href="#week-course-plan-simplified-1" id="toc-week-course-plan-simplified-1" class="nav-link" data-scroll-target="#week-course-plan-simplified-1">6-Week Course Plan (Simplified)</a></li>
+  <li><a href="#week-1-introduction-and-foundations" id="toc-week-1-introduction-and-foundations" class="nav-link" data-scroll-target="#week-1-introduction-and-foundations">Week 1: Introduction and Foundations</a></li>
+  <li><a href="#week-2-regularization-methods" id="toc-week-2-regularization-methods" class="nav-link" data-scroll-target="#week-2-regularization-methods">Week 2: Regularization Methods</a></li>
+  <li><a href="#week-3-flexible-and-nonparametric-models" id="toc-week-3-flexible-and-nonparametric-models" class="nav-link" data-scroll-target="#week-3-flexible-and-nonparametric-models">Week 3: Flexible and Nonparametric Models</a></li>
+  <li><a href="#week-4-classification-methods" id="toc-week-4-classification-methods" class="nav-link" data-scroll-target="#week-4-classification-methods">Week 4: Classification Methods</a></li>
+  <li><a href="#week-5-ensemble-methods" id="toc-week-5-ensemble-methods" class="nav-link" data-scroll-target="#week-5-ensemble-methods">Week 5: Ensemble Methods</a></li>
+  <li><a href="#week-6-applications-and-projects" id="toc-week-6-applications-and-projects" class="nav-link" data-scroll-target="#week-6-applications-and-projects">Week 6: Applications and Projects</a></li>
+  <li><a href="#unit-1-foundations-of-statistical-learning" id="toc-unit-1-foundations-of-statistical-learning" class="nav-link" data-scroll-target="#unit-1-foundations-of-statistical-learning">Unit 1: Foundations of Statistical Learning</a>
+  <ul class="collapse">
+  <li><a href="#main-topics" id="toc-main-topics" class="nav-link" data-scroll-target="#main-topics">Main Topics</a></li>
+  <li><a href="#teaching-goals" id="toc-teaching-goals" class="nav-link" data-scroll-target="#teaching-goals">Teaching Goals</a></li>
+  <li><a href="#suggested-emphasis" id="toc-suggested-emphasis" class="nav-link" data-scroll-target="#suggested-emphasis">Suggested Emphasis</a></li>
+  </ul></li>
+  <li><a href="#unit-2-linear-regression-as-a-baseline" id="toc-unit-2-linear-regression-as-a-baseline" class="nav-link" data-scroll-target="#unit-2-linear-regression-as-a-baseline">Unit 2: Linear Regression as a Baseline</a>
+  <ul class="collapse">
+  <li><a href="#main-topics-1" id="toc-main-topics-1" class="nav-link" data-scroll-target="#main-topics-1">Main Topics</a></li>
+  <li><a href="#teaching-goals-1" id="toc-teaching-goals-1" class="nav-link" data-scroll-target="#teaching-goals-1">Teaching Goals</a></li>
+  <li><a href="#suggested-emphasis-1" id="toc-suggested-emphasis-1" class="nav-link" data-scroll-target="#suggested-emphasis-1">Suggested Emphasis</a></li>
+  </ul></li>
+  <li><a href="#unit-3-nonparametric-regression" id="toc-unit-3-nonparametric-regression" class="nav-link" data-scroll-target="#unit-3-nonparametric-regression">Unit 3: Nonparametric Regression</a>
+  <ul class="collapse">
+  <li><a href="#main-topics-2" id="toc-main-topics-2" class="nav-link" data-scroll-target="#main-topics-2">Main Topics</a></li>
+  <li><a href="#teaching-goals-2" id="toc-teaching-goals-2" class="nav-link" data-scroll-target="#teaching-goals-2">Teaching Goals</a></li>
+  </ul></li>
+  <li><a href="#unit-4-classification" id="toc-unit-4-classification" class="nav-link" data-scroll-target="#unit-4-classification">Unit 4: Classification</a>
+  <ul class="collapse">
+  <li><a href="#main-topics-3" id="toc-main-topics-3" class="nav-link" data-scroll-target="#main-topics-3">Main Topics</a></li>
+  <li><a href="#teaching-goals-3" id="toc-teaching-goals-3" class="nav-link" data-scroll-target="#teaching-goals-3">Teaching Goals</a></li>
+  </ul></li>
+  <li><a href="#unit-5-binary-classification" id="toc-unit-5-binary-classification" class="nav-link" data-scroll-target="#unit-5-binary-classification">Unit 5: Binary Classification</a>
+  <ul class="collapse">
+  <li><a href="#main-topics-4" id="toc-main-topics-4" class="nav-link" data-scroll-target="#main-topics-4">Main Topics</a></li>
+  <li><a href="#teaching-goals-4" id="toc-teaching-goals-4" class="nav-link" data-scroll-target="#teaching-goals-4">Teaching Goals</a></li>
+  </ul></li>
+  <li><a href="#unit-6-generative-models" id="toc-unit-6-generative-models" class="nav-link" data-scroll-target="#unit-6-generative-models">Unit 6: Generative Models</a>
+  <ul class="collapse">
+  <li><a href="#main-topics-5" id="toc-main-topics-5" class="nav-link" data-scroll-target="#main-topics-5">Main Topics</a></li>
+  <li><a href="#teaching-goals-5" id="toc-teaching-goals-5" class="nav-link" data-scroll-target="#teaching-goals-5">Teaching Goals</a></li>
+  </ul></li>
+  <li><a href="#unit-7-resampling-methods" id="toc-unit-7-resampling-methods" class="nav-link" data-scroll-target="#unit-7-resampling-methods">Unit 7: Resampling Methods</a>
+  <ul class="collapse">
+  <li><a href="#main-topics-6" id="toc-main-topics-6" class="nav-link" data-scroll-target="#main-topics-6">Main Topics</a></li>
+  <li><a href="#teaching-goals-6" id="toc-teaching-goals-6" class="nav-link" data-scroll-target="#teaching-goals-6">Teaching Goals</a></li>
+  </ul></li>
+  <li><a href="#unit-8-regularization" id="toc-unit-8-regularization" class="nav-link" data-scroll-target="#unit-8-regularization">Unit 8: Regularization</a>
+  <ul class="collapse">
+  <li><a href="#main-topics-7" id="toc-main-topics-7" class="nav-link" data-scroll-target="#main-topics-7">Main Topics</a></li>
+  <li><a href="#teaching-goals-7" id="toc-teaching-goals-7" class="nav-link" data-scroll-target="#teaching-goals-7">Teaching Goals</a></li>
+  </ul></li>
+  <li><a href="#unit-9-ensemble-methods" id="toc-unit-9-ensemble-methods" class="nav-link" data-scroll-target="#unit-9-ensemble-methods">Unit 9: Ensemble Methods</a>
+  <ul class="collapse">
+  <li><a href="#main-topics-8" id="toc-main-topics-8" class="nav-link" data-scroll-target="#main-topics-8">Main Topics</a></li>
+  <li><a href="#teaching-goals-8" id="toc-teaching-goals-8" class="nav-link" data-scroll-target="#teaching-goals-8">Teaching Goals</a></li>
+  </ul></li>
+  <li><a href="#unit-10-machine-learning-in-practice" id="toc-unit-10-machine-learning-in-practice" class="nav-link" data-scroll-target="#unit-10-machine-learning-in-practice">Unit 10: Machine Learning in Practice</a>
+  <ul class="collapse">
+  <li><a href="#main-topics-9" id="toc-main-topics-9" class="nav-link" data-scroll-target="#main-topics-9">Main Topics</a></li>
+  <li><a href="#teaching-goals-9" id="toc-teaching-goals-9" class="nav-link" data-scroll-target="#teaching-goals-9">Teaching Goals</a></li>
+  </ul></li>
+  <li><a href="#exams-and-major-checkpoints" id="toc-exams-and-major-checkpoints" class="nav-link" data-scroll-target="#exams-and-major-checkpoints">Exams and Major Checkpoints</a>
+  <ul class="collapse">
+  <li><a href="#midterm-i" id="toc-midterm-i" class="nav-link" data-scroll-target="#midterm-i">Midterm I</a></li>
+  <li><a href="#midterm-ii" id="toc-midterm-ii" class="nav-link" data-scroll-target="#midterm-ii">Midterm II</a></li>
+  <li><a href="#final-assessment-or-project" id="toc-final-assessment-or-project" class="nav-link" data-scroll-target="#final-assessment-or-project">Final Assessment or Project</a></li>
+  </ul></li>
+  <li><a href="#weekly-teaching-rhythm" id="toc-weekly-teaching-rhythm" class="nav-link" data-scroll-target="#weekly-teaching-rhythm">Weekly Teaching Rhythm</a>
+  <ul class="collapse">
+  <li><a href="#lecture-2" id="toc-lecture-2" class="nav-link" data-scroll-target="#lecture-2">Lecture 2</a></li>
+  </ul></li>
+  <li><a href="#core-themes-to-revisit-throughout-the-course" id="toc-core-themes-to-revisit-throughout-the-course" class="nav-link" data-scroll-target="#core-themes-to-revisit-throughout-the-course">Core Themes to Revisit Throughout the Course</a>
+  <ul class="collapse">
+  <li><a href="#theme-1-model-flexibility" id="toc-theme-1-model-flexibility" class="nav-link" data-scroll-target="#theme-1-model-flexibility">Theme 1: Model Flexibility</a></li>
+  </ul></li>
+  <li><a href="#final-summary-1" id="toc-final-summary-1" class="nav-link" data-scroll-target="#final-summary-1">Final Summary</a></li>
+  <li><a href="#gemini-1" id="toc-gemini-1" class="nav-link" data-scroll-target="#gemini-1">Gemini</a>
+  <ul class="collapse">
+  <li><a href="#phase-1-foundations-optimization-weeks-13" id="toc-phase-1-foundations-optimization-weeks-13" class="nav-link" data-scroll-target="#phase-1-foundations-optimization-weeks-13"><strong>Phase 1: Foundations &amp; Optimization (Weeks 1–3)</strong></a></li>
+  <li><a href="#model-selection-regularization" id="toc-model-selection-regularization" class="nav-link" data-scroll-target="#model-selection-regularization">2. Model Selection &amp; Regularization</a></li>
+  <li><a href="#diagnostics-residuals" id="toc-diagnostics-residuals" class="nav-link" data-scroll-target="#diagnostics-residuals">3. Diagnostics &amp; Residuals</a></li>
+  <li><a href="#required-libraries-for-the-course" id="toc-required-libraries-for-the-course" class="nav-link" data-scroll-target="#required-libraries-for-the-course">4. Required Libraries for the Course</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Statistical Learning</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Xinli Xiao </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 14, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="preface" class="level1 unnumbered">
+<h1 class="unnumbered">Preface</h1>
+<p>These are notes for STAT 3113 Regression 2026 Summer at Arkansas Tech University. If you have any questions please contact me through <a href="mailto:xxiao@atu.edu">email</a>.</p>
+<p>Archived draft material from earlier notes</p>
+</section>
+<section id="week-course-plan-simplified" class="level1">
+<h1>6-Week Course Plan (Simplified)</h1>
+<p>This course introduces core statistical learning methods with an emphasis on intuition, interpretation, and practical implementation. Some advanced theoretical topics are omitted to keep the focus on applied understanding.</p>
+<p>Primary references:</p>
+<ul>
+<li><strong>ISLR</strong>: <em>An Introduction to Statistical Learning</em></li>
+<li><strong>ESL</strong>: <em>The Elements of Statistical Learning</em></li>
+<li><strong>SMLR</strong>: <em>Statistical Machine Learning with Math and R</em> (Ruoqing Zhu)</li>
+</ul>
+</section>
+<section id="course-overview" class="level1">
+<h1>Course Overview</h1>
+<p>This course is organized as an introduction to <strong>statistical learning from a statistical perspective</strong>. The focus is on three recurring ideas:</p>
+<ol type="1">
+<li><strong>Model flexibility</strong></li>
+<li><strong>Model evaluation</strong></li>
+<li><strong>Model improvement</strong></li>
+</ol>
+</section>
+<section id="course-narrative" class="level1">
+<h1>Course Narrative</h1>
+<p>The course follows this progression:</p>
+<blockquote class="blockquote">
+<p>Start with simple predictive models, make them more flexible, learn how to evaluate them, improve them, and finally apply them to real problems.</p>
+</blockquote>
+</section>
+<section id="learning-goals" class="level1">
+<h1>Learning Goals</h1>
+<p>By the end of the course, students should be able to:</p>
+<ul>
+<li>identify common supervised learning problems,</li>
+<li>distinguish regression and classification settings,</li>
+<li>understand the role of model flexibility,</li>
+<li>evaluate models using validation and resampling methods,</li>
+<li>apply regularization and ensemble methods,</li>
+<li>compare competing models using prediction performance,</li>
+<li>implement statistical learning methods in software,</li>
+<li>carry out a complete modeling workflow on real data.</li>
+</ul>
+</section>
+<section id="condensed-teaching-calendar" class="level1">
+<h1>Condensed Teaching Calendar</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Unit</th>
+<th>Topic</th>
+<th>Main Goal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Foundations</td>
+<td>Introduce statistical learning and bias–variance</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Linear Regression</td>
+<td>Establish a simple predictive baseline</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Nonparametric Regression</td>
+<td>Introduce flexibility</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Classification</td>
+<td>Shift from numeric to categorical prediction</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Binary Classification</td>
+<td>Develop logistic and classification ideas</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Generative Models</td>
+<td>Compare generative and discriminative methods</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Resampling</td>
+<td>Learn to estimate test error</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Regularization</td>
+<td>Control complexity and improve prediction</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Ensemble Methods</td>
+<td>Combine models to improve performance</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>ML in Practice</td>
+<td>Execute a complete workflow</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="final-summary" class="level1">
+<h1>Final Summary</h1>
+<p>This course should leave students with a clear picture of statistical learning as a unified process:</p>
+<ol type="1">
+<li>start with a modeling problem,</li>
+<li>choose an appropriate predictive method,</li>
+<li>evaluate it using principled tools,</li>
+<li>improve it when needed,</li>
+<li>apply it carefully in practice.</li>
+</ol>
+</section>
+<section id="gemini" class="level1">
+<h1>Gemini</h1>
+<p>Additional imported planning notes and translation-guide material were removed from the active chapter and archived here.</p>
+</section>
+<section id="week-course-plan-simplified-1" class="level1">
+<h1>6-Week Course Plan (Simplified)</h1>
+<p>This course introduces core statistical learning methods with an emphasis on intuition, interpretation, and practical implementation. Some advanced theoretical topics are omitted to keep the focus on applied understanding. Primary references:</p>
+<ul>
+<li><strong>ISLR</strong>: <em>An Introduction to Statistical Learning</em><br>
+</li>
+<li><strong>ESL</strong>: <em>The Elements of Statistical Learning</em><br>
+</li>
+<li><strong>SMLR</strong>: <em>Statistical Machine Learning with Math and R</em> (Ruoqing Zhu)</li>
+</ul>
+</section>
+<section id="week-1-introduction-and-foundations" class="level1">
+<h1>Week 1: Introduction and Foundations</h1>
+<p>Topics:</p>
+<ul>
+<li>What is statistical learning?</li>
+<li>Supervised vs unsupervised learning</li>
+<li>Prediction vs inference</li>
+<li>Review of linear regression</li>
+<li>Training error vs test error</li>
+<li>Bias–variance trade-off</li>
+<li>Overfitting and underfitting</li>
+</ul>
+<p><strong>Goal</strong>:<br>
+Build the conceptual foundation for understanding modern machine learning methods.</p>
+<p>References:</p>
+<ul>
+<li><strong>ISLR</strong>
+<ul>
+<li>Chapter 1: Introduction</li>
+<li>Chapter 2.1–2.2: Statistical Learning</li>
+<li>Chapter 2.2.2: Bias–Variance Trade-off</li>
+</ul></li>
+<li><strong>ESL</strong>
+<ul>
+<li>Chapter 1: Introduction</li>
+<li>Chapter 2: Overview of Supervised Learning</li>
+</ul></li>
+<li><strong>SMLR</strong>
+<ul>
+<li>Chapter 1: Introduction to Statistical Learning</li>
+<li>Chapter 2: Linear Regression Review</li>
+</ul></li>
+</ul>
+</section>
+<section id="week-2-regularization-methods" class="level1">
+<h1>Week 2: Regularization Methods</h1>
+<p>Topics:</p>
+<ul>
+<li>Motivation for regularization</li>
+<li>Multicollinearity and model instability</li>
+<li>Ridge regression</li>
+<li>Lasso regression</li>
+<li>Geometry of regularization</li>
+<li>Choosing tuning parameters using cross-validation</li>
+</ul>
+<p><strong>Goal</strong>:<br>
+Learn how regularization improves prediction and performs variable selection.</p>
+<p>References:</p>
+<ul>
+<li><strong>ISLR</strong>
+<ul>
+<li>Chapter 6.2: Ridge Regression</li>
+<li>Chapter 6.3: Lasso</li>
+<li>Chapter 5.1–5.2: Cross-Validation</li>
+</ul></li>
+<li><strong>ESL</strong>
+<ul>
+<li>Chapter 3.4: Shrinkage Methods</li>
+<li>Chapter 7.10: Regularization and Model Selection</li>
+</ul></li>
+<li><strong>SMLR</strong>
+<ul>
+<li>Chapter 4: Ridge Regression</li>
+<li>Chapter 5: Lasso and Variable Selection</li>
+</ul></li>
+</ul>
+</section>
+<section id="week-3-flexible-and-nonparametric-models" class="level1">
+<h1>Week 3: Flexible and Nonparametric Models</h1>
+<p>Topics:</p>
+<ul>
+<li>K-nearest neighbors (KNN)</li>
+<li>Nonparametric regression</li>
+<li>Curse of dimensionality</li>
+<li>Bias–variance trade-off in flexible models</li>
+<li>Simple smoothing methods</li>
+</ul>
+<p><strong>Goal</strong>:</p>
+<p>Understand flexible models that can capture nonlinear relationships.</p>
+<p>References:</p>
+<ul>
+<li><strong>ISLR</strong>
+<ul>
+<li>Chapter 2.2.3: KNN</li>
+<li>Chapter 7: Moving Beyond Linearity</li>
+</ul></li>
+<li><strong>ESL</strong>
+<ul>
+<li>Chapter 6: Kernel Smoothing Methods</li>
+<li>Chapter 13.3: Nearest Neighbor Methods</li>
+</ul></li>
+<li><strong>SMLR</strong>
+<ul>
+<li>Chapter 6: Nonparametric Methods</li>
+<li>Chapter 7: Kernel Methods</li>
+</ul></li>
+</ul>
+</section>
+<section id="week-4-classification-methods" class="level1">
+<h1>Week 4: Classification Methods</h1>
+<p>Topics:</p>
+<ul>
+<li>Classification vs regression</li>
+<li>Logistic regression</li>
+<li>Discriminant analysis (LDA)</li>
+<li>Decision trees</li>
+<li>Basic model comparison</li>
+</ul>
+<p><strong>Goal</strong>:<br>
+Introduce common classification algorithms and decision boundaries. References:</p>
+<ul>
+<li><strong>ISLR</strong>
+<ul>
+<li>Chapter 4: Classification</li>
+<li>Chapter 8.1–8.2: Decision Trees</li>
+</ul></li>
+<li><strong>ESL</strong>
+<ul>
+<li>Chapter 4: Linear Methods for Classification</li>
+<li>Chapter 9.2: Tree-Based Methods</li>
+</ul></li>
+<li><strong>SMLR</strong>
+<ul>
+<li>Chapter 8: Classification Methods</li>
+<li>Chapter 9: Tree Models</li>
+</ul></li>
+</ul>
+</section>
+<section id="week-5-ensemble-methods" class="level1">
+<h1>Week 5: Ensemble Methods</h1>
+<p>Topics: - Motivation for ensemble learning - Bagging - Random forests - Boosting (conceptual overview) - Feature importance</p>
+<p>Goal:<br>
+Understand how combining models can improve predictive performance. References:</p>
+<ul>
+<li><strong>ISLR</strong>
+<ul>
+<li>Chapter 8.2–8.3: Bagging and Random Forests</li>
+<li>Chapter 8.3: Boosting</li>
+</ul></li>
+<li><strong>ESL</strong>
+<ul>
+<li>Chapter 10: Boosting and Additive Trees</li>
+</ul></li>
+<li><strong>SMLR</strong>
+<ul>
+<li>Chapter 10: Ensemble Methods</li>
+</ul></li>
+</ul>
+</section>
+<section id="week-6-applications-and-projects" class="level1">
+<h1>Week 6: Applications and Projects</h1>
+<p>Topics:</p>
+<ul>
+<li>Unsupervised learning overview (clustering, PCA)</li>
+<li>Practical workflow for machine learning</li>
+<li>Model evaluation and comparison</li>
+<li>Student project presentations</li>
+</ul>
+<p>Goal:<br>
+Apply the learned methods to real datasets and communicate results. References:</p>
+<ul>
+<li><strong>ISLR</strong>
+<ul>
+<li>Chapter 10: Unsupervised Learning</li>
+</ul></li>
+<li><strong>ESL</strong>
+<ul>
+<li>Chapter 14: Unsupervised Learning</li>
+</ul></li>
+<li><strong>SMLR</strong>
+<ul>
+<li>Chapter 11: Unsupervised Learning # Course Overview This course is organized as an introduction to <strong>statistical learning from a statistical perspective</strong>.<br>
+The focus is on three recurring ideas:</li>
+</ul></li>
+</ul>
+<ol type="1">
+<li><strong>Model flexibility</strong></li>
+<li><strong>Model evaluation</strong></li>
+<li><strong>Model improvement</strong> The course moves from simple predictive models to more flexible methods, then to evaluation tools, regularization, ensemble methods, and practical workflow. # Course Narrative The course follows this progression:</li>
+</ol>
+<blockquote class="blockquote">
+<p>Start with simple predictive models, make them more flexible, learn how to evaluate them, improve them, and finally apply them to real problems.</p>
+</blockquote>
+<p>This gives students a coherent view of statistical learning as a modeling pipeline rather than a disconnected list of techniques. # Learning Goals By the end of the course, students should be able to:</p>
+<ul>
+<li>identify common supervised learning problems,</li>
+<li>distinguish regression and classification settings,</li>
+<li>understand the role of model flexibility,</li>
+<li>evaluate models using validation and resampling methods,</li>
+<li>apply regularization and ensemble methods,</li>
+<li>compare competing models using prediction performance,</li>
+<li>implement statistical learning methods in software,</li>
+<li>carry out a complete modeling workflow on real data.</li>
+</ul>
+</section>
+<section id="unit-1-foundations-of-statistical-learning" class="level1">
+<h1>Unit 1: Foundations of Statistical Learning</h1>
+<section id="main-topics" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics">Main Topics</h2>
+<ul>
+<li>What is statistical learning?</li>
+<li>Supervised vs unsupervised learning</li>
+<li>Parametric vs nonparametric methods</li>
+<li>Prediction vs explanation</li>
+<li>Bias–variance tradeoff</li>
+</ul>
+</section>
+<section id="teaching-goals" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals">Teaching Goals</h2>
+<p>Students should understand that the main goal of statistical learning is <strong>good prediction on new data</strong>, not simply fitting the observed sample as closely as possible.</p>
+</section>
+<section id="suggested-emphasis" class="level2">
+<h2 class="anchored" data-anchor-id="suggested-emphasis">Suggested Emphasis</h2>
+<ul>
+<li>Introduce the overall modeling problem first.</li>
+<li>Use simple real-world examples such as house prices, medical diagnosis, or spam filtering.</li>
+<li>Make overfitting a central theme from the beginning.</li>
+</ul>
+</section>
+</section>
+<section id="unit-2-linear-regression-as-a-baseline" class="level1">
+<h1>Unit 2: Linear Regression as a Baseline</h1>
+<section id="main-topics-1" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics-1">Main Topics</h2>
+<ul>
+<li>Linear regression as a prediction tool</li>
+<li>Interpreting fitted relationships</li>
+<li>Strengths and weaknesses of linear models</li>
+<li>Linear models as a baseline for comparison</li>
+</ul>
+</section>
+<section id="teaching-goals-1" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals-1">Teaching Goals</h2>
+<p>Students should see linear regression as the <strong>starting point</strong> of predictive modeling: simple, interpretable, and useful, but limited in flexibility.</p>
+</section>
+<section id="suggested-emphasis-1" class="level2">
+<h2 class="anchored" data-anchor-id="suggested-emphasis-1">Suggested Emphasis</h2>
+<ul>
+<li>Present linear regression mainly as a predictive model.</li>
+<li>Keep inference light unless needed for context.</li>
+<li>Highlight when linear models fail to capture nonlinear structure.</li>
+</ul>
+</section>
+</section>
+<section id="unit-3-nonparametric-regression" class="level1">
+<h1>Unit 3: Nonparametric Regression</h1>
+<section id="main-topics-2" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics-2">Main Topics</h2>
+<ul>
+<li>Flexible regression methods</li>
+<li>K-nearest neighbors regression</li>
+<li>Smoothers and local fitting ideas</li>
+<li>Model flexibility and overfitting</li>
+</ul>
+</section>
+<section id="teaching-goals-2" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals-2">Teaching Goals</h2>
+<p>Students should learn that more flexible models can better capture complicated patterns, but at the cost of increased variance. ## Suggested Emphasis - Connect this unit directly to bias–variance tradeoff. - Compare flexible and inflexible models visually. - Use plots to show underfitting and overfitting.</p>
+</section>
+</section>
+<section id="unit-4-classification" class="level1">
+<h1>Unit 4: Classification</h1>
+<section id="main-topics-3" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics-3">Main Topics</h2>
+<ul>
+<li>Classification as a prediction problem</li>
+<li>Logistic regression</li>
+<li>Decision boundaries</li>
+<li>K-nearest neighbors classification</li>
+</ul>
+</section>
+<section id="teaching-goals-3" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals-3">Teaching Goals</h2>
+<p>Students should understand that classification uses the same modeling logic as regression, but with categorical outcomes. ## Suggested Emphasis - Stress the difference between predicting a class and predicting a numeric response. - Introduce class probabilities early. - Use confusion matrices and classification error as evaluation tools.</p>
+</section>
+</section>
+<section id="unit-5-binary-classification" class="level1">
+<h1>Unit 5: Binary Classification</h1>
+<section id="main-topics-4" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics-4">Main Topics</h2>
+<ul>
+<li>Logistic regression in more detail</li>
+<li>Interpreting probabilities</li>
+<li>Thresholds and classification decisions</li>
+<li>Comparing classifiers</li>
+</ul>
+</section>
+<section id="teaching-goals-4" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals-4">Teaching Goals</h2>
+<p>Students should learn how binary classification models convert predictors into class probabilities and final decisions. ## Suggested Emphasis - Distinguish between probability estimation and hard classification. - Discuss how different thresholds change predictions. - Use practical examples such as disease detection or spam filtering.</p>
+</section>
+</section>
+<section id="unit-6-generative-models" class="level1">
+<h1>Unit 6: Generative Models</h1>
+<section id="main-topics-5" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics-5">Main Topics</h2>
+<ul>
+<li>LDA</li>
+<li>QDA</li>
+<li>Naive Bayes</li>
+<li>Discriminative vs generative modeling</li>
+</ul>
+</section>
+<section id="teaching-goals-5" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals-5">Teaching Goals</h2>
+<p>Students should understand the idea of modeling class distributions directly and then using Bayes’ rule for prediction. ## Suggested Emphasis - Compare logistic regression with LDA and QDA conceptually. - Emphasize assumptions and when they matter. - Use side-by-side model comparisons.</p>
+</section>
+</section>
+<section id="unit-7-resampling-methods" class="level1">
+<h1>Unit 7: Resampling Methods</h1>
+<section id="main-topics-6" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics-6">Main Topics</h2>
+<ul>
+<li>Validation set approach</li>
+<li>Cross-validation</li>
+<li>Bootstrap</li>
+<li>Estimating test error</li>
+</ul>
+</section>
+<section id="teaching-goals-6" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals-6">Teaching Goals</h2>
+<p>This unit is the conceptual center of the course. Students must understand that <strong>training error is not enough</strong>, and that model performance must be evaluated using principled estimates of test error. ## Suggested Emphasis - Make cross-validation a central practical tool. - Show why naive comparison by training error is misleading. - Use repeated examples across multiple methods.</p>
+</section>
+</section>
+<section id="unit-8-regularization" class="level1">
+<h1>Unit 8: Regularization</h1>
+<section id="main-topics-7" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics-7">Main Topics</h2>
+<ul>
+<li>Ridge regression</li>
+<li>Lasso</li>
+<li>Elastic net</li>
+<li>Shrinkage and complexity control</li>
+</ul>
+</section>
+<section id="teaching-goals-7" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals-7">Teaching Goals</h2>
+<p>Students should understand how regularization controls complexity and improves prediction without exhaustively searching across models. ## Suggested Emphasis - Present regularization as a modern answer to overfitting in linear models. - Compare subset selection and shrinkage conceptually. - Use coefficient path plots when possible.</p>
+</section>
+</section>
+<section id="unit-9-ensemble-methods" class="level1">
+<h1>Unit 9: Ensemble Methods</h1>
+<section id="main-topics-8" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics-8">Main Topics</h2>
+<ul>
+<li>Decision trees</li>
+<li>Bagging</li>
+<li>Random forests</li>
+<li>Boosting</li>
+</ul>
+</section>
+<section id="teaching-goals-8" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals-8">Teaching Goals</h2>
+<p>Students should learn that combining many unstable or weak learners can create a stronger predictive model. ## Suggested Emphasis - Start with a single tree and its limitations. - Then motivate bagging as variance reduction. - Finally introduce random forests and boosting as improved ensemble ideas.</p>
+</section>
+</section>
+<section id="unit-10-machine-learning-in-practice" class="level1">
+<h1>Unit 10: Machine Learning in Practice</h1>
+<section id="main-topics-9" class="level2">
+<h2 class="anchored" data-anchor-id="main-topics-9">Main Topics</h2>
+<ul>
+<li>End-to-end modeling workflow</li>
+<li>Data preprocessing</li>
+<li>Model tuning</li>
+<li>Model comparison</li>
+<li>Practical considerations on real datasets</li>
+</ul>
+</section>
+<section id="teaching-goals-9" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-goals-9">Teaching Goals</h2>
+<p>Students should be able to complete a full predictive analysis from data setup through final model comparison and interpretation. ## Suggested Emphasis - Organize this unit around a full case study. - Show how preprocessing, resampling, tuning, and comparison fit together. - Emphasize reproducible workflow and communication.</p>
+</section>
+</section>
+<section id="exams-and-major-checkpoints" class="level1">
+<h1>Exams and Major Checkpoints</h1>
+<section id="midterm-i" class="level2">
+<h2 class="anchored" data-anchor-id="midterm-i">Midterm I</h2>
+<p>Suggested coverage:</p>
+<ul>
+<li>foundations of statistical learning,</li>
+<li>linear regression,</li>
+<li>nonparametric regression,</li>
+<li>early classification concepts.</li>
+</ul>
+</section>
+<section id="midterm-ii" class="level2">
+<h2 class="anchored" data-anchor-id="midterm-ii">Midterm II</h2>
+<p>Suggested coverage:</p>
+<ul>
+<li>classification,</li>
+<li>generative models,</li>
+<li>resampling,</li>
+<li>regularization.</li>
+</ul>
+</section>
+<section id="final-assessment-or-project" class="level2">
+<h2 class="anchored" data-anchor-id="final-assessment-or-project">Final Assessment or Project</h2>
+<p>Suggested format:</p>
+<ul>
+<li>a real dataset,</li>
+<li>several competing methods,</li>
+<li>model comparison using validation or cross-validation,</li>
+<li>written interpretation of results.</li>
+</ul>
+</section>
+</section>
+<section id="weekly-teaching-rhythm" class="level1">
+<h1>Weekly Teaching Rhythm</h1>
+<p>A consistent teaching rhythm can help students stay oriented. ## Lecture 1 - concept and intuition, - visual explanation, - strengths and limitations of the method.</p>
+<section id="lecture-2" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-2">Lecture 2</h2>
+<ul>
+<li>implementation,</li>
+<li>model fitting,</li>
+<li>comparison with earlier methods,</li>
+<li>short applied example.</li>
+</ul>
+</section>
+</section>
+<section id="core-themes-to-revisit-throughout-the-course" class="level1">
+<h1>Core Themes to Revisit Throughout the Course</h1>
+<section id="theme-1-model-flexibility" class="level2">
+<h2 class="anchored" data-anchor-id="theme-1-model-flexibility">Theme 1: Model Flexibility</h2>
+<p>Students should repeatedly ask: &gt; How flexible is this model, and what does that flexibility buy us? ## Theme 2: Generalization Students should repeatedly ask: &gt; How do we know whether this model will work on new data? ## Theme 3: Comparison Students should repeatedly ask: &gt; Is this method better than what we already had? # Recommended Course Message to Students A useful recurring message for students is: &gt; Statistical learning is about building models that perform well on new data, understanding the tradeoff between simplicity and flexibility, and choosing methods based on predictive performance. # Condensed Teaching Calendar</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Unit</th>
+<th>Topic</th>
+<th>Main Goal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Foundations</td>
+<td>Introduce statistical learning and bias–variance</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Linear Regression</td>
+<td>Establish a simple predictive baseline</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Nonparametric Regression</td>
+<td>Introduce flexibility</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Classification</td>
+<td>Shift from numeric to categorical prediction</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Binary Classification</td>
+<td>Develop logistic and classification ideas</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Generative Models</td>
+<td>Compare generative and discriminative methods</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Resampling</td>
+<td>Learn to estimate test error</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Regularization</td>
+<td>Control complexity and improve prediction</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Ensemble Methods</td>
+<td>Combine models to improve performance</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>ML in Practice</td>
+<td>Execute a complete workflow</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="final-summary-1" class="level1">
+<h1>Final Summary</h1>
+<p>This course should leave students with a clear picture of statistical learning as a unified process:</p>
+<ol type="1">
+<li>start with a modeling problem,</li>
+<li>choose an appropriate predictive method,</li>
+<li>evaluate it using principled tools,</li>
+<li>improve it when needed,</li>
+<li>apply it carefully in practice.</li>
+</ol>
+</section>
+<section id="gemini-1" class="level1">
+<h1>Gemini</h1>
+<p>This course plan integrates the theoretical depth of <em>The Elements of Statistical Learning</em> (ESL) and the computational focus of Ruoqing Zhu’s <em>SMLR</em> and <em>STAT 432</em> with the intuitive, application-based approach of <em>An Introduction to Statistical Learning</em> (ISLR). The curriculum is designed for a 15-week semester, prioritizing <strong>numerical optimization</strong> (as emphasized in SMLR) alongside standard statistical learning theory.</p>
+<section id="phase-1-foundations-optimization-weeks-13" class="level3">
+<h3 class="anchored" data-anchor-id="phase-1-foundations-optimization-weeks-13"><strong>Phase 1: Foundations &amp; Optimization (Weeks 1–3)</strong></h3>
+<p><em>Focus: Setting the stage with R, Linear Algebra, and the “How” of algorithm fitting.</em></p>
+<ul>
+<li><strong>Week 1: Introduction &amp; The Learning Framework</strong>
+<ul>
+<li>What is Statistical Learning? (ISLR Ch. 2; ESL Ch. 2).</li>
+<li>Supervised vs.&nbsp;Unsupervised Learning.</li>
+<li>The Bias-Variance Trade-off and MSE (SMLR Ch. 12.3).</li>
+</ul></li>
+<li><strong>Week 2: Computational Toolkit</strong>
+<ul>
+<li><strong>R &amp; RMarkdown:</strong> Environment setup and reproducible workflows (SMLR Ch. 1-2).</li>
+<li><strong>Linear Algebra Refresher:</strong> Matrix inversion, rank updates, and block matrices (SMLR Ch. 4).</li>
+</ul></li>
+<li><strong>Week 3: Optimization Basics</strong>
+<ul>
+<li>First and Second-order properties (Gradient vs.&nbsp;Hessian).</li>
+<li><strong>Algorithms:</strong> Gradient Descent, Newton’s Method, and Coordinate Descent (SMLR Ch. 5).</li>
+<li><em>Lab:</em> Implementing Linear Regression using <code>optim()</code> from scratch. ### <strong>Phase 2: Linear Models &amp; Regularization (Weeks 4–6)</strong> <em>Focus: Moving beyond Ordinary Least Squares to handle high-dimensional data.</em></li>
+</ul></li>
+<li><strong>Week 4: Linear Regression &amp; Model Selection</strong>
+<ul>
+<li>OLS properties and limitations.</li>
+<li>Criteria: <span class="math inline">\(C_p\)</span>, AIC, BIC, and Adjusted <span class="math inline">\(R^2\)</span> (SMLR Ch. 6; ISLR Ch. 6).</li>
+<li>Search: Best subset vs.&nbsp;Stepwise methods.</li>
+</ul></li>
+<li><strong>Week 5: Penalized Regression (Ridge &amp; Lasso)</strong>
+<ul>
+<li><strong>Ridge Regression:</strong> Motivation via correlated variables and convexity (SMLR Ch. 7).</li>
+<li><strong>Lasso:</strong> The <span class="math inline">\(L_1\)</span> penalty, sparsity, and the soft-thresholding operator (SMLR Ch. 8).</li>
+<li><strong>Elastic Net:</strong> Combining <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span> penalties.</li>
+</ul></li>
+<li><strong>Week 6: Path Algorithms &amp; Cross-Validation</strong>
+<ul>
+<li>The Lasso solution path and Path-wise Coordinate Descent (SMLR Ch. 8.4).</li>
+<li>k-fold and Leave-one-out Cross-Validation (ISLR Ch. 5).</li>
+<li><em>Lab:</em> The <code>glmnet</code> package in R. ### <strong>Phase 3: Classification &amp; Smoothing (Weeks 7–9)</strong> <em>Focus: Categorical outcomes and non-linear boundaries.</em></li>
+</ul></li>
+<li><strong>Week 7: Linear Classification</strong>
+<ul>
+<li>Logistic Regression: Parameters, interpretation, and Newton-Raphson for MLE (SMLR Ch. 10).</li>
+<li>Discriminant Analysis (LDA/QDA): Bayes’ Rule and decision boundaries (ISLR Ch. 4; SMLR Ch. 11).</li>
+</ul></li>
+<li><strong>Week 8: Non-parametric Smoothing &amp; Splines</strong>
+<ul>
+<li>Moving beyond linearity: Polynomials and Piecewise functions.</li>
+<li><strong>Splines:</strong> Basis functions, Natural Cubic Splines, and Smoothing Splines (SMLR Ch. 9; ISLR Ch. 7).</li>
+</ul></li>
+<li><strong>Week 9: Local Learning &amp; Kernels</strong>
+<ul>
+<li>K-Nearest Neighbors (KNN) for regression and classification (SMLR Ch. 12).</li>
+<li>Kernel Density Estimation and Nadaraya-Watson (SMLR Ch. 13).</li>
+<li>The “Curse of Dimensionality.” ### <strong>Phase 4: Support Vector Machines &amp; Kernels (Weeks 10–11)</strong> <em>Focus: The “Kernel Trick” and Maximal Margins.</em></li>
+</ul></li>
+<li><strong>Week 10: Support Vector Machines (SVM)</strong>
+<ul>
+<li>The Maximal Margin Classifier and Slack Variables (SMLR Ch. 17).</li>
+<li>Duality: From Primal to Dual formulations (ESL Ch. 12).</li>
+</ul></li>
+<li><strong>Week 11: RKHS &amp; Kernel Methods</strong>
+<ul>
+<li>Reproducing Kernel Hilbert Space (RKHS) basics (SMLR Ch. 15).</li>
+<li>Kernel Ridge Regression and the Kernel Trick (SMLR Ch. 16). ### <strong>Phase 5: Trees, Ensembles &amp; Unsupervised Learning (Weeks 12–15)</strong> <em>Focus: Modern “Black Box” winners and discovery without labels.</em></li>
+</ul></li>
+<li><strong>Week 12: Tree-Based Methods</strong>
+<ul>
+<li>Decision Trees: Gini index vs.&nbsp;Entropy (ISLR Ch. 8).</li>
+<li>Bagging and Random Forests (SMLR Ch. 19-20).</li>
+</ul></li>
+<li><strong>Week 13: Boosting</strong>
+<ul>
+<li>AdaBoost and the Stagewise Additive Model.</li>
+<li>Gradient Boosting Machines (GBM) and XGBoost/LightGBM concepts (SMLR Ch. 22-23).</li>
+</ul></li>
+<li><strong>Week 14: Unsupervised Learning I (Clustering)</strong>
+<ul>
+<li>K-means and Hierarchical Clustering (SMLR Ch. 24-25).</li>
+<li>Spectral Clustering and the Graph Laplacian (SMLR Ch. 28).</li>
+</ul></li>
+<li><strong>Week 15: Unsupervised Learning II (Dimension Reduction)</strong>
+<ul>
+<li>Principal Component Analysis (PCA).</li>
+<li>Modern visualization: t-SNE and UMAP (SMLR Ch. 31). ### <strong>Required Reading List</strong></li>
+</ul></li>
+</ul>
+<ol type="1">
+<li><strong>SMLR:</strong> Zhu, R. <em>Statistical Machine Learning with R</em>. (Primary for optimization/computation).</li>
+<li><strong>ISLR:</strong> James, G., et al.&nbsp;<em>An Introduction to Statistical Learning</em>. (Primary for intuition/labs).</li>
+<li><strong>ESL:</strong> Hastie, T., et al.&nbsp;<em>The Elements of Statistical Learning</em>. (Reference for theoretical derivations). # Statistical Learning: R to Python Translation Guide This guide provides the Python counterparts for common R functions used in <strong>ISLR</strong>, <strong>ESL</strong>, and <strong>SMLR</strong>. ## 1. Model Fitting &amp; Inference</li>
+</ol>
+<p>While <code>scikit-learn</code> is the industry standard for prediction, <strong><code>statsmodels</code></strong> is the primary library for statistical inference (<span class="math inline">\(p\)</span>-values, <span class="math inline">\(R^2\)</span>, and <span class="math inline">\(t\)</span>-tests) and matches the R <code>lm()</code> experience.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">R Code</th>
+<th style="text-align: left;">Python (<code>statsmodels.formula.api</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Linear Regression</strong></td>
+<td style="text-align: left;"><code>fit &lt;- lm(y ~ x1 + x2, data=df)</code></td>
+<td style="text-align: left;"><code>fit = smf.ols("y ~ x1 + x2", data=df).fit()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Logistic Regression</strong></td>
+<td style="text-align: left;"><code>glm(y ~ x, data=df, family="binomial")</code></td>
+<td style="text-align: left;"><code>smf.logit("y ~ x", data=df).fit()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Model Summary</strong></td>
+<td style="text-align: left;"><code>summary(fit)</code></td>
+<td style="text-align: left;"><code>print(fit.summary())</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>ANOVA Table</strong></td>
+<td style="text-align: left;"><code>anova(fit)</code></td>
+<td style="text-align: left;"><code>sm.stats.anova_lm(fit)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Predictions</strong></td>
+<td style="text-align: left;"><code>predict(fit, newdata)</code></td>
+<td style="text-align: left;"><code>fit.predict(new_data)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Interaction Terms</strong></td>
+<td style="text-align: left;"><code>lm(y ~ x1 * x2)</code></td>
+<td style="text-align: left;"><code>smf.ols("y ~ x1 * x2", data=df).fit()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Polynomials</strong></td>
+<td style="text-align: left;"><code>lm(y ~ poly(x, 2))</code></td>
+<td style="text-align: left;"><code>smf.ols("y ~ x + I(x**2)", data=df).fit()</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-selection-regularization" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection-regularization">2. Model Selection &amp; Regularization</h2>
+<p>Python’s <strong><code>scikit-learn</code></strong> (sklearn) is the powerhouse for cross-validation and penalized regression.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">R Code (Package)</th>
+<th style="text-align: left;">Python Library</th>
+<th style="text-align: left;">Python Counterpart</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Lasso / Ridge</strong></td>
+<td style="text-align: left;"><code>glmnet(x, y)</code></td>
+<td style="text-align: left;"><code>sklearn</code></td>
+<td style="text-align: left;"><code>LassoCV()</code> or <code>RidgeCV()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Stepwise (AIC/BIC)</strong></td>
+<td style="text-align: left;"><code>step(fit)</code></td>
+<td style="text-align: left;"><code>sklearn</code></td>
+<td style="text-align: left;"><code>SequentialFeatureSelector</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Best Subset</strong></td>
+<td style="text-align: left;"><code>regsubsets()</code> (<code>leaps</code>)</td>
+<td style="text-align: left;"><code>mlxtend</code></td>
+<td style="text-align: left;"><code>ExhaustiveFeatureSelector</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Validation Split</strong></td>
+<td style="text-align: left;"><code>sample()</code> / <code>createDataPartition</code></td>
+<td style="text-align: left;"><code>sklearn</code></td>
+<td style="text-align: left;"><code>train_test_split()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>K-Fold CV</strong></td>
+<td style="text-align: left;"><code>cv.glmnet()</code></td>
+<td style="text-align: left;"><code>sklearn</code></td>
+<td style="text-align: left;"><code>cross_val_score()</code> or <code>GridSearchCV()</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="diagnostics-residuals" class="level2">
+<h2 class="anchored" data-anchor-id="diagnostics-residuals">3. Diagnostics &amp; Residuals</h2>
+<p>In R, <code>plot(fit)</code> automatically generates four diagnostic plots. In Python, you access these via the <code>.resid</code> attribute or <code>statsmodels.graphics</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Metric / Plot</th>
+<th style="text-align: left;">R Code</th>
+<th style="text-align: left;">Python Code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Residuals</strong></td>
+<td style="text-align: left;"><code>residuals(fit)</code></td>
+<td style="text-align: left;"><code>fit.resid</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Fitted Values</strong></td>
+<td style="text-align: left;"><code>fitted(fit)</code></td>
+<td style="text-align: left;"><code>fit.fittedvalues</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Q-Q Plot</strong></td>
+<td style="text-align: left;"><code>qqnorm(fit$resid)</code></td>
+<td style="text-align: left;"><code>sm.qqplot(fit.resid, line='s')</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Leverage Plot</strong></td>
+<td style="text-align: left;"><code>plot(fit, which=4)</code></td>
+<td style="text-align: left;"><code>sm.graphics.influence_plot(fit)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Residual Plot</strong></td>
+<td style="text-align: left;"><code>plot(fit, which=1)</code></td>
+<td style="text-align: left;"><code>sns.residplot(x=fit.fittedvalues, y=df['y'])</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="required-libraries-for-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="required-libraries-for-the-course">4. Required Libraries for the Course</h2>
+<p>To set up a Python environment equivalent to the R statistical suite, run:</p>
+</section>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<div id="refs" role="list" style="display: none">
+
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            trigger: 'click',
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            positionFixed: true,
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./contents/1/basic.html" class="pagination-link" aria-label="Statistical Learning Basics">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning Basics</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
