@@ -1,7 +1,613 @@
+---
+jupyter: stats
+---
+
+
 # Regularization
 
-ridge + lasso
 {{< include ../math.qmd >}}
+
+## Motivation
+
+The OLS estimator is attractive because, under the Gauss–Markov assumptions, it is BLUE: the best linear unbiased estimator. However, when some predictors are nearly collinear, the matrix $X^\top X$ becomes nearly singular. In that case, the variance of $\hat\beta_{\ols}$ can be very large, so the estimated coefficients may become unstable and unreliable.
+
+This leads to the bias-variance trade-off. By allowing a small amount of bias, we may substantially reduce the variance and improve predictive performance. A common way to do this is through regularization.
+
+Two of the most important regularization methods are ridge regression and lasso. Both methods tend to shrink the coefficients toward zero, so they are also called shrinkage methods.
+
+## Ridge Regression
+
+### OLS esimator review
+Consider a linear model
+$$
+y=X\beta+\varepsilon.
+$$
+
+Given the dataset $X$ and $y$, the OLS estimator $\hat\beta_{\ols}$ finds the coefficient vector $\beta$ that minimizes the residual sum of squares
+$$
+\rss(\beta)=\norm{y-X\beta}_2^2.
+$$ 
+In other words,
+$$
+\hat{\beta}_{\ols} = \arg\min_{\beta}\qty{\norm{y - X\beta}_2^2}.
+$$
+When $X^\top X$ is invertible, the solution is 
+$$
+\hat{\beta}_{\ols} = (X^\top X)^{-1}X^\top y.
+$$
+
+
+
+
+### Ridge estimator 
+Ridge regression modifies the OLS loss function by adding a quadratic penalty.
+
+
+
+::: {#def-}
+## Ridge Regression
+For a response vector $y \in \mathbb{R}^n$ and a design matrix $X \in \mathbb{R}^{n \times p}$, the Ridge estimator $\hat{\beta}_{\ridge}$ is defined as:
+$$
+\hat{\beta}_{\ridge} = \arg\min_{\beta} \qty{ \norm{y - X\beta}_2^2 + \lambda \norm{\beta}_2^2 }
+$$
+where 
+
+- $\lambda \ge 0$ is the regularization parameter that controls the trade-off between the fit to the data and the penalty on the coefficient size.
+- $\norm{\beta}_2^2 = \sum_{j=1}^p \beta_j^2$ is the $L_2$ norm of the coefficient vector
+:::
+
+The penalty shrinks the coefficients toward zero. Larger values of $\lambda$ produce stronger shrinkage. However, ridge regression does not perform variable selection, since it rarely sets any coefficient exactly to zero.
+
+
+
+
+Similar to the OLS estimator, the Ridge estimator can be solved analytically.
+
+
+::: {#thm-}
+## The Closed-Form of Ridge estimator
+The closed-form solution of $\hat\beta_{\ridge}$ is
+$$
+\hat{\beta}_{\ridge} = (X^\top X + \lambda I)^{-1} X^\top y.
+$$
+
+
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+
+Consider the ridge regression objective
+
+$$
+Q(\beta)
+=
+(y-X\beta)^\top (y-X\beta) + \lambda \beta^\top \beta, \quad \text{ where }$\lambda \ge 0$.
+$$
+
+We derive the ridge estimator by minimizing $Q(\beta)$ with respect to $\beta$.
+
+First expand the quadratic form:
+
+$$
+\begin{aligned}
+Q(\beta)
+&= (y^\top - \beta^\top X^\top)(y-X\beta) + \lambda \beta^\top \beta \\
+&= y^\top y - y^\top X\beta - \beta^\top X^\top y + \beta^\top X^\top X\beta + \lambda \beta^\top \beta .
+\end{aligned}
+$$
+
+Since $y^\top X\beta$ is a scalar, it equals its transpose:
+
+$$
+y^\top X\beta = \beta^\top X^\top y .
+$$
+
+Thus
+
+$$
+Q(\beta)
+=
+y^\top y - 2\beta^\top X^\top y + \beta^\top X^\top X\beta + \lambda \beta^\top \beta .
+$$
+
+Combine the last two quadratic terms:
+
+$$
+Q(\beta)
+=
+y^\top y - 2\beta^\top X^\top y + \beta^\top (X^\top X+\lambda I)\beta .
+$$
+
+Now differentiate with respect to $\beta$:
+
+$$
+\nabla_\beta Q(\beta)
+=
+-2X^\top y + 2(X^\top X+\lambda I)\beta .
+$$
+
+Set the gradient equal to zero:
+
+$$
+-2X^\top y + 2(X^\top X+\lambda I)\beta = 0 .
+$$
+
+So
+
+$$
+(X^\top X+\lambda I)\beta = X^\top y .
+$$
+
+Assuming $X^\top X+\lambda I$ is invertible, we obtain
+
+$$
+\hat{\beta}_{\ridge}
+=
+(X^\top X+\lambda I)^{-1}X^\top y .
+$$
+
+Therefore the ridge estimator is
+
+$$
+\hat{\beta}_{\ridge}
+=
+(X^\top X+\lambda I)^{-1}X^\top y.
+$$
+
+</details>
+
+
+:::
+
+In this formulation, the term $\lambda I$ (where $I$ is the identity matrix) is added to the cross-product matrix $X^\top X$ before inversion. This ensures that the matrix is non-singular and well-conditioned, even in the presence of multicollinearity or when $p > n$.
+
+
+
+### Two Types of Linear Models
+Although we typically use the notation $y = X\beta + \varepsilon$, this expression encompasses two distinct model structures based on whether an intercept is included. This choice fundamentally dictates the model's behavior at the origin.
+
+- Model with Intercept: $\beta = [\beta_0, \beta_1, \dots, \beta_k]^\top$ where $\beta_0$ is the intercept. The design matrix $X$ includes a lead column of ones to represent the constant term.
+- Model without Intercept: $\beta = [\beta_1, \dots, \beta_k]^\top$. The design matrix $X$ consists solely of predictor variables. This forces the regression line (or hyperplane) to pass exactly through the origin.
+ 
+In most applications, models with an intercept are preferred because they are more flexible and avoid the "forced-through-the-origin" restriction. 
+
+A model with an intercept can often be reformulated as a no-intercept model by centering the response and the predictors:
+$$
+y^c = y - \bar{y}, \qquad X_j^c = X_j - \bar{X}_j.
+$$
+
+After centering, all variables have mean zero. In the ordinary least squares (OLS) setting, the intercept estimate is $\hat\beta_0 = \bar y - \sum_{j=1}^k \hat\beta_j \bar X_j$. When the data is centered, $\hat\beta_0 = 0$ naturally, effectively yielding a no-intercept model.
+
+
+This distinction is especially important in ridge regression. Even when an intercept is included in the model, it is usually not penalized. The penalty is intended to control the magnitudes of the slope coefficients, which represent the effects of the predictors. Penalizing the intercept would instead shrink the overall level of the fitted model toward zero, making the result depend on the arbitrary choice of the origin of $y$.
+
+If the intercept is included in the model but excluded from the penalty, then the ridge estimator can be written as
+$$
+\hat{\beta}_{\ridge} = (X^\top X + \lambda D)^{-1}X^\top y,\quad \text{ where }D=\mqty[0&0\\0&I].
+$$
+Here the first coefficient, corresponding to $\beta_0$, is not penalized. For this reason, ridge regression is usually carried out after centering the variables. 
+
+
+
+
+::: {.callout-caution}
+It is critical to recognize that a model without an intercept is not automatically equivalent to a model with an intercept. A raw no-intercept model assumes the response must be zero when all predictors are zero. Unless the data is centered or the underlying physical process requires it, forcing the model through the origin can lead to biased results and misleading $R^2$ values.
+:::
+
+
+
+::: {.callout-note}
+## Standardization of Predictors
+Because of reasons mentioned above, it is standard practice to center the variables before performing Ridge Regression. 
+
+Besides centering, predictors are often also standardized before applying ridge regression:
+
+$$
+X_j^{s}=\frac{X_j-\bar X_j}{s_j},
+$$
+where $s_j$ is the sample standard deviation.
+
+Standardization is important because the ridge penalty
+
+$$
+\lambda \sum_{j=1}^{p}\beta_j^2
+$$
+
+depends on the magnitude of the coefficients. If predictors are measured on different scales, the penalty would affect them unevenly. Standardizing the predictors ensures that the penalty treats all variables comparably.
+
+:::
+
+
+
+
+
+
+
+
+
+### Alternative Formulation
+
+By the theory of Lagrange multipliers, ridge regression can also be written in a constrained optimization form:
+
+
+$$
+\hat{\beta}_{\ridge}
+=
+\arg\min_{\beta} \norm{y-X\beta}_2^2
+\quad
+\text{subject to}
+\quad
+\norm{\beta}_2^2 \le s .
+$$
+
+
+Here $s \ge 0$ controls the size of the coefficient vector and is directly related to the penalty parameter $\lambda$. The two parameters have an inverse relationship:
+
+- Large $s$ corresponds to small $\lambda$. The constraint is weak, and $\beta$ approaches the OLS estimator.
+- Small $s$ corresponds to large $\lambda$. The constraint is strong, and $\beta$ shrinks toward $0$.
+
+
+This formulation highlights that ridge regression limits the magnitude of the coefficient vector rather than directly penalizing prediction error. We will later use this interpretation to explain the difference between ridge regression and lasso.
+
+
+
+::: {.callout-note collapse="true"}
+## The Constrained Optimization Problem
+
+Ridge regression can be formulated as a constrained optimization problem, where we minimize RSS subject to a constriant $s$ on the squared $L_2$ norm of the coefficients:
+$$
+\min_{\beta} \norm{y - X\beta}_2^2 \quad \text{subject to} \quad \norm{\beta}_2^2 \le s.
+$$
+
+To solve this, we define the Lagrangian function $\mathcal{L}(\beta, \lambda)$:
+$$
+\mathcal{L}(\beta, \lambda) = \norm{y - X\beta}_2^2 + \lambda (\norm{\beta}_2^2 - s)
+$$
+where $\lambda \ge 0$ is the Lagrange multiplier. Taking the partial derivative with respect to $\beta$ and setting it to zero gives:
+$$
+\frac{\partial \mathcal{L}}{\partial \beta} = -2X^\top(y - X\beta) + 2\lambda\beta = 0
+$$
+Rearranging the terms yields the standard ridge estimator:
+$$
+(X^\top X + \lambda I)\beta = X^\top y \implies \hat{\beta}_{\text{ridge}} = (X^\top X + \lambda I)^{-1} X^\top y.
+$$
+This shows that for every $\lambda > 0$, there exists an equivalent constrained problem with some constraint $s$.
+
+:::
+
+::: {.callout-note collapse="true"}
+## Relation Between $\lambda$ and $s$
+The connection between the penalty parameter $\lambda$ and the constraint $s$ can be explained as follows. The Lagrange multiplier method implies that at the optimal solution
+
+$$
+\lambda (\|\beta\|_2^2 - s) = 0
+$$
+This leads to two scenarios:
+
+- Non-binding constraint: If the OLS solution already satisfies $\norm{\hat{\beta}_{\text{ols}}}_2^2 < s$, then $\lambda = 0$. The constraint has no effect, and the estimator reduces to the OLS estimator $\hat{\beta}_{\ols}$.
+- Binding constraint: If $\norm{\hat{\beta}_{\text{ols}}}_2^2 > s$, the constraint is active. In this case, $\lambda > 0$ and the solution must lie exactly on the boundary $\norm{\hat{\beta}_{\text{ridge}}}_2^2 = s$.
+
+Therefore, the parameters $\lambda$ and $s$ are related through
+$$
+\norm{(X^\top X + \lambda I)^{-1}X^\top y}_2^2 = s,
+\quad
+\text{when } \lambda > 0 .
+$$
+
+$\lambda$ is effectively the "price" paid to satisfy the constraint. As $s$ decreases, $\lambda$ must increase (heavier penalty) to pull the estimate further away from the OLS solution and toward the origin. Because the norm of the ridge estimator is a strictly decreasing function of $\lambda$, for any $s < \norm{\hat{\beta}_{\ols}}_2^2$, there exists a unique $\lambda > 0$ such that $\norm{\hat{\beta}_{\text{ridge}}}_2^2 = s$.
+
+
+
+:::
+
+
+
+
+### SVD and Tikhonov Regularization
+
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+
+Recall the OLS estimator
+
+$$
+\hat{\beta}_{\ols} = (X^\top X)^{-1}X^\top y .
+$$
+
+Let the singular value decomposition (SVD) of $X$ be
+
+$$
+X = UDV^\top ,
+$$
+
+where  
+
+- $U$ is an $n \times n$ orthogonal matrix,
+- $V$ is a $p \times p$ orthogonal matrix,
+- $D$ is an $n \times p$ diagonal matrix whose nonzero entries $d_1,\ldots,d_r$ are the singular values of $X$.
+
+Using the SVD,
+
+$$
+X^\top X = V D^\top D V^\top .
+$$
+
+Since $D^\top D = \mathrm{diag}(d_1^2,\ldots,d_r^2)$, the eigenvalues of $X^\top X$ are $d_i^2$.  
+Hence the OLS estimator can be written as
+
+$$
+\hat{\beta}_{\ols}
+=
+V(D^\top D)^{-1}D^\top U^\top y .
+$$
+
+Since $D^\top D=\mathrm{diag}(d_1^2,\ldots,d_r^2)$, we have
+
+$$
+(D^\top D)^{-1}=\mathrm{diag}\qty(\frac{1}{d_1^2},\ldots,\frac{1}{d_r^2}).
+$$
+Let $u_i$ and $v_i$ denote the columns of $U$ and $V$. Then the estimator can be written as
+
+$$
+\hat{\beta}_{\ols}
+=
+\sum_{i=1}^{r}
+\frac{1}{d_i}\, v_i\, u_i^\top y .
+$$
+
+
+If some singular values $d_i$ are very small, the factors $1/d_i$ become very large, which leads to unstable coefficient estimates. Therefore this expression reveals the instability of OLS.  
+
+Now turn to Ridge regression. We replace the OLS estimator with
+
+$$
+\hat{\beta}_{\text{ridge}}
+=
+(X^\top X+\lambda I)^{-1}X^\top y .
+$$
+
+Substituting the SVD gives
+
+$$
+\hat{\beta}_{\text{ridge}}
+=
+V(D^\top D+\lambda I)^{-1}D^\top U^\top y .
+$$
+
+Because $D^\top D$ is diagonal, the estimator can be written componentwise as
+
+$$
+\hat{\beta}_{\text{ridge}}
+=
+\sum_{i=1}^{r}
+\frac{d_i}{d_i^2+\lambda}
+v_i\,u_i^\top y .
+$$
+
+This representation shows that ridge regression applies a shrinkage factor
+
+$$
+\frac{d_i^2}{d_i^2+\lambda}
+$$
+
+to each principal component direction.
+
+- When $d_i$ is large, the factor is close to $1$, so the component is almost unchanged.
+- When $d_i$ is small, the factor becomes small, shrinking the unstable directions.
+
+
+Thus ridge regression stabilizes the estimator by shrinking the contributions of directions associated with small singular values. 
+
+
+::: {.callout-tip}
+## Tikhonov regularization
+Tikhonov regularization is a method used to solve ill-posed problems and handle multicollinearity by adding a penalty term, $\alpha\norm{L\beta}_2^2$. When the Tikhonov matrix $L$ is the identity matrix $I$, it simplifies to ridge regression. Therefore, ridge regression is a special case of Tikhonov regularization [@tikhonov1977solutions; @hastie2009elements].
+:::
+
+
+
+
+</details>
+
+
+## Python code
+
+We use the following simulated dataset to demonstrate ridge regression. 
+
+The covariance matrix has a very high correlation, so the two predictors $x_1$ and $x_2$ are highly correlated.
+
+```{python}
+import numpy as np
+
+rng = np.random.default_rng(2)
+n = 30
+
+Sigma = np.array([[1, 0.99], [0.99, 1]])
+mean = np.array([0, 0])
+
+X = rng.multivariate_normal(mean, Sigma, size=n)
+y = rng.normal(loc=X[:, 0] + X[:, 1], scale=1)
+```
+The data set is generated from a model with $\Exp(y\mid x_1,x_2)=x_1+x_2$. Therefore the true coefficients are $\beta_1=\beta_2=1$.
+
+
+### Ridge estimator
+
+We use `Ridge` from `sklearn.linear_model` to fit a ridge regression model. Its API is very similar to that of OLS. The argument `alpha` is the regularization parameter $\lambda$.
+
+For simplicity, we use a no-intercept model, so we set `fit_intercept=False`.
+
+```{python}
+from sklearn.linear_model import Ridge
+
+ridge = Ridge(alpha=5, fit_intercept=False).fit(X, y)
+print(f"Ridge beta = {ridge.coef_}")
+```
+
+
+For comparison, we also fit the OLS estimator.
+
+```{python}
+from sklearn.linear_model import LinearRegression
+
+ols = LinearRegression(fit_intercept=False).fit(X, y)
+print(f"OLS beta = {ols.coef_}")
+```
+
+In this example, you may notice two things:
+
+- The ridge coefficients are smaller in magnitude than the OLS coefficients.
+- The OLS coefficients may happen to be closer to the true values in this single sample.
+
+The second point is due to randomness in the simulated data. To see the general pattern, we repeat the simulation many times.
+
+
+```{python}
+import pandas as pd
+
+res = []
+for _ in range(100):
+    X = rng.multivariate_normal(mean, Sigma, size=n)
+    y = rng.normal(loc=X[:, 0] + X[:, 1], scale=1)
+    ols = LinearRegression(fit_intercept=False).fit(X, y)
+    ridge = Ridge(alpha=5, fit_intercept=False).fit(X, y)
+    res.append(
+        {
+            "ols_b1": ols.coef_[0],
+            "ols_b2": ols.coef_[1],
+            "ridge_b1": ridge.coef_[0],
+            "ridge_b2": ridge.coef_[1],
+        }
+    )
+res = pd.DataFrame(res)
+```
+The first five results are shown below. We can see that the OLS estimates vary substantially from sample to sample.
+
+```{python}
+res.head(5)
+```
+
+
+This becomes even clearer in the boxplot below, which shows that the ridge estimator has much smaller variance than the OLS estimator.
+
+
+```{python}
+import seaborn as sns
+sns.boxplot(res)
+```
+
+
+
+### Contour map
+
+
+
+The variance of both $\hat{\beta}_1$ and $\hat{\beta}_2$ is quite large under OLS. This is because the variance of $\widehat{\boldsymbol{\beta}}$ is $\sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}$. Since the columns of $\mathbf{X}$ are highly correlated, the smallest eigenvalue of $\mathbf{X}^\top\mathbf{X}$ is close to zero, making the largest eigenvalue of $(\mathbf{X}^\top\mathbf{X})^{-1}$ very large.
+
+
+To see things in more details, we first build the RSS function. For each $\beta_1$ and $\beta_2$ in the range, we form a model $\hat y_{\beta}=\beta_1x_1+\beta_2x_2$ and use it to compute $\rss = \sum (y-\hat y)^2$. 
+
+```{python}
+beta1_vals = np.linspace(-1, 3, 200)
+beta2_vals = np.linspace(-1, 3, 200)
+B1, B2 = np.meshgrid(beta1_vals, beta2_vals)
+
+RSS = np.array([np.sum((y - X @ np.array([b1, b2])) ** 2) for b1, b2 in zip(B1.ravel(), B2.ravel())]).reshape(B1.shape)
+```
+
+Then we sketch the contour map of $\rss$, and display the true value as a red dot, as well as the estimated `\beta` as a blue square in the countour map.
+
+
+```{python}
+#| eval: false
+quant_levels = np.quantile(RSS, [0.01, 0.025, 0.05, 0.2, 0.5, 0.75])
+
+fig, ax = plt.subplots(figsize=(6, 5))
+cs = ax.contour(B1, B2, RSS, levels=quant_levels, colors="steelblue")
+ax.clabel(cs, inline=True, fontsize=8, fmt="%.0f")
+
+ax.plot(1, 1, "ro", markersize=10, label="True (1, 1)")
+# OLS estimate
+ax.plot(ols.coef_[0], ols.coef_[1], "bs", markersize=10, label="OLS estimate")
+
+ax.set_xlabel(r"$\beta_1$")
+ax.set_ylabel(r"$\beta_2$")
+ax.set_title("OLS Objective Function Contours\n(Flat valley due to high correlation)")
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+
+You may look at the 
+
+
+We can see a relatively **"flat" valley** in the objective function. This is because the covariance matrix of $X$ has a very small eigenvalue.
+
+```{python}
+# Eigenstructure of the population covariance matrix
+eig_vals, eig_vecs = np.linalg.eigh(Sigma)
+print("Eigenvalues of X^T X (population):", np.sort(eig_vals)[::-1])
+print("  -> Smallest eigenvalue ≈", round(min(eig_vals), 4))
+
+inv_Sigma = np.linalg.inv(Sigma)
+eig_vals_inv, _ = np.linalg.eigh(inv_Sigma)
+print("\nEigenvalues of (X^T X)^{-1}:", np.sort(eig_vals_inv)[::-1])
+print("  -> Largest eigenvalue ≈", round(max(eig_vals_inv), 2))
+```
+
+Each time we observe a dataset, it represents a perturbed version of this objective function — lying on a valley centered around the truth.
+
+```{python}
+#| eval: false
+# Multiple datasets showing variability of OLS
+fig, ax = plt.subplots(figsize=(6, 5))
+
+# Draw contour for each of several seeds
+for seed in range(10):
+    rng_i = np.random.default_rng(seed)
+    X_i = rng_i.multivariate_normal(mean, Sigma, size=n)
+    y_i = rng_i.normal(loc=X_i[:, 0] + X_i[:, 1], scale=1)
+    RSS_i = np.array([np.sum((y_i - X_i @ np.array([b1, b2])) ** 2) for b1, b2 in zip(B1.ravel(), B2.ravel())]).reshape(
+        B1.shape
+    )
+    lvl = np.quantile(RSS_i, 0.025)
+    ax.contour(B1, B2, RSS_i, levels=[lvl], colors="steelblue", alpha=0.5)
+
+ax.plot(1, 1, "ro", markersize=12, zorder=5, label="True (1, 1)")
+ax.set_xlabel(r"$\beta_1$")
+ax.set_ylabel(r"$\beta_2$")
+ax.set_title("OLS Contours from Multiple Datasets\n(Valley centered around truth)")
+ax.legend()
+plt.tight_layout()
+plt.show()
+```
+
+
+
+
+
+
+
+## Choosing $\lambda$
+
+The regularization parameter $\lambda$ determines how much shrinkage is applied.
+
+In practice, the modern standard is to choose $\lambda$ by cross-validation. If $\mathrm{CV}(\lambda)$ denotes the cross-validation error, we choose
+
+$$
+\hat{\lambda}
+= \arg\min_{\lambda} \mathrm{CV}(\lambda).
+$$
+
+Classical ridge analysis also uses ridge trace plots and generalized cross-validation.
+
+### Cross
+
+
+
 
 
 ## A Short History of Ridge Regression
@@ -351,6 +957,7 @@ print("Test R^2 :", r2_score(y_test, y_pred_best_ridge_grid))
 
 
 ```{python}
+#| eval: false
 #| warning: false
 lasso_grid_pipe = Pipeline(
     [
@@ -385,6 +992,7 @@ print("Test R^2 :", r2_score(y_test, y_pred_best_lasso_grid))
 
 
 ```{python}
+#| eval: false
 import matplotlib.pyplot as plt
 from sklearn.linear_model import lasso_path
 from sklearn.preprocessing import StandardScaler
@@ -407,6 +1015,7 @@ plt.show()
 
 
 ```{python}
+#| eval: false
 alphas_ridge = np.logspace(-4, 4, 100)
 coefs_ridge = []
 
@@ -433,6 +1042,7 @@ plt.show()
 
 
 ```{python}
+#| eval: false
 from sklearn.model_selection import cross_val_score
 
 alphas = np.logspace(-4, 4, 60)
@@ -466,6 +1076,7 @@ plt.show()
 
 
 ```{python}
+#| eval: false
 #| warning: false
 alphas = np.logspace(-4, 1, 60)
 cv_rmse_lasso = []
@@ -552,77 +1163,6 @@ in practice, for OLS just use LinearRegression()
 
 
 
-
-
-## What Is Ridge Regression?
-
-Ridge regression is a regularized version of ordinary least squares (OLS). It is especially useful when predictors are highly correlated or when the matrix $X^\top X$ is nearly singular, because in such settings the OLS estimator can be unstable.
-
-Recall the linear model
-
-$$
-y = X\beta + \varepsilon.
-$$
-
-When $X^\top X$ is invertible, the OLS estimator is
-
-$$
-\hat{\beta}_{\mathrm{OLS}} = (X^\top X)^{-1}X^\top y.
-$$
-
-Ridge regression modifies the least-squares criterion by adding a quadratic penalty:
-
-$$
-\hat{\beta}_{\mathrm{ridge}}
-= \arg\min_{\beta}
-\left\{
-\lVert y - X\beta \rVert_2^2 + \lambda \lVert \beta \rVert_2^2
-\right\},
-$$
-
-where $\lambda \ge 0$ is a tuning parameter.
-
-Equivalently,
-
-$$
-\hat{\beta}_{\mathrm{ridge}} = (X^\top X + \lambda I)^{-1}X^\top y.
-$$
-
-The penalty shrinks coefficients toward zero. Larger values of $\lambda$ produce stronger shrinkage.
-
-
-## Why Ridge Regression Helps
-
-OLS is unbiased under the classical linear model assumptions, but it can have high variance when predictors are strongly correlated. Ridge regression introduces bias, but it often reduces variance enough to improve predictive performance.
-
-This is a standard example of the **bias-variance tradeoff**.
-
-::: {.callout-note}
-## Key Properties
-
-- If $\lambda = 0$, ridge regression reduces to OLS.
-- If $\lambda > 0$, the matrix $X^\top X + \lambda I$ is invertible even when $X^\top X$ is singular.
-- Ridge shrinks coefficients continuously toward zero.
-- Ridge usually does not set coefficients exactly to zero.
-- Ridge is particularly useful under multicollinearity.
-:::
-
-
-## Choosing $\lambda$
-
-The tuning parameter $\lambda$ determines how much shrinkage is applied.
-
-- Small $\lambda$ gives a model close to OLS.
-- Large $\lambda$ gives stronger regularization.
-
-In practice, the modern standard is to choose $\lambda$ by cross-validation. If $\mathrm{CV}(\lambda)$ denotes the cross-validation error, we choose
-
-$$
-\hat{\lambda}
-= \arg\min_{\lambda} \mathrm{CV}(\lambda).
-$$
-
-Classical ridge analysis also uses ridge trace plots and generalized cross-validation.
 
 
 ## Fitting Ridge Regression in R
@@ -714,126 +1254,6 @@ In the example below, the true parameters are both $1$, but OLS concludes almost
 
 
 
-
-```{python}
-import numpy as np
-rng = np.random.default_rng(2)
-n = 30
-
-# Covariance matrix with high correlation (rho = 0.99)
-Sigma = np.array([[1, 0.99], [0.99, 1]])
-mean = np.array([0, 0])
-
-# Generate correlated predictors
-X = rng.multivariate_normal(mean, Sigma, size=n)
-y = rng.normal(loc=X[:, 0] + X[:, 1], scale=1)
-```
-
-
-
-
-
-
-
-
-
-
-
-
-```{python}
-
-import matplotlib.pyplot as plt
-from sklearn.linear_model import Ridge, LinearRegression
-
-
-# OLS estimate
-ols = LinearRegression(fit_intercept=True).fit(X, y)
-print("OLS estimates (true = [1, 1]):")
-print(f"  beta_1 = {ols.coef_[0]:.4f}")
-print(f"  beta_2 = {ols.coef_[1]:.4f}")
-
-# Ridge estimate (lambda=5/n to match R's lm.ridge(lambda=5))
-ridge = Ridge(alpha=5, fit_intercept=True).fit(X, y)
-print("\nRidge estimates (alpha=5, true = [1, 1]):")
-print(f"  beta_1 = {ridge.coef_[0]:.4f}")
-print(f"  beta_2 = {ridge.coef_[1]:.4f}")
-```
-
-The variance of both $\hat{\beta}_1$ and $\hat{\beta}_2$ is quite large under OLS. This is because the variance of $\widehat{\boldsymbol{\beta}}$ is $\sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}$. Since the columns of $\mathbf{X}$ are highly correlated, the smallest eigenvalue of $\mathbf{X}^\top\mathbf{X}$ is close to zero, making the largest eigenvalue of $(\mathbf{X}^\top\mathbf{X})^{-1}$ very large.
-
-```{python}
-# Contour plot of OLS objective function
-beta1_vals = np.linspace(-1, 3, 200)
-beta2_vals = np.linspace(-1, 3, 200)
-B1, B2 = np.meshgrid(beta1_vals, beta2_vals)
-
-# Compute RSS over grid
-RSS = np.array([
-    np.sum((y - X @ np.array([b1, b2]))**2)
-    for b1, b2 in zip(B1.ravel(), B2.ravel())
-]).reshape(B1.shape)
-
-# Quantile levels for contours
-quant_levels = np.quantile(RSS, [0.01, 0.025, 0.05, 0.2, 0.5, 0.75])
-
-fig, ax = plt.subplots(figsize=(6, 5))
-cs = ax.contour(B1, B2, RSS, levels=quant_levels, colors='steelblue')
-ax.clabel(cs, inline=True, fontsize=8, fmt='%.0f')
-
-# True parameter values
-ax.plot(1, 1, 'ro', markersize=10, label='True (1, 1)')
-# OLS estimate
-ax.plot(ols.coef_[0], ols.coef_[1], 'bs', markersize=10, label='OLS estimate')
-
-ax.set_xlabel(r'$\beta_1$')
-ax.set_ylabel(r'$\beta_2$')
-ax.set_title('OLS Objective Function Contours\n(Flat valley due to high correlation)')
-ax.legend()
-plt.tight_layout()
-plt.show()
-```
-
-We can see a relatively **"flat" valley** in the objective function. This is because the covariance matrix of $X$ has a very small eigenvalue.
-
-```{python}
-# Eigenstructure of the population covariance matrix
-eig_vals, eig_vecs = np.linalg.eigh(Sigma)
-print("Eigenvalues of X^T X (population):", np.sort(eig_vals)[::-1])
-print("  -> Smallest eigenvalue ≈", round(min(eig_vals), 4))
-
-inv_Sigma = np.linalg.inv(Sigma)
-eig_vals_inv, _ = np.linalg.eigh(inv_Sigma)
-print("\nEigenvalues of (X^T X)^{-1}:", np.sort(eig_vals_inv)[::-1])
-print("  -> Largest eigenvalue ≈", round(max(eig_vals_inv), 2))
-```
-
-Each time we observe a dataset, it represents a perturbed version of this objective function — lying on a valley centered around the truth.
-
-```{python}
-# Multiple datasets showing variability of OLS
-fig, ax = plt.subplots(figsize=(6, 5))
-
-# Draw contour for each of several seeds
-for seed in range(10):
-    rng_i = np.random.default_rng(seed)
-    X_i = rng_i.multivariate_normal(mean, Sigma, size=n)
-    y_i = rng_i.normal(loc=X_i[:, 0] + X_i[:, 1], scale=1)
-    RSS_i = np.array([
-        np.sum((y_i - X_i @ np.array([b1, b2]))**2)
-        for b1, b2 in zip(B1.ravel(), B2.ravel())
-    ]).reshape(B1.shape)
-    lvl = np.quantile(RSS_i, 0.025)
-    ax.contour(B1, B2, RSS_i, levels=[lvl], colors='steelblue', alpha=0.5)
-
-ax.plot(1, 1, 'ro', markersize=12, zorder=5, label='True (1, 1)')
-ax.set_xlabel(r'$\beta_1$')
-ax.set_ylabel(r'$\beta_2$')
-ax.set_title('OLS Contours from Multiple Datasets\n(Valley centered around truth)')
-ax.legend()
-plt.tight_layout()
-plt.show()
-```
-
 ---
 
 ## Bias-Variance Trade-off
@@ -861,6 +1281,7 @@ For Ridge:
 The bias-variance trade-off means that a small increase in bias can yield a large decrease in variance, reducing overall prediction error.
 
 ```{python}
+#| eval: false
 # Demonstrate bias-variance trade-off numerically
 n_sim = 500
 n_train = 30
@@ -887,7 +1308,7 @@ for lam in lambdas:
     preds = np.array(preds_at_x)
     true_val = x_test @ beta_true
 
-    bias2 = (np.mean(preds) - true_val[0])**2
+    bias2 = (np.mean(preds) - true_val[0]) ** 2
     var = np.var(preds)
     mse = bias2 + var  # + sigma^2 (ignored here, same for all lambda)
 
@@ -896,13 +1317,15 @@ for lam in lambdas:
     mse_list.append(mse)
 
 fig, ax = plt.subplots(figsize=(8, 5))
-ax.semilogx(lambdas, bias2_list, 'r-', label='Bias²', linewidth=2)
-ax.semilogx(lambdas, var_list, 'b-', label='Variance', linewidth=2)
-ax.semilogx(lambdas, mse_list, 'k--', label='MSE (Bias² + Var)', linewidth=2)
-ax.axvline(lambdas[np.argmin(mse_list)], color='gray', linestyle=':', label=f'Optimal λ ≈ {lambdas[np.argmin(mse_list)]:.3f}')
-ax.set_xlabel(r'Regularization parameter $\lambda$ (log scale)')
-ax.set_ylabel('Error')
-ax.set_title('Bias-Variance Trade-off in Ridge Regression')
+ax.semilogx(lambdas, bias2_list, "r-", label="Bias²", linewidth=2)
+ax.semilogx(lambdas, var_list, "b-", label="Variance", linewidth=2)
+ax.semilogx(lambdas, mse_list, "k--", label="MSE (Bias² + Var)", linewidth=2)
+ax.axvline(
+    lambdas[np.argmin(mse_list)], color="gray", linestyle=":", label=f"Optimal λ ≈ {lambdas[np.argmin(mse_list)]:.3f}"
+)
+ax.set_xlabel(r"Regularization parameter $\lambda$ (log scale)")
+ax.set_ylabel("Error")
+ax.set_title("Bias-Variance Trade-off in Ridge Regression")
 ax.legend()
 plt.tight_layout()
 plt.show()
@@ -918,6 +1341,7 @@ print(f"Min MSE: {min(mse_list):.4f}")
 In practice, $\lambda$ is chosen by **cross-validation** — minimizing the held-out prediction error.
 
 ```{python}
+#| eval: false
 from sklearn.linear_model import RidgeCV
 from sklearn.model_selection import KFold
 
@@ -942,6 +1366,7 @@ print(f"Fitted coefficients: {ridge_cv.coef_}")
 The **regularization path** shows how coefficients shrink as $\lambda$ increases.
 
 ```{python}
+#| eval: false
 from sklearn.linear_model import Ridge
 
 # Fit ridge for many alpha values and track coefficients
@@ -959,13 +1384,13 @@ for a in alphas_path:
 coefs = np.array(coefs)
 
 fig, ax = plt.subplots(figsize=(8, 5))
-ax.semilogx(alphas_path, coefs[:, 0], 'b-', label=r'$\hat{\beta}_1$', linewidth=2)
-ax.semilogx(alphas_path, coefs[:, 1], 'r-', label=r'$\hat{\beta}_2$', linewidth=2)
-ax.axhline(1.0, color='gray', linestyle='--', alpha=0.6, label='True value = 1')
-ax.axhline(0.0, color='black', linestyle=':', alpha=0.4)
-ax.set_xlabel(r'$\alpha$ = $n\lambda$ (log scale)')
-ax.set_ylabel('Coefficient value')
-ax.set_title('Ridge Regression Path\n(Coefficients shrink toward 0 as λ increases)')
+ax.semilogx(alphas_path, coefs[:, 0], "b-", label=r"$\hat{\beta}_1$", linewidth=2)
+ax.semilogx(alphas_path, coefs[:, 1], "r-", label=r"$\hat{\beta}_2$", linewidth=2)
+ax.axhline(1.0, color="gray", linestyle="--", alpha=0.6, label="True value = 1")
+ax.axhline(0.0, color="black", linestyle=":", alpha=0.4)
+ax.set_xlabel(r"$\alpha$ = $n\lambda$ (log scale)")
+ax.set_ylabel("Coefficient value")
+ax.set_title("Ridge Regression Path\n(Coefficients shrink toward 0 as λ increases)")
 ax.legend()
 plt.tight_layout()
 plt.show()

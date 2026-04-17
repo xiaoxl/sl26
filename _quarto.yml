@@ -23,7 +23,7 @@ knitr:
     # comment: "#>"
     collapse: false
 
-jupyter: stats
+
 
  
 book:
@@ -38,8 +38,8 @@ book:
       - contents/1/lr.qmd
       - contents/1/shrinkage.qmd      
       - contents/1/dr.qmd
-      - contents/1/glm.qmd
-      - contents/1/gam.qmd
+      # - contents/1/glm.qmd
+      # - contents/1/gam.qmd
     # - part: "Simple Linear regression"
     #   chapters: 
     #   - contents/2/intro.qmd
