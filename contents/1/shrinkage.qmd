@@ -515,75 +515,155 @@ beta1_vals = np.linspace(-1, 3, 200)
 beta2_vals = np.linspace(-1, 3, 200)
 B1, B2 = np.meshgrid(beta1_vals, beta2_vals)
 
-RSS = np.array([np.sum((y - X @ np.array([b1, b2])) ** 2) for b1, b2 in zip(B1.ravel(), B2.ravel())]).reshape(B1.shape)
+betas = np.column_stack([B1.ravel(), B2.ravel()])
+preds = X @ betas.T
+rss_term = np.sum((y[:, None] - preds) ** 2, axis=0)
+rss_value0 = rss_term.reshape(B1.shape)
 ```
 
-Then we sketch the contour map of $\rss$, and display the true value as a red dot, as well as the estimated `\beta` as a blue square in the countour map.
+
+We then construct the contour map for the $\rss$ surface, plotting the isolines that correspond to the 1%, 2.5%, 5%, 20%, 50%, and 75% quantiles of the distribution. The ture coefficient $(\beta_1=1,\beta_2=1)$ is displayed as the red dot, as well as the estimated $\beta$ as a blue square in the countour map.
 
 
 ```{python}
-#| eval: false
-quant_levels = np.quantile(RSS, [0.01, 0.025, 0.05, 0.2, 0.5, 0.75])
+#| code-fold: true
+import matplotlib.pyplot as plt
+
+quant_levels = np.quantile(rss_value0, [0.01, 0.025, 0.05, 0.2, 0.5, 0.75])
 
 fig, ax = plt.subplots(figsize=(6, 5))
-cs = ax.contour(B1, B2, RSS, levels=quant_levels, colors="steelblue")
+cs = ax.contour(B1, B2, rss_value0, levels=quant_levels, colors="steelblue")
 ax.clabel(cs, inline=True, fontsize=8, fmt="%.0f")
 
 ax.plot(1, 1, "ro", markersize=10, label="True (1, 1)")
-# OLS estimate
 ax.plot(ols.coef_[0], ols.coef_[1], "bs", markersize=10, label="OLS estimate")
 
 ax.set_xlabel(r"$\beta_1$")
 ax.set_ylabel(r"$\beta_2$")
-ax.set_title("OLS Objective Function Contours\n(Flat valley due to high correlation)")
+ax.set_title("OLS Objective Function Contours")
 ax.legend()
 plt.tight_layout()
-plt.show()
 ```
 
-You may look at the 
+The contour map reveals a narrow, elongated valley in the $\rss$ objective function. While the surface is highly sensitive to movement perpendicular to the valley, it remains relatively flat along the valley floor. Because the surface is particularly flat in this longitudinal direction, numerous parameter combinations yield nearly identical $\rss$ values. Consequently, the data provides insufficient information to distinguish between points along this axis, making the $\rss$ minimum highly unstable. This lack of identifiability is the fundamental cause of high variance in the estimated coefficients.
 
 
-We can see a relatively **"flat" valley** in the objective function. This is because the covariance matrix of $X$ has a very small eigenvalue.
+When ridge regression is applied, the $\rss$ objective function is modified by adding a penalty term. As a result, the objective surface no longer exhibits a long, flat valley floor. Instead, the minimum becomes more well-defined, and the estimate is pulled toward the origin. Although the true parameter may no longer lie at the bottom of this modified valley, the ridge estimate has substantially lower variance. In this way, ridge regression stabilizes the estimation by controlling the region along the valley floor where the OLS solution would otherwise vary widely.
+
+Here we show the $\rss$ objective function contours for $\lambda=0.1$, $0.5$, $1$ and $5$.
 
 ```{python}
-# Eigenstructure of the population covariance matrix
-eig_vals, eig_vecs = np.linalg.eigh(Sigma)
-print("Eigenvalues of X^T X (population):", np.sort(eig_vals)[::-1])
-print("  -> Smallest eigenvalue ≈", round(min(eig_vals), 4))
+#| code-fold: true
+from sklearn.linear_model import Ridge
 
-inv_Sigma = np.linalg.inv(Sigma)
-eig_vals_inv, _ = np.linalg.eigh(inv_Sigma)
-print("\nEigenvalues of (X^T X)^{-1}:", np.sort(eig_vals_inv)[::-1])
-print("  -> Largest eigenvalue ≈", round(max(eig_vals_inv), 2))
+beta1_vals = np.linspace(-1, 3, 200)
+beta2_vals = np.linspace(-1, 3, 200)
+B1, B2 = np.meshgrid(beta1_vals, beta2_vals)
+
+lambda_vals = [0.1, 0.5, 1, 5]
+
+
+fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+
+for ax, reg_lambda in zip(axes.ravel(), lambda_vals):
+    betas = np.column_stack([B1.ravel(), B2.ravel()])
+    preds = X @ betas.T
+    rss_term = np.sum((y[:, None] - preds) ** 2, axis=0)
+    penalty_term = reg_lambda * np.sum(betas**2, axis=1)
+    rss_value = (rss_term + penalty_term).reshape(B1.shape)
+
+    quant_levels = np.quantile(rss_value, [0.01, 0.025, 0.05, 0.2, 0.5, 0.75])
+
+    cs = ax.contour(B1, B2, rss_value, levels=quant_levels, colors="steelblue")
+    ax.clabel(cs, inline=True, fontsize=7, fmt="%.0f")
+
+    ridge = Ridge(alpha=reg_lambda, fit_intercept=False).fit(X, y)
+
+    ax.plot(1, 1, "ro", markersize=8, label="True (1,1)")
+    ax.plot(ridge.coef_[0], ridge.coef_[1], "bs", markersize=8, label="Ridge")
+
+    ax.set_title(r"$\lambda$ = {}".format(reg_lambda))
+    ax.set_xlabel(r"$\beta_1$")
+    ax.set_ylabel(r"$\beta_2$")
+
+handles, labels = axes[0, 0].get_legend_handles_labels()
+fig.suptitle("Ridge Objective Function Contours for Different lambda Values")
+fig.legend(handles, labels, loc="right")
+plt.tight_layout()
 ```
 
-Each time we observe a dataset, it represents a perturbed version of this objective function — lying on a valley centered around the truth.
+As $\lambda$ increases, the bottom of the valley gradually becomes more rounded, and the objective surface is lifted more strongly as the coefficients move away from the origin. This additional curvature removes the flat valley floor and makes the minimum more well-defined. Geometrically, the penalty shrinks the estimated coefficients toward the origin, preventing the estimator from drifting freely along the valley direction. Consequently, the ridge estimator is more stable and has substantially lower variance than the OLS estimator, although this stabilization comes at the cost of introducing some bias.
+
+
+
+::: {.callout-note collapse="true"}
+## Gram matrix and Covariance matrix
+
+The Gram matrix $X\top X$ represents the raw inner products of predictors. In the context of $\rss$ map, it is the direct source of the surface geometry.
+
+The Covariance matrix is essentially the Gram matrix of the centered data, usually scaled by $n-1$.
+$$
+\mathbf{S} = \frac{1}{n-1} \sum (x_i - \bar{x})(x_i - \bar{x})^top.
+$$
+
+Therefore if the data is already centered, the Gram matrix and the covariance matrix are directly related: $X\top X=(n-1)\Cov$.
+
+
+
+
+Mathematically, these two directions (the longitudinal axis and the perpendicular axis) correspond to the eigenvectors of the $\mathbf{X}^T\mathbf{X}$ matrix (or, equivalently, the principal components of the predictor space). The flatness or steepness in those directions is governed by their corresponding eigenvalues.
 
 ```{python}
-#| eval: false
-# Multiple datasets showing variability of OLS
+XTX = X.T @ X
+eigenvalues, eigenvectors = np.linalg.eigh(XTX)
+for i in range(len(eigenvalues)):
+    print(f'eigenvalue: {eigenvalues[i]: .2f}, eigenbasis: {eigenvectors[i]}')
+```
+
+Then mark the eigenvectors in the contour map.
+
+```{python}
+#| code-fold: true
 fig, ax = plt.subplots(figsize=(6, 5))
 
-# Draw contour for each of several seeds
-for seed in range(10):
-    rng_i = np.random.default_rng(seed)
-    X_i = rng_i.multivariate_normal(mean, Sigma, size=n)
-    y_i = rng_i.normal(loc=X_i[:, 0] + X_i[:, 1], scale=1)
-    RSS_i = np.array([np.sum((y_i - X_i @ np.array([b1, b2])) ** 2) for b1, b2 in zip(B1.ravel(), B2.ravel())]).reshape(
-        B1.shape
-    )
-    lvl = np.quantile(RSS_i, 0.025)
-    ax.contour(B1, B2, RSS_i, levels=[lvl], colors="steelblue", alpha=0.5)
+quant_levels = np.quantile(rss_value0, [0.01, 0.025, 0.05, 0.2, 0.5, 0.75])
+cs = ax.contour(B1, B2, rss_value0, levels=quant_levels, colors="lightblue")
+ax.clabel(cs, inline=True, fontsize=8, fmt="%.0f")
 
-ax.plot(1, 1, "ro", markersize=12, zorder=5, label="True (1, 1)")
-ax.set_xlabel(r"$\beta_1$")
-ax.set_ylabel(r"$\beta_2$")
-ax.set_title("OLS Contours from Multiple Datasets\n(Valley centered around truth)")
+ax.plot(1, 1, "ro", markersize=10, label="True (1, 1)")
+ax.plot(ols.coef_[0], ols.coef_[1], "bs", markersize=10, label="OLS estimate")
+
+scale = 0.6
+for i in range(len(eigenvalues)):
+    v = eigenvectors[:, i]
+    ax.arrow(
+        ols.coef_[0],
+        ols.coef_[1],
+        v[0] * scale,
+        v[1] * scale,
+        head_width=0.05,
+        head_length=0.1,
+        fc="orange",
+        ec="orange",
+        label="Eigenvectors" if i == 0 else "",
+    )
+
+    ax.text(
+        ols.coef_[0] + v[0] * scale * 1.5,
+        ols.coef_[1] + v[1] * scale * 1.5,
+        r"$v_{}$ ($\lambda={:.2f}$)".format(i + 1, eigenvalues[i]),
+        color="darkorange",
+        fontweight="bold",
+        ha="center",
+    )
 ax.legend()
 plt.tight_layout()
-plt.show()
 ```
+
+
+:::
+
+
 
 
 
