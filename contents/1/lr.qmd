@@ -1,4 +1,6 @@
-
+---
+jupyter: stats
+---
 
 # Linear Regression
 
@@ -491,7 +493,7 @@ Cross-validation is primarily used to estimate test error or to compare competin
 
 
 
-In `sklearn`, there are several ways to perform $k$-fold cross-validation. From `KFold` to `cross_validate` and then to `cross_val_score`, the interface becomes easier to use, but also less flexible.
+In `sklearn`, there are several ways to perform $k$-fold cross-validation. From `KFold` to `cross_validate` and then `cross_val_score`, the interface becomes easier to use, but also less flexible.
 
 The three approaches perform essentially the same task, but at different levels of abstraction.
 
@@ -607,13 +609,65 @@ cv_scores.mean()
 So `cross_val_score()` is convenient when you only need the validation scores and do not need the extra information returned by `cross_validate()`.
 :::
 
+Cross-validation is often used to compare competing models. One important application is hyperparameter tuning. In this setting, we compare models from the same family under different choices of hyperparameters. In `sklearn`, this process is commonly carried out with `GridSearchCV`.
+
+The procedure can be summarized as follows:
+
+1. Split the training data into several folds.
+2. For each hyperparameter combination, hold out one fold as the validation set and use the remaining folds as the training set.
+3. Fit the model on the training folds and evaluate its performance on the validation fold.
+4. Repeat this process so that each fold serves once as the validation set. The average validation score is the cross-validation score for that hyperparameter combination.
+5. Repeat Steps 2–4 for all hyperparameter combinations, and select the combination with the best average cross-validation score.
+6. **Final step:** After the best hyperparameter combination is identified, the model is refit on the entire training set using these hyperparameters.
 
 
+`GridSearchCV` automates this process. To illustrate the idea, suppose we want to decide whether a linear regression model should be fit with or without an intercept.
+
+First, specify the hyperparameters to be tuned:
+```{python}
+params = {"fit_intercept": [True, False]}
+```
 
 
+::: {.callout-important}
+## `Pipeline` and `ColumnTransformer`
+If the model is wrapped inside a `Pipeline` or a `ColumnTransformer` (discussed later), hyperparameters inside a step must be referred to using the syntax `step__param` with two underscores.
+
+For example, suppose a pipeline contains a step named `linear`, and that step has a hyperparameter called `fit_intercept`. Then the parameter grid should be written as
+```{python}
+#| eval: false
+params = {"linear__fit_intercept": [True, False]}
+```
+:::
 
 
+Next, construct the grid search. The argument `cv` is specified in the same way as in ordinary `cross-validation`. The argument `refit=True` controls whether the model is refit on the entire training set using the best hyperparameters. The default value is `True`.
 
+```{python}
+from sklearn.model_selection import GridSearchCV
+
+gs = GridSearchCV(
+    model,
+    param_grid=params,
+    scoring="neg_mean_squared_error",
+    cv=5,
+    refit=True
+)
+gs.fit(X, y)
+```
+After fitting, the best estimator and other information about the search can be obtained. 
+
+```{python}
+gs.best_estimator_
+```
+
+```{python}
+gs.best_params_
+```
+
+```{python}
+gs.best_score_
+```
 
 
 
@@ -864,6 +918,7 @@ prep.named_transformers_['x_std']
 ```
 
 
+
 </details>
 
 
@@ -937,6 +992,9 @@ pipe.steps
 ```{python}
 pipe.named_steps['scaler']
 ```
+
+
+
 
 
 ::: {.callout-note}

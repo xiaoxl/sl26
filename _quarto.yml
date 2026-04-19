@@ -24,7 +24,6 @@ knitr:
     collapse: false
 
 
-
  
 book:
   title: "Statistical Learning"

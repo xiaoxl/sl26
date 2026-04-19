@@ -675,19 +675,18 @@ plt.tight_layout()
 
 The regularization parameter $\lambda$ determines how much shrinkage is applied.
 
-In practice, the modern standard is to choose $\lambda$ by cross-validation. If $\mathrm{CV}(\lambda)$ denotes the cross-validation error, we choose
+In practice, the modern standard is to choose $\lambda$ by cross-validation. Therefore, like mentioned in the linear regression case,
 
-$$
-\hat{\lambda}
-= \arg\min_{\lambda} \mathrm{CV}(\lambda).
-$$
+1. Fix a $\lambda$, we split the dataset into $k$ pieces, each time choose one as the validation set and the rest as the training set, to train the model and record the validation score.
+2. Repeat it for all pieces, and use the mean score as the cross-validation score for this $\lambda$.
+3. Repeat the above two steps for each $\lambda$ in the pool, and choose the $\lambda$ with the best cross-validation score.
 
-Classical ridge analysis also uses ridge trace plots and generalized cross-validation.
-
-### Cross
+Since the whole process is very common in ridge regression, `sklearn` provide `RidgeCV` with built-in cross-validation. In addition you could still use `GridSearchCV`.
 
 
+::: {.callout-note}
 
+:::
 
 
 ## A Short History of Ridge Regression
