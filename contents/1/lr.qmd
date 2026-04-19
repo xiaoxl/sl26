@@ -641,7 +641,10 @@ params = {"linear__fit_intercept": [True, False]}
 :::
 
 
-Next, construct the grid search. The argument `cv` is specified in the same way as in ordinary `cross-validation`. The argument `refit=True` controls whether the model is refit on the entire training set using the best hyperparameters. The default value is `True`.
+Next, construct the grid search. 
+
+- The argument `cv` is specified in the same way as in ordinary `cross-validation`. 
+- The argument `refit=True` controls whether the model is refit on the entire training set using the best hyperparameters. The default value is `True`.
 
 ```{python}
 from sklearn.model_selection import GridSearchCV
