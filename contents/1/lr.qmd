@@ -956,7 +956,7 @@ For transformers, the combined method `.fit_transform()` performs both steps in 
 
 
 
-## Pipelines
+## Pipelines and transformations of $y$
 
 
 In many modeling workflows, several steps must be performed before fitting the model. These steps may include
@@ -1005,7 +1005,27 @@ Pipelines are particularly useful when combined with cross-validation and hyperp
 :::
 
 
-### Full Pipeline Example
+
+
+### `TransformedTargetRegressor`
+
+`TransformedTargetRegressor` from `sklearn.compose` is a wrapper that applies a transformation to the response variable $y$ during model fitting and automatically applies the inverse transformation when making predictions. In other words, the regressor is trained on the transformed response, while predictions are converted back to the original scale.
+
+Here is a simple example of a `TransformedTargetRegressor`. The transformation of $y$ is centralizer, which is essentially standardizer without rescaling.
+
+```{python}
+#| eval: false
+from sklearn.compose import TransformedTargetRegressor
+
+model = TransformedTargetRegressor(
+    regressor=LinearRegression(),
+    transformer=StandardScaler(with_std=False)
+)
+```
+
+
+
+### Full Example
 
 <details>
 <summary><strong>Click to expand.</strong></summary>
@@ -1037,27 +1057,34 @@ The pipeline is illustrated as follows.
 3. Categorical features go through `OneHotEncoder`.
 4. The transformed features are combined into a single feature matrix.
 5. The model `LinearRegression` is fitted to the transformed data.
-6. The fitted model can then be used to generate predictions.
+6. The response variable $y$ is centralized.
+7. The fitted model can then be used to generate predictions, while the transforamtion of $y$ is automatically reversed.
 
 ```{mermaid}
 flowchart TB
 
 A[Input Data X]
+Y[Response: y]
+
+subgraph TTR[TransformedTargetRegressor]
+direction TB
+
+Y --> Y1[Center y]
+Y1 --> P
 
 subgraph P[Pipeline]
-
 direction TB
 
 B[ColumnTransformer]
 
-subgraph N[Numeric Features: x1, x2]
+subgraph N[Numeric features: x1, x2]
 direction TB
 N1[StandardScaler]
 N2[PolynomialFeatures]
 N1 --> N2
 end
 
-subgraph C[Categorical Feature: group]
+subgraph C[Categorical features: group]
 direction TB
 C1[OneHotEncoder]
 end
@@ -1065,20 +1092,22 @@ end
 B --> N
 B --> C
 
-N2 --> D[Combined Feature Matrix]
+N2 --> D[Combined feature matrix]
 C1 --> D
-
 D --> E[LinearRegression]
+end
 
+P --> H[Predictions on centered y-scale]
+H --> I[Reverse y transformation]
 end
 
 A --> B
-E --> F[Predictions]
+I --> O[Predictions on original y-scale]
 ```
 
 
 ```{python}
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import ColumnTransformer, TransformedTargetRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, PolynomialFeatures
 from sklearn.linear_model import LinearRegression
@@ -1094,6 +1123,7 @@ preprocessor = ColumnTransformer(
 )
 
 pipe = Pipeline([("preprocess", preprocessor), ("model", LinearRegression())])
+model = TransformedTargetRegressor(regressor=pipe, transformer=StandardScaler(with_std=False))
 ```
 
 
@@ -1104,7 +1134,7 @@ The entire `pipeline` is trained on the training set and then evaluated on the v
 from sklearn.model_selection import cross_validate
 
 cv_result = cross_validate(
-    pipe, X, y, cv=KFold(5, shuffle=True, random_state=1), scoring=["r2", "neg_mean_squared_error"]
+    model, X, y, cv=KFold(5, shuffle=True, random_state=1), scoring=["r2", "neg_mean_squared_error"]
 )
 
 print(f"test R2: {cv_result['test_r2'].mean()}")
@@ -1113,9 +1143,3 @@ print(f"test neg mse: {cv_result['test_neg_mean_squared_error'].mean()}")
 
 
 </details>
-
-
-
-## Exercises
-
-

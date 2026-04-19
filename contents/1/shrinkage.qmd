@@ -163,6 +163,97 @@ In this formulation, the term $\lambda I$ (where $I$ is the identity matrix) is 
 
 
 
+
+
+
+
+### About intercept
+
+Linear regression models are commonly written in the form
+
+$$
+y = X\beta + \varepsilon.
+$$
+
+This notation can represent two different model structures depending on whether an intercept is included.
+
+- Model with intercept: $\beta = [\beta_0,\beta_1,\ldots,\beta_p]^\top$
+  where $\beta_0$ is the intercept. The design matrix $X$ contains a leading column of ones representing the constant term.
+
+- **Model without intercept**  
+  $$
+  \beta = [\beta_1,\ldots,\beta_p]^\top
+  $$
+  and the design matrix contains only the predictor variables. In this case the fitted regression surface is forced to pass through the origin.
+
+In most practical applications, models with an intercept are preferred because they allow the regression function to shift vertically rather than being constrained to go through the origin.
+
+
+
+### Centering and the No-Intercept Form
+
+A model with an intercept can be rewritten as a no-intercept model by centering both the response and the predictors:
+
+$$
+y^c = y - \bar y, 
+\qquad
+X_j^c = X_j - \bar X_j .
+$$
+
+After centering, all variables have mean zero. In ordinary least squares, the intercept estimate is
+
+$$
+\hat\beta_0 = \bar y - \sum_{j=1}^{p}\hat\beta_j \bar X_j .
+$$
+
+When the data are centered, this quantity becomes zero automatically. As a result, fitting a regression without an intercept on centered data produces the same fitted model as fitting a regression with an intercept on the original data.
+
+
+
+### OLS vs Ridge Regression
+
+For **ordinary least squares (OLS)**, the intercept formulation and the centered no-intercept formulation are mathematically equivalent.
+
+However, the situation is slightly different in **ridge regression**. The ridge estimator introduces the penalty
+
+$$
+\lambda \sum_{j=1}^{p} \beta_j^2 ,
+$$
+
+which is intended to shrink the slope coefficients. In practice the intercept is **not penalized**, because penalizing it would shrink the overall level of the model toward zero and make the result depend on the arbitrary origin of the response variable.
+
+For this reason ridge regression is usually formulated in the **no-intercept form after centering the data**, so that the penalty naturally applies only to the slope coefficients.
+
+
+
+### Standardization in Practice
+
+In practical implementations of ridge (and lasso), two preprocessing steps are typically applied:
+
+1. **Center the response**
+   $$
+   y^c = y - \bar y
+   $$
+
+2. **Standardize the predictors**
+   $$
+   X_j^{s} = \frac{X_j - \bar X_j}{s_j}
+   $$
+
+Standardization is important because the ridge penalty depends on the magnitudes of the coefficients. If predictors are measured on different scales, the penalty would affect them unevenly. Scaling ensures that all predictors are penalized in a comparable way.
+
+
+
+### Implementation in `scikit-learn`
+
+In `scikit-learn`, ridge and lasso regression automatically **center the data internally** when fitting the model (while leaving the final predictions on the original scale). The intercept is therefore handled separately and excluded from the penalty.
+
+Because of this internal preprocessing, users typically **do not need to manually center the response** when using `Ridge` or `Lasso`. However, it is still common to standardize the predictors explicitly using tools such as `StandardScaler`, especially when building modeling pipelines.
+
+
+
+<!-- 
+
 ### Two Types of Linear Models
 Although we typically use the notation $y = X\beta + \varepsilon$, this expression encompasses two distinct model structures based on whether an intercept is included. This choice fundamentally dictates the model's behavior at the origin.
 
@@ -217,7 +308,7 @@ depends on the magnitude of the coefficients. If predictors are measured on diff
 
 :::
 
-
+ -->
 
 
 
@@ -413,7 +504,7 @@ Tikhonov regularization is a method used to solve ill-posed problems and handle 
 </details>
 
 
-## Python code
+## Ridge Regression in Python
 
 We use the following simulated dataset to demonstrate ridge regression. 
 
@@ -671,22 +762,213 @@ plt.tight_layout()
 
 
 
-## Choosing $\lambda$
+### Choosing $\lambda$
 
 The regularization parameter $\lambda$ determines how much shrinkage is applied.
 
-In practice, the modern standard is to choose $\lambda$ by cross-validation. Therefore, like mentioned in the linear regression case,
+In practice, the modern standard is to choose $\lambda$ by cross-validation. Similar to the model selection procedure discussed in the linear regression case, the process works as follows:
 
-1. Fix a $\lambda$, we split the dataset into $k$ pieces, each time choose one as the validation set and the rest as the training set, to train the model and record the validation score.
-2. Repeat it for all pieces, and use the mean score as the cross-validation score for this $\lambda$.
-3. Repeat the above two steps for each $\lambda$ in the pool, and choose the $\lambda$ with the best cross-validation score.
+1. Fix a value of $\lambda$. Split the dataset into $k$ folds. Each time, choose one fold as the validation set and use the remaining folds as the training set to fit the model and compute the validation score.
+2. Repeat this process so that each fold serves once as the validation set. The average validation score is the cross-validation score for this $\lambda$.
+3. Repeat the above steps for each candidate value of $\lambda$, and select the $\lambda$ with the best cross-validation score.
+4. Finally, refit the model on the entire training set using the selected $\lambda$.
 
-Since the whole process is very common in ridge regression, `sklearn` provide `RidgeCV` with built-in cross-validation. In addition you could still use `GridSearchCV`.
+Since this procedure is very common in ridge regression, sklearn provides `RidgeCV`, which has built-in cross-validation. Alternatively, the same task can be performed using `GridSearchCV`.
 
 
 ::: {.callout-note}
+## Leave-one-out cross-validation
 
+`GridSearchCV` typically uses $k$-fold cross-validation, where the training set is split into $k$ folds and each fold is used once as the validation set.
+
+If each observation is treated as its own fold (that is, the validation set contains exactly one observation), the procedure is called leave-one-out cross-validation (LOOCV). In other words, LOOCV is equivalent to $N$-fold cross-validation, where $N$ is the number of observations.
+
+`RidgeCV` uses leave-one-out cross-validation by default.
 :::
+
+The arguments of `RidgeCV` are similar to those of `Ridge`. The main differences are:
+
+- `alphas` should be a list of candidate values for $\alpha$. In the example below, $\alpha$ is selected from values ranging from `1e-4` to `1e4`.
+- `cv` works in the same way as in ordinary cross-validation and specifies the number of folds used in the cross-validation procedure.
+
+
+```{python}
+from sklearn.linear_model import RidgeCV
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+alphas = np.logspace(-4, 4, 100)
+
+ridge_cv_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", RidgeCV(alphas=alphas, cv=5)),
+    ]
+)
+
+ridge_cv_pipe.fit(X, y)
+
+best_alpha_ridge = ridge_cv_pipe.named_steps["model"].alpha_
+best_alpha_ridge
+```
+
+
+### Validation curve and Coefficient paths
+
+`RidgeCV` returns only the final fitted model at the selected value of `alpha`, rather than the entire validation curve or coefficient path. If we want to examine how the validation score changes with `alpha`, we may fit ordinary Ridge models over a grid of `alpha` values and then add a vertical line at the value selected by `RidgeCV`.
+
+`sklearn` provides `validation_curve()` to streamline the process.
+
+
+```{python}
+from sklearn.model_selection import validation_curve
+
+alphas = np.logspace(-4, 4, 100)
+
+ridge_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", Ridge()),
+    ]
+)
+train_scores, test_scores = validation_curve(
+    ridge_pipe,
+    X,
+    y,
+    param_name="model__alpha",
+    param_range=alphas,
+    cv=5,
+    scoring="neg_mean_squared_error",
+)
+
+plt.plot(alphas, train_scores.mean(axis=1), label="train")
+plt.plot(alphas, test_scores.mean(axis=1), label="test")
+plt.axvline(best_alpha_ridge, color="black", linestyle="--", label="RidgeCV alpha")
+plt.xscale("log")
+plt.xlabel("alpha")
+plt.ylabel("score")
+plt.title("Validation curve for ridge regression")
+plt.legend()
+```
+
+Similarly, if we want to examine how the coefficients change with `alpha`, we fit ordinary `Ridge` repeatedly over a grid of `alpha` values and record the fitted coefficients. In this case, cross-validation is not needed, since the goal is only to visualize the coefficient path rather than to compare models.
+
+
+```{python}
+from sklearn.linear_model import Ridge
+import matplotlib.pyplot as plt
+
+alphas = np.logspace(-4, 4, 100)
+coefs = []
+for a in alphas:
+    pipe = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("model", Ridge(alpha=a)),
+        ]
+    )
+    pipe.fit(X, y)
+    coefs.append(pipe.named_steps["model"].coef_)
+coefs = np.array(coefs)
+for j in range(coefs.shape[1]):
+    plt.plot(alphas, coefs[:, j], label=f"x{j + 1}")
+plt.axvline(best_alpha_ridge, linestyle="--", color="black", label="RidgeCV alpha")
+
+ax = plt.gca()
+ax.set_xlim(ax.get_xlim()[::-1])  # <1>
+plt.xscale("log")
+plt.xlabel("alpha")
+plt.ylabel("weights")
+plt.title("Ridge Coefficients vs Regularization Strength (alpha)")
+plt.axis("tight")
+plt.legend()
+```
+1. In the coefficient path plot, the horizontal axis is shown in reverse order so that the coefficients move from heavily regularized models on the left to weakly regularized models on the right.
+
+
+
+
+
+
+
+
+
+
+### GCV
+Naively, LOOCV would require fitting the model $N$ times. Each time one observation is removed and the model is refit. However, ridge regression admits an analytic formula that allows the LOOCV error to be computed without refitting the model repeatedly. This is one reason ridge regression works very well with LOOCV.
+
+
+
+Recall that the ridge estimator is
+$$
+\hat{\beta}_\lambda = (X^\top X + \lambda I)^{-1} X^\top y.
+$$
+
+The fitted values can be written as
+$$
+\hat{y} = X\hat{\beta}_\lambda = H_\lambda y,
+$$
+where
+$$
+H_\lambda = X (X^\top X + \lambda I)^{-1} X^\top
+$$
+is the ridge hat matrix.
+
+
+Let
+
+$$
+r_i = y_i - \hat{y}_i
+$$
+
+be the ordinary residual from the ridge regression fitted using the entire dataset.  
+
+Suppose we remove observation $i$ and refit the ridge regression model. Let $\hat{y}_{(i)}$ denote the predicted value for $y_i$ from this leave-one-out model. The corresponding leave-one-out residual is
+
+$$
+r_{(i)} = y_i - \hat{y}_{(i)} .
+$$
+
+A key result in linear models shows that this residual can be computed directly from the full-data fit:
+
+$$
+r_{(i)} = \frac{r_i}{1 - H_{\lambda,ii}} ,
+$$
+
+where $H_{\lambda,ii}$ is the $i$-th diagonal element of the ridge hat matrix.
+
+This identity means that the leave-one-out residuals can be obtained by simply adjusting the ordinary residuals using the leverage term $H_{\lambda,ii}$. Consequently, the LOOCV error can be computed without refitting the model $N$ times.
+
+Note that $H_{\lambda,ii}$ plays a role similar to leverage in ordinary least squares, adjusting the residual to account for the influence of observation $i$.
+
+
+Let $H_{\lambda,ii}$ denote the $i$-th diagonal entry of $H_\lambda$. Then the leave-one-out residual can be computed as
+$$
+r_{(i)} = \frac{y_i - \hat{y}_i}{1 - H_{\lambda,ii}}.
+$$
+
+Therefore the LOOCV error is
+$$
+\text{CV}(\lambda)
+=
+\frac{1}{N}
+\sum_{i=1}^{N}
+\left(
+\frac{y_i - \hat{y}_i}{1 - H_{\lambda,ii}}
+\right)^2.
+$$
+
+This formula allows the LOOCV error to be computed using only a single ridge fit. Consequently, `RidgeCV` can efficiently perform LOOCV without refitting the model $N$ times.
+
+
+
+
+
+
+
+
+
+
 
 
 ## A Short History of Ridge Regression
@@ -719,6 +1001,7 @@ y = X @ beta + np.random.randn(n)
 
 
 ```{python}
+#| eval: false
 from sklearn.linear_model import Ridge, Lasso
 
 ridge = Ridge(alpha=1.0)
@@ -795,6 +1078,7 @@ In sklearn, the cleanest way is a pipeline.
 
 
 ```{python}
+#| eval: false
 import numpy as np
 from sklearn.model_selection import train_test_split
 
@@ -817,6 +1101,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 
 
 ```{python}
+#| eval: false
 import numpy as np
 from sklearn.model_selection import train_test_split
 
@@ -872,6 +1157,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 
 
 ```{python}
+#| eval: false
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
@@ -895,6 +1181,7 @@ print("Test R^2 :", r2_score(y_test, y_pred_ols))
 
 
 ```{python}
+#| eval: false
 from sklearn.linear_model import Ridge, Lasso
 
 ridge_pipe = Pipeline(
@@ -929,6 +1216,7 @@ print("Test R^2 :", r2_score(y_test, y_pred_lasso))
 To inspect coefficients:
 
 ```{python}
+#| eval: false
 ridge_coef = ridge_pipe.named_steps["model"].coef_
 lasso_coef = lasso_pipe.named_steps["model"].coef_
 
@@ -953,32 +1241,10 @@ You will usually see:
 
 
 
-```{python}
-from sklearn.linear_model import RidgeCV
-
-alphas = np.logspace(-4, 4, 100)
-
-ridge_cv_pipe = Pipeline(
-    [
-        ("scaler", StandardScaler()),
-        ("model", RidgeCV(alphas=alphas, cv=5)),
-    ]
-)
-
-ridge_cv_pipe.fit(X_train, y_train)
-y_pred_ridge_cv = ridge_cv_pipe.predict(X_test)
-
-best_alpha_ridge = ridge_cv_pipe.named_steps["model"].alpha_
-
-print("Best ridge alpha:", best_alpha_ridge)
-print("RidgeCV Test RMSE:", mean_squared_error(y_test, y_pred_ridge_cv))
-print("RidgeCV Test R^2 :", r2_score(y_test, y_pred_ridge_cv))
-```
-
-
 
 
 ```{python}
+#| eval: false
 from sklearn.linear_model import LassoCV
 
 lasso_cv_pipe = Pipeline(
@@ -1003,6 +1269,7 @@ print("LassoCV Test R^2 :", r2_score(y_test, y_pred_lasso_cv))
 
 
 ```{python}
+#| eval: false
 from sklearn.model_selection import GridSearchCV
 
 ridge_grid_pipe = Pipeline(
@@ -1189,6 +1456,7 @@ plt.show()
 11. a comparble table
 
 ```{python}
+#| eval: false
 results = []
 
 models = {
