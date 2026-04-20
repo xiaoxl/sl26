@@ -78,12 +78,11 @@ The training error measures how well a model fits the training data.
 The test error measures prediction error on new observations not used to fit the model.
 :::
 
-For example, for a fitted model, we can measure its performance using the mean squared error (MSE). The training MSE measures how well the model fits the training data:
-$$
+<!-- $$
 \text{MSE}_{train}=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat y_i)^2 .
-$$
+$$ -->
 
-However, a model that fits the training data very well may perform poorly on new observations. The more relevant quantity is the test MSE, which measures prediction error on new data drawn from the same population.
+For example, for a fitted model, we can measure its performance using the mean squared error (MSE). The training MSE measures how well the model fits the training data. However, a model that fits the training data very well may perform poorly on new observations. The more relevant quantity is the test MSE, which measures prediction error on new data drawn from the same population.
 
 The goal of statistical learning is to build models with small test error, not merely small training error.
 
@@ -433,9 +432,9 @@ The dataset is divided into two parts:
 - Training set: used to fit the model.
 - Test set: used to evaluate prediction performance.
 
-After fitting the model on the training set, predictions are made on the test set, and performance measures such as MSE are computed.
+After fitting the model on the training set, predictions are made on the test set, and performance measures such as MSE are computed. This provides a more realistic estimate of how the model performs on new data.
 
-This provides a more realistic estimate of how the model performs on new data.
+---
 
 In many situations we also need to choose between several competing models or tuning parameters. To avoid using the test data for model selection, a third subset is often introduced.
 
@@ -445,7 +444,7 @@ In many situations we also need to choose between several competing models or tu
 
 This separation helps prevent overly optimistic performance estimates.
 
-
+---
 
 In `sklearn`, the function `train_test_split()` from `sklearn.model_selection` is commonly used to split the data into a training set and a test set.
 
@@ -486,12 +485,15 @@ The most common form is $k$-fold cross-validation.
 3. This process is repeated $k$ times so that each fold serves once as the validation set.
 4. The validation errors from all folds are averaged to estimate the model's expected test error.
 
+---
+
+
 Cross-validation is primarily used to estimate test error or to compare competing models. When it is used for model selection, two additional steps are typically performed. Note that cross-validation uses only the training data and does not involve the test set.
 
 5. After the best model configuration has been selected, the model is retrained on the entire training data.
 6. The final model is then evaluated once on the test set, providing an unbiased estimate of its performance on new data.
 
-
+---
 
 In `sklearn`, there are several ways to perform $k$-fold cross-validation. From `KFold` to `cross_validate` and then `cross_val_score`, the interface becomes easier to use, but also less flexible.
 
@@ -609,9 +611,12 @@ cv_scores.mean()
 So `cross_val_score()` is convenient when you only need the validation scores and do not need the extra information returned by `cross_validate()`.
 :::
 
+
+---
+
 Cross-validation is often used to compare competing models. One important application is hyperparameter tuning. In this setting, we compare models from the same family under different choices of hyperparameters. In `sklearn`, this process is commonly carried out with `GridSearchCV`.
 
-The procedure can be summarized as follows:
+The CV procedure is summarized (again) as follows:
 
 1. Split the training data into several folds.
 2. For each hyperparameter combination, hold out one fold as the validation set and use the remaining folds as the training set.
@@ -620,6 +625,7 @@ The procedure can be summarized as follows:
 5. Repeat Steps 2–4 for all hyperparameter combinations, and select the combination with the best average cross-validation score.
 6. **Final step:** After the best hyperparameter combination is identified, the model is refit on the entire training set using these hyperparameters.
 
+---
 
 `GridSearchCV` automates this process. To illustrate the idea, suppose we want to decide whether a linear regression model should be fit with or without an intercept.
 
@@ -823,7 +829,7 @@ If you want to apply `OneHotEncoder` only to certain columns, you need to use a 
 
 
 
-### Scaling Variables
+### Scaling Variables {#sec-scaling}
 
 
 <details>

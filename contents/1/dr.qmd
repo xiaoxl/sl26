@@ -1,5 +1,339 @@
 # Dimension reduction 
 
+
+When the number of predictors is large or when predictors are highly correlated, directly fitting a regression model using the original predictors may lead to unstable estimates and poor predictive performance.
+
+One approach to address this problem is **dimension reduction**. Instead of using the original predictors directly, we first construct a smaller number of derived variables (called **components**) and then perform regression using these components.
+
+Two commonly used methods are
+
+- **Principal Component Regression (PCR)**
+- **Partial Least Squares (PLS)**
+
+Both methods construct new variables that are **linear combinations of the original predictors**, but they differ in how those combinations are chosen.
+
+---
+
+
 ## PCR
 
-## PLS
+### Idea
+
+PCR first applies **principal component analysis (PCA)** to the predictor matrix $X$, and then uses the leading principal components as predictors in a regression model.
+
+The key idea is that most of the variation in the predictors often lies in a lower-dimensional subspace.
+
+---
+
+::: {#def-pcr}
+## Principal Component Regression
+
+Let $X$ be the $n \times p$ predictor matrix.  
+
+The principal components are defined as
+
+$$
+Z_k = X v_k,
+$$
+
+where $v_k$ is the $k$-th eigenvector of $X^\top X$.
+
+Principal component regression fits a linear model using the first $m$ components:
+
+$$
+y = \theta_0 + \theta_1 Z_1 + \theta_2 Z_2 + \cdots + \theta_m Z_m + \varepsilon.
+$$
+
+Here
+
+- $Z_1,\ldots,Z_m$ are the first $m$ principal components
+- $m < p$ is chosen by cross-validation
+:::
+
+Thus PCR replaces the original predictors with a smaller set of orthogonal components.
+
+---
+
+### PCA review
+
+Principal component analysis finds directions in predictor space that maximize variance.
+
+Let
+
+$$
+X = UDV^\top
+$$
+
+be the singular value decomposition of $X$.
+
+Then
+
+- the columns of $V$ are the principal directions
+- the principal components are
+
+$$
+Z = XV
+$$
+
+The first principal component captures the largest variance in $X$, the second captures the next largest variance orthogonal to the first, and so on.
+
+---
+
+::: {.callout-note}
+## Key feature of PCR
+
+PCR constructs components **using only the predictor matrix $X$**, without considering the response $y$.
+
+As a result, the directions that explain the most variation in $X$ are not necessarily the directions that are most predictive of $y$.
+:::
+
+---
+
+### Choosing the number of components
+
+The number of components $m$ is usually chosen using cross-validation.
+
+Typical procedure:
+
+1. Compute the principal components.
+2. Fit regression models using $m = 1,2,\ldots,p$ components.
+3. Compute validation error for each $m$.
+4. Choose the value of $m$ with the lowest validation error.
+
+---
+
+### PCR in Python
+
+`scikit-learn` provides `PCA` for computing principal components.
+
+```python
+from sklearn.decomposition import PCA
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+
+pcr_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("pca", PCA(n_components=5)),
+        ("model", LinearRegression())
+    ]
+)
+
+pcr_pipe.fit(X, y)
+```
+
+Here the pipeline performs
+
+standardization
+PCA
+regression using the principal components.
+
+### Choosing number of components by cross-validation
+
+
+```{python}
+#| eval: false
+
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {"pca__n_components": list(range(1, X.shape[1] + 1))}
+
+grid = GridSearchCV(pcr_pipe, param_grid, cv=5, scoring="neg_mean_squared_error")
+
+grid.fit(X, y)
+
+best_m = grid.best_params_["pca__n_components"]
+best_m
+```
+
+
+
+## Partial Least Squares (PLS)
+
+### Idea
+
+Principal component regression constructs components that explain the variation in the predictor matrix $X$. However, these directions are chosen **without considering the response variable $y$**.
+
+Partial least squares (PLS) addresses this limitation by constructing components that are most strongly related to the response.
+
+The key idea is to construct components that simultaneously
+
+- capture variation in the predictors, and  
+- are strongly associated with the response.
+
+---
+
+::: {#def-pls}
+## Partial Least Squares
+
+Partial least squares constructs a sequence of components
+
+$$
+Z_k = X w_k
+$$
+
+where the weight vector $w_k$ is chosen to maximize the covariance between the component and the response:
+
+$$
+w_k =
+\arg\max_w
+\operatorname{Cov}(Xw, y)^2
+$$
+
+subject to the normalization constraint
+
+$$
+\|w\|_2 = 1.
+$$
+
+After constructing the component $Z_k$, both the predictor matrix and the response are deflated, and the procedure is repeated to construct additional components.
+:::
+
+Thus PLS chooses directions in predictor space that are most predictive of the response.
+
+---
+
+### Algorithm intuition
+
+PLS constructs components sequentially.
+
+At step $k$:
+
+1. Find a direction $w_k$ such that the component $Z_k = X w_k$ has maximal covariance with $y$.
+2. Regress $y$ on the component $Z_k$.
+3. Remove the variation explained by $Z_k$ from both $X$ and $y$.
+4. Repeat the process on the residual matrices.
+
+This produces components that are ordered by predictive importance.
+
+---
+
+### Geometric interpretation
+
+PLS can be understood geometrically as searching for directions in predictor space that align with the response.
+
+- PCR chooses directions with **largest variance in $X$**.
+- PLS chooses directions with **largest covariance between $X$ and $y$**.
+
+Therefore PLS tends to find directions that are more useful for prediction.
+
+---
+
+::: {.callout-note}
+## Comparison with PCR
+
+PCR constructs components using only the predictor matrix $X$.
+
+PLS uses both $X$ and $y$ to determine the directions.
+
+As a result
+
+- PCR may require many components before the response information is captured.
+- PLS often achieves good predictive performance with fewer components.
+:::
+
+---
+
+### Choosing the number of components
+
+Similar to PCR, the number of components is chosen using cross-validation.
+
+Typical procedure:
+
+1. Fit PLS models with different numbers of components.
+2. Evaluate the validation error for each model.
+3. Choose the number of components that minimizes the validation error.
+
+---
+
+## PLS in Python
+
+`scikit-learn` provides the class `PLSRegression` for fitting partial least squares models.
+
+```python
+from sklearn.cross_decomposition import PLSRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+pls_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", PLSRegression(n_components=2))
+    ]
+)
+
+pls_pipe.fit(X, y)
+```
+
+The argument n_components specifies the number of PLS components.
+
+### Selecting the number of components
+
+We can choose the number of components using cross-validation.
+
+```{python}
+#| eval: false
+
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {"model__n_components": list(range(1, X.shape[1] + 1))}
+
+grid = GridSearchCV(pls_pipe, param_grid, cv=5, scoring="neg_mean_squared_error")
+
+grid.fit(X, y)
+
+best_components = grid.best_params_["model__n_components"]
+best_components
+```
+
+
+### PLS coefficient path
+
+We can also examine how the regression coefficients change as the number of components increases.
+
+
+```{python}
+#| eval: false
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cross_decomposition import PLSRegression
+from sklearn.preprocessing import StandardScaler
+
+X_scaled = StandardScaler().fit_transform(X)
+
+coefs = []
+
+for m in range(1, X.shape[1] + 1):
+    pls = PLSRegression(n_components=m)
+    pls.fit(X_scaled, y)
+    coefs.append(pls.coef_.ravel())
+
+coefs = np.array(coefs)
+
+for j in range(coefs.shape[1]):
+    plt.plot(range(1, X.shape[1] + 1), coefs[:, j], label=f"x{j + 1}")
+
+plt.xlabel("Number of components")
+plt.ylabel("Coefficient")
+plt.title("PLS coefficient path")
+plt.legend()
+plt.show()
+```
+
+
+Summary
+
+Partial least squares is a dimension reduction method designed for predictive modeling.
+
+It constructs components that maximize covariance between predictors and response.
+These components are used as predictors in a regression model.
+The number of components is typically selected using cross-validation.
+
+Compared with principal component regression:
+
+PCR focuses on explaining predictor variation.
+PLS focuses on predicting the response.
+
+As a result, PLS often requires fewer components to achieve strong predictive performance.

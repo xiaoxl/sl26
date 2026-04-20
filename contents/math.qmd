@@ -15,7 +15,7 @@ $$
 \newcommand{\rss}{\mathrm{RSS}}
 \newcommand{\ols}{\mathrm{OLS}}
 \newcommand{\ridge}{\mathrm{ridge}}
-\newcommand{\lasso}{\mathrm{LASSO}}
+\newcommand{\lasso}{\mathrm{lasso}}
 \newcommand{\mle}{\mathrm{MLE}}
 $$
 
