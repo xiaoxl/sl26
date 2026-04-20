@@ -771,7 +771,9 @@ train_scores, test_scores = validation_curve(
 
 plt.plot(alphas, train_scores.mean(axis=1), label="train")
 plt.plot(alphas, test_scores.mean(axis=1), label="test")
-plt.axvline(best_alpha_ridge, color="black", linestyle="--", label="RidgeCV alpha")
+plt.axvline(
+    best_alpha_ridge, color="black", linestyle="--", label="RidgeCV alpha"
+)
 plt.xscale("log")
 plt.xlabel("alpha")
 plt.ylabel("score")
@@ -1021,7 +1023,7 @@ Thus $\text{Trace}(S_\lambda)$ plays the role of the model's effective number of
 
 ### Definition
 
-Lasso regression modifies the OLS objective by adding an $L_1$ penalty.
+Lasso regression (short for least absolute shrinkage and selection operator) modifies the OLS objective by adding an $L_1$ penalty.
 
 ::: {#def-lasso}
 ## Lasso Regression
@@ -1044,13 +1046,13 @@ where
 
 :::
 
-The lasso penalty shrinks the coefficients toward zero. Unlike ridge regression, however, lasso can set some coefficients **exactly equal to zero**. Therefore, lasso performs both **shrinkage** and **variable selection**.
+The lasso penalty also shrinks the coefficients toward zero. However it has a major difference from ridge regression. 
 
----
 
-### Alternative formulation
+### Geometry and sparsity
 
-By the theory of Lagrange multipliers, lasso can also be written in constrained form:
+
+Similar to ridge regression, by the theory of Lagrange multipliers, lasso can also be written in constrained form:
 
 $$
 \hat{\beta}_{\lasso}
@@ -1063,36 +1065,77 @@ $$
 \norm{\beta}_1 \le s.
 $$
 
-Here $s \ge 0$ controls the size of the coefficient vector.
+Here $s \ge 0$ controls the size of the coefficient vector. This constrained formulation is useful because it makes the geometry of lasso easier to visualize.
 
-- Large $s$ corresponds to small $\lambda$, so the estimator is close to OLS.
-- Small $s$ corresponds to large $\lambda$, so the coefficients are forced toward zero.
+In $\mathbb{R}^2$, the ridge constraint region is based on the $L_2$ norm and has a circular boundary, whereas the lasso constraint region is based on the $L_1$ norm and has a diamond-shaped boundary. The solution is obtained where the smallest residual $\rss$ contour first touches the constraint region.
 
-This formulation is useful because it makes the geometry of lasso easier to understand.
+For ridge regression, the circular boundary is smooth, so the point of tangency typically occurs away from the coordinate axes. As a result, ridge usually shrinks coefficients continuously toward zero, but does not make them exactly zero.
 
----
+For lasso, the diamond-shaped boundary has sharp corners lying on the coordinate axes. Because of these corners, the point of tangency is much more likely to occur at a location where one coordinate is zero. Consequently, lasso can produce solutions with some coefficients exactly equal to zero.
 
-### Geometry and sparsity
+Therefore, ridge is mainly a shrinkage method, whereas lasso is both a shrinkage method and a variable-selection method.
 
-The geometric reason that lasso produces sparse solutions is that its constraint region has corners.
 
-- Ridge regression uses an $L_2$ constraint region, which is circular in two dimensions.
-- Lasso uses an $L_1$ constraint region, which is diamond-shaped in two dimensions.
 
-Because the diamond has sharp corners on the coordinate axes, the minimum often occurs at a corner. At such a point, one or more coefficients are exactly zero. This is the geometric explanation for the variable-selection property of lasso.
+```{python}
+#| code-fold: true
+import numpy as np
+import matplotlib.pyplot as plt
 
-::: {.callout-note}
-## Ridge versus Lasso
+mu = np.array([2.0, 0.35])
 
-Both ridge and lasso shrink coefficients toward zero.
+theta = np.deg2rad(32)
+R = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
 
-- **Ridge** uses an $L_2$ penalty and usually keeps all coefficients nonzero.
-- **Lasso** uses an $L_1$ penalty and may set some coefficients exactly to zero.
+D = np.diag([7.0, 0.45])
+A = R @ D @ R.T
 
-Therefore, ridge is mainly a shrinkage method, while lasso is both a shrinkage method and a variable-selection method.
-:::
 
----
+def rss(beta1, beta2):
+    B = np.stack([beta1 - mu[0], beta2 - mu[1]], axis=-1)
+    return np.einsum("...i,ij,...j->...", B, A, B)
+
+
+x = np.linspace(-0.5, 3.2, 600)
+y = np.linspace(-2.0, 2.0, 600)
+X, Y = np.meshgrid(x, y)
+Z = rss(X, Y)
+
+levels = [0.15, 0.4, 0.8, 1.4, 2.4, 3.8, 5.8]
+
+ridge_r = 1.7
+lasso_t = 2.0
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+
+axs[0].contour(X, Y, Z, levels=levels)
+t = np.linspace(0, 2 * np.pi, 400)
+axs[0].plot(ridge_r * np.cos(t), ridge_r * np.sin(t), linewidth=3)
+axs[0].scatter(*mu)
+axs[0].axhline(0)
+axs[0].axvline(0)
+axs[0].set_title("Ridge Constraint")
+
+axs[1].contour(X, Y, Z, levels=levels)
+diamond = np.array(
+    [[lasso_t, 0], [0, lasso_t], [-lasso_t, 0], [0, -lasso_t], [lasso_t, 0]]
+)
+axs[1].plot(diamond[:, 0], diamond[:, 1], linewidth=3)
+axs[1].scatter(*mu)
+axs[1].axhline(0)
+axs[1].axvline(0)
+axs[1].set_title("Lasso Constraint")
+
+for ax in axs:
+    ax.set_xlim(-2.2, 3.2)
+    ax.set_ylim(-2, 2)
+    ax.set_aspect("equal")
+    ax.set_xlabel(r"$\beta_1$")
+    ax.set_ylabel(r"$\beta_2$")
+
+plt.tight_layout()
+```
+
 
 ### About intercept
 
@@ -1268,9 +1311,13 @@ from sklearn.linear_model import LinearRegression, Lasso
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-ols_pipe = Pipeline([("scaler", StandardScaler()), ("model", LinearRegression())])
+ols_pipe = Pipeline(
+    [("scaler", StandardScaler()), ("model", LinearRegression())]
+)
 
-lasso_pipe = Pipeline([("scaler", StandardScaler()), ("model", Lasso(alpha=0.1))])
+lasso_pipe = Pipeline(
+    [("scaler", StandardScaler()), ("model", Lasso(alpha=0.1))]
+)
 
 ols_pipe.fit(X, y)
 lasso_pipe.fit(X, y)
