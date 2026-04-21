@@ -3,27 +3,24 @@
 
 When the number of predictors is large or when predictors are highly correlated, directly fitting a regression model using the original predictors may lead to unstable estimates and poor predictive performance.
 
-One approach to address this problem is **dimension reduction**. Instead of using the original predictors directly, we first construct a smaller number of derived variables (called **components**) and then perform regression using these components.
+One approach to address this problem is dimension reduction. Instead of using the original predictors directly, we first construct a smaller number of derived variables (called components) and then perform regression using these components.
 
 Two commonly used methods are
 
-- **Principal Component Regression (PCR)**
-- **Partial Least Squares (PLS)**
+- Principal Component Regression (PCR)
+- Partial Least Squares (PLS)
 
-Both methods construct new variables that are **linear combinations of the original predictors**, but they differ in how those combinations are chosen.
+Both methods construct new variables that are linear combinations of the original predictors, but they differ in how those combinations are chosen.
 
----
 
 
 ## PCR
 
-### Idea
 
-PCR first applies **principal component analysis (PCA)** to the predictor matrix $X$, and then uses the leading principal components as predictors in a regression model.
+PCR first applies principal component analysis (PCA) to the predictor matrix $X$, and then uses the leading principal components as predictors in a regression model.
 
 The key idea is that most of the variation in the predictors often lies in a lower-dimensional subspace.
 
----
 
 ::: {#def-pcr}
 ## Principal Component Regression

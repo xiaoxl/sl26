@@ -430,6 +430,226 @@ Tikhonov regularization is a method used to solve ill-posed problems and handle 
 </details>
 
 
+
+
+
+
+
+
+
+### Bias-Variance Tradeoff
+
+One of the main motivations for regularization methods is the bias-variance tradeoff. A more flexible model can fit the training data very well, but it may also be highly sensitive to random noise in the sample. In contrast, a more constrained model is usually more stable, but may systematically miss part of the true signal.
+
+This tradeoff can be described mathematically through a decomposition of the expected prediction error.
+
+
+Suppose the true model is
+$$
+Y=f(x)+\varepsilon,\quad\Exp(\varepsilon)=0,\quad \Var(\varepsilon)=\sigma^2.
+$$
+
+
+Let $\hat f(x)$ be an estimator of $f(x)$ constructed from a training sample. Since the training sample is random, $\hat f(x)$ is also random. We study the expected prediction error at a fixed point $x$:
+$$
+\Exp\qty[(Y-\hat f(x))^2].
+$$
+
+Here, the expectation is taken over both the randomness in the training data and the randomness in the new response $Y$.
+
+
+::: {#def-}
+## Bias and Variance
+
+- $\operatorname{Bias}(\hat f(x))=\Exp[\hat f(x)]-f(x)$.
+- $\Var(\hat f(x))=\Exp\qty[\qty(\hat f(x)-\Exp[\hat f(x)])^2]$.
+:::
+
+
+::: {#thm-}
+## Bias-Variance Decomposition
+$$
+\Exp\qty[(Y-\hat f(x))^2]
+=
+\operatorname{Bias}(\hat f(x))^2+\operatorname{Var}(\hat f(x))+\sigma^2.
+$$
+
+
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+Since $Y=f(x)+\varepsilon$,
+$$
+\begin{split}
+\Exp\qty[(Y-\hat f(x))^2]&=\Exp\qty[(f(x)+\varepsilon-\hat f(x))^2]\\
+&=\Exp\qty[(f(x)-\hat f(x))^2+2\varepsilon(f(x)-\hat f(x))+\varepsilon^2]\\
+&=\Exp\qty[(f(x)-\hat f(x))^2]+2\Exp\qty[\varepsilon(f(x)-\hat f(x))]+\Exp(\varepsilon^2).
+\end{split}
+$$
+
+
+
+Since the new noise $\varepsilon$ is independent of the training data and has mean $0$,
+$$
+\Exp\qty[\varepsilon(f(x)-\hat f(x))]=0.
+$$
+Also,
+$$
+\Exp(\varepsilon^2)=\Var(\varepsilon)=\sigma^2.
+$$
+
+Therefore,
+$$
+\Exp\qty[(Y-\hat f(x))^2]
+=
+\Exp\qty[(f(x)-\hat f(x))^2]+\sigma^2.
+$$
+
+Thus the prediction error is the sum of:
+
+- the estimation error $\mathbb{E}[(f(x)-\hat f(x))^2]$,
+- the irreducible error $\sigma^2$.
+
+
+Now we further decompose
+$$
+\Exp\qty[(f(x)-\hat f(x))^2].
+$$
+
+Let
+$$
+m(x)=\Exp[\hat f(x)],
+$$
+where the expectation is taken over the randomness in the training sample. Then
+$$
+f(x)-\hat f(x)=\qty(f(x)-m(x))+\qty(m(x)-\hat f(x)).
+$$
+
+Squaring,
+$$
+(f(x)-\hat f(x))^2
+=
+(f(x)-m(x))^2
++
+(m(x)-\hat f(x))^2
++
+2\qty(f(x)-m(x))\qty(m(x)-\hat f(x)).
+$$
+
+Taking expectation,
+$$
+\Exp\qty[(f(x)-\hat f(x))^2]
+=
+(f(x)-m(x))^2
++
+\Exp\qty[(m(x)-\hat f(x))^2]
++
+2\qty(f(x)-m(x))\Exp[m(x)-\hat f(x)].
+$$
+
+But
+$$
+\Exp[m(x)-\hat f(x)]
+=
+m(x)-\Exp[\hat f(x)]
+=
+0.
+$$
+
+So the cross term vanishes, and we obtain
+$$
+\Exp\qty[(f(x)-\hat f(x))^2]
+=
+\qty(f(x)-\Exp[\hat f(x)])^2
++
+\Exp\qty[\qty(\hat f(x)-\Exp[\hat f(x)])^2].
+$$
+
+The first term is the squared bias:
+$$
+\operatorname{Bias}(\hat f(x))^2
+=
+\qty(\Exp[\hat f(x)]-f(x))^2.
+$$
+
+The second term is the variance:
+$$
+\Var(\hat f(x))
+=
+\Exp\qty[\qty(\hat f(x)-\Exp[\hat f(x)])^2].
+$$
+
+Therefore,
+$$
+\Exp\qty[(f(x)-\hat f(x))^2]
+=
+\operatorname{Bias}(\hat f(x))^2+\Var(\hat f(x)).
+$$
+
+Combining this with the earlier decomposition gives
+$$
+\Exp\qty[(Y-\hat f(x))^2]
+=
+\operatorname{Bias}(\hat f(x))^2+\operatorname{Var}(\hat f(x))+\sigma^2.
+$$
+</details>
+
+:::
+
+
+
+
+This formula shows that the expected prediction error has three parts:
+
+
+- Squared bias: error caused by systematic deviation of the estimator from the truth.
+- Variance: error caused by sensitivity of the estimator to the particular training sample.
+- Irreducible error: the noise level $\sigma^2$, which cannot be removed by any method.
+
+
+A very flexible model often has small bias but large variance. A more constrained model often has larger bias but smaller variance. The goal of regularization is not necessarily to minimize bias or variance alone, but to balance them so that the total prediction error is as small as possible.
+
+::: {.callout-note}
+Ordinary least squares is often unbiased, but its variance can be very large when predictors are highly correlated or when the model is too flexible. Ridge and lasso (which will be discussed later) introduce bias by shrinking the coefficients toward $0$, but this often substantially reduces variance.
+
+As a result, although ridge or lasso may fit the training data less perfectly than OLS, they can achieve better prediction performance on new data. This is the central idea behind the bias-variance tradeoff and one of the main reasons regularization methods are useful in statistical learning.
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Ridge Regression in Python
 
 We use the following simulated dataset to demonstrate ridge regression. 
@@ -836,9 +1056,9 @@ $$
 =
 \frac{1}{N}
 \sum_{i=1}^{N}
-\left(
+\qty(
 \frac{y_i - \hat{y}_i}{1 - H_{\lambda,ii}}
-\right)^2.
+)^2.
 $$
 
 <details>
@@ -888,9 +1108,9 @@ $$
 =
 \frac{1}{N}
 \sum_{i=1}^{N}
-\left(
+\qty(
 \frac{y_i - \hat{y}_i}{1 - H_{\lambda,ii}}
-\right)^2.
+)^2.
 $$
 
 <!-- This formula allows the LOOCV error to be computed using only a single ridge fit. Consequently, `RidgeCV` can efficiently perform LOOCV without refitting the model $N$ times. -->

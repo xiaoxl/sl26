@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Regularization – Statistical Learning</title>
+<title>2&nbsp; Regularization – Statistical Learning</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -87,7 +87,6 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/1/dr.html" rel="next">
 <link href="../../contents/1/lr.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -343,7 +342,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regularization</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regularization</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -392,107 +391,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/1/basic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning Basics</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../contents/1/lr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/shrinkage.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/1/dr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/1/logistic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Part 2</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/knn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">knn.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/svm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">svm.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">lda.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/tree.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tree.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/ensemble.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ensemble.html</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
- <span class="menu-text">Unsupervised Learning</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/3/cluster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">cluster.html</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
- <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/app/r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Quick intro to R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -507,37 +413,38 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">3.1</span> Motivation</a></li>
-  <li><a href="#ridge-regression" id="toc-ridge-regression" class="nav-link" data-scroll-target="#ridge-regression"><span class="header-section-number">3.2</span> Ridge Regression</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">2.1</span> Motivation</a></li>
+  <li><a href="#ridge-regression" id="toc-ridge-regression" class="nav-link" data-scroll-target="#ridge-regression"><span class="header-section-number">2.2</span> Ridge Regression</a>
   <ul class="collapse">
-  <li><a href="#ols-esimator-review" id="toc-ols-esimator-review" class="nav-link" data-scroll-target="#ols-esimator-review"><span class="header-section-number">3.2.1</span> OLS esimator review</a></li>
-  <li><a href="#ridge-estimator" id="toc-ridge-estimator" class="nav-link" data-scroll-target="#ridge-estimator"><span class="header-section-number">3.2.2</span> Ridge estimator</a></li>
-  <li><a href="#about-intercept" id="toc-about-intercept" class="nav-link" data-scroll-target="#about-intercept"><span class="header-section-number">3.2.3</span> About intercept</a></li>
-  <li><a href="#alternative-formulation" id="toc-alternative-formulation" class="nav-link" data-scroll-target="#alternative-formulation"><span class="header-section-number">3.2.4</span> Alternative Formulation</a></li>
-  <li><a href="#svd-and-tikhonov-regularization" id="toc-svd-and-tikhonov-regularization" class="nav-link" data-scroll-target="#svd-and-tikhonov-regularization"><span class="header-section-number">3.2.5</span> SVD and Tikhonov Regularization</a></li>
+  <li><a href="#ols-esimator-review" id="toc-ols-esimator-review" class="nav-link" data-scroll-target="#ols-esimator-review"><span class="header-section-number">2.2.1</span> OLS esimator review</a></li>
+  <li><a href="#ridge-estimator" id="toc-ridge-estimator" class="nav-link" data-scroll-target="#ridge-estimator"><span class="header-section-number">2.2.2</span> Ridge estimator</a></li>
+  <li><a href="#about-intercept" id="toc-about-intercept" class="nav-link" data-scroll-target="#about-intercept"><span class="header-section-number">2.2.3</span> About intercept</a></li>
+  <li><a href="#alternative-formulation" id="toc-alternative-formulation" class="nav-link" data-scroll-target="#alternative-formulation"><span class="header-section-number">2.2.4</span> Alternative Formulation</a></li>
+  <li><a href="#svd-and-tikhonov-regularization" id="toc-svd-and-tikhonov-regularization" class="nav-link" data-scroll-target="#svd-and-tikhonov-regularization"><span class="header-section-number">2.2.5</span> SVD and Tikhonov Regularization</a></li>
+  <li><a href="#bias-variance-tradeoff" id="toc-bias-variance-tradeoff" class="nav-link" data-scroll-target="#bias-variance-tradeoff"><span class="header-section-number">2.2.6</span> Bias-Variance Tradeoff</a></li>
   </ul></li>
-  <li><a href="#ridge-regression-in-python" id="toc-ridge-regression-in-python" class="nav-link" data-scroll-target="#ridge-regression-in-python"><span class="header-section-number">3.3</span> Ridge Regression in Python</a>
+  <li><a href="#ridge-regression-in-python" id="toc-ridge-regression-in-python" class="nav-link" data-scroll-target="#ridge-regression-in-python"><span class="header-section-number">2.3</span> Ridge Regression in Python</a>
   <ul class="collapse">
-  <li><a href="#ridge-estimator-1" id="toc-ridge-estimator-1" class="nav-link" data-scroll-target="#ridge-estimator-1"><span class="header-section-number">3.3.1</span> Ridge estimator</a></li>
-  <li><a href="#contour-map" id="toc-contour-map" class="nav-link" data-scroll-target="#contour-map"><span class="header-section-number">3.3.2</span> Contour map</a></li>
-  <li><a href="#choosing-lambda" id="toc-choosing-lambda" class="nav-link" data-scroll-target="#choosing-lambda"><span class="header-section-number">3.3.3</span> Choosing <span class="math inline">\(\lambda\)</span></a></li>
-  <li><a href="#validation-curve-and-coefficient-paths" id="toc-validation-curve-and-coefficient-paths" class="nav-link" data-scroll-target="#validation-curve-and-coefficient-paths"><span class="header-section-number">3.3.4</span> Validation curve and Coefficient paths</a></li>
-  <li><a href="#loocv" id="toc-loocv" class="nav-link" data-scroll-target="#loocv"><span class="header-section-number">3.3.5</span> LOOCV</a></li>
+  <li><a href="#ridge-estimator-1" id="toc-ridge-estimator-1" class="nav-link" data-scroll-target="#ridge-estimator-1"><span class="header-section-number">2.3.1</span> Ridge estimator</a></li>
+  <li><a href="#contour-map" id="toc-contour-map" class="nav-link" data-scroll-target="#contour-map"><span class="header-section-number">2.3.2</span> Contour map</a></li>
+  <li><a href="#choosing-lambda" id="toc-choosing-lambda" class="nav-link" data-scroll-target="#choosing-lambda"><span class="header-section-number">2.3.3</span> Choosing <span class="math inline">\(\lambda\)</span></a></li>
+  <li><a href="#validation-curve-and-coefficient-paths" id="toc-validation-curve-and-coefficient-paths" class="nav-link" data-scroll-target="#validation-curve-and-coefficient-paths"><span class="header-section-number">2.3.4</span> Validation curve and Coefficient paths</a></li>
+  <li><a href="#loocv" id="toc-loocv" class="nav-link" data-scroll-target="#loocv"><span class="header-section-number">2.3.5</span> LOOCV</a></li>
   </ul></li>
-  <li><a href="#lasso-regression" id="toc-lasso-regression" class="nav-link" data-scroll-target="#lasso-regression"><span class="header-section-number">3.4</span> Lasso Regression</a>
+  <li><a href="#lasso-regression" id="toc-lasso-regression" class="nav-link" data-scroll-target="#lasso-regression"><span class="header-section-number">2.4</span> Lasso Regression</a>
   <ul class="collapse">
-  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition"><span class="header-section-number">3.4.1</span> Definition</a></li>
-  <li><a href="#geometry-and-sparsity" id="toc-geometry-and-sparsity" class="nav-link" data-scroll-target="#geometry-and-sparsity"><span class="header-section-number">3.4.2</span> Geometry and sparsity</a></li>
-  <li><a href="#one-variable-lasso-and-soft-thresholding" id="toc-one-variable-lasso-and-soft-thresholding" class="nav-link" data-scroll-target="#one-variable-lasso-and-soft-thresholding"><span class="header-section-number">3.4.3</span> One-variable lasso and soft-thresholding</a></li>
+  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition"><span class="header-section-number">2.4.1</span> Definition</a></li>
+  <li><a href="#geometry-and-sparsity" id="toc-geometry-and-sparsity" class="nav-link" data-scroll-target="#geometry-and-sparsity"><span class="header-section-number">2.4.2</span> Geometry and sparsity</a></li>
+  <li><a href="#one-variable-lasso-and-soft-thresholding" id="toc-one-variable-lasso-and-soft-thresholding" class="nav-link" data-scroll-target="#one-variable-lasso-and-soft-thresholding"><span class="header-section-number">2.4.3</span> One-variable lasso and soft-thresholding</a></li>
   </ul></li>
-  <li><a href="#lasso-in-python" id="toc-lasso-in-python" class="nav-link" data-scroll-target="#lasso-in-python"><span class="header-section-number">3.5</span> Lasso in Python</a>
+  <li><a href="#lasso-in-python" id="toc-lasso-in-python" class="nav-link" data-scroll-target="#lasso-in-python"><span class="header-section-number">2.5</span> Lasso in Python</a>
   <ul class="collapse">
-  <li><a href="#a-simulated-example" id="toc-a-simulated-example" class="nav-link" data-scroll-target="#a-simulated-example"><span class="header-section-number">3.5.1</span> A simulated example</a></li>
-  <li><a href="#initial-model-fitting" id="toc-initial-model-fitting" class="nav-link" data-scroll-target="#initial-model-fitting"><span class="header-section-number">3.5.2</span> Initial model fitting</a></li>
-  <li><a href="#coefficient-paths" id="toc-coefficient-paths" class="nav-link" data-scroll-target="#coefficient-paths"><span class="header-section-number">3.5.3</span> Coefficient paths</a></li>
-  <li><a href="#tuning-with-cross-validation" id="toc-tuning-with-cross-validation" class="nav-link" data-scroll-target="#tuning-with-cross-validation"><span class="header-section-number">3.5.4</span> Tuning with cross-validation</a></li>
-  <li><a href="#validation-curves" id="toc-validation-curves" class="nav-link" data-scroll-target="#validation-curves"><span class="header-section-number">3.5.5</span> Validation curves</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">3.5.6</span> Summary</a></li>
+  <li><a href="#a-simulated-example" id="toc-a-simulated-example" class="nav-link" data-scroll-target="#a-simulated-example"><span class="header-section-number">2.5.1</span> A simulated example</a></li>
+  <li><a href="#initial-model-fitting" id="toc-initial-model-fitting" class="nav-link" data-scroll-target="#initial-model-fitting"><span class="header-section-number">2.5.2</span> Initial model fitting</a></li>
+  <li><a href="#coefficient-paths" id="toc-coefficient-paths" class="nav-link" data-scroll-target="#coefficient-paths"><span class="header-section-number">2.5.3</span> Coefficient paths</a></li>
+  <li><a href="#tuning-with-cross-validation" id="toc-tuning-with-cross-validation" class="nav-link" data-scroll-target="#tuning-with-cross-validation"><span class="header-section-number">2.5.4</span> Tuning with cross-validation</a></li>
+  <li><a href="#validation-curves" id="toc-validation-curves" class="nav-link" data-scroll-target="#validation-curves"><span class="header-section-number">2.5.5</span> Validation curves</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">2.5.6</span> Summary</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -548,7 +455,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regularization</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regularization</span></h1>
 </div>
 
 
@@ -604,16 +511,16 @@ window.Quarto = {
 \newcommand{\distnormal}{\operatorname{\mathcal N}}
 \]</span></p>
 </div>
-<section id="motivation" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">3.1</span> Motivation</h2>
+<section id="motivation" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">2.1</span> Motivation</h2>
 <p>The OLS estimator is attractive because, under the Gauss–Markov assumptions, it is BLUE: the best linear unbiased estimator. However, when some predictors are nearly collinear, the matrix <span class="math inline">\(X^\top X\)</span> becomes nearly singular. In that case, the variance of <span class="math inline">\(\hat\beta_{\ols}\)</span> can be very large, so the estimated coefficients may become unstable and unreliable.</p>
 <p>This leads to the bias-variance trade-off. By allowing a small amount of bias, we may substantially reduce the variance and improve predictive performance. A common way to do this is through regularization.</p>
 <p>Two of the most important regularization methods are ridge regression and lasso. Both methods tend to shrink the coefficients toward zero, so they are also called shrinkage methods.</p>
 </section>
-<section id="ridge-regression" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="ridge-regression"><span class="header-section-number">3.2</span> Ridge Regression</h2>
-<section id="ols-esimator-review" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="ols-esimator-review"><span class="header-section-number">3.2.1</span> OLS esimator review</h3>
+<section id="ridge-regression" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="ridge-regression"><span class="header-section-number">2.2</span> Ridge Regression</h2>
+<section id="ols-esimator-review" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="ols-esimator-review"><span class="header-section-number">2.2.1</span> OLS esimator review</h3>
 <p>Consider a linear model <span class="math display">\[
 y=X\beta+\varepsilon.
 \]</span></p>
@@ -625,11 +532,11 @@ y=X\beta+\varepsilon.
 \hat{\beta}_{\ols} = (X^\top X)^{-1}X^\top y.
 \]</span></p>
 </section>
-<section id="ridge-estimator" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="ridge-estimator"><span class="header-section-number">3.2.2</span> Ridge estimator</h3>
+<section id="ridge-estimator" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="ridge-estimator"><span class="header-section-number">2.2.2</span> Ridge estimator</h3>
 <p>Ridge regression modifies the OLS loss function by adding a quadratic penalty.</p>
 <div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3.1 (Ridge Regression)</strong></span> For a response vector <span class="math inline">\(y \in \mathbb{R}^n\)</span> and a design matrix <span class="math inline">\(X \in \mathbb{R}^{n \times p}\)</span>, the Ridge estimator <span class="math inline">\(\hat{\beta}_{\ridge}\)</span> is defined as: <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 2.1 (Ridge Regression)</strong></span> For a response vector <span class="math inline">\(y \in \mathbb{R}^n\)</span> and a design matrix <span class="math inline">\(X \in \mathbb{R}^{n \times p}\)</span>, the Ridge estimator <span class="math inline">\(\hat{\beta}_{\ridge}\)</span> is defined as: <span class="math display">\[
 \hat{\beta}_{\ridge} = \arg\min_{\beta} \qty{ \norm{y - X\beta}_2^2 + \lambda \norm{\beta}_2^2 }
 \]</span> where</p>
 <ul>
@@ -640,7 +547,7 @@ y=X\beta+\varepsilon.
 <p>The penalty shrinks the coefficients toward zero. Larger values of <span class="math inline">\(\lambda\)</span> produce stronger shrinkage. However, ridge regression does not perform variable selection, since it rarely sets any coefficient exactly to zero.</p>
 <p>Similar to the OLS estimator, the Ridge estimator can be solved analytically.</p>
 <div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.1 (The Closed-Form of Ridge estimator)</strong></span> The closed-form solution of <span class="math inline">\(\hat\beta_{\ridge}\)</span> is <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 2.1 (The Closed-Form of Ridge estimator)</strong></span> The closed-form solution of <span class="math inline">\(\hat\beta_{\ridge}\)</span> is <span class="math display">\[
 \hat{\beta}_{\ridge} = (X^\top X + \lambda I)^{-1} X^\top y.
 \]</span></p>
 <details>
@@ -708,8 +615,8 @@ y^\top y - 2\beta^\top X^\top y + \beta^\top (X^\top X+\lambda I)\beta .
 </div>
 <p>In this formulation, the term <span class="math inline">\(\lambda I\)</span> (where <span class="math inline">\(I\)</span> is the identity matrix) is added to the cross-product matrix <span class="math inline">\(X^\top X\)</span> before inversion. This ensures that the matrix is non-singular and well-conditioned, even in the presence of multicollinearity or when <span class="math inline">\(p &gt; n\)</span>.</p>
 </section>
-<section id="about-intercept" class="level3" data-number="3.2.3">
-<h3 data-number="3.2.3" class="anchored" data-anchor-id="about-intercept"><span class="header-section-number">3.2.3</span> About intercept</h3>
+<section id="about-intercept" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="about-intercept"><span class="header-section-number">2.2.3</span> About intercept</h3>
 <p>Linear regression models are commonly written in the form</p>
 <p><span class="math display">\[
 y = X\beta + \varepsilon.
@@ -759,7 +666,7 @@ X_j^c = X_j - \bar X_j .
 <div class="callout-body-container callout-body">
 <p>Because the ridge penalty depends on the sizes of the coefficients, ridge regression is usually implemented after standardizing the predictors. This puts the predictors on a common scale, so that the penalty treats them fairly.</p>
 <p>In practice, the predictors are typically standardized, whereas the response is usually only centered rather than standardized.</p>
-<p>For details see <a href="lr.html#sec-scaling" class="quarto-xref"><span>Section 2.5.4</span></a>.</p>
+<p>For details see <a href="lr.html#sec-scaling" class="quarto-xref"><span>Section 1.5.4</span></a>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -777,8 +684,8 @@ X_j^c = X_j - \bar X_j .
 </div>
 </div>
 </section>
-<section id="alternative-formulation" class="level3" data-number="3.2.4">
-<h3 data-number="3.2.4" class="anchored" data-anchor-id="alternative-formulation"><span class="header-section-number">3.2.4</span> Alternative Formulation</h3>
+<section id="alternative-formulation" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="alternative-formulation"><span class="header-section-number">2.2.4</span> Alternative Formulation</h3>
 <p>By the theory of Lagrange multipliers, ridge regression can also be written in a constrained optimization form:</p>
 <p><span class="math display">\[
 \hat{\beta}_{\ridge}
@@ -850,8 +757,8 @@ X_j^c = X_j - \bar X_j .
 </div>
 </div>
 </section>
-<section id="svd-and-tikhonov-regularization" class="level3" data-number="3.2.5">
-<h3 data-number="3.2.5" class="anchored" data-anchor-id="svd-and-tikhonov-regularization"><span class="header-section-number">3.2.5</span> SVD and Tikhonov Regularization</h3>
+<section id="svd-and-tikhonov-regularization" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="svd-and-tikhonov-regularization"><span class="header-section-number">2.2.5</span> SVD and Tikhonov Regularization</h3>
 <details>
 <summary>
 <strong>Click to expand.</strong>
@@ -937,12 +844,146 @@ v_i\,u_i^\top y .
 </div>
 </details>
 </section>
+<section id="bias-variance-tradeoff" class="level3" data-number="2.2.6">
+<h3 data-number="2.2.6" class="anchored" data-anchor-id="bias-variance-tradeoff"><span class="header-section-number">2.2.6</span> Bias-Variance Tradeoff</h3>
+<p>One of the main motivations for regularization methods is the bias-variance tradeoff. A more flexible model can fit the training data very well, but it may also be highly sensitive to random noise in the sample. In contrast, a more constrained model is usually more stable, but may systematically miss part of the true signal.</p>
+<p>This tradeoff can be described mathematically through a decomposition of the expected prediction error.</p>
+<p>Suppose the true model is <span class="math display">\[
+Y=f(x)+\varepsilon,\quad\operatorname{E}(\varepsilon)=0,\quad \operatorname{Var}(\varepsilon)=\sigma^2.
+\]</span></p>
+<p>Let <span class="math inline">\(\hat f(x)\)</span> be an estimator of <span class="math inline">\(f(x)\)</span> constructed from a training sample. Since the training sample is random, <span class="math inline">\(\hat f(x)\)</span> is also random. We study the expected prediction error at a fixed point <span class="math inline">\(x\)</span>: <span class="math display">\[
+\operatorname{E}\qty[(Y-\hat f(x))^2].
+\]</span></p>
+<p>Here, the expectation is taken over both the randomness in the training data and the randomness in the new response <span class="math inline">\(Y\)</span>.</p>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.2 (Bias and Variance)</strong></span> &nbsp;</p>
+<ul>
+<li><span class="math inline">\(\operatorname{Bias}(\hat f(x))=\operatorname{E}[\hat f(x)]-f(x)\)</span>.</li>
+<li><span class="math inline">\(\operatorname{Var}(\hat f(x))=\operatorname{E}\qty[\qty(\hat f(x)-\operatorname{E}[\hat f(x)])^2]\)</span>.</li>
+</ul>
+</div>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2.2 (Bias-Variance Decomposition)</strong></span> <span class="math display">\[
+\operatorname{E}\qty[(Y-\hat f(x))^2]
+=
+\operatorname{Bias}(\hat f(x))^2+\operatorname{Var}(\hat f(x))+\sigma^2.
+\]</span></p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
+<p>Since <span class="math inline">\(Y=f(x)+\varepsilon\)</span>, <span class="math display">\[
+\begin{split}
+\operatorname{E}\qty[(Y-\hat f(x))^2]&amp;=\operatorname{E}\qty[(f(x)+\varepsilon-\hat f(x))^2]\\
+&amp;=\operatorname{E}\qty[(f(x)-\hat f(x))^2+2\varepsilon(f(x)-\hat f(x))+\varepsilon^2]\\
+&amp;=\operatorname{E}\qty[(f(x)-\hat f(x))^2]+2\operatorname{E}\qty[\varepsilon(f(x)-\hat f(x))]+\operatorname{E}(\varepsilon^2).
+\end{split}
+\]</span></p>
+<p>Since the new noise <span class="math inline">\(\varepsilon\)</span> is independent of the training data and has mean <span class="math inline">\(0\)</span>, <span class="math display">\[
+\operatorname{E}\qty[\varepsilon(f(x)-\hat f(x))]=0.
+\]</span> Also, <span class="math display">\[
+\operatorname{E}(\varepsilon^2)=\operatorname{Var}(\varepsilon)=\sigma^2.
+\]</span></p>
+<p>Therefore, <span class="math display">\[
+\operatorname{E}\qty[(Y-\hat f(x))^2]
+=
+\operatorname{E}\qty[(f(x)-\hat f(x))^2]+\sigma^2.
+\]</span></p>
+<p>Thus the prediction error is the sum of:</p>
+<ul>
+<li>the estimation error <span class="math inline">\(\mathbb{E}[(f(x)-\hat f(x))^2]\)</span>,</li>
+<li>the irreducible error <span class="math inline">\(\sigma^2\)</span>.</li>
+</ul>
+<p>Now we further decompose <span class="math display">\[
+\operatorname{E}\qty[(f(x)-\hat f(x))^2].
+\]</span></p>
+<p>Let <span class="math display">\[
+m(x)=\operatorname{E}[\hat f(x)],
+\]</span> where the expectation is taken over the randomness in the training sample. Then <span class="math display">\[
+f(x)-\hat f(x)=\qty(f(x)-m(x))+\qty(m(x)-\hat f(x)).
+\]</span></p>
+<p>Squaring, <span class="math display">\[
+(f(x)-\hat f(x))^2
+=
+(f(x)-m(x))^2
++
+(m(x)-\hat f(x))^2
++
+2\qty(f(x)-m(x))\qty(m(x)-\hat f(x)).
+\]</span></p>
+<p>Taking expectation, <span class="math display">\[
+\operatorname{E}\qty[(f(x)-\hat f(x))^2]
+=
+(f(x)-m(x))^2
++
+\operatorname{E}\qty[(m(x)-\hat f(x))^2]
++
+2\qty(f(x)-m(x))\operatorname{E}[m(x)-\hat f(x)].
+\]</span></p>
+<p>But <span class="math display">\[
+\operatorname{E}[m(x)-\hat f(x)]
+=
+m(x)-\operatorname{E}[\hat f(x)]
+=
+0.
+\]</span></p>
+<p>So the cross term vanishes, and we obtain <span class="math display">\[
+\operatorname{E}\qty[(f(x)-\hat f(x))^2]
+=
+\qty(f(x)-\operatorname{E}[\hat f(x)])^2
++
+\operatorname{E}\qty[\qty(\hat f(x)-\operatorname{E}[\hat f(x)])^2].
+\]</span></p>
+<p>The first term is the squared bias: <span class="math display">\[
+\operatorname{Bias}(\hat f(x))^2
+=
+\qty(\operatorname{E}[\hat f(x)]-f(x))^2.
+\]</span></p>
+<p>The second term is the variance: <span class="math display">\[
+\operatorname{Var}(\hat f(x))
+=
+\operatorname{E}\qty[\qty(\hat f(x)-\operatorname{E}[\hat f(x)])^2].
+\]</span></p>
+<p>Therefore, <span class="math display">\[
+\operatorname{E}\qty[(f(x)-\hat f(x))^2]
+=
+\operatorname{Bias}(\hat f(x))^2+\operatorname{Var}(\hat f(x)).
+\]</span></p>
+Combining this with the earlier decomposition gives <span class="math display">\[
+\operatorname{E}\qty[(Y-\hat f(x))^2]
+=
+\operatorname{Bias}(\hat f(x))^2+\operatorname{Var}(\hat f(x))+\sigma^2.
+\]</span>
+</details>
+</div>
+<p>This formula shows that the expected prediction error has three parts:</p>
+<ul>
+<li>Squared bias: error caused by systematic deviation of the estimator from the truth.</li>
+<li>Variance: error caused by sensitivity of the estimator to the particular training sample.</li>
+<li>Irreducible error: the noise level <span class="math inline">\(\sigma^2\)</span>, which cannot be removed by any method.</li>
+</ul>
+<p>A very flexible model often has small bias but large variance. A more constrained model often has larger bias but smaller variance. The goal of regularization is not necessarily to minimize bias or variance alone, but to balance them so that the total prediction error is as small as possible.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ordinary least squares is often unbiased, but its variance can be very large when predictors are highly correlated or when the model is too flexible. Ridge and lasso (which will be discussed later) introduce bias by shrinking the coefficients toward <span class="math inline">\(0\)</span>, but this often substantially reduces variance.</p>
+<p>As a result, although ridge or lasso may fit the training data less perfectly than OLS, they can achieve better prediction performance on new data. This is the central idea behind the bias-variance tradeoff and one of the main reasons regularization methods are useful in statistical learning.</p>
+</div>
+</div>
 </section>
-<section id="ridge-regression-in-python" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="ridge-regression-in-python"><span class="header-section-number">3.3</span> Ridge Regression in Python</h2>
+</section>
+<section id="ridge-regression-in-python" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="ridge-regression-in-python"><span class="header-section-number">2.3</span> Ridge Regression in Python</h2>
 <p>We use the following simulated dataset to demonstrate ridge regression.</p>
 <p>The covariance matrix has a very high correlation, so the two predictors <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are highly correlated.</p>
-<div id="7eeb0bc5" class="cell" data-execution_count="1">
+<div id="96d2bd44" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">2</span>)</span>
@@ -955,11 +996,11 @@ v_i\,u_i^\top y .
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> rng.normal(loc<span class="op">=</span>X[:, <span class="dv">0</span>] <span class="op">+</span> X[:, <span class="dv">1</span>], scale<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The data set is generated from a model with <span class="math inline">\(\operatorname{E}(y\mid x_1,x_2)=x_1+x_2\)</span>. Therefore the true coefficients are <span class="math inline">\(\beta_1=\beta_2=1\)</span>.</p>
-<section id="ridge-estimator-1" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="ridge-estimator-1"><span class="header-section-number">3.3.1</span> Ridge estimator</h3>
+<section id="ridge-estimator-1" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="ridge-estimator-1"><span class="header-section-number">2.3.1</span> Ridge estimator</h3>
 <p>We use <code>Ridge</code> from <code>sklearn.linear_model</code> to fit a ridge regression model. Its API is very similar to that of OLS. The argument <code>alpha</code> is the regularization parameter <span class="math inline">\(\lambda\)</span>.</p>
 <p>For simplicity, we use a no-intercept model, so we set <code>fit_intercept=False</code>.</p>
-<div id="2938bff4" class="cell" data-execution_count="2">
+<div id="52d21082" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ridge <span class="op">=</span> Ridge(alpha<span class="op">=</span><span class="dv">5</span>, fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X, y)</span>
@@ -969,7 +1010,7 @@ v_i\,u_i^\top y .
 </div>
 </div>
 <p>For comparison, we also fit the OLS estimator.</p>
-<div id="d8ae65ac" class="cell" data-execution_count="3">
+<div id="18b8c66f" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ols <span class="op">=</span> LinearRegression(fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X, y)</span>
@@ -984,7 +1025,7 @@ v_i\,u_i^\top y .
 <li>The OLS coefficients may happen to be closer to the true values in this single sample.</li>
 </ul>
 <p>The second point is due to randomness in the simulated data. To see the general pattern, we repeat the simulation many times.</p>
-<div id="5bf90647" class="cell" data-execution_count="4">
+<div id="1b308f57" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> []</span>
@@ -1004,7 +1045,7 @@ v_i\,u_i^\top y .
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> pd.DataFrame(res)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The first five results are shown below. We can see that the OLS estimates vary substantially from sample to sample.</p>
-<div id="35475799" class="cell" data-execution_count="5">
+<div id="6e765e92" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>res.head(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -1063,7 +1104,7 @@ v_i\,u_i^\top y .
 </div>
 </div>
 <p>This becomes even clearer in the boxplot below, which shows that the ridge estimator has much smaller variance than the OLS estimator.</p>
-<div id="3a15b248" class="cell" data-execution_count="6">
+<div id="3b391374" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(res)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -1075,11 +1116,11 @@ v_i\,u_i^\top y .
 </div>
 </div>
 </section>
-<section id="contour-map" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="contour-map"><span class="header-section-number">3.3.2</span> Contour map</h3>
+<section id="contour-map" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="contour-map"><span class="header-section-number">2.3.2</span> Contour map</h3>
 <p>The variance of both <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> is quite large under OLS. This is because the variance of <span class="math inline">\(\widehat{\boldsymbol{\beta}}\)</span> is <span class="math inline">\(\sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}\)</span>. Since the columns of <span class="math inline">\(\mathbf{X}\)</span> are highly correlated, the smallest eigenvalue of <span class="math inline">\(\mathbf{X}^\top\mathbf{X}\)</span> is close to zero, making the largest eigenvalue of <span class="math inline">\((\mathbf{X}^\top\mathbf{X})^{-1}\)</span> very large.</p>
 <p>To see things in more details, we first build the RSS function. For each <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> in the range, we form a model <span class="math inline">\(\hat y_{\beta}=\beta_1x_1+\beta_2x_2\)</span> and use it to compute <span class="math inline">\(\rss = \sum (y-\hat y)^2\)</span>.</p>
-<div id="1e3699e3" class="cell" data-execution_count="7">
+<div id="8750382c" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>beta1_vals <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">200</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>beta2_vals <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">200</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>B1, B2 <span class="op">=</span> np.meshgrid(beta1_vals, beta2_vals)</span>
@@ -1090,7 +1131,7 @@ v_i\,u_i^\top y .
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>rss_value0 <span class="op">=</span> rss_term.reshape(B1.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We then construct the contour map for the <span class="math inline">\(\rss\)</span> surface, plotting the isolines that correspond to the 1%, 2.5%, 5%, 20%, 50%, and 75% quantiles of the distribution. The ture coefficient <span class="math inline">\((\beta_1=1,\beta_2=1)\)</span> is displayed as the red dot, as well as the estimated <span class="math inline">\(\beta\)</span> as a blue square in the countour map.</p>
-<div id="b3bbe7cd" class="cell" data-execution_count="8">
+<div id="3962bb05" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1121,7 +1162,7 @@ v_i\,u_i^\top y .
 <p>The contour map reveals a narrow, elongated valley in the <span class="math inline">\(\rss\)</span> objective function. While the surface is highly sensitive to movement perpendicular to the valley, it remains relatively flat along the valley floor. Because the surface is particularly flat in this longitudinal direction, numerous parameter combinations yield nearly identical <span class="math inline">\(\rss\)</span> values. Consequently, the data provides insufficient information to distinguish between points along this axis, making the <span class="math inline">\(\rss\)</span> minimum highly unstable. This lack of identifiability is the fundamental cause of high variance in the estimated coefficients.</p>
 <p>When ridge regression is applied, the <span class="math inline">\(\rss\)</span> objective function is modified by adding a penalty term. As a result, the objective surface no longer exhibits a long, flat valley floor. Instead, the minimum becomes more well-defined, and the estimate is pulled toward the origin. Although the true parameter may no longer lie at the bottom of this modified valley, the ridge estimate has substantially lower variance. In this way, ridge regression stabilizes the estimation by controlling the region along the valley floor where the OLS solution would otherwise vary widely.</p>
 <p>Here we show the <span class="math inline">\(\rss\)</span> objective function contours for <span class="math inline">\(\lambda=0.1\)</span>, <span class="math inline">\(1\)</span>, <span class="math inline">\(10\)</span> and <span class="math inline">\(100\)</span>.</p>
-<div id="b2b0854d" class="cell" data-execution_count="9">
+<div id="6f33bf53" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
@@ -1172,7 +1213,7 @@ v_i\,u_i^\top y .
 <p>As <span class="math inline">\(\lambda\)</span> increases, the bottom of the valley gradually becomes more rounded, and the objective surface rises more steeply as the coefficients move away from the origin. This additional curvature removes the long flat valley floor and makes the minimum more clearly defined. At the same time, the penalty pulls the estimated coefficients toward the origin, so the ridge estimate is effectively dragged toward zero.</p>
 <p>Geometrically, this shrinkage prevents the estimator from drifting freely along the nearly flat valley direction that appears in the OLS objective. As a result, the ridge estimator is much more stable and typically has substantially lower variance than the OLS estimator, although this improvement comes at the cost of introducing some bias.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1181,7 +1222,7 @@ v_i\,u_i^\top y .
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The Gram matrix <span class="math inline">\(X\top X\)</span> represents the raw inner products of predictors. In the context of <span class="math inline">\(\rss\)</span> map, it is the direct source of the surface geometry.</p>
 <p>The Covariance matrix is essentially the Gram matrix of the centered data, usually scaled by <span class="math inline">\(n-1\)</span>. <span class="math display">\[
@@ -1189,7 +1230,7 @@ v_i\,u_i^\top y .
 \]</span></p>
 <p>Therefore if the data is already centered, the Gram matrix and the covariance matrix are directly related: <span class="math inline">\(X\top X=(n-1)\operatorname{Cov}\)</span>.</p>
 <p>Mathematically, these two directions (the longitudinal axis and the perpendicular axis) correspond to the eigenvectors of the <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> matrix (or, equivalently, the principal components of the predictor space). The flatness or steepness in those directions is governed by their corresponding eigenvalues.</p>
-<div id="60612f5a" class="cell" data-execution_count="10">
+<div id="57c9b703" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>XTX <span class="op">=</span> X.T <span class="op">@</span> X</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>eigenvalues, eigenvectors <span class="op">=</span> np.linalg.eigh(XTX)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(eigenvalues)):</span>
@@ -1200,7 +1241,7 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 </div>
 </div>
 <p>Then mark the eigenvectors in the contour map.</p>
-<div id="ee2fbb25" class="cell" data-execution_count="11">
+<div id="b1d8cfae" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
@@ -1250,8 +1291,8 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 </div>
 </div>
 </section>
-<section id="choosing-lambda" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="choosing-lambda"><span class="header-section-number">3.3.3</span> Choosing <span class="math inline">\(\lambda\)</span></h3>
+<section id="choosing-lambda" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="choosing-lambda"><span class="header-section-number">2.3.3</span> Choosing <span class="math inline">\(\lambda\)</span></h3>
 <p>The regularization parameter <span class="math inline">\(\lambda\)</span> determines how much shrinkage is applied.</p>
 <p>In practice, the modern standard is to choose <span class="math inline">\(\lambda\)</span> by cross-validation. Similar to the model selection procedure discussed in the linear regression case, the process works as follows:</p>
 <ol type="1">
@@ -1281,7 +1322,7 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 <li><code>alphas</code> should be a list of candidate values for <span class="math inline">\(\alpha\)</span>. In the example below, <span class="math inline">\(\alpha\)</span> is selected from values ranging from <code>1e-4</code> to <code>1e4</code>.</li>
 <li><code>cv</code> works in the same way as in ordinary cross-validation and specifies the number of folds used in the cross-validation procedure. If it is not set, LOOCV will be used.</li>
 </ul>
-<div id="84efdd9b" class="cell" data-execution_count="12">
+<div id="fbfe082b" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> RidgeCV</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
@@ -1304,11 +1345,11 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 </div>
 </div>
 </section>
-<section id="validation-curve-and-coefficient-paths" class="level3" data-number="3.3.4">
-<h3 data-number="3.3.4" class="anchored" data-anchor-id="validation-curve-and-coefficient-paths"><span class="header-section-number">3.3.4</span> Validation curve and Coefficient paths</h3>
+<section id="validation-curve-and-coefficient-paths" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="validation-curve-and-coefficient-paths"><span class="header-section-number">2.3.4</span> Validation curve and Coefficient paths</h3>
 <p><code>RidgeCV</code> returns only the final fitted model at the selected value of <code>alpha</code>, rather than the entire validation curve or coefficient path. If we want to examine how the validation score changes with <code>alpha</code>, we may fit ordinary Ridge models over a grid of <code>alpha</code> values and then add a vertical line at the value selected by <code>RidgeCV</code>.</p>
 <p><code>sklearn</code> provides <code>validation_curve()</code> to streamline the process.</p>
-<div id="93f0906f" class="cell" data-execution_count="13">
+<div id="902a263d" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> validation_curve</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>alphas <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">100</span>)</span>
@@ -1348,7 +1389,7 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 </div>
 </div>
 <p>Similarly, if we want to examine how the coefficients change with <code>alpha</code>, we fit ordinary <code>Ridge</code> repeatedly over a grid of <code>alpha</code> values and record the fitted coefficients. In this case, cross-validation is not needed, since the goal is only to visualize the coefficient path rather than to compare models.</p>
-<div id="f536527a" class="cell" data-execution_count="14">
+<div id="ebfd8857" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
 <span id="annotated-cell-12-2"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="annotated-cell-12-3"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1393,18 +1434,18 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 </div>
 </div>
 </section>
-<section id="loocv" class="level3" data-number="3.3.5">
-<h3 data-number="3.3.5" class="anchored" data-anchor-id="loocv"><span class="header-section-number">3.3.5</span> LOOCV</h3>
+<section id="loocv" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="loocv"><span class="header-section-number">2.3.5</span> LOOCV</h3>
 <p>Naively, LOOCV would require fitting the model <span class="math inline">\(N\)</span> times. Each time one observation is removed and the model is refit. However, ridge regression admits an analytic formula that allows the LOOCV error to be computed without refitting the model repeatedly. This is one reason ridge regression works very well with LOOCV. <code>RidgeCV</code> from <code>sklearn</code> is also implemented using LOOCV formula instead of refitting the model multiple times.</p>
 <div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.2 (LOOCV)</strong></span> The LOOCV error is <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 2.3 (LOOCV)</strong></span> The LOOCV error is <span class="math display">\[
 \text{CV}(\lambda)
 =
 \frac{1}{N}
 \sum_{i=1}^{N}
-\left(
+\qty(
 \frac{y_i - \hat{y}_i}{1 - H_{\lambda,ii}}
-\right)^2.
+)^2.
 \]</span></p>
 <details>
 <summary>
@@ -1436,9 +1477,9 @@ r_{(i)} = \frac{r_i}{1 - H_{\lambda,ii}} ,
 =
 \frac{1}{N}
 \sum_{i=1}^{N}
-\left(
+\qty(
 \frac{y_i - \hat{y}_i}{1 - H_{\lambda,ii}}
-\right)^2.
+)^2.
 \]</span></p>
 <!-- This formula allows the LOOCV error to be computed using only a single ridge fit. Consequently, `RidgeCV` can efficiently perform LOOCV without refitting the model $N$ times. -->
 </details>
@@ -1552,13 +1593,13 @@ For ridge regression,
 Thus $\text{Trace}(S_\lambda)$ plays the role of the model's effective number of parameters, and the denominator of the GCV criterion adjusts the training error to account for model complexity. -->
 </section>
 </section>
-<section id="lasso-regression" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="lasso-regression"><span class="header-section-number">3.4</span> Lasso Regression</h2>
-<section id="definition" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">3.4.1</span> Definition</h3>
+<section id="lasso-regression" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="lasso-regression"><span class="header-section-number">2.4</span> Lasso Regression</h2>
+<section id="definition" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">2.4.1</span> Definition</h3>
 <p>Lasso regression (short for least absolute shrinkage and selection operator) modifies the OLS objective by adding an <span class="math inline">\(L_1\)</span> penalty.</p>
 <div id="def-lasso" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3.2 (Lasso Regression)</strong></span> For a response vector <span class="math inline">\(y \in \mathbb{R}^n\)</span> and a design matrix <span class="math inline">\(X \in \mathbb{R}^{n \times p}\)</span>, the lasso estimator <span class="math inline">\(\hat{\beta}_{\lasso}\)</span> is defined by</p>
+<p><span class="theorem-title"><strong>Definition 2.3 (Lasso Regression)</strong></span> For a response vector <span class="math inline">\(y \in \mathbb{R}^n\)</span> and a design matrix <span class="math inline">\(X \in \mathbb{R}^{n \times p}\)</span>, the lasso estimator <span class="math inline">\(\hat{\beta}_{\lasso}\)</span> is defined by</p>
 <p><span class="math display">\[
 \hat{\beta}_{\lasso}
 =
@@ -1596,8 +1637,8 @@ Thus $\text{Trace}(S_\lambda)$ plays the role of the model's effective number of
 <p>The lasso penalty also shrinks the coefficients toward zero, and therefore behaves similarly to ridge regression. In practice, the penalty is typically applied only to the slope coefficients, so the intercept is not penalized. For this reason, it is common to standardize the predictors and center the response variable before fitting the model.</p>
 <p>However, lasso has an important difference from ridge regression, which we discuss in the next section.</p>
 </section>
-<section id="geometry-and-sparsity" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="geometry-and-sparsity"><span class="header-section-number">3.4.2</span> Geometry and sparsity</h3>
+<section id="geometry-and-sparsity" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="geometry-and-sparsity"><span class="header-section-number">2.4.2</span> Geometry and sparsity</h3>
 <p>Similar to ridge regression, by the theory of Lagrange multipliers, lasso can also be written in constrained form:</p>
 <p><span class="math display">\[
 \hat{\beta}_{\lasso}
@@ -1614,7 +1655,7 @@ Thus $\text{Trace}(S_\lambda)$ plays the role of the model's effective number of
 <p>For ridge regression, the circular boundary is smooth, so the point of tangency typically occurs away from the coordinate axes. As a result, ridge usually shrinks coefficients continuously toward zero, but does not make them exactly zero.</p>
 <p>For lasso, the diamond-shaped boundary has sharp corners lying on the coordinate axes. Because of these corners, the point of tangency is much more likely to occur at a location where one coordinate is zero. Consequently, lasso can produce solutions with some coefficients exactly equal to zero.</p>
 <p>Therefore, ridge is mainly a shrinkage method, whereas lasso is both a shrinkage method and a variable-selection method.</p>
-<div id="09739a19" class="cell" data-execution_count="15">
+<div id="b3927cb4" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1682,8 +1723,8 @@ Thus $\text{Trace}(S_\lambda)$ plays the role of the model's effective number of
 </div>
 </div>
 </section>
-<section id="one-variable-lasso-and-soft-thresholding" class="level3" data-number="3.4.3">
-<h3 data-number="3.4.3" class="anchored" data-anchor-id="one-variable-lasso-and-soft-thresholding"><span class="header-section-number">3.4.3</span> One-variable lasso and soft-thresholding</h3>
+<section id="one-variable-lasso-and-soft-thresholding" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="one-variable-lasso-and-soft-thresholding"><span class="header-section-number">2.4.3</span> One-variable lasso and soft-thresholding</h3>
 <p>To understand how lasso sets coefficients to <span class="math inline">\(0\)</span>, it is useful to first look at the one-variable case.</p>
 <p>Suppose we want to solve <span class="math display">\[
 \min_{\beta}\qty{\norm{y-X\beta}_2^2 + \lambda \abs{\beta}}.
@@ -1692,7 +1733,7 @@ Thus $\text{Trace}(S_\lambda)$ plays the role of the model's effective number of
 \hat\beta_\ols=\arg\min_\beta\qty{\norm{y-X\beta}_2^2}
 \]</span> denotes the OLS solution for this one-variable problem.</p>
 <div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.3 (Soft-thresholding Rule)</strong></span> <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 2.4 (Soft-thresholding Rule)</strong></span> <span class="math display">\[
 \hat\beta_\lasso=\begin{cases}
 \hat\beta_\ols+\frac\lambda{2a}&amp; \text{ if }\hat\beta_\ols&lt;-\frac\lambda{2a},\\
 0&amp; \text{ if }\abs{\hat\beta_\ols}\leq\frac\lambda{2a},\\
@@ -1804,8 +1845,8 @@ So coordinate descent repeatedly reduces the full lasso problem to a sequence of
  -->
 </section>
 </section>
-<section id="lasso-in-python" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="lasso-in-python"><span class="header-section-number">3.5</span> Lasso in Python</h2>
+<section id="lasso-in-python" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="lasso-in-python"><span class="header-section-number">2.5</span> Lasso in Python</h2>
 <p>In <code>scikit-learn</code>, <code>Lasso</code> and <code>LassoCV</code> from <code>linear_model</code> are used in a way very similar to <code>Ridge</code> and <code>RidgeCV</code>.</p>
 <ul>
 <li>The argument <code>alpha</code> is the regularization parameter.</li>
@@ -1814,15 +1855,15 @@ So coordinate descent repeatedly reduces the full lasso problem to a sequence of
 <li>It is recommended to standardize the features <span class="math inline">\(X\)</span>.</li>
 </ul>
 <p>A key computational difference from ridge is that lasso does not have a closed-form estimator. Likewise, unlike ridge regression, there is no closed-form LOOCV formula available for selecting the tuning parameter. Therefore, <code>LassoCV</code> uses ordinary <span class="math inline">\(K\)</span>-fold cross-validation to choose the best value of <code>alpha</code>.</p>
-<section id="a-simulated-example" class="level3" data-number="3.5.1">
-<h3 data-number="3.5.1" class="anchored" data-anchor-id="a-simulated-example"><span class="header-section-number">3.5.1</span> A simulated example</h3>
+<section id="a-simulated-example" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="a-simulated-example"><span class="header-section-number">2.5.1</span> A simulated example</h3>
 <p>To illustrate lasso and ridge in code, we start with a simulated dataset. The data are constructed so that:</p>
 <ul>
 <li>there are 100 predictors and 150 observations,</li>
 <li>many predictors are almost collinear (that they are obtained from a rank 12 latent structure),</li>
 <li>but only 10 predictors truly contribute to the response.</li>
 </ul>
-<div id="5f5490a0" class="cell" data-execution_count="16">
+<div id="300f2e8d" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>)</span>
@@ -1841,7 +1882,7 @@ So coordinate descent repeatedly reduces the full lasso problem to a sequence of
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X <span class="op">@</span> beta <span class="op">+</span> <span class="dv">12</span> <span class="op">*</span> rng.normal(size<span class="op">=</span>n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We split the data into training and test sets.</p>
-<div id="631446f7" class="cell" data-execution_count="17">
+<div id="0da35014" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
@@ -1849,10 +1890,10 @@ So coordinate descent repeatedly reduces the full lasso problem to a sequence of
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="initial-model-fitting" class="level3" data-number="3.5.2">
-<h3 data-number="3.5.2" class="anchored" data-anchor-id="initial-model-fitting"><span class="header-section-number">3.5.2</span> Initial model fitting</h3>
+<section id="initial-model-fitting" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="initial-model-fitting"><span class="header-section-number">2.5.2</span> Initial model fitting</h3>
 <p>Before tuning the regularization parameter, we first fit OLS, ridge, and lasso with simple default or manually chosen settings. This gives a first look at how the methods behave on the same dataset.</p>
-<div id="23cdab2f" class="cell" data-execution_count="18">
+<div id="ae4a815b" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
@@ -1880,7 +1921,7 @@ Test RMSE: 1212.515485649412
 Test R^2 : 0.49121698288112325</code></pre>
 </div>
 </div>
-<div id="0ffae02e" class="cell" data-execution_count="19">
+<div id="ebab05a4" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
@@ -1904,7 +1945,7 @@ Test RMSE: 249.13745912332723
 Test R^2 : 0.8954595552549109</code></pre>
 </div>
 </div>
-<div id="507b4cb7" class="cell" data-execution_count="20">
+<div id="ef0e34c8" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>lasso_pipe <span class="op">=</span> Pipeline(</span>
@@ -1927,7 +1968,7 @@ Test R^2 : 0.9141760906397303</code></pre>
 </div>
 </div>
 <p>One important difference between ridge and lasso is that lasso can set some coefficients exactly to zero, while ridge typically only shrinks coefficients toward zero without eliminating them.</p>
-<div id="2929c652" class="cell" data-execution_count="21">
+<div id="d4d6f407" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ridge_coef <span class="op">=</span> ridge_pipe.named_steps[<span class="st">"model"</span>].coef_</span>
@@ -1943,14 +1984,14 @@ Number of nonzero lasso coefficients: 64</code></pre>
 </div>
 <p>You can see that in the lasso case, many coefficients are exactly <span class="math inline">\(0\)</span>. This is one reason lasso is often viewed as performing both regularization and variable selection.</p>
 </section>
-<section id="coefficient-paths" class="level3" data-number="3.5.3">
-<h3 data-number="3.5.3" class="anchored" data-anchor-id="coefficient-paths"><span class="header-section-number">3.5.3</span> Coefficient paths</h3>
+<section id="coefficient-paths" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="coefficient-paths"><span class="header-section-number">2.5.3</span> Coefficient paths</h3>
 <p>To better understand how the regularization parameter affects the estimates, we now plot the coefficient paths.</p>
 <ul>
 <li>In the lasso plot, some coefficient curves hit exactly <span class="math inline">\(0\)</span> as <code>alpha</code> increases.</li>
 <li>In the ridge plot, all coefficients are shrunk continuously toward <span class="math inline">\(0\)</span>, but usually remain nonzero.</li>
 </ul>
-<div id="60d11fe0" class="cell" data-execution_count="22">
+<div id="4cd99c09" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1999,11 +2040,11 @@ Number of nonzero lasso coefficients: 64</code></pre>
 </div>
 </div>
 </section>
-<section id="tuning-with-cross-validation" class="level3" data-number="3.5.4">
-<h3 data-number="3.5.4" class="anchored" data-anchor-id="tuning-with-cross-validation"><span class="header-section-number">3.5.4</span> Tuning with cross-validation</h3>
+<section id="tuning-with-cross-validation" class="level3" data-number="2.5.4">
+<h3 data-number="2.5.4" class="anchored" data-anchor-id="tuning-with-cross-validation"><span class="header-section-number">2.5.4</span> Tuning with cross-validation</h3>
 <p>The choice of <code>alpha</code> strongly affects the fitted model. Therefore in practice we usually tune it by cross-validation.</p>
 <p>We first use <code>LassoCV</code> to select the best value of alpha.</p>
-<div id="795685de" class="cell" data-execution_count="23">
+<div id="9fd4f13a" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LassoCV</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>lasso_cv_pipe <span class="op">=</span> Pipeline(</span>
@@ -2028,7 +2069,7 @@ LassoCV Test R^2 : 0.9069453683021322</code></pre>
 </div>
 </div>
 <p>For comparison, we also fit ridge regression with <code>RidgeCV</code>.</p>
-<div id="088d0345" class="cell" data-execution_count="24">
+<div id="26af07cf" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> RidgeCV</span>
@@ -2056,7 +2097,7 @@ LassoCV Test R^2 : 0.8849211803824286</code></pre>
 </div>
 </div>
 <p>After obtaining the best regularization parameters, we mark them on the coefficient path plots. This helps connect the selected model to the whole regularization path.</p>
-<div id="2fa387cc" class="cell" data-execution_count="25">
+<div id="41884b0e" class="cell" data-execution_count="25">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2113,15 +2154,15 @@ LassoCV Test R^2 : 0.8849211803824286</code></pre>
 </div>
 </div>
 </section>
-<section id="validation-curves" class="level3" data-number="3.5.5">
-<h3 data-number="3.5.5" class="anchored" data-anchor-id="validation-curves"><span class="header-section-number">3.5.5</span> Validation curves</h3>
+<section id="validation-curves" class="level3" data-number="2.5.5">
+<h3 data-number="2.5.5" class="anchored" data-anchor-id="validation-curves"><span class="header-section-number">2.5.5</span> Validation curves</h3>
 <p>Another way to visualize tuning is through the validation curve. Here we plot the mean training and validation scores across a grid of <code>alpha</code> values. Note that the score is nagative MSE. Therefore the higher the better.</p>
 <ul>
 <li>When <code>alpha</code> is too small, the model may overfit.</li>
 <li>When <code>alpha</code> is too large, the model may underfit.</li>
 <li>A good value of <code>alpha</code> balances these two effects.</li>
 </ul>
-<div id="0aeb2df3" class="cell" data-execution_count="26">
+<div id="67132991" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> validation_curve</span>
@@ -2202,10 +2243,10 @@ LassoCV Test R^2 : 0.8849211803824286</code></pre>
 </div>
 </div>
 </section>
-<section id="summary" class="level3" data-number="3.5.6">
-<h3 data-number="3.5.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">3.5.6</span> Summary</h3>
+<section id="summary" class="level3" data-number="2.5.6">
+<h3 data-number="2.5.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">2.5.6</span> Summary</h3>
 <p>Finally, we summarize the test performance and the number of nonzero coefficients for each model.</p>
-<div id="c374007f" class="cell" data-execution_count="27">
+<div id="95ce0511" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -2762,13 +2803,10 @@ LassoCV Test R^2 : 0.8849211803824286</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../contents/1/lr.html" class="pagination-link" aria-label="Linear Regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/1/dr.html" class="pagination-link" aria-label="Dimension reduction">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

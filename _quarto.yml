@@ -33,23 +33,23 @@ book:
     - index.qmd
     - part: "Linear models"
       chapters:
-      - contents/1/basic.qmd
+      # - contents/1/basic.qmd
       - contents/1/lr.qmd
       - contents/1/shrinkage.qmd      
-      - contents/1/dr.qmd
-      - contents/1/logistic.qmd
+      # - contents/1/dr.qmd
+      # - contents/1/logistic.qmd
       # - contents/1/glm.qmd
       # - contents/1/gam.qmd
-    - part: "Part 2"
-      chapters: 
-      - contents/2/knn.qmd
-      - contents/2/svm.qmd
-      - contents/2/lda.qmd
-      - contents/2/tree.qmd
-      - contents/2/ensemble.qmd
-    - part: "Unsupervised Learning"
-      chapters:
-      - contents/3/cluster.qmd
+    # - part: "Part 2"
+    #   chapters: 
+    #   - contents/2/knn.qmd
+    #   - contents/2/svm.qmd
+    #   - contents/2/lda.qmd
+    #   - contents/2/tree.qmd
+    #   - contents/2/ensemble.qmd
+    # - part: "Unsupervised Learning"
+    #   chapters:
+    #   - contents/3/cluster.qmd
       # - contents/3/rkhs.qmd
     #   - contents/3/cat.qmd
     #   # - contents/3/rcode2.qmd
@@ -58,9 +58,9 @@ book:
     #   chapters:
     #   - contents/4/vs.qmd
       # - contents/4/ra.qmd
-  appendices:
+  # appendices:
   #   - contents/app/data.qmd
-    - contents/app/r.qmd
+    # - contents/app/r.qmd
   #   - contents/app/hypo.qmd
   sidebar:
     style: "docked"
