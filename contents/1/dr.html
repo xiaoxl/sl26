@@ -484,15 +484,14 @@ window.Quarto = {
   <ul>
   <li><a href="#pcr" id="toc-pcr" class="nav-link active" data-scroll-target="#pcr"><span class="header-section-number">4.1</span> PCR</a>
   <ul class="collapse">
-  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea"><span class="header-section-number">4.1.1</span> Idea</a></li>
-  <li><a href="#pca-review" id="toc-pca-review" class="nav-link" data-scroll-target="#pca-review"><span class="header-section-number">4.1.2</span> PCA review</a></li>
-  <li><a href="#choosing-the-number-of-components" id="toc-choosing-the-number-of-components" class="nav-link" data-scroll-target="#choosing-the-number-of-components"><span class="header-section-number">4.1.3</span> Choosing the number of components</a></li>
-  <li><a href="#pcr-in-python" id="toc-pcr-in-python" class="nav-link" data-scroll-target="#pcr-in-python"><span class="header-section-number">4.1.4</span> PCR in Python</a></li>
-  <li><a href="#choosing-number-of-components-by-cross-validation" id="toc-choosing-number-of-components-by-cross-validation" class="nav-link" data-scroll-target="#choosing-number-of-components-by-cross-validation"><span class="header-section-number">4.1.5</span> Choosing number of components by cross-validation</a></li>
+  <li><a href="#pca-review" id="toc-pca-review" class="nav-link" data-scroll-target="#pca-review"><span class="header-section-number">4.1.1</span> PCA review</a></li>
+  <li><a href="#choosing-the-number-of-components" id="toc-choosing-the-number-of-components" class="nav-link" data-scroll-target="#choosing-the-number-of-components"><span class="header-section-number">4.1.2</span> Choosing the number of components</a></li>
+  <li><a href="#pcr-in-python" id="toc-pcr-in-python" class="nav-link" data-scroll-target="#pcr-in-python"><span class="header-section-number">4.1.3</span> PCR in Python</a></li>
+  <li><a href="#choosing-number-of-components-by-cross-validation" id="toc-choosing-number-of-components-by-cross-validation" class="nav-link" data-scroll-target="#choosing-number-of-components-by-cross-validation"><span class="header-section-number">4.1.4</span> Choosing number of components by cross-validation</a></li>
   </ul></li>
   <li><a href="#partial-least-squares-pls" id="toc-partial-least-squares-pls" class="nav-link" data-scroll-target="#partial-least-squares-pls"><span class="header-section-number">4.2</span> Partial Least Squares (PLS)</a>
   <ul class="collapse">
-  <li><a href="#idea-1" id="toc-idea-1" class="nav-link" data-scroll-target="#idea-1"><span class="header-section-number">4.2.1</span> Idea</a></li>
+  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea"><span class="header-section-number">4.2.1</span> Idea</a></li>
   <li><a href="#algorithm-intuition" id="toc-algorithm-intuition" class="nav-link" data-scroll-target="#algorithm-intuition"><span class="header-section-number">4.2.2</span> Algorithm intuition</a></li>
   <li><a href="#geometric-interpretation" id="toc-geometric-interpretation" class="nav-link" data-scroll-target="#geometric-interpretation"><span class="header-section-number">4.2.3</span> Geometric interpretation</a></li>
   <li><a href="#choosing-the-number-of-components-1" id="toc-choosing-the-number-of-components-1" class="nav-link" data-scroll-target="#choosing-the-number-of-components-1"><span class="header-section-number">4.2.4</span> Choosing the number of components</a></li>
@@ -529,21 +528,17 @@ window.Quarto = {
 
 
 <p>When the number of predictors is large or when predictors are highly correlated, directly fitting a regression model using the original predictors may lead to unstable estimates and poor predictive performance.</p>
-<p>One approach to address this problem is <strong>dimension reduction</strong>. Instead of using the original predictors directly, we first construct a smaller number of derived variables (called <strong>components</strong>) and then perform regression using these components.</p>
+<p>One approach to address this problem is dimension reduction. Instead of using the original predictors directly, we first construct a smaller number of derived variables (called components) and then perform regression using these components.</p>
 <p>Two commonly used methods are</p>
 <ul>
-<li><strong>Principal Component Regression (PCR)</strong></li>
-<li><strong>Partial Least Squares (PLS)</strong></li>
+<li>Principal Component Regression (PCR)</li>
+<li>Partial Least Squares (PLS)</li>
 </ul>
-<p>Both methods construct new variables that are <strong>linear combinations of the original predictors</strong>, but they differ in how those combinations are chosen.</p>
-<hr>
+<p>Both methods construct new variables that are linear combinations of the original predictors, but they differ in how those combinations are chosen.</p>
 <section id="pcr" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="pcr"><span class="header-section-number">4.1</span> PCR</h2>
-<section id="idea" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="idea"><span class="header-section-number">4.1.1</span> Idea</h3>
-<p>PCR first applies <strong>principal component analysis (PCA)</strong> to the predictor matrix <span class="math inline">\(X\)</span>, and then uses the leading principal components as predictors in a regression model.</p>
+<p>PCR first applies principal component analysis (PCA) to the predictor matrix <span class="math inline">\(X\)</span>, and then uses the leading principal components as predictors in a regression model.</p>
 <p>The key idea is that most of the variation in the predictors often lies in a lower-dimensional subspace.</p>
-<hr>
 <div id="def-pcr" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4.1 (Principal Component Regression)</strong></span> Let <span class="math inline">\(X\)</span> be the <span class="math inline">\(n \times p\)</span> predictor matrix.</p>
 <p>The principal components are defined as</p>
@@ -563,9 +558,8 @@ y = \theta_0 + \theta_1 Z_1 + \theta_2 Z_2 + \cdots + \theta_m Z_m + \varepsilon
 </div>
 <p>Thus PCR replaces the original predictors with a smaller set of orthogonal components.</p>
 <hr>
-</section>
-<section id="pca-review" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="pca-review"><span class="header-section-number">4.1.2</span> PCA review</h3>
+<section id="pca-review" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="pca-review"><span class="header-section-number">4.1.1</span> PCA review</h3>
 <p>Principal component analysis finds directions in predictor space that maximize variance.</p>
 <p>Let</p>
 <p><span class="math display">\[
@@ -598,8 +592,8 @@ Z = XV
 </div>
 <hr>
 </section>
-<section id="choosing-the-number-of-components" class="level3" data-number="4.1.3">
-<h3 data-number="4.1.3" class="anchored" data-anchor-id="choosing-the-number-of-components"><span class="header-section-number">4.1.3</span> Choosing the number of components</h3>
+<section id="choosing-the-number-of-components" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="choosing-the-number-of-components"><span class="header-section-number">4.1.2</span> Choosing the number of components</h3>
 <p>The number of components <span class="math inline">\(m\)</span> is usually chosen using cross-validation.</p>
 <p>Typical procedure:</p>
 <ol type="1">
@@ -610,8 +604,8 @@ Z = XV
 </ol>
 <hr>
 </section>
-<section id="pcr-in-python" class="level3" data-number="4.1.4">
-<h3 data-number="4.1.4" class="anchored" data-anchor-id="pcr-in-python"><span class="header-section-number">4.1.4</span> PCR in Python</h3>
+<section id="pcr-in-python" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="pcr-in-python"><span class="header-section-number">4.1.3</span> PCR in Python</h3>
 <p><code>scikit-learn</code> provides <code>PCA</code> for computing principal components.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
@@ -630,9 +624,9 @@ Z = XV
 <p>Here the pipeline performs</p>
 <p>standardization PCA regression using the principal components.</p>
 </section>
-<section id="choosing-number-of-components-by-cross-validation" class="level3" data-number="4.1.5">
-<h3 data-number="4.1.5" class="anchored" data-anchor-id="choosing-number-of-components-by-cross-validation"><span class="header-section-number">4.1.5</span> Choosing number of components by cross-validation</h3>
-<div id="09be8c10" class="cell" data-execution_count="1">
+<section id="choosing-number-of-components-by-cross-validation" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="choosing-number-of-components-by-cross-validation"><span class="header-section-number">4.1.4</span> Choosing number of components by cross-validation</h3>
+<div id="8c091dad" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">"pca__n_components"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>))}</span>
@@ -648,8 +642,8 @@ Z = XV
 </section>
 <section id="partial-least-squares-pls" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="partial-least-squares-pls"><span class="header-section-number">4.2</span> Partial Least Squares (PLS)</h2>
-<section id="idea-1" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="idea-1"><span class="header-section-number">4.2.1</span> Idea</h3>
+<section id="idea" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="idea"><span class="header-section-number">4.2.1</span> Idea</h3>
 <p>Principal component regression constructs components that explain the variation in the predictor matrix <span class="math inline">\(X\)</span>. However, these directions are chosen <strong>without considering the response variable <span class="math inline">\(y\)</span></strong>.</p>
 <p>Partial least squares (PLS) addresses this limitation by constructing components that are most strongly related to the response.</p>
 <p>The key idea is to construct components that simultaneously</p>
@@ -753,7 +747,7 @@ w_k =
 <section id="selecting-the-number-of-components" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="selecting-the-number-of-components"><span class="header-section-number">4.3.1</span> Selecting the number of components</h3>
 <p>We can choose the number of components using cross-validation.</p>
-<div id="0de966ba" class="cell" data-execution_count="2">
+<div id="f80a21e3" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">"model__n_components"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>))}</span>
@@ -769,7 +763,7 @@ w_k =
 <section id="pls-coefficient-path" class="level3" data-number="4.3.2">
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="pls-coefficient-path"><span class="header-section-number">4.3.2</span> PLS coefficient path</h3>
 <p>We can also examine how the regression coefficients change as the number of components increases.</p>
-<div id="66a1e259" class="cell" data-execution_count="3">
+<div id="38fe900a" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span>
