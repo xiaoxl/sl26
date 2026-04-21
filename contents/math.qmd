@@ -17,6 +17,7 @@ $$
 \newcommand{\ridge}{\mathrm{ridge}}
 \newcommand{\lasso}{\mathrm{lasso}}
 \newcommand{\mle}{\mathrm{MLE}}
+\newcommand{\constant}{\mathrm{constant}}
 $$
 
 <!-- Probability -->

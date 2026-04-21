@@ -529,7 +529,6 @@ window.Quarto = {
   <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition"><span class="header-section-number">3.4.1</span> Definition</a></li>
   <li><a href="#geometry-and-sparsity" id="toc-geometry-and-sparsity" class="nav-link" data-scroll-target="#geometry-and-sparsity"><span class="header-section-number">3.4.2</span> Geometry and sparsity</a></li>
   <li><a href="#one-variable-lasso-and-soft-thresholding" id="toc-one-variable-lasso-and-soft-thresholding" class="nav-link" data-scroll-target="#one-variable-lasso-and-soft-thresholding"><span class="header-section-number">3.4.3</span> One-variable lasso and soft-thresholding</a></li>
-  <li><a href="#coordinate-descent" id="toc-coordinate-descent" class="nav-link" data-scroll-target="#coordinate-descent"><span class="header-section-number">3.4.4</span> Coordinate descent</a></li>
   </ul></li>
   <li><a href="#lasso-in-python" id="toc-lasso-in-python" class="nav-link" data-scroll-target="#lasso-in-python"><span class="header-section-number">3.5</span> Lasso in Python</a>
   <ul class="collapse">
@@ -581,6 +580,7 @@ window.Quarto = {
 \newcommand{\ridge}{\mathrm{ridge}}
 \newcommand{\lasso}{\mathrm{lasso}}
 \newcommand{\mle}{\mathrm{MLE}}
+\newcommand{\constant}{\mathrm{constant}}
 \]</span></p>
 <!-- Probability -->
 <p>$$ </p>
@@ -942,7 +942,7 @@ v_i\,u_i^\top y .
 <h2 data-number="3.3" class="anchored" data-anchor-id="ridge-regression-in-python"><span class="header-section-number">3.3</span> Ridge Regression in Python</h2>
 <p>We use the following simulated dataset to demonstrate ridge regression.</p>
 <p>The covariance matrix has a very high correlation, so the two predictors <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are highly correlated.</p>
-<div id="8b2aa92f" class="cell" data-execution_count="1">
+<div id="7eeb0bc5" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">2</span>)</span>
@@ -959,7 +959,7 @@ v_i\,u_i^\top y .
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="ridge-estimator-1"><span class="header-section-number">3.3.1</span> Ridge estimator</h3>
 <p>We use <code>Ridge</code> from <code>sklearn.linear_model</code> to fit a ridge regression model. Its API is very similar to that of OLS. The argument <code>alpha</code> is the regularization parameter <span class="math inline">\(\lambda\)</span>.</p>
 <p>For simplicity, we use a no-intercept model, so we set <code>fit_intercept=False</code>.</p>
-<div id="8ce7275a" class="cell" data-execution_count="2">
+<div id="2938bff4" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ridge <span class="op">=</span> Ridge(alpha<span class="op">=</span><span class="dv">5</span>, fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X, y)</span>
@@ -969,7 +969,7 @@ v_i\,u_i^\top y .
 </div>
 </div>
 <p>For comparison, we also fit the OLS estimator.</p>
-<div id="caa03b5a" class="cell" data-execution_count="3">
+<div id="d8ae65ac" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ols <span class="op">=</span> LinearRegression(fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X, y)</span>
@@ -984,7 +984,7 @@ v_i\,u_i^\top y .
 <li>The OLS coefficients may happen to be closer to the true values in this single sample.</li>
 </ul>
 <p>The second point is due to randomness in the simulated data. To see the general pattern, we repeat the simulation many times.</p>
-<div id="87a797b0" class="cell" data-execution_count="4">
+<div id="5bf90647" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> []</span>
@@ -1004,9 +1004,9 @@ v_i\,u_i^\top y .
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> pd.DataFrame(res)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The first five results are shown below. We can see that the OLS estimates vary substantially from sample to sample.</p>
-<div id="0d0d396b" class="cell" data-execution_count="5">
+<div id="35475799" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>res.head(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="86">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -1063,7 +1063,7 @@ v_i\,u_i^\top y .
 </div>
 </div>
 <p>This becomes even clearer in the boxplot below, which shows that the ridge estimator has much smaller variance than the OLS estimator.</p>
-<div id="d5278d00" class="cell" data-execution_count="6">
+<div id="3a15b248" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(res)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
@@ -1079,7 +1079,7 @@ v_i\,u_i^\top y .
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="contour-map"><span class="header-section-number">3.3.2</span> Contour map</h3>
 <p>The variance of both <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> is quite large under OLS. This is because the variance of <span class="math inline">\(\widehat{\boldsymbol{\beta}}\)</span> is <span class="math inline">\(\sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}\)</span>. Since the columns of <span class="math inline">\(\mathbf{X}\)</span> are highly correlated, the smallest eigenvalue of <span class="math inline">\(\mathbf{X}^\top\mathbf{X}\)</span> is close to zero, making the largest eigenvalue of <span class="math inline">\((\mathbf{X}^\top\mathbf{X})^{-1}\)</span> very large.</p>
 <p>To see things in more details, we first build the RSS function. For each <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> in the range, we form a model <span class="math inline">\(\hat y_{\beta}=\beta_1x_1+\beta_2x_2\)</span> and use it to compute <span class="math inline">\(\rss = \sum (y-\hat y)^2\)</span>.</p>
-<div id="f20bf51e" class="cell" data-execution_count="7">
+<div id="1e3699e3" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>beta1_vals <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">200</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>beta2_vals <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">200</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>B1, B2 <span class="op">=</span> np.meshgrid(beta1_vals, beta2_vals)</span>
@@ -1090,7 +1090,7 @@ v_i\,u_i^\top y .
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>rss_value0 <span class="op">=</span> rss_term.reshape(B1.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We then construct the contour map for the <span class="math inline">\(\rss\)</span> surface, plotting the isolines that correspond to the 1%, 2.5%, 5%, 20%, 50%, and 75% quantiles of the distribution. The ture coefficient <span class="math inline">\((\beta_1=1,\beta_2=1)\)</span> is displayed as the red dot, as well as the estimated <span class="math inline">\(\beta\)</span> as a blue square in the countour map.</p>
-<div id="8a1ad3cb" class="cell" data-execution_count="8">
+<div id="b3bbe7cd" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1121,7 +1121,7 @@ v_i\,u_i^\top y .
 <p>The contour map reveals a narrow, elongated valley in the <span class="math inline">\(\rss\)</span> objective function. While the surface is highly sensitive to movement perpendicular to the valley, it remains relatively flat along the valley floor. Because the surface is particularly flat in this longitudinal direction, numerous parameter combinations yield nearly identical <span class="math inline">\(\rss\)</span> values. Consequently, the data provides insufficient information to distinguish between points along this axis, making the <span class="math inline">\(\rss\)</span> minimum highly unstable. This lack of identifiability is the fundamental cause of high variance in the estimated coefficients.</p>
 <p>When ridge regression is applied, the <span class="math inline">\(\rss\)</span> objective function is modified by adding a penalty term. As a result, the objective surface no longer exhibits a long, flat valley floor. Instead, the minimum becomes more well-defined, and the estimate is pulled toward the origin. Although the true parameter may no longer lie at the bottom of this modified valley, the ridge estimate has substantially lower variance. In this way, ridge regression stabilizes the estimation by controlling the region along the valley floor where the OLS solution would otherwise vary widely.</p>
 <p>Here we show the <span class="math inline">\(\rss\)</span> objective function contours for <span class="math inline">\(\lambda=0.1\)</span>, <span class="math inline">\(1\)</span>, <span class="math inline">\(10\)</span> and <span class="math inline">\(100\)</span>.</p>
-<div id="9bbb8ec4" class="cell" data-execution_count="9">
+<div id="b2b0854d" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
@@ -1189,7 +1189,7 @@ v_i\,u_i^\top y .
 \]</span></p>
 <p>Therefore if the data is already centered, the Gram matrix and the covariance matrix are directly related: <span class="math inline">\(X\top X=(n-1)\operatorname{Cov}\)</span>.</p>
 <p>Mathematically, these two directions (the longitudinal axis and the perpendicular axis) correspond to the eigenvectors of the <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> matrix (or, equivalently, the principal components of the predictor space). The flatness or steepness in those directions is governed by their corresponding eigenvalues.</p>
-<div id="39e1a6a0" class="cell" data-execution_count="10">
+<div id="60612f5a" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>XTX <span class="op">=</span> X.T <span class="op">@</span> X</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>eigenvalues, eigenvectors <span class="op">=</span> np.linalg.eigh(XTX)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(eigenvalues)):</span>
@@ -1200,7 +1200,7 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 </div>
 </div>
 <p>Then mark the eigenvectors in the contour map.</p>
-<div id="5f3efc78" class="cell" data-execution_count="11">
+<div id="ee2fbb25" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
@@ -1281,7 +1281,7 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 <li><code>alphas</code> should be a list of candidate values for <span class="math inline">\(\alpha\)</span>. In the example below, <span class="math inline">\(\alpha\)</span> is selected from values ranging from <code>1e-4</code> to <code>1e4</code>.</li>
 <li><code>cv</code> works in the same way as in ordinary cross-validation and specifies the number of folds used in the cross-validation procedure. If it is not set, LOOCV will be used.</li>
 </ul>
-<div id="d277e65a" class="cell" data-execution_count="12">
+<div id="84efdd9b" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> RidgeCV</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
@@ -1299,7 +1299,7 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 <span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>best_alpha_ridge <span class="op">=</span> ridge_cv_pipe.named_steps[<span class="st">"model"</span>].alpha_</span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>best_alpha_ridge</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="93">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>1.3219411484660315</code></pre>
 </div>
 </div>
@@ -1308,7 +1308,7 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 <h3 data-number="3.3.4" class="anchored" data-anchor-id="validation-curve-and-coefficient-paths"><span class="header-section-number">3.3.4</span> Validation curve and Coefficient paths</h3>
 <p><code>RidgeCV</code> returns only the final fitted model at the selected value of <code>alpha</code>, rather than the entire validation curve or coefficient path. If we want to examine how the validation score changes with <code>alpha</code>, we may fit ordinary Ridge models over a grid of <code>alpha</code> values and then add a vertical line at the value selected by <code>RidgeCV</code>.</p>
 <p><code>sklearn</code> provides <code>validation_curve()</code> to streamline the process.</p>
-<div id="19c1fd2f" class="cell" data-execution_count="13">
+<div id="93f0906f" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> validation_curve</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>alphas <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">100</span>)</span>
@@ -1348,7 +1348,7 @@ eigenvalue:  95.19, eigenbasis: [-0.71098234 -0.70320986]</code></pre>
 </div>
 </div>
 <p>Similarly, if we want to examine how the coefficients change with <code>alpha</code>, we fit ordinary <code>Ridge</code> repeatedly over a grid of <code>alpha</code> values and record the fitted coefficients. In this case, cross-validation is not needed, since the goal is only to visualize the coefficient path rather than to compare models.</p>
-<div id="93e30953" class="cell" data-execution_count="14">
+<div id="f536527a" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
 <span id="annotated-cell-12-2"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="annotated-cell-12-3"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1573,6 +1573,26 @@ Thus $\text{Trace}(S_\lambda)$ plays the role of the model's effective number of
 <li><span class="math inline">\(\norm{\beta}_1 = \sum_{j=1}^p |\beta_j|\)</span> is the <span class="math inline">\(L_1\)</span> norm of the coefficient vector.</li>
 </ul>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solving lasso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lasso is solved using numerical optimization algorithms. The most widely used methods include</p>
+<ul>
+<li>coordinate descent</li>
+<li>LARS (Least Angle Regression)</li>
+<li>proximal gradient methods</li>
+</ul>
+<p>These algorithms iteratively update the coefficients until convergence.</p>
+<p>Unlike OLS or ridge regression, the lasso estimator does not admit a closed-form solution because the <span class="math inline">\(L_1\)</span> penalty is not differentiable at zero.</p>
+</div>
+</div>
 <p>The lasso penalty also shrinks the coefficients toward zero, and therefore behaves similarly to ridge regression. In practice, the penalty is typically applied only to the slope coefficients, so the intercept is not penalized. For this reason, it is common to standardize the predictors and center the response variable before fitting the model.</p>
 <p>However, lasso has an important difference from ridge regression, which we discuss in the next section.</p>
 </section>
@@ -1594,7 +1614,7 @@ Thus $\text{Trace}(S_\lambda)$ plays the role of the model's effective number of
 <p>For ridge regression, the circular boundary is smooth, so the point of tangency typically occurs away from the coordinate axes. As a result, ridge usually shrinks coefficients continuously toward zero, but does not make them exactly zero.</p>
 <p>For lasso, the diamond-shaped boundary has sharp corners lying on the coordinate axes. Because of these corners, the point of tangency is much more likely to occur at a location where one coordinate is zero. Consequently, lasso can produce solutions with some coefficients exactly equal to zero.</p>
 <p>Therefore, ridge is mainly a shrinkage method, whereas lasso is both a shrinkage method and a variable-selection method.</p>
-<div id="1b261119" class="cell" data-execution_count="15">
+<div id="09739a19" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1664,36 +1684,78 @@ Thus $\text{Trace}(S_\lambda)$ plays the role of the model's effective number of
 </section>
 <section id="one-variable-lasso-and-soft-thresholding" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="one-variable-lasso-and-soft-thresholding"><span class="header-section-number">3.4.3</span> One-variable lasso and soft-thresholding</h3>
-<p>To understand how lasso sets coefficients to zero, it is useful to first look at the one-variable case.</p>
-<p>Suppose we want to solve</p>
-<p><span class="math display">\[
-\min_{\beta}
-\qty{
-\frac{1}{n}\sum_{i=1}^n (y_i - x_i \beta)^2 + \lambda |\beta|
-}.
+<p>To understand how lasso sets coefficients to <span class="math inline">\(0\)</span>, it is useful to first look at the one-variable case.</p>
+<p>Suppose we want to solve <span class="math display">\[
+\min_{\beta}\qty{\norm{y-X\beta}_2^2 + \lambda \abs{\beta}}.
 \]</span></p>
-<p>Let <span class="math inline">\(\hat{\beta}_{\ols}\)</span> denote the OLS solution for this one-variable problem. Then the lasso solution is obtained by applying the <strong>soft-thresholding rule</strong>:</p>
-<p><span class="math display">\[
-\hat{\beta}_{\lasso}
-=
-\operatorname{SoftTH}(\hat{\beta}_{\ols}, \lambda),
-\]</span></p>
-<p>where</p>
-<p><span class="math display">\[
-\operatorname{SoftTH}(z,\lambda)
-=
-\begin{cases}
-z-\lambda, &amp; z&gt;\lambda,\\
-0, &amp; |z|\le \lambda,\\
-z+\lambda, &amp; z&lt;-\lambda.
+<p>Note that <span class="math display">\[
+\hat\beta_\ols=\arg\min_\beta\qty{\norm{y-X\beta}_2^2}
+\]</span> denotes the OLS solution for this one-variable problem.</p>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3.3 (Soft-thresholding Rule)</strong></span> <span class="math display">\[
+\hat\beta_\lasso=\begin{cases}
+\hat\beta_\ols+\frac\lambda{2a}&amp; \text{ if }\hat\beta_\ols&lt;-\frac\lambda{2a},\\
+0&amp; \text{ if }\abs{\hat\beta_\ols}\leq\frac\lambda{2a},\\
+\hat\beta_\ols-\frac\lambda{2a}&amp; \text{ if }\hat\beta_\ols&gt; \frac\lambda{2a},\\
 \end{cases}
 \]</span></p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
+<p>Since there is only one <span class="math inline">\(\beta\)</span>, <span class="math display">\[
+\rss(\beta)=\norm{y-X\beta}_2^2+\lambda\abs{\beta}=(\sum x_i^2)\beta^2-2(\sum x_iy_i)\beta+\sum y_i^2+\lambda\abs{\beta}.
+\]</span></p>
+<p>Let <span class="math inline">\(a=\sum x_i^2\)</span>, <span class="math inline">\(c=\sum x_iy_i\)</span>. Then <span class="math display">\[
+\rss(\beta)=a\beta^2-2c\beta+\lambda\abs{\beta}+\constant.
+\]</span></p>
+<p>Note that</p>
+<p><span class="math display">\[
+\hat\beta_\ols=(X^\top X)^{-1}X^\top y=\frac{\sum x_iy_i}{\sum x_i^2}=\frac ca.
+\]</span></p>
+<p>Now due to absolute value we split into different cases.</p>
+<hr>
+<p>If <span class="math inline">\(\beta\geq0\)</span>: Then <span class="math inline">\(\abs{\beta}=\beta\)</span>. Therefore <span class="math inline">\(\rss(\beta)=a\beta^2-2c\beta+\lambda\beta+\constant\)</span>. Let <span class="math inline">\(\dv{\rss(\beta)}{\beta}=2a\beta-2c+\lambda=0\)</span>. So <span class="math inline">\(\beta=\frac ca-\frac{\lambda}{2a}=\hat\beta_\ols-\frac\lambda {2a}\)</span> is the critical point.</p>
+<p>In this case since <span class="math inline">\(\beta\geq 0\)</span>,</p>
+<ul>
+<li>if <span class="math inline">\(\hat\beta_\ols+\frac\lambda {2a}&gt;0\)</span>, then the minimizer is <span class="math inline">\(\hat\beta_\ols+\frac\lambda {2a}\)</span>.</li>
+<li>Otherwise, the minimum over the region <span class="math inline">\(\beta\geq 0\)</span> is attained at <span class="math inline">\(0\)</span>.</li>
+</ul>
+<p>Therefore <span class="math display">\[
+\hat\beta_\lasso=\begin{cases}
+\hat\beta_\ols-\frac\lambda{2a}&amp; \text{ if }\hat\beta_\ols&gt; \frac\lambda{2a},\\
+0&amp; \text{ if }\hat\beta_\ols\leq \frac\lambda{2a}.
+\end{cases}
+\]</span></p>
+<hr>
+<p>If <span class="math inline">\(\beta\leq 0\)</span>: Then <span class="math inline">\(\abs{\beta}=-\beta\)</span>. Therefore <span class="math inline">\(\rss(\beta)=a\beta^2-2c\beta-\lambda\beta+\constant\)</span>. Let <span class="math inline">\(\dv{\rss(\beta)}{\beta}=2a\beta-2c-\lambda=0\)</span>. So <span class="math inline">\(\beta=\frac ca+\frac{\lambda}{2a}=\hat\beta_\ols+\frac\lambda {2a}\)</span> is the critical point.</p>
+<p>In this case since <span class="math inline">\(\beta\leq 0\)</span>,</p>
+<ul>
+<li>if <span class="math inline">\(\hat\beta_\ols+\frac\lambda {2a}&lt;0\)</span>, then the minimizer is <span class="math inline">\(\hat\beta_\ols+\frac\lambda {2a}\)</span>.</li>
+<li>Otherwise, the minimum over the region <span class="math inline">\(\beta\leq 0\)</span> is attained at <span class="math inline">\(0\)</span>.</li>
+</ul>
+<p>In other words, <span class="math display">\[
+\hat\beta_\lasso=\begin{cases}
+\hat\beta_\ols+\frac\lambda{2a}&amp; \text{ if }\hat\beta_\ols&lt;-\frac\lambda{2a},\\
+0&amp; \text{ if }\hat\beta_\ols\geq -\frac\lambda{2a}
+\end{cases}
+\]</span></p>
+<hr>
+<p>To sum up,</p>
+<p><span class="math display">\[
+\hat\beta_\lasso=\begin{cases}
+\hat\beta_\ols+\frac\lambda{2a}&amp; \text{ if }\hat\beta_\ols&lt;-\frac\lambda{2a},\\
+0&amp; \text{ if }\abs{\hat\beta_\ols}\leq\frac\lambda{2a},\\
+\hat\beta_\ols-\frac\lambda{2a}&amp; \text{ if }\hat\beta_\ols&gt; \frac\lambda{2a},\\
+\end{cases}
+\]</span></p>
+</details>
+</div>
 <p>This formula shows the essential behavior of lasso:</p>
 <ul>
 <li>if the OLS coefficient is large enough in magnitude, it is shrunk toward zero;</li>
 <li>if the OLS coefficient is small enough, it is shrunk all the way to zero.</li>
 </ul>
-<p>Thus the lasso solution is continuous, but it is not smooth at zero.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1708,41 +1770,38 @@ z+\lambda, &amp; z&lt;-\lambda.
 <p>This is the clearest way to see why lasso performs variable selection.</p>
 </div>
 </div>
-</section>
-<section id="coordinate-descent" class="level3" data-number="3.4.4">
-<h3 data-number="3.4.4" class="anchored" data-anchor-id="coordinate-descent"><span class="header-section-number">3.4.4</span> Coordinate descent</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Solving lasso
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Lasso is solved using numerical optimization algorithms. The most widely used methods include coordinate descent, LARS (Least Angle Regression), and proximal gradient methods. These algorithms iteratively update the coefficients until convergence.</p>
-<p>Unlike OLS or ridge regression, the lasso estimator does not admit a closed-form solution because the <span class="math inline">\(L_1\)</span> penalty is not differentiable at zero.</p>
-</div>
-</div>
-<p>In general, lasso does not have a simple closed-form vector solution like ridge regression. Instead, it is typically solved numerically.</p>
-<p>The most common algorithm is <strong>coordinate descent</strong>. The idea is to update one coefficient at a time while holding the others fixed.</p>
-<p>Suppose all coefficients except <span class="math inline">\(\beta_j\)</span> are fixed. Define the partial residual</p>
-<p><span class="math display">\[
+<!-- 
+### Coordinate descent
+
+
+In general, lasso does not have a simple closed-form vector solution like ridge regression. Instead, it is typically solved numerically.
+
+The most common algorithm is **coordinate descent**. The idea is to update one coefficient at a time while holding the others fixed.
+
+Suppose all coefficients except $\beta_j$ are fixed. Define the partial residual
+
+$$
 r^{(j)}
 =
 y - \sum_{k\ne j} X_k \beta_k .
-\]</span></p>
-<p>Then the coordinate update for <span class="math inline">\(\beta_j\)</span> is obtained by solving a one-variable lasso problem. Therefore the update is</p>
-<p><span class="math display">\[
+$$
+
+Then the coordinate update for $\beta_j$ is obtained by solving a one-variable lasso problem. Therefore the update is
+
+$$
 \beta_j^{\text{new}}
 =
 \operatorname{SoftTH}\!\left(
 \frac{X_j^\top r^{(j)}}{X_j^\top X_j},
 \frac{\lambda}{X_j^\top X_j}
 \right).
-\]</span></p>
-<p>So coordinate descent repeatedly reduces the full lasso problem to a sequence of one-variable soft-thresholding updates.</p>
+$$
+
+So coordinate descent repeatedly reduces the full lasso problem to a sequence of one-variable soft-thresholding updates.
+ -->
+<!-- 
+### The solution path
+ -->
 </section>
 </section>
 <section id="lasso-in-python" class="level2" data-number="3.5">
@@ -1763,7 +1822,7 @@ y - \sum_{k\ne j} X_k \beta_k .
 <li>many predictors are almost collinear (that they are obtained from a rank 12 latent structure),</li>
 <li>but only 10 predictors truly contribute to the response.</li>
 </ul>
-<div id="0e4629c3" class="cell" data-execution_count="16">
+<div id="5f5490a0" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>)</span>
@@ -1782,7 +1841,7 @@ y - \sum_{k\ne j} X_k \beta_k .
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X <span class="op">@</span> beta <span class="op">+</span> <span class="dv">12</span> <span class="op">*</span> rng.normal(size<span class="op">=</span>n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We split the data into training and test sets.</p>
-<div id="fece6349" class="cell" data-execution_count="17">
+<div id="631446f7" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
@@ -1793,7 +1852,7 @@ y - \sum_{k\ne j} X_k \beta_k .
 <section id="initial-model-fitting" class="level3" data-number="3.5.2">
 <h3 data-number="3.5.2" class="anchored" data-anchor-id="initial-model-fitting"><span class="header-section-number">3.5.2</span> Initial model fitting</h3>
 <p>Before tuning the regularization parameter, we first fit OLS, ridge, and lasso with simple default or manually chosen settings. This gives a first look at how the methods behave on the same dataset.</p>
-<div id="ae47e250" class="cell" data-execution_count="18">
+<div id="23cdab2f" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
@@ -1821,7 +1880,7 @@ Test RMSE: 1212.515485649412
 Test R^2 : 0.49121698288112325</code></pre>
 </div>
 </div>
-<div id="a5c5fe9d" class="cell" data-execution_count="19">
+<div id="0ffae02e" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
@@ -1845,7 +1904,7 @@ Test RMSE: 249.13745912332723
 Test R^2 : 0.8954595552549109</code></pre>
 </div>
 </div>
-<div id="fcf9abc3" class="cell" data-execution_count="20">
+<div id="507b4cb7" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>lasso_pipe <span class="op">=</span> Pipeline(</span>
@@ -1868,7 +1927,7 @@ Test R^2 : 0.9141760906397303</code></pre>
 </div>
 </div>
 <p>One important difference between ridge and lasso is that lasso can set some coefficients exactly to zero, while ridge typically only shrinks coefficients toward zero without eliminating them.</p>
-<div id="a50bde0c" class="cell" data-execution_count="21">
+<div id="2929c652" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ridge_coef <span class="op">=</span> ridge_pipe.named_steps[<span class="st">"model"</span>].coef_</span>
@@ -1891,7 +1950,7 @@ Number of nonzero lasso coefficients: 64</code></pre>
 <li>In the lasso plot, some coefficient curves hit exactly <span class="math inline">\(0\)</span> as <code>alpha</code> increases.</li>
 <li>In the ridge plot, all coefficients are shrunk continuously toward <span class="math inline">\(0\)</span>, but usually remain nonzero.</li>
 </ul>
-<div id="f6c41f43" class="cell" data-execution_count="22">
+<div id="60d11fe0" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1944,7 +2003,7 @@ Number of nonzero lasso coefficients: 64</code></pre>
 <h3 data-number="3.5.4" class="anchored" data-anchor-id="tuning-with-cross-validation"><span class="header-section-number">3.5.4</span> Tuning with cross-validation</h3>
 <p>The choice of <code>alpha</code> strongly affects the fitted model. Therefore in practice we usually tune it by cross-validation.</p>
 <p>We first use <code>LassoCV</code> to select the best value of alpha.</p>
-<div id="21cf03e7" class="cell" data-execution_count="23">
+<div id="795685de" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LassoCV</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>lasso_cv_pipe <span class="op">=</span> Pipeline(</span>
@@ -1969,7 +2028,7 @@ LassoCV Test R^2 : 0.9069453683021322</code></pre>
 </div>
 </div>
 <p>For comparison, we also fit ridge regression with <code>RidgeCV</code>.</p>
-<div id="55f2ca6b" class="cell" data-execution_count="24">
+<div id="088d0345" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> RidgeCV</span>
@@ -1997,7 +2056,7 @@ LassoCV Test R^2 : 0.8849211803824286</code></pre>
 </div>
 </div>
 <p>After obtaining the best regularization parameters, we mark them on the coefficient path plots. This helps connect the selected model to the whole regularization path.</p>
-<div id="0867e8e1" class="cell" data-execution_count="25">
+<div id="2fa387cc" class="cell" data-execution_count="25">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2062,7 +2121,7 @@ LassoCV Test R^2 : 0.8849211803824286</code></pre>
 <li>When <code>alpha</code> is too large, the model may underfit.</li>
 <li>A good value of <code>alpha</code> balances these two effects.</li>
 </ul>
-<div id="8dffb6e4" class="cell" data-execution_count="26">
+<div id="0aeb2df3" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> validation_curve</span>
@@ -2146,7 +2205,7 @@ LassoCV Test R^2 : 0.8849211803824286</code></pre>
 <section id="summary" class="level3" data-number="3.5.6">
 <h3 data-number="3.5.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">3.5.6</span> Summary</h3>
 <p>Finally, we summarize the test performance and the number of nonzero coefficients for each model.</p>
-<div id="9de60504" class="cell" data-execution_count="27">
+<div id="c374007f" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -2177,7 +2236,7 @@ LassoCV Test R^2 : 0.8849211803824286</code></pre>
 <span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="108">
+<div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 
 

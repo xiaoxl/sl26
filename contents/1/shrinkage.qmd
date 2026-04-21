@@ -1047,6 +1047,21 @@ where
 :::
 
 
+::: {.callout-note}
+## Solving lasso
+
+Lasso is solved using numerical optimization algorithms. The most widely used methods include 
+
+- coordinate descent
+- LARS (Least Angle Regression)
+- proximal gradient methods 
+ 
+These algorithms iteratively update the coefficients until convergence.
+
+Unlike OLS or ridge regression, the lasso estimator does not admit a closed-form solution because the $L_1$ penalty is not differentiable at zero.
+:::
+
+
 
 
 The lasso penalty also shrinks the coefficients toward zero, and therefore behaves similarly to ridge regression. In practice, the penalty is typically applied only to the slope coefficients, so the intercept is not penalized. For this reason, it is common to standardize the predictors and center the response variable before fitting the model.
@@ -1150,43 +1165,131 @@ plt.tight_layout()
 
 ### One-variable lasso and soft-thresholding
 
-To understand how lasso sets coefficients to zero, it is useful to first look at the one-variable case.
+To understand how lasso sets coefficients to $0$, it is useful to first look at the one-variable case.
 
 Suppose we want to solve
-
 $$
-\min_{\beta}
-\qty{
-\frac{1}{n}\sum_{i=1}^n (y_i - x_i \beta)^2 + \lambda |\beta|
-}.
+\min_{\beta}\qty{\norm{y-X\beta}_2^2 + \lambda \abs{\beta}}.
 $$
 
-Let $\hat{\beta}_{\ols}$ denote the OLS solution for this one-variable problem. Then the lasso solution is obtained by applying the **soft-thresholding rule**:
-
+Note that 
 $$
-\hat{\beta}_{\lasso}
-=
-\operatorname{SoftTH}(\hat{\beta}_{\ols}, \lambda),
+\hat\beta_\ols=\arg\min_\beta\qty{\norm{y-X\beta}_2^2}
 $$
+denotes the OLS solution for this one-variable problem. 
 
-where
 
+::: {#thm-}
+## Soft-thresholding Rule
 $$
-\operatorname{SoftTH}(z,\lambda)
-=
-\begin{cases}
-z-\lambda, & z>\lambda,\\
-0, & |z|\le \lambda,\\
-z+\lambda, & z<-\lambda.
+\hat\beta_\lasso=\begin{cases}
+\hat\beta_\ols+\frac\lambda{2a}& \text{ if }\hat\beta_\ols<-\frac\lambda{2a},\\
+0& \text{ if }\abs{\hat\beta_\ols}\leq\frac\lambda{2a},\\
+\hat\beta_\ols-\frac\lambda{2a}& \text{ if }\hat\beta_\ols> \frac\lambda{2a},\\
 \end{cases}
 $$
+
+
+
+
+
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+
+
+
+Since there is only one $\beta$, 
+$$
+\rss(\beta)=\norm{y-X\beta}_2^2+\lambda\abs{\beta}=(\sum x_i^2)\beta^2-2(\sum x_iy_i)\beta+\sum y_i^2+\lambda\abs{\beta}.
+$$
+
+Let $a=\sum x_i^2$, $c=\sum x_iy_i$. Then
+$$
+\rss(\beta)=a\beta^2-2c\beta+\lambda\abs{\beta}+\constant.
+$$
+
+Note that 
+
+$$
+\hat\beta_\ols=(X^\top X)^{-1}X^\top y=\frac{\sum x_iy_i}{\sum x_i^2}=\frac ca.
+$$
+
+
+Now due to absolute value we split into different cases.
+
+---
+
+If $\beta\geq0$: Then $\abs{\beta}=\beta$. Therefore
+$\rss(\beta)=a\beta^2-2c\beta+\lambda\beta+\constant$. Let $\dv{\rss(\beta)}{\beta}=2a\beta-2c+\lambda=0$. So $\beta=\frac ca-\frac{\lambda}{2a}=\hat\beta_\ols-\frac\lambda {2a}$ is the critical point. 
+
+In this case since $\beta\geq 0$, 
+
+- if $\hat\beta_\ols+\frac\lambda {2a}>0$, then the minimizer is $\hat\beta_\ols+\frac\lambda {2a}$. 
+- Otherwise, the minimum over the region $\beta\geq 0$ is attained at $0$.
+
+Therefore
+$$
+\hat\beta_\lasso=\begin{cases}
+\hat\beta_\ols-\frac\lambda{2a}& \text{ if }\hat\beta_\ols> \frac\lambda{2a},\\
+0& \text{ if }\hat\beta_\ols\leq \frac\lambda{2a}.
+\end{cases}
+$$
+
+---
+
+
+
+If $\beta\leq 0$: Then $\abs{\beta}=-\beta$. Therefore $\rss(\beta)=a\beta^2-2c\beta-\lambda\beta+\constant$. Let $\dv{\rss(\beta)}{\beta}=2a\beta-2c-\lambda=0$. So $\beta=\frac ca+\frac{\lambda}{2a}=\hat\beta_\ols+\frac\lambda {2a}$ is the critical point. 
+
+In this case since $\beta\leq 0$, 
+
+- if $\hat\beta_\ols+\frac\lambda {2a}<0$, then the minimizer is $\hat\beta_\ols+\frac\lambda {2a}$. 
+- Otherwise, the minimum over the region $\beta\leq 0$ is attained at $0$.
+ 
+In other words, 
+$$
+\hat\beta_\lasso=\begin{cases}
+\hat\beta_\ols+\frac\lambda{2a}& \text{ if }\hat\beta_\ols<-\frac\lambda{2a},\\
+0& \text{ if }\hat\beta_\ols\geq -\frac\lambda{2a}
+\end{cases}
+$$
+
+---
+
+To sum up,
+
+
+$$
+\hat\beta_\lasso=\begin{cases}
+\hat\beta_\ols+\frac\lambda{2a}& \text{ if }\hat\beta_\ols<-\frac\lambda{2a},\\
+0& \text{ if }\abs{\hat\beta_\ols}\leq\frac\lambda{2a},\\
+\hat\beta_\ols-\frac\lambda{2a}& \text{ if }\hat\beta_\ols> \frac\lambda{2a},\\
+\end{cases}
+$$
+
+
+
+
+
+
+</details>
+
+
+
+:::
+
 
 This formula shows the essential behavior of lasso:
 
 - if the OLS coefficient is large enough in magnitude, it is shrunk toward zero;
 - if the OLS coefficient is small enough, it is shrunk all the way to zero.
 
-Thus the lasso solution is continuous, but it is not smooth at zero.
+
+
+
 
 ::: {.callout-note}
 ## Orthogonal design
@@ -1196,17 +1299,8 @@ If the design matrix satisfies $X^\top X = nI$, then the lasso problem separates
 This is the clearest way to see why lasso performs variable selection.
 :::
 
-
+<!-- 
 ### Coordinate descent
-
-
-::: {.callout-note}
-## Solving lasso
-
-Lasso is solved using numerical optimization algorithms. The most widely used methods include coordinate descent, LARS (Least Angle Regression), and proximal gradient methods. These algorithms iteratively update the coefficients until convergence.
-
-Unlike OLS or ridge regression, the lasso estimator does not admit a closed-form solution because the $L_1$ penalty is not differentiable at zero.
-:::
 
 
 In general, lasso does not have a simple closed-form vector solution like ridge regression. Instead, it is typically solved numerically.
@@ -1233,12 +1327,12 @@ $$
 $$
 
 So coordinate descent repeatedly reduces the full lasso problem to a sequence of one-variable soft-thresholding updates.
+ -->
 
 
-
-
-
-
+<!-- 
+### The solution path
+ -->
 
 
 
