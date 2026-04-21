@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Appendix A — Quick intro to R – Statistical Learning</title>
+<title>4&nbsp; Dimension reduction – Statistical Learning</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -33,7 +68,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/3/cluster.html" rel="prev">
+<link href="../../contents/1/logistic.html" rel="next">
+<link href="../../contents/1/shrinkage.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -76,6 +112,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles/fonts.css">
 <link rel="stylesheet" href="../../styles/blocks.css">
@@ -253,7 +318,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Appendix A — Quick intro to R</h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -293,13 +358,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Linear models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/basic.html" class="sidebar-item-text sidebar-link">
@@ -320,7 +385,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/1/dr.html" class="sidebar-item-text sidebar-link">
+  <a href="../../contents/1/dr.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></span></a>
   </div>
 </li>
@@ -392,16 +457,16 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/app/r.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../contents/app/r.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Quick intro to R</span></span></a>
   </div>
 </li>
@@ -417,7 +482,26 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#for-those-who-are-from-other-languages-especially-python" id="toc-for-those-who-are-from-other-languages-especially-python" class="nav-link active" data-scroll-target="#for-those-who-are-from-other-languages-especially-python"><span class="header-section-number">A.1</span> For those who are from other languages, especially Python</a></li>
+  <li><a href="#pcr" id="toc-pcr" class="nav-link active" data-scroll-target="#pcr"><span class="header-section-number">4.1</span> PCR</a>
+  <ul class="collapse">
+  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea"><span class="header-section-number">4.1.1</span> Idea</a></li>
+  <li><a href="#pca-review" id="toc-pca-review" class="nav-link" data-scroll-target="#pca-review"><span class="header-section-number">4.1.2</span> PCA review</a></li>
+  <li><a href="#choosing-the-number-of-components" id="toc-choosing-the-number-of-components" class="nav-link" data-scroll-target="#choosing-the-number-of-components"><span class="header-section-number">4.1.3</span> Choosing the number of components</a></li>
+  <li><a href="#pcr-in-python" id="toc-pcr-in-python" class="nav-link" data-scroll-target="#pcr-in-python"><span class="header-section-number">4.1.4</span> PCR in Python</a></li>
+  <li><a href="#choosing-number-of-components-by-cross-validation" id="toc-choosing-number-of-components-by-cross-validation" class="nav-link" data-scroll-target="#choosing-number-of-components-by-cross-validation"><span class="header-section-number">4.1.5</span> Choosing number of components by cross-validation</a></li>
+  </ul></li>
+  <li><a href="#partial-least-squares-pls" id="toc-partial-least-squares-pls" class="nav-link" data-scroll-target="#partial-least-squares-pls"><span class="header-section-number">4.2</span> Partial Least Squares (PLS)</a>
+  <ul class="collapse">
+  <li><a href="#idea-1" id="toc-idea-1" class="nav-link" data-scroll-target="#idea-1"><span class="header-section-number">4.2.1</span> Idea</a></li>
+  <li><a href="#algorithm-intuition" id="toc-algorithm-intuition" class="nav-link" data-scroll-target="#algorithm-intuition"><span class="header-section-number">4.2.2</span> Algorithm intuition</a></li>
+  <li><a href="#geometric-interpretation" id="toc-geometric-interpretation" class="nav-link" data-scroll-target="#geometric-interpretation"><span class="header-section-number">4.2.3</span> Geometric interpretation</a></li>
+  <li><a href="#choosing-the-number-of-components-1" id="toc-choosing-the-number-of-components-1" class="nav-link" data-scroll-target="#choosing-the-number-of-components-1"><span class="header-section-number">4.2.4</span> Choosing the number of components</a></li>
+  </ul></li>
+  <li><a href="#pls-in-python" id="toc-pls-in-python" class="nav-link" data-scroll-target="#pls-in-python"><span class="header-section-number">4.3</span> PLS in Python</a>
+  <ul class="collapse">
+  <li><a href="#selecting-the-number-of-components" id="toc-selecting-the-number-of-components" class="nav-link" data-scroll-target="#selecting-the-number-of-components"><span class="header-section-number">4.3.1</span> Selecting the number of components</a></li>
+  <li><a href="#pls-coefficient-path" id="toc-pls-coefficient-path" class="nav-link" data-scroll-target="#pls-coefficient-path"><span class="header-section-number">4.3.2</span> PLS coefficient path</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -427,7 +511,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Appendix A — Quick intro to R</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></h1>
 </div>
 
 
@@ -444,14 +528,282 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="for-those-who-are-from-other-languages-especially-python" class="level2" data-number="A.1">
-<h2 data-number="A.1" class="anchored" data-anchor-id="for-those-who-are-from-other-languages-especially-python"><span class="header-section-number">A.1</span> For those who are from other languages, especially Python</h2>
+<p>When the number of predictors is large or when predictors are highly correlated, directly fitting a regression model using the original predictors may lead to unstable estimates and poor predictive performance.</p>
+<p>One approach to address this problem is <strong>dimension reduction</strong>. Instead of using the original predictors directly, we first construct a smaller number of derived variables (called <strong>components</strong>) and then perform regression using these components.</p>
+<p>Two commonly used methods are</p>
+<ul>
+<li><strong>Principal Component Regression (PCR)</strong></li>
+<li><strong>Partial Least Squares (PLS)</strong></li>
+</ul>
+<p>Both methods construct new variables that are <strong>linear combinations of the original predictors</strong>, but they differ in how those combinations are chosen.</p>
+<hr>
+<section id="pcr" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="pcr"><span class="header-section-number">4.1</span> PCR</h2>
+<section id="idea" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="idea"><span class="header-section-number">4.1.1</span> Idea</h3>
+<p>PCR first applies <strong>principal component analysis (PCA)</strong> to the predictor matrix <span class="math inline">\(X\)</span>, and then uses the leading principal components as predictors in a regression model.</p>
+<p>The key idea is that most of the variation in the predictors often lies in a lower-dimensional subspace.</p>
+<hr>
+<div id="def-pcr" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.1 (Principal Component Regression)</strong></span> Let <span class="math inline">\(X\)</span> be the <span class="math inline">\(n \times p\)</span> predictor matrix.</p>
+<p>The principal components are defined as</p>
+<p><span class="math display">\[
+Z_k = X v_k,
+\]</span></p>
+<p>where <span class="math inline">\(v_k\)</span> is the <span class="math inline">\(k\)</span>-th eigenvector of <span class="math inline">\(X^\top X\)</span>.</p>
+<p>Principal component regression fits a linear model using the first <span class="math inline">\(m\)</span> components:</p>
+<p><span class="math display">\[
+y = \theta_0 + \theta_1 Z_1 + \theta_2 Z_2 + \cdots + \theta_m Z_m + \varepsilon.
+\]</span></p>
+<p>Here</p>
+<ul>
+<li><span class="math inline">\(Z_1,\ldots,Z_m\)</span> are the first <span class="math inline">\(m\)</span> principal components</li>
+<li><span class="math inline">\(m &lt; p\)</span> is chosen by cross-validation</li>
+</ul>
+</div>
+<p>Thus PCR replaces the original predictors with a smaller set of orthogonal components.</p>
+<hr>
+</section>
+<section id="pca-review" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="pca-review"><span class="header-section-number">4.1.2</span> PCA review</h3>
+<p>Principal component analysis finds directions in predictor space that maximize variance.</p>
+<p>Let</p>
+<p><span class="math display">\[
+X = UDV^\top
+\]</span></p>
+<p>be the singular value decomposition of <span class="math inline">\(X\)</span>.</p>
+<p>Then</p>
+<ul>
+<li>the columns of <span class="math inline">\(V\)</span> are the principal directions</li>
+<li>the principal components are</li>
+</ul>
+<p><span class="math display">\[
+Z = XV
+\]</span></p>
+<p>The first principal component captures the largest variance in <span class="math inline">\(X\)</span>, the second captures the next largest variance orthogonal to the first, and so on.</p>
+<hr>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key feature of PCR
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PCR constructs components <strong>using only the predictor matrix <span class="math inline">\(X\)</span></strong>, without considering the response <span class="math inline">\(y\)</span>.</p>
+<p>As a result, the directions that explain the most variation in <span class="math inline">\(X\)</span> are not necessarily the directions that are most predictive of <span class="math inline">\(y\)</span>.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="choosing-the-number-of-components" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="choosing-the-number-of-components"><span class="header-section-number">4.1.3</span> Choosing the number of components</h3>
+<p>The number of components <span class="math inline">\(m\)</span> is usually chosen using cross-validation.</p>
+<p>Typical procedure:</p>
 <ol type="1">
-<li>The character <code>.</code> is NOT special. It doesn’t mean packages or classes. It is just one of the characters that can be used as variable names.</li>
-<li>R recommends to use <code>&lt;-</code> to denote assigning values, although <code>=</code> is accepted. <code>a &lt;- 1</code> and <code>a = 1</code> are essentially the same. It has some benefits</li>
+<li>Compute the principal components.</li>
+<li>Fit regression models using <span class="math inline">\(m = 1,2,\ldots,p\)</span> components.</li>
+<li>Compute validation error for each <span class="math inline">\(m\)</span>.</li>
+<li>Choose the value of <span class="math inline">\(m\)</span> with the lowest validation error.</li>
 </ol>
+<hr>
+</section>
+<section id="pcr-in-python" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="pcr-in-python"><span class="header-section-number">4.1.4</span> PCR in Python</h3>
+<p><code>scikit-learn</code> provides <code>PCA</code> for computing principal components.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pcr_pipe <span class="op">=</span> Pipeline(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"pca"</span>, PCA(n_components<span class="op">=</span><span class="dv">5</span>)),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"model"</span>, LinearRegression())</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>pcr_pipe.fit(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Here the pipeline performs</p>
+<p>standardization PCA regression using the principal components.</p>
+</section>
+<section id="choosing-number-of-components-by-cross-validation" class="level3" data-number="4.1.5">
+<h3 data-number="4.1.5" class="anchored" data-anchor-id="choosing-number-of-components-by-cross-validation"><span class="header-section-number">4.1.5</span> Choosing number of components by cross-validation</h3>
+<div id="09be8c10" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">"pca__n_components"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>))}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> GridSearchCV(pcr_pipe, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>grid.fit(X, y)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>best_m <span class="op">=</span> grid.best_params_[<span class="st">"pca__n_components"</span>]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>best_m</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="partial-least-squares-pls" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="partial-least-squares-pls"><span class="header-section-number">4.2</span> Partial Least Squares (PLS)</h2>
+<section id="idea-1" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="idea-1"><span class="header-section-number">4.2.1</span> Idea</h3>
+<p>Principal component regression constructs components that explain the variation in the predictor matrix <span class="math inline">\(X\)</span>. However, these directions are chosen <strong>without considering the response variable <span class="math inline">\(y\)</span></strong>.</p>
+<p>Partial least squares (PLS) addresses this limitation by constructing components that are most strongly related to the response.</p>
+<p>The key idea is to construct components that simultaneously</p>
+<ul>
+<li>capture variation in the predictors, and<br>
+</li>
+<li>are strongly associated with the response.</li>
+</ul>
+<hr>
+<div id="def-pls" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.2 (Partial Least Squares)</strong></span> Partial least squares constructs a sequence of components</p>
+<p><span class="math display">\[
+Z_k = X w_k
+\]</span></p>
+<p>where the weight vector <span class="math inline">\(w_k\)</span> is chosen to maximize the covariance between the component and the response:</p>
+<p><span class="math display">\[
+w_k =
+\arg\max_w
+\operatorname{Cov}(Xw, y)^2
+\]</span></p>
+<p>subject to the normalization constraint</p>
+<p><span class="math display">\[
+\|w\|_2 = 1.
+\]</span></p>
+<p>After constructing the component <span class="math inline">\(Z_k\)</span>, both the predictor matrix and the response are deflated, and the procedure is repeated to construct additional components.</p>
+</div>
+<p>Thus PLS chooses directions in predictor space that are most predictive of the response.</p>
+<hr>
+</section>
+<section id="algorithm-intuition" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="algorithm-intuition"><span class="header-section-number">4.2.2</span> Algorithm intuition</h3>
+<p>PLS constructs components sequentially.</p>
+<p>At step <span class="math inline">\(k\)</span>:</p>
+<ol type="1">
+<li>Find a direction <span class="math inline">\(w_k\)</span> such that the component <span class="math inline">\(Z_k = X w_k\)</span> has maximal covariance with <span class="math inline">\(y\)</span>.</li>
+<li>Regress <span class="math inline">\(y\)</span> on the component <span class="math inline">\(Z_k\)</span>.</li>
+<li>Remove the variation explained by <span class="math inline">\(Z_k\)</span> from both <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span>.</li>
+<li>Repeat the process on the residual matrices.</li>
+</ol>
+<p>This produces components that are ordered by predictive importance.</p>
+<hr>
+</section>
+<section id="geometric-interpretation" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="geometric-interpretation"><span class="header-section-number">4.2.3</span> Geometric interpretation</h3>
+<p>PLS can be understood geometrically as searching for directions in predictor space that align with the response.</p>
+<ul>
+<li>PCR chooses directions with <strong>largest variance in <span class="math inline">\(X\)</span></strong>.</li>
+<li>PLS chooses directions with <strong>largest covariance between <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span></strong>.</li>
+</ul>
+<p>Therefore PLS tends to find directions that are more useful for prediction.</p>
+<hr>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Comparison with PCR
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PCR constructs components using only the predictor matrix <span class="math inline">\(X\)</span>.</p>
+<p>PLS uses both <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span> to determine the directions.</p>
+<p>As a result</p>
+<ul>
+<li>PCR may require many components before the response information is captured.</li>
+<li>PLS often achieves good predictive performance with fewer components.</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+<section id="choosing-the-number-of-components-1" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="choosing-the-number-of-components-1"><span class="header-section-number">4.2.4</span> Choosing the number of components</h3>
+<p>Similar to PCR, the number of components is chosen using cross-validation.</p>
+<p>Typical procedure:</p>
+<ol type="1">
+<li>Fit PLS models with different numbers of components.</li>
+<li>Evaluate the validation error for each model.</li>
+<li>Choose the number of components that minimizes the validation error.</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="pls-in-python" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="pls-in-python"><span class="header-section-number">4.3</span> PLS in Python</h2>
+<p><code>scikit-learn</code> provides the class <code>PLSRegression</code> for fitting partial least squares models.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>pls_pipe <span class="op">=</span> Pipeline(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"model"</span>, PLSRegression(n_components<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>pls_pipe.fit(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The argument n_components specifies the number of PLS components.</p>
+<section id="selecting-the-number-of-components" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="selecting-the-number-of-components"><span class="header-section-number">4.3.1</span> Selecting the number of components</h3>
+<p>We can choose the number of components using cross-validation.</p>
+<div id="0de966ba" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">"model__n_components"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>))}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> GridSearchCV(pls_pipe, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>grid.fit(X, y)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>best_components <span class="op">=</span> grid.best_params_[<span class="st">"model__n_components"</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>best_components</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="pls-coefficient-path" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="pls-coefficient-path"><span class="header-section-number">4.3.2</span> PLS coefficient path</h3>
+<p>We can also examine how the regression coefficients change as the number of components increases.</p>
+<div id="66a1e259" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> StandardScaler().fit_transform(X)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> []</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    pls <span class="op">=</span> PLSRegression(n_components<span class="op">=</span>m)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    pls.fit(X_scaled, y)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    coefs.append(pls.coef_.ravel())</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> np.array(coefs)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(coefs.shape[<span class="dv">1</span>]):</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>), coefs[:, j], label<span class="op">=</span><span class="ss">f"x</span><span class="sc">{</span>j <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of components"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Coefficient"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"PLS coefficient path"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Summary</p>
+<p>Partial least squares is a dimension reduction method designed for predictive modeling.</p>
+<p>It constructs components that maximize covariance between predictors and response. These components are used as predictors in a regression model. The number of components is typically selected using cross-validation.</p>
+<p>Compared with principal component regression:</p>
+<p>PCR focuses on explaining predictor variation. PLS focuses on predicting the response.</p>
+<p>As a result, PLS often requires fewer components to achieve strong predictive performance.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -911,11 +1263,14 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/3/cluster.html" class="pagination-link" aria-label="cluster.html">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">cluster.html</span></span>
+      <a href="../../contents/1/shrinkage.html" class="pagination-link" aria-label="Regularization">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regularization</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../../contents/1/logistic.html" class="pagination-link" aria-label="Logistic Regression">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

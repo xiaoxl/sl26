@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Ridge Regression – Statistical Learning</title>
+<title>3&nbsp; Ridge Regression – Statistical Learning</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../contents/1/lasso.html" rel="next">
-<link href="../../contents/1/gam.html" rel="prev">
+<link href="../../contents/1/lr.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -318,7 +318,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ridge Regression</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ridge Regression</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -379,26 +379,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/1/glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalized linear models</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/1/gam.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Generalized additive models</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../contents/1/ridge.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ridge Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ridge Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/lasso.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">LASSO</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalized linear models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/gam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Generalized additive models</span></span></a>
   </div>
 </li>
       </ul>
@@ -430,15 +430,25 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#a-short-history-of-ridge-regression" id="toc-a-short-history-of-ridge-regression" class="nav-link active" data-scroll-target="#a-short-history-of-ridge-regression"><span class="header-section-number">5.1</span> A Short History of Ridge Regression</a></li>
-  <li><a href="#what-is-ridge-regression" id="toc-what-is-ridge-regression" class="nav-link" data-scroll-target="#what-is-ridge-regression"><span class="header-section-number">5.2</span> What Is Ridge Regression?</a></li>
-  <li><a href="#why-ridge-regression-helps" id="toc-why-ridge-regression-helps" class="nav-link" data-scroll-target="#why-ridge-regression-helps"><span class="header-section-number">5.3</span> Why Ridge Regression Helps</a></li>
-  <li><a href="#choosing-lambda" id="toc-choosing-lambda" class="nav-link" data-scroll-target="#choosing-lambda"><span class="header-section-number">5.4</span> Choosing <span class="math inline">\(\lambda\)</span></a></li>
-  <li><a href="#fitting-ridge-regression-in-r" id="toc-fitting-ridge-regression-in-r" class="nav-link" data-scroll-target="#fitting-ridge-regression-in-r"><span class="header-section-number">5.5</span> Fitting Ridge Regression in R</a></li>
-  <li><a href="#scaling-issues-of-ridge-regression" id="toc-scaling-issues-of-ridge-regression" class="nav-link" data-scroll-target="#scaling-issues-of-ridge-regression"><span class="header-section-number">5.6</span> Scaling Issues of Ridge Regression</a></li>
-  <li><a href="#relation-to-tikhonov-regularization" id="toc-relation-to-tikhonov-regularization" class="nav-link" data-scroll-target="#relation-to-tikhonov-regularization"><span class="header-section-number">5.7</span> Relation to Tikhonov Regularization</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.8</span> Summary</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">5.9</span> References</a></li>
+  <li><a href="#a-short-history-of-ridge-regression" id="toc-a-short-history-of-ridge-regression" class="nav-link active" data-scroll-target="#a-short-history-of-ridge-regression"><span class="header-section-number">3.1</span> A Short History of Ridge Regression</a></li>
+  <li><a href="#what-is-ridge-regression" id="toc-what-is-ridge-regression" class="nav-link" data-scroll-target="#what-is-ridge-regression"><span class="header-section-number">3.2</span> What Is Ridge Regression?</a></li>
+  <li><a href="#why-ridge-regression-helps" id="toc-why-ridge-regression-helps" class="nav-link" data-scroll-target="#why-ridge-regression-helps"><span class="header-section-number">3.3</span> Why Ridge Regression Helps</a></li>
+  <li><a href="#choosing-lambda" id="toc-choosing-lambda" class="nav-link" data-scroll-target="#choosing-lambda"><span class="header-section-number">3.4</span> Choosing <span class="math inline">\(\lambda\)</span></a></li>
+  <li><a href="#fitting-ridge-regression-in-r" id="toc-fitting-ridge-regression-in-r" class="nav-link" data-scroll-target="#fitting-ridge-regression-in-r"><span class="header-section-number">3.5</span> Fitting Ridge Regression in R</a></li>
+  <li><a href="#scaling-issues-of-ridge-regression" id="toc-scaling-issues-of-ridge-regression" class="nav-link" data-scroll-target="#scaling-issues-of-ridge-regression"><span class="header-section-number">3.6</span> Scaling Issues of Ridge Regression</a></li>
+  <li><a href="#relation-to-tikhonov-regularization" id="toc-relation-to-tikhonov-regularization" class="nav-link" data-scroll-target="#relation-to-tikhonov-regularization"><span class="header-section-number">3.7</span> Relation to Tikhonov Regularization</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">3.8</span> Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">3.9</span> References</a></li>
+  <li><a href="#ridge-regression" id="toc-ridge-regression" class="nav-link" data-scroll-target="#ridge-regression"><span class="header-section-number">3.10</span> Ridge Regression</a></li>
+  <li><a href="#motivation-correlated-variables-convexity-and-variance" id="toc-motivation-correlated-variables-convexity-and-variance" class="nav-link" data-scroll-target="#motivation-correlated-variables-convexity-and-variance"><span class="header-section-number">3.11</span> Motivation: Correlated Variables, Convexity and Variance</a></li>
+  <li><a href="#bias-variance-trade-off" id="toc-bias-variance-trade-off" class="nav-link" data-scroll-target="#bias-variance-trade-off"><span class="header-section-number">3.12</span> Bias-Variance Trade-off</a>
+  <ul class="collapse">
+  <li><a href="#decomposition" id="toc-decomposition" class="nav-link" data-scroll-target="#decomposition"><span class="header-section-number">3.12.1</span> Decomposition</a></li>
+  <li><a href="#ridge-vs-ols-analytical-perspective" id="toc-ridge-vs-ols-analytical-perspective" class="nav-link" data-scroll-target="#ridge-vs-ols-analytical-perspective"><span class="header-section-number">3.12.2</span> Ridge vs OLS: Analytical Perspective</a></li>
+  </ul></li>
+  <li><a href="#selecting-lambda-via-cross-validation" id="toc-selecting-lambda-via-cross-validation" class="nav-link" data-scroll-target="#selecting-lambda-via-cross-validation"><span class="header-section-number">3.13</span> Selecting <span class="math inline">\(\lambda\)</span> via Cross-Validation</a></li>
+  <li><a href="#ridge-regression-path" id="toc-ridge-regression-path" class="nav-link" data-scroll-target="#ridge-regression-path"><span class="header-section-number">3.14</span> Ridge Regression Path</a></li>
+  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1"><span class="header-section-number">3.15</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -448,7 +458,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Ridge Regression</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Ridge Regression</span></h1>
 </div>
 
 
@@ -475,6 +485,9 @@ window.Quarto = {
 \newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
 \newcommand{\me}{{\mathrm e}}
 \newcommand{\argmin}{\operatorname{argmin}}
+\newcommand{\rss}{\mathrm{RSS}}
+\newcommand{\ols}{\mathrm{OLS}}
+\newcommand{\mle}{\mathrm{MLE}}
 \]</span></p>
 <!-- Probability -->
 <p>$$ </p>
@@ -498,13 +511,13 @@ window.Quarto = {
 \newcommand{\distnormal}{\operatorname{\mathcal N}}
 \]</span></p>
 </div>
-<section id="a-short-history-of-ridge-regression" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="a-short-history-of-ridge-regression"><span class="header-section-number">5.1</span> A Short History of Ridge Regression</h2>
-<p>Ridge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from <strong>Tikhonov (1963)</strong> in numerical analysis, where a regularization term was added to ill-posed problems.</p>
-<p>In statistics, <strong>Hoerl and Kennard (1970)</strong> formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.</p>
+<section id="a-short-history-of-ridge-regression" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="a-short-history-of-ridge-regression"><span class="header-section-number">3.1</span> A Short History of Ridge Regression</h2>
+<p>Ridge regression was introduced as a remedy for instability in ordinary least squares when predictors are highly correlated. The idea of stabilizing an inverse problem by adding a penalty term originates from Tikhonov (1963) in numerical analysis, where a regularization term was added to ill-posed problems.</p>
+<p>In statistics, Hoerl and Kennard (1970) formally introduced ridge regression to address multicollinearity in linear regression. Later work connected ridge regression to generalized inverses, biased estimation, Bayesian regression, and other regularization methods.</p>
 </section>
-<section id="what-is-ridge-regression" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="what-is-ridge-regression"><span class="header-section-number">5.2</span> What Is Ridge Regression?</h2>
+<section id="what-is-ridge-regression" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="what-is-ridge-regression"><span class="header-section-number">3.2</span> What Is Ridge Regression?</h2>
 <p>Ridge regression is a regularized version of ordinary least squares (OLS). It is especially useful when predictors are highly correlated or when the matrix <span class="math inline">\(X^\top X\)</span> is nearly singular, because in such settings the OLS estimator can be unstable.</p>
 <p>Recall the linear model</p>
 <p><span class="math display">\[
@@ -529,8 +542,8 @@ y = X\beta + \varepsilon.
 \]</span></p>
 <p>The penalty shrinks coefficients toward zero. Larger values of <span class="math inline">\(\lambda\)</span> produce stronger shrinkage.</p>
 </section>
-<section id="why-ridge-regression-helps" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="why-ridge-regression-helps"><span class="header-section-number">5.3</span> Why Ridge Regression Helps</h2>
+<section id="why-ridge-regression-helps" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="why-ridge-regression-helps"><span class="header-section-number">3.3</span> Why Ridge Regression Helps</h2>
 <p>OLS is unbiased under the classical linear model assumptions, but it can have high variance when predictors are strongly correlated. Ridge regression introduces bias, but it often reduces variance enough to improve predictive performance.</p>
 <p>This is a standard example of the <strong>bias-variance tradeoff</strong>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -553,8 +566,8 @@ y = X\beta + \varepsilon.
 </div>
 </div>
 </section>
-<section id="choosing-lambda" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="choosing-lambda"><span class="header-section-number">5.4</span> Choosing <span class="math inline">\(\lambda\)</span></h2>
+<section id="choosing-lambda" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="choosing-lambda"><span class="header-section-number">3.4</span> Choosing <span class="math inline">\(\lambda\)</span></h2>
 <p>The tuning parameter <span class="math inline">\(\lambda\)</span> determines how much shrinkage is applied.</p>
 <ul>
 <li>Small <span class="math inline">\(\lambda\)</span> gives a model close to OLS.</li>
@@ -567,24 +580,30 @@ y = X\beta + \varepsilon.
 \]</span></p>
 <p>Classical ridge analysis also uses ridge trace plots and generalized cross-validation.</p>
 </section>
-<section id="fitting-ridge-regression-in-r" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="fitting-ridge-regression-in-r"><span class="header-section-number">5.5</span> Fitting Ridge Regression in R</h2>
+<section id="fitting-ridge-regression-in-r" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="fitting-ridge-regression-in-r"><span class="header-section-number">3.5</span> Fitting Ridge Regression in R</h2>
 <p>The <code>glmnet</code> package is a standard implementation:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(y <span class="sc">~</span> ., <span class="at">data =</span> dat)[, <span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> dat<span class="sc">$</span>y</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>ridge_fit <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ridge_fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Cross-validation is performed with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cv_fit <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv_fit)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(cv_fit, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- ```r
+library(glmnet)
+
+x <- model.matrix(y ~ ., data = dat)[, -1]
+y <- dat$y
+
+ridge_fit <- glmnet(x, y, alpha = 0)
+plot(ridge_fit)
+```
+
+Cross-validation is performed with:
+
+```r
+cv_fit <- cv.glmnet(x, y, alpha = 0)
+plot(cv_fit)
+coef(cv_fit, s = "lambda.min")
+``` -->
 <p>Here <code>alpha = 0</code> specifies ridge regression.</p>
 </section>
-<section id="scaling-issues-of-ridge-regression" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="scaling-issues-of-ridge-regression"><span class="header-section-number">5.6</span> Scaling Issues of Ridge Regression</h2>
+<section id="scaling-issues-of-ridge-regression" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="scaling-issues-of-ridge-regression"><span class="header-section-number">3.6</span> Scaling Issues of Ridge Regression</h2>
 <p>Ridge regression is sensitive to the scale of the predictors, so the variables are usually <strong>standardized</strong> before fitting the model.</p>
 <p>The usual standardization is</p>
 <p><span class="math display">\[
@@ -599,12 +618,12 @@ x_j^* = \frac{x_j - \bar{x}_j}{s_j},
 <li>software such as <code>glmnet</code> usually performs standardization automatically.</li>
 </ul>
 </section>
-<section id="relation-to-tikhonov-regularization" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="relation-to-tikhonov-regularization"><span class="header-section-number">5.7</span> Relation to Tikhonov Regularization</h2>
+<section id="relation-to-tikhonov-regularization" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="relation-to-tikhonov-regularization"><span class="header-section-number">3.7</span> Relation to Tikhonov Regularization</h2>
 <p>Ridge regression is the statistical form of <strong>Tikhonov regularization</strong>. In inverse problems, Tikhonov regularization stabilizes an ill-posed problem by adding a quadratic penalty. Ridge regression applies the same idea to linear regression.</p>
 </section>
-<section id="summary" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.8</span> Summary</h2>
+<section id="summary" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">3.8</span> Summary</h2>
 <p>The main ideas of ridge regression are:</p>
 <ul>
 <li>it adds an <span class="math inline">\(L_2\)</span> penalty to least squares;</li>
@@ -614,8 +633,8 @@ x_j^* = \frac{x_j - \bar{x}_j}{s_j},
 <li>it usually keeps all variables in the model.</li>
 </ul>
 </section>
-<section id="references" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="references"><span class="header-section-number">5.9</span> References</h2>
+<section id="references" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="references"><span class="header-section-number">3.9</span> References</h2>
 <ul>
 <li>Hoerl, A. E., &amp; Kennard, R. W. (1970). <em>Ridge regression: Biased estimation for nonorthogonal problems</em>. Technometrics, 12(1), 55-67.</li>
 <li>Marquardt, D. W. (1970). <em>Generalized inverses, ridge regression, biased linear estimation, and nonlinear estimation</em>. Technometrics, 12(3), 591-612.</li>
@@ -624,14 +643,6 @@ x_j^* = \frac{x_j - \bar{x}_j}{s_j},
 </ul>
 <!--
 Archived draft sections
-
-
-::: {.cell}
-
-```{.r .cell-code}
-fit <- lm(y ~ ., data = dat)
-```
-:::
 
 
 ## Correlated Variables, Convexity and Variance
@@ -656,6 +667,360 @@ fit <- lm(y ~ ., data = dat)
 
 A large teaching-scope draft was removed from the active chapter and archived here.
 -->
+</section>
+<section id="ridge-regression" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="ridge-regression"><span class="header-section-number">3.10</span> Ridge Regression</h2>
+<p>Ridge regression was proposed by Hoerl and Kennard (1970), and is also a special case of <a href="https://en.wikipedia.org/wiki/Tikhonov_regularization">Tikhonov regularization</a>. The essential idea is simple: knowing that the ordinary least squares (OLS) solution is not unique in an ill-posed problem (i.e., <span class="math inline">\(\mathbf{X}^\top\mathbf{X}\)</span> is not invertible), ridge regression adds a ridge (diagonal matrix) to <span class="math inline">\(\mathbf{X}^\top\mathbf{X}\)</span>:</p>
+<p><span class="math display">\[
+\widehat{\boldsymbol{\beta}}^{\text{ridge}} = (\mathbf{X}^\top\mathbf{X} + n\lambda \mathbf{I})^{-1} \mathbf{X}^\top\mathbf{y}
+\]</span></p>
+<p>It provides a solution to linear regression when multicollinearity occurs, especially when the number of variables <span class="math inline">\(p\)</span> is larger than the sample size <span class="math inline">\(n\)</span>. Alternatively, this is the solution of a regularized least squares estimator — we add an <span class="math inline">\(\ell_2\)</span> penalty to the residual sum of squares:</p>
+<p><span class="math display">\[
+\begin{align}
+\widehat{\boldsymbol{\beta}}^{\text{ridge}} &amp;= \arg\min_{\boldsymbol{\beta}} \|\mathbf{y} - \mathbf{X}\boldsymbol{\beta}\|_2^2 + n\lambda\|\boldsymbol{\beta}\|_2^2 \\
+&amp;= \arg\min_{\boldsymbol{\beta}} \frac{1}{n}\sum_{i=1}^n (y_i - x_i^\top \boldsymbol{\beta})^2 + \lambda\sum_{j=1}^p \beta_j^2
+\end{align}
+\]</span></p>
+<p>for some penalty <span class="math inline">\(\lambda &gt; 0\)</span>. Ridge regression is used extensively in genetic analyses to address “small-<span class="math inline">\(n\)</span>-large-<span class="math inline">\(p\)</span>” problems. We will start with a motivation example and then discuss the crucial topic: the <strong>bias-variance trade-off</strong>.</p>
+<hr>
+</section>
+<section id="motivation-correlated-variables-convexity-and-variance" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="motivation-correlated-variables-convexity-and-variance"><span class="header-section-number">3.11</span> Motivation: Correlated Variables, Convexity and Variance</h2>
+<p>Ridge regression has many advantages. Most notably, it can address highly correlated variables. When variables are highly correlated, the <span class="math inline">\(\ell_2\)</span> loss becomes “flat” along certain directions in the parameter space.</p>
+<p>In the example below, the true parameters are both <span class="math inline">\(1\)</span>, but OLS concludes almost all effects belong to the first variable. Ridge regression produces more stable estimates.</p>
+<div id="f20b7534" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge, LinearRegression</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">2</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Covariance matrix with high correlation (rho = 0.99)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Sigma <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="fl">0.99</span>], [<span class="fl">0.99</span>, <span class="dv">1</span>]])</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate correlated predictors</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> rng.multivariate_normal(mean, Sigma, size<span class="op">=</span>n)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> rng.normal(loc<span class="op">=</span>X[:, <span class="dv">0</span>] <span class="op">+</span> X[:, <span class="dv">1</span>], scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># OLS estimate</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ols <span class="op">=</span> LinearRegression(fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X, y)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"OLS estimates (true = [1, 1]):"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  beta_1 = </span><span class="sc">{</span>ols<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  beta_2 = </span><span class="sc">{</span>ols<span class="sc">.</span>coef_[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Ridge estimate (lambda=5/n to match R's lm.ridge(lambda=5))</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>ridge <span class="op">=</span> Ridge(alpha<span class="op">=</span><span class="dv">5</span>, fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X, y)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Ridge estimates (alpha=5, true = [1, 1]):"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  beta_1 = </span><span class="sc">{</span>ridge<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  beta_2 = </span><span class="sc">{</span>ridge<span class="sc">.</span>coef_[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OLS estimates (true = [1, 1]):
+  beta_1 = 0.9964
+  beta_2 = 0.8597
+
+Ridge estimates (alpha=5, true = [1, 1]):
+  beta_1 = 0.8577
+  beta_2 = 0.8496</code></pre>
+</div>
+</div>
+<p>The variance of both <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> is quite large under OLS. This is because the variance of <span class="math inline">\(\widehat{\boldsymbol{\beta}}\)</span> is <span class="math inline">\(\sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}\)</span>. Since the columns of <span class="math inline">\(\mathbf{X}\)</span> are highly correlated, the smallest eigenvalue of <span class="math inline">\(\mathbf{X}^\top\mathbf{X}\)</span> is close to zero, making the largest eigenvalue of <span class="math inline">\((\mathbf{X}^\top\mathbf{X})^{-1}\)</span> very large.</p>
+<div id="bc012011" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contour plot of OLS objective function</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>beta1_vals <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">200</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>beta2_vals <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">200</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>B1, B2 <span class="op">=</span> np.meshgrid(beta1_vals, beta2_vals)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute RSS over grid</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>RSS <span class="op">=</span> np.array([</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    np.<span class="bu">sum</span>((y <span class="op">-</span> X <span class="op">@</span> np.array([b1, b2]))<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b1, b2 <span class="kw">in</span> <span class="bu">zip</span>(B1.ravel(), B2.ravel())</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>]).reshape(B1.shape)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantile levels for contours</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>quant_levels <span class="op">=</span> np.quantile(RSS, [<span class="fl">0.01</span>, <span class="fl">0.025</span>, <span class="fl">0.05</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>])</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>cs <span class="op">=</span> ax.contour(B1, B2, RSS, levels<span class="op">=</span>quant_levels, colors<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>ax.clabel(cs, inline<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">8</span>, fmt<span class="op">=</span><span class="st">'%.0f'</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># True parameter values</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>ax.plot(<span class="dv">1</span>, <span class="dv">1</span>, <span class="st">'ro'</span>, markersize<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">'True (1, 1)'</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># OLS estimate</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>ax.plot(ols.coef_[<span class="dv">0</span>], ols.coef_[<span class="dv">1</span>], <span class="st">'bs'</span>, markersize<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">'OLS estimate'</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r'</span><span class="dv">$\b</span><span class="vs">eta_1</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r'</span><span class="dv">$\b</span><span class="vs">eta_2</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'OLS Objective Function Contours</span><span class="ch">\n</span><span class="st">(Flat valley due to high correlation)'</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ridge_files/figure-html/cell-3-output-1.png" width="564" height="469" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see a relatively <strong>“flat” valley</strong> in the objective function. This is because the covariance matrix of <span class="math inline">\(X\)</span> has a very small eigenvalue.</p>
+<div id="44d68bf4" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eigenstructure of the population covariance matrix</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>eig_vals, eig_vecs <span class="op">=</span> np.linalg.eigh(Sigma)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Eigenvalues of X^T X (population):"</span>, np.sort(eig_vals)[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"  -&gt; Smallest eigenvalue ≈"</span>, <span class="bu">round</span>(<span class="bu">min</span>(eig_vals), <span class="dv">4</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>inv_Sigma <span class="op">=</span> np.linalg.inv(Sigma)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>eig_vals_inv, _ <span class="op">=</span> np.linalg.eigh(inv_Sigma)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Eigenvalues of (X^T X)^{-1}:"</span>, np.sort(eig_vals_inv)[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"  -&gt; Largest eigenvalue ≈"</span>, <span class="bu">round</span>(<span class="bu">max</span>(eig_vals_inv), <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Eigenvalues of X^T X (population): [1.99 0.01]
+  -&gt; Smallest eigenvalue ≈ 0.01
+
+Eigenvalues of (X^T X)^{-1}: [100.           0.50251256]
+  -&gt; Largest eigenvalue ≈ 100.0</code></pre>
+</div>
+</div>
+<p>Each time we observe a dataset, it represents a perturbed version of this objective function — lying on a valley centered around the truth.</p>
+<div id="23bf1508" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple datasets showing variability of OLS</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw contour for each of several seeds</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> seed <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    rng_i <span class="op">=</span> np.random.default_rng(seed)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    X_i <span class="op">=</span> rng_i.multivariate_normal(mean, Sigma, size<span class="op">=</span>n)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    y_i <span class="op">=</span> rng_i.normal(loc<span class="op">=</span>X_i[:, <span class="dv">0</span>] <span class="op">+</span> X_i[:, <span class="dv">1</span>], scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    RSS_i <span class="op">=</span> np.array([</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        np.<span class="bu">sum</span>((y_i <span class="op">-</span> X_i <span class="op">@</span> np.array([b1, b2]))<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> b1, b2 <span class="kw">in</span> <span class="bu">zip</span>(B1.ravel(), B2.ravel())</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    ]).reshape(B1.shape)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    lvl <span class="op">=</span> np.quantile(RSS_i, <span class="fl">0.025</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    ax.contour(B1, B2, RSS_i, levels<span class="op">=</span>[lvl], colors<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>ax.plot(<span class="dv">1</span>, <span class="dv">1</span>, <span class="st">'ro'</span>, markersize<span class="op">=</span><span class="dv">12</span>, zorder<span class="op">=</span><span class="dv">5</span>, label<span class="op">=</span><span class="st">'True (1, 1)'</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r'</span><span class="dv">$\b</span><span class="vs">eta_1</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r'</span><span class="dv">$\b</span><span class="vs">eta_2</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'OLS Contours from Multiple Datasets</span><span class="ch">\n</span><span class="st">(Valley centered around truth)'</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ridge_files/figure-html/cell-5-output-1.png" width="564" height="469" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="bias-variance-trade-off" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="bias-variance-trade-off"><span class="header-section-number">3.12</span> Bias-Variance Trade-off</h2>
+<section id="decomposition" class="level3" data-number="3.12.1">
+<h3 data-number="3.12.1" class="anchored" data-anchor-id="decomposition"><span class="header-section-number">3.12.1</span> Decomposition</h3>
+<p>For any estimator <span class="math inline">\(\hat{f}(x)\)</span> of the true function <span class="math inline">\(f(x)\)</span>, the expected prediction error can be decomposed as:</p>
+<p><span class="math display">\[
+\mathbb{E}[(y - \hat{f}(x))^2] = \underbrace{\text{Bias}^2[\hat{f}(x)]}_{\text{systematic error}} + \underbrace{\text{Var}[\hat{f}(x)]}_{\text{random error}} + \underbrace{\sigma^2}_{\text{irreducible noise}}
+\]</span></p>
+<ul>
+<li><strong>Bias</strong> = how far off the expected prediction is from the truth<br>
+</li>
+<li><strong>Variance</strong> = how much the prediction changes with different training data<br>
+</li>
+<li><strong><span class="math inline">\(\sigma^2\)</span></strong> = irreducible noise, cannot be reduced</li>
+</ul>
+</section>
+<section id="ridge-vs-ols-analytical-perspective" class="level3" data-number="3.12.2">
+<h3 data-number="3.12.2" class="anchored" data-anchor-id="ridge-vs-ols-analytical-perspective"><span class="header-section-number">3.12.2</span> Ridge vs OLS: Analytical Perspective</h3>
+<p>For OLS: <strong>unbiased</strong>, but can have <strong>high variance</strong> (especially when <span class="math inline">\(\mathbf{X}^\top\mathbf{X}\)</span> is near-singular).</p>
+<p>For Ridge: - <strong>Bias</strong> is introduced (predictions are shrunk toward zero) - <strong>Variance</strong> is reduced (the added ridge stabilizes <span class="math inline">\((\mathbf{X}^\top\mathbf{X} + n\lambda\mathbf{I})^{-1}\)</span>)</p>
+<p>The bias-variance trade-off means that a small increase in bias can yield a large decrease in variance, reducing overall prediction error.</p>
+<div id="0f6a7bc3" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate bias-variance trade-off numerically</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>n_sim <span class="op">=</span> <span class="dv">500</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>n_train <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">50</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># True coefficients</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>beta_true <span class="op">=</span> np.array([<span class="fl">1.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>bias2_list <span class="op">=</span> []</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>var_list <span class="op">=</span> []</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>mse_list <span class="op">=</span> []</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> lam <span class="kw">in</span> lambdas:</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    preds_at_x <span class="op">=</span> []</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    x_test <span class="op">=</span> np.array([[<span class="fl">1.0</span>, <span class="fl">1.0</span>]])  <span class="co"># test point</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_sim):</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        rng_s <span class="op">=</span> np.random.default_rng()</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        X_s <span class="op">=</span> rng_s.multivariate_normal(mean, Sigma, size<span class="op">=</span>n_train)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        y_s <span class="op">=</span> rng_s.normal(loc<span class="op">=</span>X_s <span class="op">@</span> beta_true, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> Ridge(alpha<span class="op">=</span>lam <span class="op">*</span> n_train, fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X_s, y_s)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        preds_at_x.append(model.predict(x_test)[<span class="dv">0</span>])</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    preds <span class="op">=</span> np.array(preds_at_x)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    true_val <span class="op">=</span> x_test <span class="op">@</span> beta_true</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    bias2 <span class="op">=</span> (np.mean(preds) <span class="op">-</span> true_val[<span class="dv">0</span>])<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    var <span class="op">=</span> np.var(preds)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> bias2 <span class="op">+</span> var  <span class="co"># + sigma^2 (ignored here, same for all lambda)</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    bias2_list.append(bias2)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    var_list.append(var)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    mse_list.append(mse)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>ax.semilogx(lambdas, bias2_list, <span class="st">'r-'</span>, label<span class="op">=</span><span class="st">'Bias²'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>ax.semilogx(lambdas, var_list, <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">'Variance'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>ax.semilogx(lambdas, mse_list, <span class="st">'k--'</span>, label<span class="op">=</span><span class="st">'MSE (Bias² + Var)'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>ax.axvline(lambdas[np.argmin(mse_list)], color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, label<span class="op">=</span><span class="ss">f'Optimal λ ≈ </span><span class="sc">{</span>lambdas[np.argmin(mse_list)]<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r'Regularization parameter </span><span class="dv">$</span><span class="er">\</span><span class="vs">lambda</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">log scale</span><span class="kw">)</span><span class="vs">'</span>)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Error'</span>)</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Bias-Variance Trade-off in Ridge Regression'</span>)</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Optimal lambda: </span><span class="sc">{</span>lambdas[np.argmin(mse_list)]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Min MSE: </span><span class="sc">{</span><span class="bu">min</span>(mse_list)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ridge_files/figure-html/cell-6-output-1.png" width="758" height="466" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimal lambda: 0.0429
+Min MSE: 0.0305</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="selecting-lambda-via-cross-validation" class="level2" data-number="3.13">
+<h2 data-number="3.13" class="anchored" data-anchor-id="selecting-lambda-via-cross-validation"><span class="header-section-number">3.13</span> Selecting <span class="math inline">\(\lambda\)</span> via Cross-Validation</h2>
+<p>In practice, <span class="math inline">\(\lambda\)</span> is chosen by <strong>cross-validation</strong> — minimizing the held-out prediction error.</p>
+<div id="09057110" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> RidgeCV</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Candidate lambda values (sklearn uses alpha = n*lambda)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>alphas <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">100</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>rng_cv <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>X_cv <span class="op">=</span> rng_cv.multivariate_normal(mean, Sigma, size<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>y_cv <span class="op">=</span> rng_cv.normal(loc<span class="op">=</span>X_cv <span class="op">@</span> beta_true, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>ridge_cv <span class="op">=</span> RidgeCV(alphas<span class="op">=</span>alphas, cv<span class="op">=</span><span class="dv">5</span>, fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X_cv, y_cv)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best alpha (= n*lambda): </span><span class="sc">{</span>ridge_cv<span class="sc">.</span>alpha_<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best lambda: </span><span class="sc">{</span>ridge_cv<span class="sc">.</span>alpha_ <span class="op">/</span> <span class="bu">len</span>(X_cv)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Fitted coefficients: </span><span class="sc">{</span>ridge_cv<span class="sc">.</span>coef_<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best alpha (= n*lambda): 4.0370
+Best lambda: 0.0404
+Fitted coefficients: [1.03405656 1.05497857]</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="ridge-regression-path" class="level2" data-number="3.14">
+<h2 data-number="3.14" class="anchored" data-anchor-id="ridge-regression-path"><span class="header-section-number">3.14</span> Ridge Regression Path</h2>
+<p>The <strong>regularization path</strong> shows how coefficients shrink as <span class="math inline">\(\lambda\)</span> increases.</p>
+<div id="6e36f19d" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit ridge for many alpha values and track coefficients</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>alphas_path <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">200</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> []</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>rng_path <span class="op">=</span> np.random.default_rng(<span class="dv">2</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>X_path <span class="op">=</span> rng_path.multivariate_normal(mean, Sigma, size<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>y_path <span class="op">=</span> rng_path.normal(loc<span class="op">=</span>X_path <span class="op">@</span> beta_true, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a <span class="kw">in</span> alphas_path:</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> Ridge(alpha<span class="op">=</span>a, fit_intercept<span class="op">=</span><span class="va">False</span>).fit(X_path, y_path)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    coefs.append(r.coef_)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> np.array(coefs)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>ax.semilogx(alphas_path, coefs[:, <span class="dv">0</span>], <span class="st">'b-'</span>, label<span class="op">=</span><span class="vs">r'</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{</span><span class="dv">\b</span><span class="vs">eta}_1</span><span class="dv">$</span><span class="vs">'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>ax.semilogx(alphas_path, coefs[:, <span class="dv">1</span>], <span class="st">'r-'</span>, label<span class="op">=</span><span class="vs">r'</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{</span><span class="dv">\b</span><span class="vs">eta}_2</span><span class="dv">$</span><span class="vs">'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="fl">1.0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">'True value = 1'</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="fl">0.0</span>, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r'</span><span class="dv">$</span><span class="ch">\a</span><span class="vs">lpha</span><span class="dv">$</span><span class="vs"> = </span><span class="dv">$</span><span class="vs">n</span><span class="er">\</span><span class="vs">lambda</span><span class="dv">$</span><span class="vs"> </span><span class="kw">(</span><span class="vs">log scale</span><span class="kw">)</span><span class="vs">'</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Coefficient value'</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Ridge Regression Path</span><span class="ch">\n</span><span class="st">(Coefficients shrink toward 0 as λ increases)'</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ridge_files/figure-html/cell-8-output-1.png" width="758" height="467" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As <span class="math inline">\(\lambda \to 0\)</span>, the ridge estimates approach OLS. As <span class="math inline">\(\lambda \to \infty\)</span>, all coefficients shrink to zero. The optimal <span class="math inline">\(\lambda\)</span> balances bias and variance.</p>
+<hr>
+</section>
+<section id="summary-1" class="level2" data-number="3.15">
+<h2 data-number="3.15" class="anchored" data-anchor-id="summary-1"><span class="header-section-number">3.15</span> Summary</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>OLS</th>
+<th>Ridge</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bias</strong></td>
+<td>0 (unbiased)</td>
+<td>&gt; 0 (biased toward 0)</td>
+</tr>
+<tr class="even">
+<td><strong>Variance</strong></td>
+<td>Can be very high</td>
+<td>Reduced</td>
+</tr>
+<tr class="odd">
+<td><strong>Works when <span class="math inline">\(p &gt; n\)</span>?</strong></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><strong>Handles multicollinearity?</strong></td>
+<td>Poorly</td>
+<td>Well</td>
+</tr>
+<tr class="odd">
+<td><strong>Solution</strong></td>
+<td>Closed-form</td>
+<td>Closed-form</td>
+</tr>
+<tr class="even">
+<td><strong>Penalty</strong></td>
+<td>None</td>
+<td><span class="math inline">\(\lambda \|\boldsymbol{\beta}\|_2^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Ridge regression is particularly useful when:</p>
+<ul>
+<li>Variables are <strong>highly correlated</strong> (multicollinearity)</li>
+<li>The number of predictors <strong>exceeds the sample size</strong> (<span class="math inline">\(p &gt; n\)</span>)</li>
+<li>We want to <strong>trade a small bias for a large reduction in variance</strong></li>
+</ul>
+<p>The regularization parameter <span class="math inline">\(\lambda\)</span> is typically chosen by cross-validation.</p>
 
 
 </section>
@@ -1117,13 +1482,13 @@ A large teaching-scope draft was removed from the active chapter and archived he
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/1/gam.html" class="pagination-link" aria-label="Generalized additive models">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Generalized additive models</span></span>
+      <a href="../../contents/1/lr.html" class="pagination-link" aria-label="Linear Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../../contents/1/lasso.html" class="pagination-link" aria-label="LASSO">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">LASSO</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
