@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Dimension reduction – Statistical Learning</title>
+<title>3&nbsp; Dimension reduction – Statistical Learning</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,7 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/1/logistic.html" rel="next">
 <link href="../../contents/1/shrinkage.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -318,7 +317,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Dimension reduction</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -367,107 +366,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/1/basic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Statistical Learning Basics</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../../contents/1/lr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/shrinkage.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/dr.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/1/logistic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Part 2</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/knn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">knn.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/svm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">svm.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">lda.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/tree.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tree.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/ensemble.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ensemble.html</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
- <span class="menu-text">Unsupervised Learning</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/3/cluster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">cluster.html</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
- <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/app/r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Quick intro to R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Dimension reduction</span></span></a>
   </div>
 </li>
       </ul>
@@ -482,24 +394,51 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pcr" id="toc-pcr" class="nav-link active" data-scroll-target="#pcr"><span class="header-section-number">4.1</span> PCR</a>
+  <li><a href="#pcr" id="toc-pcr" class="nav-link active" data-scroll-target="#pcr"><span class="header-section-number">3.1</span> PCR</a>
   <ul class="collapse">
-  <li><a href="#pca-review" id="toc-pca-review" class="nav-link" data-scroll-target="#pca-review"><span class="header-section-number">4.1.1</span> PCA review</a></li>
-  <li><a href="#choosing-the-number-of-components" id="toc-choosing-the-number-of-components" class="nav-link" data-scroll-target="#choosing-the-number-of-components"><span class="header-section-number">4.1.2</span> Choosing the number of components</a></li>
-  <li><a href="#pcr-in-python" id="toc-pcr-in-python" class="nav-link" data-scroll-target="#pcr-in-python"><span class="header-section-number">4.1.3</span> PCR in Python</a></li>
-  <li><a href="#choosing-number-of-components-by-cross-validation" id="toc-choosing-number-of-components-by-cross-validation" class="nav-link" data-scroll-target="#choosing-number-of-components-by-cross-validation"><span class="header-section-number">4.1.4</span> Choosing number of components by cross-validation</a></li>
+  <li><a href="#pca-review" id="toc-pca-review" class="nav-link" data-scroll-target="#pca-review"><span class="header-section-number">3.1.1</span> PCA review</a></li>
   </ul></li>
-  <li><a href="#partial-least-squares-pls" id="toc-partial-least-squares-pls" class="nav-link" data-scroll-target="#partial-least-squares-pls"><span class="header-section-number">4.2</span> Partial Least Squares (PLS)</a>
+  <li><a href="#principal-component-analysis-pca-summary" id="toc-principal-component-analysis-pca-summary" class="nav-link" data-scroll-target="#principal-component-analysis-pca-summary"><span class="header-section-number">4</span> Principal Component Analysis (PCA) Summary</a>
   <ul class="collapse">
-  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea"><span class="header-section-number">4.2.1</span> Idea</a></li>
-  <li><a href="#algorithm-intuition" id="toc-algorithm-intuition" class="nav-link" data-scroll-target="#algorithm-intuition"><span class="header-section-number">4.2.2</span> Algorithm intuition</a></li>
-  <li><a href="#geometric-interpretation" id="toc-geometric-interpretation" class="nav-link" data-scroll-target="#geometric-interpretation"><span class="header-section-number">4.2.3</span> Geometric interpretation</a></li>
-  <li><a href="#choosing-the-number-of-components-1" id="toc-choosing-the-number-of-components-1" class="nav-link" data-scroll-target="#choosing-the-number-of-components-1"><span class="header-section-number">4.2.4</span> Choosing the number of components</a></li>
+  <li><a href="#data-setup" id="toc-data-setup" class="nav-link" data-scroll-target="#data-setup"><span class="header-section-number">4.1</span> 1. Data Setup</a></li>
+  <li><a href="#pca-via-singular-value-decomposition-svd" id="toc-pca-via-singular-value-decomposition-svd" class="nav-link" data-scroll-target="#pca-via-singular-value-decomposition-svd"><span class="header-section-number">4.2</span> 2. PCA via Singular Value Decomposition (SVD)</a></li>
+  <li><a href="#key-mathematical-properties" id="toc-key-mathematical-properties" class="nav-link" data-scroll-target="#key-mathematical-properties"><span class="header-section-number">4.3</span> 3. Key Mathematical Properties</a>
+  <ul class="collapse">
+  <li><a href="#principal-component-directions-v_k" id="toc-principal-component-directions-v_k" class="nav-link" data-scroll-target="#principal-component-directions-v_k"><span class="header-section-number">4.3.1</span> Principal Component Directions (<span class="math inline">\(v_k\)</span>)</a></li>
+  <li><a href="#principal-component-scores-z_i" id="toc-principal-component-scores-z_i" class="nav-link" data-scroll-target="#principal-component-scores-z_i"><span class="header-section-number">4.3.2</span> Principal Component Scores (<span class="math inline">\(z_i\)</span>)</a></li>
   </ul></li>
-  <li><a href="#pls-in-python" id="toc-pls-in-python" class="nav-link" data-scroll-target="#pls-in-python"><span class="header-section-number">4.3</span> PLS in Python</a>
+  <li><a href="#variance-explained" id="toc-variance-explained" class="nav-link" data-scroll-target="#variance-explained"><span class="header-section-number">4.4</span> 4. Variance Explained</a></li>
+  <li><a href="#dimensionality-reduction" id="toc-dimensionality-reduction" class="nav-link" data-scroll-target="#dimensionality-reduction"><span class="header-section-number">4.5</span> 5. Dimensionality Reduction</a></li>
+  </ul></li>
+  <li><a href="#principal-component-analysis" id="toc-principal-component-analysis" class="nav-link" data-scroll-target="#principal-component-analysis"><span class="header-section-number">5</span> Principal Component Analysis</a>
   <ul class="collapse">
-  <li><a href="#selecting-the-number-of-components" id="toc-selecting-the-number-of-components" class="nav-link" data-scroll-target="#selecting-the-number-of-components"><span class="header-section-number">4.3.1</span> Selecting the number of components</a></li>
-  <li><a href="#pls-coefficient-path" id="toc-pls-coefficient-path" class="nav-link" data-scroll-target="#pls-coefficient-path"><span class="header-section-number">4.3.2</span> PLS coefficient path</a></li>
+  <li><a href="#data-setup-1" id="toc-data-setup-1" class="nav-link" data-scroll-target="#data-setup-1"><span class="header-section-number">5.1</span> Data Setup</a></li>
+  </ul></li>
+  <li><a href="#pca-via-singular-value-decomposition" id="toc-pca-via-singular-value-decomposition" class="nav-link" data-scroll-target="#pca-via-singular-value-decomposition"><span class="header-section-number">6</span> PCA via Singular Value Decomposition</a></li>
+  <li><a href="#interpretation-of-the-svd-components" id="toc-interpretation-of-the-svd-components" class="nav-link" data-scroll-target="#interpretation-of-the-svd-components"><span class="header-section-number">7</span> Interpretation of the SVD Components</a></li>
+  <li><a href="#principal-component-directions" id="toc-principal-component-directions" class="nav-link" data-scroll-target="#principal-component-directions"><span class="header-section-number">8</span> Principal Component Directions</a></li>
+  <li><a href="#principal-component-scores" id="toc-principal-component-scores" class="nav-link" data-scroll-target="#principal-component-scores"><span class="header-section-number">9</span> Principal Component Scores</a></li>
+  <li><a href="#matrix-reconstruction-form" id="toc-matrix-reconstruction-form" class="nav-link" data-scroll-target="#matrix-reconstruction-form"><span class="header-section-number">10</span> Matrix Reconstruction Form</a></li>
+  <li><a href="#vector-form-observation-representation" id="toc-vector-form-observation-representation" class="nav-link" data-scroll-target="#vector-form-observation-representation"><span class="header-section-number">11</span> Vector Form (Observation Representation)</a></li>
+  <li><a href="#rank-1-decomposition" id="toc-rank-1-decomposition" class="nav-link" data-scroll-target="#rank-1-decomposition"><span class="header-section-number">12</span> Rank-1 Decomposition</a></li>
+  <li><a href="#variance-explained-1" id="toc-variance-explained-1" class="nav-link" data-scroll-target="#variance-explained-1"><span class="header-section-number">13</span> Variance Explained</a></li>
+  <li><a href="#dimensionality-reduction-1" id="toc-dimensionality-reduction-1" class="nav-link" data-scroll-target="#dimensionality-reduction-1"><span class="header-section-number">14</span> Dimensionality Reduction</a>
+  <ul class="collapse">
+  <li><a href="#choosing-the-number-of-components" id="toc-choosing-the-number-of-components" class="nav-link" data-scroll-target="#choosing-the-number-of-components"><span class="header-section-number">14.0.1</span> Choosing the number of components</a></li>
+  <li><a href="#pcr-in-python" id="toc-pcr-in-python" class="nav-link" data-scroll-target="#pcr-in-python"><span class="header-section-number">14.0.2</span> PCR in Python</a></li>
+  <li><a href="#choosing-number-of-components-by-cross-validation" id="toc-choosing-number-of-components-by-cross-validation" class="nav-link" data-scroll-target="#choosing-number-of-components-by-cross-validation"><span class="header-section-number">14.0.3</span> Choosing number of components by cross-validation</a></li>
+  <li><a href="#partial-least-squares-pls" id="toc-partial-least-squares-pls" class="nav-link" data-scroll-target="#partial-least-squares-pls"><span class="header-section-number">14.1</span> Partial Least Squares (PLS)</a>
+  <ul class="collapse">
+  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea"><span class="header-section-number">14.1.1</span> Idea</a></li>
+  <li><a href="#algorithm-intuition" id="toc-algorithm-intuition" class="nav-link" data-scroll-target="#algorithm-intuition"><span class="header-section-number">14.1.2</span> Algorithm intuition</a></li>
+  <li><a href="#geometric-interpretation" id="toc-geometric-interpretation" class="nav-link" data-scroll-target="#geometric-interpretation"><span class="header-section-number">14.1.3</span> Geometric interpretation</a></li>
+  <li><a href="#choosing-the-number-of-components-1" id="toc-choosing-the-number-of-components-1" class="nav-link" data-scroll-target="#choosing-the-number-of-components-1"><span class="header-section-number">14.1.4</span> Choosing the number of components</a></li>
+  </ul></li>
+  <li><a href="#pls-in-python" id="toc-pls-in-python" class="nav-link" data-scroll-target="#pls-in-python"><span class="header-section-number">14.2</span> PLS in Python</a>
+  <ul class="collapse">
+  <li><a href="#selecting-the-number-of-components" id="toc-selecting-the-number-of-components" class="nav-link" data-scroll-target="#selecting-the-number-of-components"><span class="header-section-number">14.2.1</span> Selecting the number of components</a></li>
+  <li><a href="#pls-coefficient-path" id="toc-pls-coefficient-path" class="nav-link" data-scroll-target="#pls-coefficient-path"><span class="header-section-number">14.2.2</span> PLS coefficient path</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -510,7 +449,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Dimension reduction</span></h1>
 </div>
 
 
@@ -527,6 +466,45 @@ window.Quarto = {
 </header>
 
 
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\newcommand{\argmin}{\operatorname{argmin}}
+\newcommand{\rss}{\mathrm{RSS}}
+\newcommand{\ols}{\mathrm{OLS}}
+\newcommand{\ridge}{\mathrm{ridge}}
+\newcommand{\lasso}{\mathrm{lasso}}
+\newcommand{\mle}{\mathrm{MLE}}
+\newcommand{\constant}{\mathrm{constant}}
+\]</span></p>
+<!-- Probability -->
+<p>$$ </p>
+<p> $$</p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\]</span></p>
+</div>
 <p>When the number of predictors is large or when predictors are highly correlated, directly fitting a regression model using the original predictors may lead to unstable estimates and poor predictive performance.</p>
 <p>One approach to address this problem is dimension reduction. Instead of using the original predictors directly, we first construct a smaller number of derived variables (called components) and then perform regression using these components.</p>
 <p>Two commonly used methods are</p>
@@ -535,17 +513,17 @@ window.Quarto = {
 <li>Partial Least Squares (PLS)</li>
 </ul>
 <p>Both methods construct new variables that are linear combinations of the original predictors, but they differ in how those combinations are chosen.</p>
-<section id="pcr" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="pcr"><span class="header-section-number">4.1</span> PCR</h2>
+<section id="pcr" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="pcr"><span class="header-section-number">3.1</span> PCR</h2>
 <p>PCR first applies principal component analysis (PCA) to the predictor matrix <span class="math inline">\(X\)</span>, and then uses the leading principal components as predictors in a regression model.</p>
 <p>The key idea is that most of the variation in the predictors often lies in a lower-dimensional subspace.</p>
 <div id="def-pcr" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4.1 (Principal Component Regression)</strong></span> Let <span class="math inline">\(X\)</span> be the <span class="math inline">\(n \times p\)</span> predictor matrix.</p>
+<p><span class="theorem-title"><strong>Definition 3.1 (Principal Component Regression)</strong></span> Let <span class="math inline">\(X\)</span> be the <span class="math inline">\(n \times p\)</span> predictor matrix.</p>
 <p>The principal components are defined as</p>
 <p><span class="math display">\[
 Z_k = X v_k,
 \]</span></p>
-<p>where <span class="math inline">\(v_k\)</span> is the <span class="math inline">\(k\)</span>-th eigenvector of <span class="math inline">\(X^\top X\)</span>.</p>
+<p>where <span class="math inline">\(v_k\)</span> is the <span class="math inline">\(k\)</span>-th eigenvector of the Gram matrix <span class="math inline">\(X^\top X\)</span>.</p>
 <p>Principal component regression fits a linear model using the first <span class="math inline">\(m\)</span> components:</p>
 <p><span class="math display">\[
 y = \theta_0 + \theta_1 Z_1 + \theta_2 Z_2 + \cdots + \theta_m Z_m + \varepsilon.
@@ -557,9 +535,8 @@ y = \theta_0 + \theta_1 Z_1 + \theta_2 Z_2 + \cdots + \theta_m Z_m + \varepsilon
 </ul>
 </div>
 <p>Thus PCR replaces the original predictors with a smaller set of orthogonal components.</p>
-<hr>
-<section id="pca-review" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="pca-review"><span class="header-section-number">4.1.1</span> PCA review</h3>
+<section id="pca-review" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="pca-review"><span class="header-section-number">3.1.1</span> PCA review</h3>
 <p>Principal component analysis finds directions in predictor space that maximize variance.</p>
 <p>Let</p>
 <p><span class="math display">\[
@@ -590,10 +567,363 @@ Z = XV
 <p>As a result, the directions that explain the most variation in <span class="math inline">\(X\)</span> are not necessarily the directions that are most predictive of <span class="math inline">\(y\)</span>.</p>
 </div>
 </div>
+</section>
+</section>
+<section id="principal-component-analysis-pca-summary" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Principal Component Analysis (PCA) Summary</h1>
+<section id="data-setup" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="data-setup"><span class="header-section-number">4.1</span> 1. Data Setup</h2>
+<p>Given a data matrix <span class="math inline">\(X \in \mathbb{R}^{n \times p}\)</span> (<span class="math inline">\(n\)</span> observations, <span class="math inline">\(p\)</span> variables), we assume <span class="math inline">\(X\)</span> is <strong>centered</strong> (each column has mean zero).</p>
 <hr>
 </section>
-<section id="choosing-the-number-of-components" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="choosing-the-number-of-components"><span class="header-section-number">4.1.2</span> Choosing the number of components</h3>
+<section id="pca-via-singular-value-decomposition-svd" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="pca-via-singular-value-decomposition-svd"><span class="header-section-number">4.2</span> 2. PCA via Singular Value Decomposition (SVD)</h2>
+<p>The SVD decomposes <span class="math inline">\(X\)</span> as: <span class="math display">\[X = UDV^\top\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Matrix</th>
+<th style="text-align: left;">Dimension</th>
+<th style="text-align: left;">Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Directions</strong></td>
+<td style="text-align: left;"><span class="math inline">\(V\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(p \times r\)</span></td>
+<td style="text-align: left;">The weights (loadings) that define the new axes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Scores</strong></td>
+<td style="text-align: left;"><span class="math inline">\(Z = UD\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(n \times r\)</span></td>
+<td style="text-align: left;">The coordinates of the data in the new PC space.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Magnitudes</strong></td>
+<td style="text-align: left;"><span class="math inline">\(D\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(r \times r\)</span></td>
+<td style="text-align: left;">Diagonal matrix of singular values <span class="math inline">\(d_k\)</span>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Normalized</strong></td>
+<td style="text-align: left;"><span class="math inline">\(U\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(n \times r\)</span></td>
+<td style="text-align: left;">The directions of the scores (unit length).</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="key-mathematical-properties" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="key-mathematical-properties"><span class="header-section-number">4.3</span> 3. Key Mathematical Properties</h2>
+<section id="principal-component-directions-v_k" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="principal-component-directions-v_k"><span class="header-section-number">4.3.1</span> Principal Component Directions (<span class="math inline">\(v_k\)</span>)</h3>
+<p>The columns of <span class="math inline">\(V\)</span> are orthonormal vectors that sequentially maximize variance: <span class="math display">\[v_k = \arg\max_{\|v\|=1} \text{Var}(Xv)\]</span> <em>(subject to <span class="math inline">\(v_k \perp v_1, \dots, v_{k-1}\)</span>)</em></p>
+</section>
+<section id="principal-component-scores-z_i" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="principal-component-scores-z_i"><span class="header-section-number">4.3.2</span> Principal Component Scores (<span class="math inline">\(z_i\)</span>)</h3>
+<p>The scores represent the original data projected onto the PC directions. For any observation <span class="math inline">\(x_i\)</span>: <span class="math display">\[x_i = \sum_{k=1}^{r} z_{ik} v_k\]</span></p>
+<hr>
+</section>
+</section>
+<section id="variance-explained" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="variance-explained"><span class="header-section-number">4.4</span> 4. Variance Explained</h2>
+<p>The importance of each component is determined by its singular value <span class="math inline">\(d_k\)</span>:</p>
+<ul>
+<li><strong>Variance of <span class="math inline">\(k\)</span>-th component:</strong> <span class="math inline">\(\lambda_k = \frac{d_k^2}{n}\)</span></li>
+<li><strong>Proportion of Variance Explained (PVE):</strong> <span class="math display">\[\text{PVE}_k = \frac{d_k^2}{\sum_{j=1}^{r} d_j^2}\]</span></li>
+</ul>
+<hr>
+</section>
+<section id="dimensionality-reduction" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="dimensionality-reduction"><span class="header-section-number">4.5</span> 5. Dimensionality Reduction</h2>
+<p>PCA allows for the best rank-<span class="math inline">\(m\)</span> approximation (<span class="math inline">\(m &lt; r\)</span>) of the data by retaining only the first <span class="math inline">\(m\)</span> columns of <span class="math inline">\(U, D,\)</span> and <span class="math inline">\(V\)</span>: <span class="math display">\[X \approx U_m D_m V_m^\top\]</span> This reconstruction minimizes the <strong>squared reconstruction error</strong>, making it the optimal linear projection for data compression.</p>
+</section>
+</section>
+<section id="principal-component-analysis" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Principal Component Analysis</h1>
+<section id="data-setup-1" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="data-setup-1"><span class="header-section-number">5.1</span> Data Setup</h2>
+<p>Suppose we observe a dataset with</p>
+<ul>
+<li><span class="math inline">\(n\)</span> observations<br>
+</li>
+<li><span class="math inline">\(p\)</span> variables</li>
+</ul>
+<p>Let the data matrix be</p>
+<p><span class="math display">\[
+X =
+\mqty[x_1^\top \\
+x_2^\top \\
+\vdots \\
+x_n^\top
+]=\mqty[X_1,X_2,\ldots,X_p]=\mqty[x_{ij}]_{1\leq i\leq n, 1\leq j\leq p}
+\in \mathbb{R}^{n\times p}
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(x_i \in \mathbb{R}^p\)</span> is the <span class="math inline">\(i\)</span>-th observation</li>
+<li><span class="math inline">\(X_j\in\mathbb{R}^n\)</span> is the <span class="math inline">\(j\)</span>-th variable</li>
+</ul>
+<p>Throughout this section we assume the variables are centered, so each column of <span class="math inline">\(X\)</span> has mean zero:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} x_{ij} = 0,\quad \text{ for each }j.
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Centering the variables simplifies the PCA formulation and ensures that the first principal component corresponds to the direction of maximal variance.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="pca-via-singular-value-decomposition" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> PCA via Singular Value Decomposition</h1>
+<p>The singular value decomposition (SVD) of the data matrix <span class="math inline">\(X\)</span> is</p>
+<p><span class="math display">\[
+X = UDV^\top
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+U \in \mathbb{R}^{n\times r}, \quad
+D \in \mathbb{R}^{r\times r}, \quad
+V \in \mathbb{R}^{p\times r}
+\]</span></p>
+<p>and</p>
+<ul>
+<li><span class="math inline">\(r = \rank(X)\)</span></li>
+<li><span class="math inline">\(U^\top U = I_r\)</span></li>
+<li><span class="math inline">\(V^\top V = I_r\)</span></li>
+<li><span class="math inline">\(D = \operatorname{diag}(d_1,\dots,d_r)\)</span></li>
+<li><span class="math inline">\(d_1 \ge d_2 \ge \dots \ge d_r &gt;0\)</span></li>
+</ul>
+<p>Here - The columns of <span class="math inline">\(UD\)</span> are the principal component vectors, which is the direction of where the most variance are explained. It is official called principal component scores. - The columns of <span class="math inline">\(U\)</span> are the normalized principal component vectors, which gives the direction, but not magnitude. - The diagnoal of <span class="math inline">\(D\)</span> gives the magnitudes of each principal compoennt vector. - The columns of <span class="math inline">\(V\)</span> are the pricipal component directions. In other words, it is the weights to indicate how to use linear combinations of the orignal variables to make the principal component vectors. The math is <span class="math inline">\(XV=UD\)</span> since columns of <span class="math inline">\(V\)</span> are orthogonormal.</p>
+<p>Let the</p>
+<!-- Thus the dimensions are
+
+| Matrix | Dimension |
+|------|------|
+| \(X\) | \(n \times p\) |
+| \(U\) | \(n \times r\) |
+| \(D\) | \(r \times r\) |
+| \(V\) | \(p \times r\) | -->
+</section>
+<section id="interpretation-of-the-svd-components" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Interpretation of the SVD Components</h1>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Matrix</th>
+<th>Dimension</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(V\)</span></td>
+<td><span class="math inline">\(p \times r\)</span></td>
+<td>principal component directions</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(UD\)</span></td>
+<td><span class="math inline">\(n \times r\)</span></td>
+<td>principal component scores</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(U\)</span></td>
+<td><span class="math inline">\(n \times r\)</span></td>
+<td>normalized scores</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="principal-component-directions" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Principal Component Directions</h1>
+<p>Let</p>
+<p><span class="math display">\[
+V = [v_1, v_2, \dots, v_r]
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+v_k \in \mathbb{R}^p.
+\]</span></p>
+<p>The vectors (v_k) are the principal component directions.</p>
+<p>They are orthonormal:</p>
+<p><span class="math display">\[
+v_k^\top v_j =
+\begin{cases}
+1 &amp; k=j \\
+0 &amp; k\ne j
+\end{cases}
+\]</span></p>
+<p>Each direction maximizes variance sequentially:</p>
+<p><span class="math display">\[
+v_k =
+\arg\max_{\norm{v}=1} \operatorname{Var}(Xv)
+\]</span></p>
+<p>subject to orthogonality constraints with previous components.</p>
+<hr>
+</section>
+<section id="principal-component-scores" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Principal Component Scores</h1>
+<p>The principal component scores are obtained by projecting the data onto the principal component directions:</p>
+<p><span class="math display">\[
+Z = XV
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+Z \in \mathbb{R}^{n\times r}.
+\]</span></p>
+<p>Using the SVD <span class="math inline">\(X=UDV^\top\)</span>,</p>
+<p><span class="math display">\[
+Z = XV = UD.
+\]</span></p>
+<p>Thus</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Matrix</th>
+<th>Dimension</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(Z\)</span></td>
+<td><span class="math inline">\(n\times r\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(U\)</span></td>
+<td><span class="math inline">\(n\times r\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(D\)</span></td>
+<td><span class="math inline">\(r\times r\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Each row of <span class="math inline">\(Z\)</span> corresponds to the principal component representation of one observation.</p>
+<hr>
+</section>
+<section id="matrix-reconstruction-form" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Matrix Reconstruction Form</h1>
+<p>Using the SVD we can write</p>
+<p><span class="math display">\[
+X = UDV^\top
+\]</span></p>
+<p>or equivalently</p>
+<p><span class="math display">\[
+X = ZV^\top
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+Z = UD.
+\]</span></p>
+<p>Dimension check:</p>
+<p><span class="math display">\[
+(n\times r)(r\times p) = n\times p.
+\]</span></p>
+<p>Thus the original data matrix is reconstructed from</p>
+<ul>
+<li><strong>scores (Z)</strong></li>
+<li><strong>principal directions (V)</strong>.</li>
+</ul>
+<hr>
+</section>
+<section id="vector-form-observation-representation" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Vector Form (Observation Representation)</h1>
+<p>Let</p>
+<p><span class="math display">\[
+z_i^\top
+\]</span></p>
+<p>be the (i)-th row of (Z).</p>
+<p>Then the (i)-th observation satisfies</p>
+<p><span class="math display">\[
+x_i = z_i^\top V^\top
+\]</span></p>
+<p>or equivalently</p>
+<p><span class="math display">\[
+x_i = \sum_{k=1}^{r} z_{ik} v_k.
+\]</span></p>
+<p>where</p>
+<ul>
+<li>(v_k ^p) is the (k)-th principal component direction</li>
+<li>(z_{ik}) is the <strong>score of observation (i)</strong> on component (k).</li>
+</ul>
+<p>Thus each observation is expressed as a linear combination of the principal component directions.</p>
+<hr>
+</section>
+<section id="rank-1-decomposition" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Rank-1 Decomposition</h1>
+<p>The SVD can also be written as a sum of rank-1 matrices:</p>
+<p><span class="math display">\[
+X =
+\sum_{k=1}^{r} d_k u_k v_k^\top
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(u_k \in \mathbb{R}^n\)</span></li>
+<li><span class="math inline">\(v_k \in \mathbb{R}^p\)</span></li>
+</ul>
+<p>Each matrix</p>
+<p><span class="math display">\[
+d_k u_k v_k^\top
+\]</span></p>
+<p>represents the contribution of the <span class="math inline">\(k\)</span>-th principal component to the data matrix.</p>
+<hr>
+</section>
+<section id="variance-explained-1" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Variance Explained</h1>
+<p>The sample covariance matrix is</p>
+<p><span class="math display">\[
+S = \frac{1}{n}X^\top X.
+\]</span></p>
+<p>Using SVD,</p>
+<p><span class="math display">\[
+X^\top X = V D^2 V^\top.
+\]</span></p>
+<p>Thus the variance explained by component <span class="math inline">\(k\)</span> is</p>
+<p><span class="math display">\[
+\lambda_k = \frac{d_k^2}{n}.
+\]</span></p>
+<p>The proportion of variance explained (PVE) is</p>
+<p><span class="math display">\[
+\text{PVE}_k =
+\frac{d_k^2}{\sum_{j=1}^{r} d_j^2}.
+\]</span></p>
+<hr>
+</section>
+<section id="dimensionality-reduction-1" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> Dimensionality Reduction</h1>
+<p>If we retain only the first <span class="math inline">\(m\)</span> principal components,</p>
+<p><span class="math display">\[
+X \approx Z_m V_m^\top
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+Z_m \in \mathbb{R}^{n\times m},
+\quad
+V_m \in \mathbb{R}^{p\times m}.
+\]</span></p>
+<p>This provides the best rank-<span class="math inline">\(m\)</span> approximation to <span class="math inline">\(X\)</span> in terms of squared reconstruction error.</p>
+<section id="choosing-the-number-of-components" class="level3" data-number="14.0.1">
+<h3 data-number="14.0.1" class="anchored" data-anchor-id="choosing-the-number-of-components"><span class="header-section-number">14.0.1</span> Choosing the number of components</h3>
 <p>The number of components <span class="math inline">\(m\)</span> is usually chosen using cross-validation.</p>
 <p>Typical procedure:</p>
 <ol type="1">
@@ -604,8 +934,8 @@ Z = XV
 </ol>
 <hr>
 </section>
-<section id="pcr-in-python" class="level3" data-number="4.1.3">
-<h3 data-number="4.1.3" class="anchored" data-anchor-id="pcr-in-python"><span class="header-section-number">4.1.3</span> PCR in Python</h3>
+<section id="pcr-in-python" class="level3" data-number="14.0.2">
+<h3 data-number="14.0.2" class="anchored" data-anchor-id="pcr-in-python"><span class="header-section-number">14.0.2</span> PCR in Python</h3>
 <p><code>scikit-learn</code> provides <code>PCA</code> for computing principal components.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
@@ -624,9 +954,9 @@ Z = XV
 <p>Here the pipeline performs</p>
 <p>standardization PCA regression using the principal components.</p>
 </section>
-<section id="choosing-number-of-components-by-cross-validation" class="level3" data-number="4.1.4">
-<h3 data-number="4.1.4" class="anchored" data-anchor-id="choosing-number-of-components-by-cross-validation"><span class="header-section-number">4.1.4</span> Choosing number of components by cross-validation</h3>
-<div id="8c091dad" class="cell" data-execution_count="1">
+<section id="choosing-number-of-components-by-cross-validation" class="level3" data-number="14.0.3">
+<h3 data-number="14.0.3" class="anchored" data-anchor-id="choosing-number-of-components-by-cross-validation"><span class="header-section-number">14.0.3</span> Choosing number of components by cross-validation</h3>
+<div id="62e89adb" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">"pca__n_components"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>))}</span>
@@ -639,11 +969,10 @@ Z = XV
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>best_m</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-</section>
-<section id="partial-least-squares-pls" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="partial-least-squares-pls"><span class="header-section-number">4.2</span> Partial Least Squares (PLS)</h2>
-<section id="idea" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="idea"><span class="header-section-number">4.2.1</span> Idea</h3>
+<section id="partial-least-squares-pls" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="partial-least-squares-pls"><span class="header-section-number">14.1</span> Partial Least Squares (PLS)</h2>
+<section id="idea" class="level3" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="idea"><span class="header-section-number">14.1.1</span> Idea</h3>
 <p>Principal component regression constructs components that explain the variation in the predictor matrix <span class="math inline">\(X\)</span>. However, these directions are chosen <strong>without considering the response variable <span class="math inline">\(y\)</span></strong>.</p>
 <p>Partial least squares (PLS) addresses this limitation by constructing components that are most strongly related to the response.</p>
 <p>The key idea is to construct components that simultaneously</p>
@@ -654,7 +983,7 @@ Z = XV
 </ul>
 <hr>
 <div id="def-pls" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4.2 (Partial Least Squares)</strong></span> Partial least squares constructs a sequence of components</p>
+<p><span class="theorem-title"><strong>Definition 14.1 (Partial Least Squares)</strong></span> Partial least squares constructs a sequence of components</p>
 <p><span class="math display">\[
 Z_k = X w_k
 \]</span></p>
@@ -673,8 +1002,8 @@ w_k =
 <p>Thus PLS chooses directions in predictor space that are most predictive of the response.</p>
 <hr>
 </section>
-<section id="algorithm-intuition" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="algorithm-intuition"><span class="header-section-number">4.2.2</span> Algorithm intuition</h3>
+<section id="algorithm-intuition" class="level3" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="algorithm-intuition"><span class="header-section-number">14.1.2</span> Algorithm intuition</h3>
 <p>PLS constructs components sequentially.</p>
 <p>At step <span class="math inline">\(k\)</span>:</p>
 <ol type="1">
@@ -686,8 +1015,8 @@ w_k =
 <p>This produces components that are ordered by predictive importance.</p>
 <hr>
 </section>
-<section id="geometric-interpretation" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="geometric-interpretation"><span class="header-section-number">4.2.3</span> Geometric interpretation</h3>
+<section id="geometric-interpretation" class="level3" data-number="14.1.3">
+<h3 data-number="14.1.3" class="anchored" data-anchor-id="geometric-interpretation"><span class="header-section-number">14.1.3</span> Geometric interpretation</h3>
 <p>PLS can be understood geometrically as searching for directions in predictor space that align with the response.</p>
 <ul>
 <li>PCR chooses directions with <strong>largest variance in <span class="math inline">\(X\)</span></strong>.</li>
@@ -716,8 +1045,8 @@ w_k =
 </div>
 <hr>
 </section>
-<section id="choosing-the-number-of-components-1" class="level3" data-number="4.2.4">
-<h3 data-number="4.2.4" class="anchored" data-anchor-id="choosing-the-number-of-components-1"><span class="header-section-number">4.2.4</span> Choosing the number of components</h3>
+<section id="choosing-the-number-of-components-1" class="level3" data-number="14.1.4">
+<h3 data-number="14.1.4" class="anchored" data-anchor-id="choosing-the-number-of-components-1"><span class="header-section-number">14.1.4</span> Choosing the number of components</h3>
 <p>Similar to PCR, the number of components is chosen using cross-validation.</p>
 <p>Typical procedure:</p>
 <ol type="1">
@@ -728,8 +1057,8 @@ w_k =
 <hr>
 </section>
 </section>
-<section id="pls-in-python" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="pls-in-python"><span class="header-section-number">4.3</span> PLS in Python</h2>
+<section id="pls-in-python" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="pls-in-python"><span class="header-section-number">14.2</span> PLS in Python</h2>
 <p><code>scikit-learn</code> provides the class <code>PLSRegression</code> for fitting partial least squares models.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
@@ -744,10 +1073,10 @@ w_k =
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>pls_pipe.fit(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The argument n_components specifies the number of PLS components.</p>
-<section id="selecting-the-number-of-components" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="selecting-the-number-of-components"><span class="header-section-number">4.3.1</span> Selecting the number of components</h3>
+<section id="selecting-the-number-of-components" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="selecting-the-number-of-components"><span class="header-section-number">14.2.1</span> Selecting the number of components</h3>
 <p>We can choose the number of components using cross-validation.</p>
-<div id="f80a21e3" class="cell" data-execution_count="2">
+<div id="50fa96a7" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">"model__n_components"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>))}</span>
@@ -760,10 +1089,10 @@ w_k =
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>best_components</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="pls-coefficient-path" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="pls-coefficient-path"><span class="header-section-number">4.3.2</span> PLS coefficient path</h3>
+<section id="pls-coefficient-path" class="level3" data-number="14.2.2">
+<h3 data-number="14.2.2" class="anchored" data-anchor-id="pls-coefficient-path"><span class="header-section-number">14.2.2</span> PLS coefficient path</h3>
 <p>We can also examine how the regression coefficients change as the number of components increases.</p>
-<div id="38fe900a" class="cell" data-execution_count="3">
+<div id="9412a8cd" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span>
@@ -797,6 +1126,7 @@ w_k =
 <p>As a result, PLS often requires fewer components to achieve strong predictive performance.</p>
 
 
+</section>
 </section>
 </section>
 
@@ -1258,13 +1588,10 @@ w_k =
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../contents/1/shrinkage.html" class="pagination-link" aria-label="Regularization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regularization</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regularization</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/1/logistic.html" class="pagination-link" aria-label="Logistic Regression">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

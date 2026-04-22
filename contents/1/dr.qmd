@@ -1,5 +1,11 @@
+---
+jupyter: stats
+---
+
+
 # Dimension reduction 
 
+{{< include ../math.qmd >}} 
 
 When the number of predictors is large or when predictors are highly correlated, directly fitting a regression model using the original predictors may lead to unstable estimates and poor predictive performance.
 
@@ -33,7 +39,7 @@ $$
 Z_k = X v_k,
 $$
 
-where $v_k$ is the $k$-th eigenvector of $X^\top X$.
+where $v_k$ is the $k$-th eigenvector of the Gram matrix $X^\top X$.
 
 Principal component regression fits a linear model using the first $m$ components:
 
@@ -49,7 +55,6 @@ Here
 
 Thus PCR replaces the original predictors with a smaller set of orthogonal components.
 
----
 
 ### PCA review
 
@@ -84,7 +89,415 @@ PCR constructs components **using only the predictor matrix $X$**, without consi
 As a result, the directions that explain the most variation in $X$ are not necessarily the directions that are most predictive of $y$.
 :::
 
+
+
+
+
+
+
+
+
+# Principal Component Analysis (PCA) Summary
+
+## 1. Data Setup
+Given a data matrix $X \in \mathbb{R}^{n \times p}$ ($n$ observations, $p$ variables), we assume $X$ is **centered** (each column has mean zero).
+
+
+
 ---
+
+## 2. PCA via Singular Value Decomposition (SVD)
+The SVD decomposes $X$ as:
+$$X = UDV^\top$$
+
+| Component | Matrix | Dimension | Interpretation |
+| :--- | :--- | :--- | :--- |
+| **Directions** | $V$ | $p \times r$ | The weights (loadings) that define the new axes. |
+| **Scores** | $Z = UD$ | $n \times r$ | The coordinates of the data in the new PC space. |
+| **Magnitudes** | $D$ | $r \times r$ | Diagonal matrix of singular values $d_k$. |
+| **Normalized** | $U$ | $n \times r$ | The directions of the scores (unit length). |
+
+---
+
+## 3. Key Mathematical Properties
+
+### Principal Component Directions ($v_k$)
+The columns of $V$ are orthonormal vectors that sequentially maximize variance:
+$$v_k = \arg\max_{\|v\|=1} \text{Var}(Xv)$$
+*(subject to $v_k \perp v_1, \dots, v_{k-1}$)*
+
+### Principal Component Scores ($z_i$)
+The scores represent the original data projected onto the PC directions. For any observation $x_i$:
+$$x_i = \sum_{k=1}^{r} z_{ik} v_k$$
+
+
+
+---
+
+## 4. Variance Explained
+The importance of each component is determined by its singular value $d_k$:
+
+* **Variance of $k$-th component:** $\lambda_k = \frac{d_k^2}{n}$
+* **Proportion of Variance Explained (PVE):**
+    $$\text{PVE}_k = \frac{d_k^2}{\sum_{j=1}^{r} d_j^2}$$
+
+
+
+---
+
+## 5. Dimensionality Reduction
+PCA allows for the best rank-$m$ approximation ($m < r$) of the data by retaining only the first $m$ columns of $U, D,$ and $V$:
+$$X \approx U_m D_m V_m^\top$$
+This reconstruction minimizes the **squared reconstruction error**, making it the optimal linear projection for data compression.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Principal Component Analysis
+
+## Data Setup
+
+Suppose we observe a dataset with  
+
+- $n$ observations  
+- $p$ variables  
+
+Let the data matrix be
+
+$$
+X =
+\mqty[x_1^\top \\
+x_2^\top \\
+\vdots \\
+x_n^\top
+]=\mqty[X_1,X_2,\ldots,X_p]=\mqty[x_{ij}]_{1\leq i\leq n, 1\leq j\leq p}
+\in \mathbb{R}^{n\times p}
+$$
+
+where
+
+- $x_i \in \mathbb{R}^p$ is the $i$-th observation
+- $X_j\in\mathbb{R}^n$ is the $j$-th variable
+
+
+Throughout this section we assume the variables are centered, so each column of $X$ has mean zero:
+
+$$
+\sum_{i=1}^{n} x_{ij} = 0,\quad \text{ for each }j.
+$$
+
+
+
+
+
+
+
+
+
+::: {.callout-note}
+Centering the variables simplifies the PCA formulation and ensures that the first principal component corresponds to the direction of maximal variance.
+:::
+
+
+# PCA via Singular Value Decomposition
+
+The singular value decomposition (SVD) of the data matrix $X$ is
+
+$$
+X = UDV^\top
+$$
+
+where
+
+$$
+U \in \mathbb{R}^{n\times r}, \quad
+D \in \mathbb{R}^{r\times r}, \quad
+V \in \mathbb{R}^{p\times r}
+$$
+
+and
+
+- $r = \rank(X)$
+- $U^\top U = I_r$
+- $V^\top V = I_r$
+- $D = \operatorname{diag}(d_1,\dots,d_r)$
+- $d_1 \ge d_2 \ge \dots \ge d_r >0$
+
+
+Here 
+- The columns of $UD$ are the principal component vectors, which is the direction of where the most variance are explained. It is official called principal component scores.
+- The columns of $U$ are the normalized principal component vectors, which gives the direction, but not magnitude.
+- The diagnoal of $D$ gives the magnitudes of each principal compoennt vector.
+- The columns of $V$ are the pricipal component directions. In other words, it is the weights to indicate how to use linear combinations of the orignal variables to make the principal component vectors. The math is $XV=UD$ since columns of $V$ are orthogonormal.
+
+Let the 
+
+
+<!-- Thus the dimensions are
+
+| Matrix | Dimension |
+|------|------|
+| \(X\) | \(n \times p\) |
+| \(U\) | \(n \times r\) |
+| \(D\) | \(r \times r\) |
+| \(V\) | \(p \times r\) | -->
+
+
+# Interpretation of the SVD Components
+
+| Matrix | Dimension | Interpretation |
+|------|------|------|
+| $V$ | $p \times r$ | principal component directions  |
+| $UD$ | $n \times r$ | principal component scores |
+| $U$ | $n \times r$ | normalized scores |
+
+---
+
+# Principal Component Directions
+
+Let
+
+$$
+V = [v_1, v_2, \dots, v_r]
+$$
+
+where
+
+$$
+v_k \in \mathbb{R}^p.
+$$
+
+The vectors \(v_k\) are the principal component directions.
+
+They are orthonormal:
+
+$$
+v_k^\top v_j =
+\begin{cases}
+1 & k=j \\
+0 & k\ne j
+\end{cases}
+$$
+
+Each direction maximizes variance sequentially:
+
+$$
+v_k =
+\arg\max_{\norm{v}=1} \Var(Xv)
+$$
+
+subject to orthogonality constraints with previous components.
+
+---
+
+# Principal Component Scores
+
+The principal component scores are obtained by projecting the data onto the principal component directions:
+
+$$
+Z = XV
+$$
+
+with
+
+$$
+Z \in \mathbb{R}^{n\times r}.
+$$
+
+Using the SVD $X=UDV^\top$,
+
+$$
+Z = XV = UD.
+$$
+
+Thus
+
+| Matrix | Dimension |
+|------|------|
+| $Z$ | $n\times r$ |
+| $U$ | $n\times r$ |
+| $D$ | $r\times r$ |
+
+Each row of $Z$ corresponds to the principal component representation of one observation.
+
+---
+
+# Matrix Reconstruction Form
+
+Using the SVD we can write
+
+$$
+X = UDV^\top
+$$
+
+or equivalently
+
+$$
+X = ZV^\top
+$$
+
+where
+
+$$
+Z = UD.
+$$
+
+Dimension check:
+
+$$
+(n\times r)(r\times p) = n\times p.
+$$
+
+Thus the original data matrix is reconstructed from
+
+- **scores \(Z\)**
+- **principal directions \(V\)**.
+
+---
+
+# Vector Form (Observation Representation)
+
+Let
+
+$$
+z_i^\top
+$$
+
+be the \(i\)-th row of \(Z\).
+
+Then the \(i\)-th observation satisfies
+
+$$
+x_i = z_i^\top V^\top
+$$
+
+or equivalently
+
+$$
+x_i = \sum_{k=1}^{r} z_{ik} v_k.
+$$
+
+where
+
+- \(v_k \in \mathbb{R}^p\) is the \(k\)-th principal component direction
+- \(z_{ik}\) is the **score of observation \(i\)** on component \(k\).
+
+Thus each observation is expressed as a linear combination of the principal component directions.
+
+---
+
+# Rank-1 Decomposition
+
+The SVD can also be written as a sum of rank-1 matrices:
+
+$$
+X =
+\sum_{k=1}^{r} d_k u_k v_k^\top
+$$
+
+where
+
+- $u_k \in \mathbb{R}^n$
+- $v_k \in \mathbb{R}^p$
+
+Each matrix
+
+$$
+d_k u_k v_k^\top
+$$
+
+represents the contribution of the $k$-th principal component to the data matrix.
+
+---
+
+# Variance Explained
+
+The sample covariance matrix is
+
+$$
+S = \frac{1}{n}X^\top X.
+$$
+
+Using SVD,
+
+$$
+X^\top X = V D^2 V^\top.
+$$
+
+Thus the variance explained by component $k$ is
+
+$$
+\lambda_k = \frac{d_k^2}{n}.
+$$
+
+The proportion of variance explained (PVE) is
+
+$$
+\text{PVE}_k =
+\frac{d_k^2}{\sum_{j=1}^{r} d_j^2}.
+$$
+
+---
+
+# Dimensionality Reduction
+
+If we retain only the first $m$ principal components,
+
+$$
+X \approx Z_m V_m^\top
+$$
+
+where
+
+$$
+Z_m \in \mathbb{R}^{n\times m},
+\quad
+V_m \in \mathbb{R}^{p\times m}.
+$$
+
+This provides the best rank-$m$ approximation to $X$ in terms of squared reconstruction error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Choosing the number of components
 
