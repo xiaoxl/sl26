@@ -4,7 +4,11 @@ These are notes for STAT 3113 Regression {{< var course.year >}} {{< var course.
 
 
 
-
+- Week 1–2: Linear + Ridge/Lasso + PCR/PLS
+- Week 3: Logistic + LDA/QDA
+- Week 4: KNN + nonparametric ideas
+- Week 5: Trees + Ensembles
+- Week 6: Clustering
 
 
 

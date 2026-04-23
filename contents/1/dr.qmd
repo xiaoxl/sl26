@@ -20,7 +20,7 @@ Both methods construct new variables that are linear combinations of the origina
 
 
 
-## PCR
+## Principal Component Regression (PCR)
 
 
 PCR first applies principal component analysis (PCA) to the predictor matrix $X$, and then uses the leading principal components as predictors in a regression model.
@@ -56,35 +56,11 @@ Here
 Thus PCR replaces the original predictors with a smaller set of orthogonal components.
 
 
-### PCA review
-
-Principal component analysis finds directions in predictor space that maximize variance.
-
-Let
-
-$$
-X = UDV^\top
-$$
-
-be the singular value decomposition of $X$.
-
-Then
-
-- the columns of $V$ are the principal directions
-- the principal components are
-
-$$
-Z = XV
-$$
-
-The first principal component captures the largest variance in $X$, the second captures the next largest variance orthogonal to the first, and so on.
-
----
 
 ::: {.callout-note}
 ## Key feature of PCR
 
-PCR constructs components **using only the predictor matrix $X$**, without considering the response $y$.
+PCR constructs components using only the predictor matrix $X$, without considering the response $y$.
 
 As a result, the directions that explain the most variation in $X$ are not necessarily the directions that are most predictive of $y$.
 :::
@@ -92,471 +68,415 @@ As a result, the directions that explain the most variation in $X$ are not neces
 
 
 
+### Data matrix and its geometric views
 
 
+Let $X \in \mathbb{R}^{n \times p}$ be a data matrix with $n$ observations and $p$ predictors. We assume columns are centered ($\sum_{i=1}^n x_{ij} = 0$) so that the origin represents the sample mean.
 
+**Column (variable) view: observation space $\mathbb{R}^n$**
 
+Each column of $X_j$ is a vector in $n$-dimensional space, which represents one predictor across all observations.
 
-# Principal Component Analysis (PCA) Summary
+- This space is often called the observation space.
+- Geometry in this space describes relationships between predictors:
+  - Inner products encode covariance.
+  - After standardization, angles encode correlation.
+  - Orthogonality corresponds to zero correlation.
 
-## 1. Data Setup
-Given a data matrix $X \in \mathbb{R}^{n \times p}$ ($n$ observations, $p$ variables), we assume $X$ is **centered** (each column has mean zero).
+**Row (observation) view: feature space $\mathbb{R}^p$**
 
+Each row of $x_i^\top$ is a vector in $p$-dimensional space, which represents one observation across all predictors.
 
+- This space is called the feature space.
+- Geometry in this space describes relationships between observations:
+  - Euclidean distance measures dissimilarity.
+  - Clustering and nearest-neighbor methods operate in this space.
 
----
 
-## 2. PCA via Singular Value Decomposition (SVD)
-The SVD decomposes $X$ as:
-$$X = UDV^\top$$
+::: {#exm-}
 
-| Component | Matrix | Dimension | Interpretation |
-| :--- | :--- | :--- | :--- |
-| **Directions** | $V$ | $p \times r$ | The weights (loadings) that define the new axes. |
-| **Scores** | $Z = UD$ | $n \times r$ | The coordinates of the data in the new PC space. |
-| **Magnitudes** | $D$ | $r \times r$ | Diagonal matrix of singular values $d_k$. |
-| **Normalized** | $U$ | $n \times r$ | The directions of the scores (unit length). |
+<details>
+<summary><strong>Click to expand.</strong></summary>
+To demonstrate the idea, we generate the following dataset. It contains 2 variables.
 
----
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
 
-## 3. Key Mathematical Properties
+rng = np.random.default_rng(0)
 
-### Principal Component Directions ($v_k$)
-The columns of $V$ are orthonormal vectors that sequentially maximize variance:
-$$v_k = \arg\max_{\|v\|=1} \text{Var}(Xv)$$
-*(subject to $v_k \perp v_1, \dots, v_{k-1}$)*
+n = 100
 
-### Principal Component Scores ($z_i$)
-The scores represent the original data projected onto the PC directions. For any observation $x_i$:
-$$x_i = \sum_{k=1}^{r} z_{ik} v_k$$
+Sigma = np.array([[0.5, -0.65], [-0.65, 1.0]])
+mu = np.array([1, 2])
 
+X = rng.multivariate_normal(mean=mu, cov=Sigma, size=n)
 
+plt.scatter(X[:, 0], X[:, 1])
 
----
+plt.xlabel("x1")
+plt.ylabel("x2")
+```
 
-## 4. Variance Explained
-The importance of each component is determined by its singular value $d_k$:
+Each point is an observation and is represented by a point in the feature space.
 
-* **Variance of $k$-th component:** $\lambda_k = \frac{d_k^2}{n}$
-* **Proportion of Variance Explained (PVE):**
-    $$\text{PVE}_k = \frac{d_k^2}{\sum_{j=1}^{r} d_j^2}$$
+</details>
 
-
-
----
-
-## 5. Dimensionality Reduction
-PCA allows for the best rank-$m$ approximation ($m < r$) of the data by retaining only the first $m$ columns of $U, D,$ and $V$:
-$$X \approx U_m D_m V_m^\top$$
-This reconstruction minimizes the **squared reconstruction error**, making it the optimal linear projection for data compression.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Principal Component Analysis
-
-## Data Setup
-
-Suppose we observe a dataset with  
-
-- $n$ observations  
-- $p$ variables  
-
-Let the data matrix be
-
-$$
-X =
-\mqty[x_1^\top \\
-x_2^\top \\
-\vdots \\
-x_n^\top
-]=\mqty[X_1,X_2,\ldots,X_p]=\mqty[x_{ij}]_{1\leq i\leq n, 1\leq j\leq p}
-\in \mathbb{R}^{n\times p}
-$$
-
-where
-
-- $x_i \in \mathbb{R}^p$ is the $i$-th observation
-- $X_j\in\mathbb{R}^n$ is the $j$-th variable
-
-
-Throughout this section we assume the variables are centered, so each column of $X$ has mean zero:
-
-$$
-\sum_{i=1}^{n} x_{ij} = 0,\quad \text{ for each }j.
-$$
-
-
-
-
-
-
-
-
-
-::: {.callout-note}
-Centering the variables simplifies the PCA formulation and ensures that the first principal component corresponds to the direction of maximal variance.
 :::
 
 
-# PCA via Singular Value Decomposition
+---
 
-The singular value decomposition (SVD) of the data matrix $X$ is
+### Singular Value Decomposition (SVD)
 
+The SVD provides the most direct link between the two geometric perspectives. 
+
+For a matrix with $\text{rank}(X) = r$
 $$
-X = UDV^\top
+X = U D V^\top,
 $$
-
 where
 
-$$
-U \in \mathbb{R}^{n\times r}, \quad
-D \in \mathbb{R}^{r\times r}, \quad
-V \in \mathbb{R}^{p\times r}
-$$
-
-and
-
-- $r = \rank(X)$
-- $U^\top U = I_r$
-- $V^\top V = I_r$
-- $D = \operatorname{diag}(d_1,\dots,d_r)$
-- $d_1 \ge d_2 \ge \dots \ge d_r >0$
-
-
-Here 
-- The columns of $UD$ are the principal component vectors, which is the direction of where the most variance are explained. It is official called principal component scores.
-- The columns of $U$ are the normalized principal component vectors, which gives the direction, but not magnitude.
-- The diagnoal of $D$ gives the magnitudes of each principal compoennt vector.
-- The columns of $V$ are the pricipal component directions. In other words, it is the weights to indicate how to use linear combinations of the orignal variables to make the principal component vectors. The math is $XV=UD$ since columns of $V$ are orthogonormal.
-
-Let the 
-
-
-<!-- Thus the dimensions are
-
-| Matrix | Dimension |
-|------|------|
-| \(X\) | \(n \times p\) |
-| \(U\) | \(n \times r\) |
-| \(D\) | \(r \times r\) |
-| \(V\) | \(p \times r\) | -->
-
-
-# Interpretation of the SVD Components
-
-| Matrix | Dimension | Interpretation |
-|------|------|------|
-| $V$ | $p \times r$ | principal component directions  |
-| $UD$ | $n \times r$ | principal component scores |
-| $U$ | $n \times r$ | normalized scores |
+- $U \in \mathbb{R}^{n \times r}$, $U^\top U = I$
+- $D = \operatorname{diag}(d_1,\dots,d_r)$, $d_1 \ge \cdots \ge d_r > 0$
+- $V \in \mathbb{R}^{p \times r}$, $V^\top V = I$
 
 ---
 
-# Principal Component Directions
+### Principal components (PC)
 
-Let
+Principal component analysis (PCA) constructs new variables as linear combinations of the original predictors. It builds upon SVD.
 
+Let $Z =XV=UD= \qty[Z_1, \dots, Z_r]=\mqty[z_{ij}]$ denote the principal components. Each principal component has the form
 $$
-V = [v_1, v_2, \dots, v_r]
+Z_j = X v_j=v_{1j}X_1+v_{2j}X_2+\ldots+v_{pj}X_p
+$$
+where $v_j=\mqty[v_{1j}&\ldots&v_{pj}]^{\top} \in \mathbb{R}^p$ is a unit vector.
+
+
+**Loadings (directions)**
+
+- Each PC is a linear combination of the columns of $X$.
+- **Loadings** ($v_{ij}$): The coefficients used to form PC $Z_j$ are called loadings.
+- Loadings describe directions in feature space.
+
+**Scores (coordinates)**
+
+- As a vector, each PC lies in $\mathbb{R}^n$ (observation space).
+- **Scores** ($z_{ij}$): The coordinate of observation $i$ along direction $v_j$ is called the score.
+
+
+Thus:
+
+- rows of $Z$ = transformed observations,
+- columns of $Z$ = principal components.
+
+
+
+::: {#exm-}
+## Centering and Scaling
+
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+We use the same previous dataset `X`, centering it as `Xc` and standarizing it as `Xs`.
+
+```{python}
+Xc = X - X.mean(axis=0)
+Xs = Xc / Xc.std(axis=0)
+```
+
+Now we plot them together with the princial compoenent. `pca()` from `sklearn` will automatically centering columns. In order to show the sceanario, we use `svd()` from `numpy.linalg` to do the computation.
+
+
+```{python}
+import matplotlib.pyplot as plt
+
+
+def pca_svd(X):
+    U, D, Vt = np.linalg.svd(X, full_matrices=False)
+    return Vt.T, D
+
+
+def plot_svd(ax, X, V, title, scale=3, length=5):
+    ax.scatter(X[:, 0], X[:, 1])
+    t = np.linspace(-length, length, 100)
+    line = np.outer(t, V[:, 0])
+    ax.plot(line[:, 0], line[:, 1], linewidth=2, color="red")
+
+    ax.set_title(title)
+    ax.set_xlabel("x1")
+    ax.set_ylabel("x2")
+
+
+V_raw = np.linalg.svd(X, full_matrices=False)[2].T
+V_c = np.linalg.svd(Xc, full_matrices=False)[2].T
+V_s = np.linalg.svd(Xs, full_matrices=False)[2].T
+
+fig, axs = plt.subplots(1, 3, figsize=(15, 4))
+
+plot_svd(axs[0], X, V_raw, "Uncentered (Wrong PCA)")
+plot_svd(axs[1], Xc, V_c, "Centered")
+plot_svd(axs[2], Xs, V_s, "Centered + Scaled")
+
+plt.tight_layout()
+```
+
+The principal component finds the direction that maximizes the variance of the projected data.
+
+If the data are not centered, the optimization is no longer based purely on variance. In this case, the objective involves both the covariance structure and the mean of the data.
+
+As a result, when the mean is large, the first principal direction may be strongly influenced by the location of the data, and can point roughly toward the data cloud rather than reflecting its intrinsic variation.
+
+Note that the last two plots may appear similar at first glance. However, their coordinate scales are different, so this visual similarity can be misleading.
+
+</details>
+
+
+:::
+
+
+---
+
+
+
+### Covariance and Optimality
+
+The sample covariance matrix is $S = \frac{1}{n-1} X^\top X$. By SVD,
+$$
+S=\frac{1}{n-1} X^\top X = V \frac{D^2}{n-1} V^\top
 $$
 
+- $V$: eigenvectors of covariance matrix  
+- $d_j^2/(n-1)$: eigenvalues of $S$
+- $\Var(Z_j)=d_j^2/(n-1)$
+
+Therefore
+
+- First PC: Direction $v_1$ that maximizes $\Var(Xv_1)$ subject to $\norm{v_1}=1$.
+- Subsequent PCs: Maximize remaining variance subject to orthogonality (that they are orthogonal to all previous PCs $v_k^\top v_j = 0$ for $j < k$).
+
+---
+
+### Summary
+
+| Component | Matrix | Space | Interpretation |
+|----------|--------|-------|----------------|
+| Loadings | $V$ | Feature ($\mathbb{R}^p$) | Principal directions (rotation of axes) |
+| Scores | $Z = UD$ | Observation ($\mathbb{R}^n$) | Transformed coordinates of observations |
+| Normalized scores | $U$ | Observation ($\mathbb{R}^n$) | Directions of score vectors (unit length) |
+| Singular values | $D$ | — | Scaling of each component (spread) |
+| Variance | $D^2/(n-1)$ | — | Importance of each principal component |
+
+
+- Columns of $X$: variables in $\mathbb{R}^n$ (relationships via angles)
+- Rows of $X$: observations in $\mathbb{R}^p$ (relationships via distance)
+- PCA finds orthogonal directions in feature space
+- $V$ gives directions, $Z$ gives coordinates
+- SVD unifies everything:
+$$
+X = UDV^\top, \quad Z = XV = UD
+$$
+
+
+
+---
+
+
+
+
+
+### Choosing the number of components ($m$)
+
+Let $\rank(X)=r$. PCA produces $r$ components, but in practice we keep only the first $m \le r$.
+
+Define the truncated SVD:
+$$
+X \approx X_m = U_m D_m V_m^\top,
+$$
 where
 
+- $U_m \in \mathbb{R}^{n \times m}$
+- $D_m \in \mathbb{R}^{m \times m}$
+- $V_m \in \mathbb{R}^{p \times m}$
+
+Correspondingly,
 $$
-v_k \in \mathbb{R}^p.
+Z_m = X V_m = U_m D_m
 $$
+contains the first $m$ principal components.
 
-The vectors \(v_k\) are the principal component directions.
+Keeping the $m$ largest singular values gives the best rank-$m$ approximation of $X$ in least squares sense.
 
-They are orthonormal:
+#### Variance explained
 
+The total variance is
 $$
-v_k^\top v_j =
-\begin{cases}
-1 & k=j \\
-0 & k\ne j
-\end{cases}
+\sum_{j=1}^r \frac{d_j^2}{n-1},
 $$
-
-Each direction maximizes variance sequentially:
-
+and the proportion explained by the first $m$ components is
 $$
-v_k =
-\arg\max_{\norm{v}=1} \Var(Xv)
-$$
-
-subject to orthogonality constraints with previous components.
-
----
-
-# Principal Component Scores
-
-The principal component scores are obtained by projecting the data onto the principal component directions:
-
-$$
-Z = XV
+\frac{\sum_{j=1}^m d_j^2}{\sum_{j=1}^r d_j^2}.
 $$
 
-with
+#### Choosing $m$ for prediction (PCR)
 
-$$
-Z \in \mathbb{R}^{n\times r}.
-$$
+In predictive settings, $m$ is typically selected via cross-validation:
 
-Using the SVD $X=UDV^\top$,
+1. Compute principal components.
+2. Fit regression models using $m = 1,2,\ldots,r$ components.
+3. Evaluate validation error.
+4. Choose $m$ with the lowest validation error.
 
-$$
-Z = XV = UD.
-$$
 
-Thus
+::: {.callout-note}
+## Scree plot (Elbow method)
+The scree plot (elbow method) plots $d_j^2$ against $j$ and selects $m$ at the point where the marginal gain in variance explained drops sharply (the “elbow”). This identifies the number of components that captures most of the variation in $X$.
 
-| Matrix | Dimension |
-|------|------|
-| $Z$ | $n\times r$ |
-| $U$ | $n\times r$ |
-| $D$ | $r\times r$ |
+However, PCA is unsupervised: directions that explain high variance in $X$ do not necessarily have strong predictive power for $y$. Therefore, in predictive settings such as PCR, $m$ is typically chosen via cross-validation rather than the elbow method.
 
-Each row of $Z$ corresponds to the principal component representation of one observation.
+For unsupervised tasks (e.g., representation or clustering), the scree plot remains a reasonable and commonly used choice.
+:::
 
----
 
-# Matrix Reconstruction Form
+## PCR in Python
 
-Using the SVD we can write
 
-$$
-X = UDV^\top
-$$
+### PCA
 
-or equivalently
+`scikit-learn` provides `PCA` for computing principal components. To demonstrate the code we use the same dataset from lasso.
 
-$$
-X = ZV^\top
-$$
+```{python}
+#| code-fold: true
+import numpy as np
+from sklearn.model_selection import train_test_split
 
-where
+rng = np.random.default_rng(0)
 
-$$
-Z = UD.
-$$
+n = 150
+p = 100
+k = 12
 
-Dimension check:
+Z = rng.normal(size=(n, k))
+A = rng.normal(size=(k, p))
+X = Z @ A + 0.8 * rng.normal(size=(n, p))
 
-$$
-(n\times r)(r\times p) = n\times p.
-$$
+beta = np.zeros(p)
+beta[:10] = [8, 7, 6, 5, 4, 3, 2, 1.5, 1, 0.5]
 
-Thus the original data matrix is reconstructed from
+y = X @ beta + 12 * rng.normal(size=n)
 
-- **scores \(Z\)**
-- **principal directions \(V\)**.
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=0
+)
+```
 
----
+`pca` is an unsupervised learnning method. Therefore to perform it we only need `X`.
 
-# Vector Form (Observation Representation)
-
-Let
-
-$$
-z_i^\top
-$$
-
-be the \(i\)-th row of \(Z\).
-
-Then the \(i\)-th observation satisfies
-
-$$
-x_i = z_i^\top V^\top
-$$
-
-or equivalently
-
-$$
-x_i = \sum_{k=1}^{r} z_{ik} v_k.
-$$
-
-where
-
-- \(v_k \in \mathbb{R}^p\) is the \(k\)-th principal component direction
-- \(z_{ik}\) is the **score of observation \(i\)** on component \(k\).
-
-Thus each observation is expressed as a linear combination of the principal component directions.
-
----
-
-# Rank-1 Decomposition
-
-The SVD can also be written as a sum of rank-1 matrices:
-
-$$
-X =
-\sum_{k=1}^{r} d_k u_k v_k^\top
-$$
-
-where
-
-- $u_k \in \mathbb{R}^n$
-- $v_k \in \mathbb{R}^p$
-
-Each matrix
-
-$$
-d_k u_k v_k^\top
-$$
-
-represents the contribution of the $k$-th principal component to the data matrix.
-
----
-
-# Variance Explained
-
-The sample covariance matrix is
-
-$$
-S = \frac{1}{n}X^\top X.
-$$
-
-Using SVD,
-
-$$
-X^\top X = V D^2 V^\top.
-$$
-
-Thus the variance explained by component $k$ is
-
-$$
-\lambda_k = \frac{d_k^2}{n}.
-$$
-
-The proportion of variance explained (PVE) is
-
-$$
-\text{PVE}_k =
-\frac{d_k^2}{\sum_{j=1}^{r} d_j^2}.
-$$
-
----
-
-# Dimensionality Reduction
-
-If we retain only the first $m$ principal components,
-
-$$
-X \approx Z_m V_m^\top
-$$
-
-where
-
-$$
-Z_m \in \mathbb{R}^{n\times m},
-\quad
-V_m \in \mathbb{R}^{p\times m}.
-$$
-
-This provides the best rank-$m$ approximation to $X$ in terms of squared reconstruction error.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Choosing the number of components
-
-The number of components $m$ is usually chosen using cross-validation.
-
-Typical procedure:
-
-1. Compute the principal components.
-2. Fit regression models using $m = 1,2,\ldots,p$ components.
-3. Compute validation error for each $m$.
-4. Choose the value of $m$ with the lowest validation error.
-
----
-
-### PCR in Python
-
-`scikit-learn` provides `PCA` for computing principal components.
-
-```python
+```{python}
 from sklearn.decomposition import PCA
+
+pca = PCA().fit(X_train)
+```
+
+All important information can be accessed from the returned object.
+
+```{python}
+V = pca.components_.T                   # loadings (V)
+Z = pca.transform(X_train)              # scores (Z)
+D = pca.singular_values_                # singular values (D)
+var = pca.explained_variance_           # variance that are explained
+ratio = pca.explained_variance_ratio_   # the ratio of variance that are explained
+```
+
+With `var` and `ratio`, we may plot the scree plot (although we won't really use it to select the number of components).
+
+
+```{python}
+#| code-fold: true
+k = np.arange(1, len(var) + 1)
+
+plt.figure()
+plt.plot(k, ratio, marker="o")
+plt.xlabel("Component index")
+plt.ylabel("Proportion of variance explained")
+plt.title("Scree Plot (Variance Ratio)")
+
+cum = np.cumsum(ratio)
+
+diff2 = np.diff(cum, 2)
+elbow_idx = np.argmin(diff2) + 2
+elbow_k = k[elbow_idx]
+elbow_val = ratio[elbow_idx]
+plt.axvline(elbow_k, linestyle="--", color="red")  # <1>
+
+plt.scatter(elbow_k, elbow_val)
+plt.text(elbow_k + 0.2, elbow_val + 0.004, f"k={elbow_k}\n{elbow_val:.3f}")
+```
+1. Use 2nd order difference to find the elbow.
+
+
+
+### PCR
+
+Using PCA to do regression, we have to standarize the data. Therefore we set up the pipeline. 
+
+We first use 13 components (which comes from the scree plot) as our starting point. We will tune it later using cross-validation.
+
+```{python}
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
 
 pcr_pipe = Pipeline(
     [
         ("scaler", StandardScaler()),
-        ("pca", PCA(n_components=5)),
-        ("model", LinearRegression())
+        ("pca", PCA(n_components=13)),
+        ("model", LinearRegression()),
     ]
 )
 
-pcr_pipe.fit(X, y)
+pcr_pipe.fit(X_train, y_train)
+y_pred_pcr = pcr_pipe.predict(X_test)
+
+print(f"Test RMSE: {mean_squared_error(y_test, y_pred_pcr)}")
+print(f"Test R^2 : {r2_score(y_test, y_pred_pcr)}")
 ```
 
-Here the pipeline performs
-
-standardization
-PCA
-regression using the principal components.
+You may compare it with the results we get from `lasso` and `ridge`.
 
 ### Choosing number of components by cross-validation
-
+We use $K$-fold cross validation to find the best number of components. Our criterion is negative MSE.
 
 ```{python}
-#| eval: false
-
+#| warning: false
 from sklearn.model_selection import GridSearchCV
 
-param_grid = {"pca__n_components": list(range(1, X.shape[1] + 1))}
+n_splits = 5
+n_train_fold = int(X_train.shape[0] * (n_splits - 1) / n_splits)
+max_components = min(n_train_fold, X_train.shape[1])  # <1>
 
-grid = GridSearchCV(pcr_pipe, param_grid, cv=5, scoring="neg_mean_squared_error")
+param_grid = {"pca__n_components": list(range(1, max_components + 1))}
 
-grid.fit(X, y)
-
-best_m = grid.best_params_["pca__n_components"]
-best_m
+grid = GridSearchCV(
+    pcr_pipe, param_grid, cv=n_splits, scoring="neg_mean_squared_error"
+)
+grid.fit(X_train, y_train)
+grid.best_params_["pca__n_components"]
 ```
+1. The maximal possible number of components depends on the shape of X. However for cross-validation, the number of rows of X is reduced due to the split. Therefore we have to estimate this number in order to avoid "`n_components` out of bounds" warning.
 
+It shows that `{python} grid.best_params_["pca__n_components"]` is the best number. Then we check the test result.
+```{python}
+y_pred_pcr = grid.predict(X_test)
+
+print(f"Test RMSE: {mean_squared_error(y_test, y_pred_pcr)}")
+print(f"Test R^2 : {r2_score(y_test, y_pred_pcr)}")
+```
+It is slightly better than `13`, but not better than `ridge` and `lasso`.
 
 
 ## Partial Least Squares (PLS)
