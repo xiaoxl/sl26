@@ -476,23 +476,23 @@ y_pred_pcr = grid.predict(X_test)
 print(f"Test RMSE: {mean_squared_error(y_test, y_pred_pcr)}")
 print(f"Test R^2 : {r2_score(y_test, y_pred_pcr)}")
 ```
-It is slightly better than `13`, but not better than `ridge` and `lasso`.
+It is slightly better than `13`, but still worse than tuned `ridge` and `lasso`. 
+
+
+
+
 
 
 ## Partial Least Squares (PLS)
 
-### Idea
+One limitation of Principal Component Regression (PCR) is that it is unsupervised: the principal components depend only on $X$ and ignore the response $y$. As a result, directions with large variance in $X$ may not be relevant for predicting $y$.
 
-Principal component regression constructs components that explain the variation in the predictor matrix $X$. However, these directions are chosen **without considering the response variable $y$**.
+Partial Least Squares (PLS) addresses this by constructing components that are guided by the response. It seeks directions in the predictor space that are both:
 
-Partial least squares (PLS) addresses this limitation by constructing components that are most strongly related to the response.
+- informative about $X$, and
+- strongly related to $y$
 
-The key idea is to construct components that simultaneously
 
-- capture variation in the predictors, and  
-- are strongly associated with the response.
-
----
 
 ::: {#def-pls}
 ## Partial Least Squares
@@ -504,166 +504,291 @@ Z_k = X w_k
 $$
 
 where the weight vector $w_k$ is chosen to maximize the covariance between the component and the response:
-
 $$
-w_k =
-\arg\max_w
-\operatorname{Cov}(Xw, y)^2
+w_k =\arg\max_{\norm{w}=1}\Cov(Xw, y).
 $$
 
-subject to the normalization constraint
-
-$$
-\|w\|_2 = 1.
-$$
-
-After constructing the component $Z_k$, both the predictor matrix and the response are deflated, and the procedure is repeated to construct additional components.
+After constructing the component $Z_k$, both the predictor matrix $X$ and the response $y$ are deflated, and the procedure is repeated to construct additional components.
 :::
 
-Thus PLS chooses directions in predictor space that are most predictive of the response.
-
----
 
 ### Algorithm intuition
 
-PLS constructs components sequentially.
+PLS constructs components sequentially, with each step explicitly targeting predictive power for $y$, rather than variance in $X$.
 
-At step $k$:
+<!-- At step $k$, we work with residual matrices:
 
-1. Find a direction $w_k$ such that the component $Z_k = X w_k$ has maximal covariance with $y$.
-2. Regress $y$ on the component $Z_k$.
-3. Remove the variation explained by $Z_k$ from both $X$ and $y$.
-4. Repeat the process on the residual matrices.
+- $X_k$: predictor residuals  
+- $y_k$: response residuals   -->
 
-This produces components that are ordered by predictive importance.
 
----
+<!-- #### Sequential construction -->
 
-### Geometric interpretation
+**Step 1**: Find the direction. Choose a direction $w_k \in \mathbb{R}^p$ such that the component $Z_k = X_k w_k$ maximizes covariance with $y_k$.
+$$
+w_k =\arg\max_{\norm{w}=1}\Cov(X_kw, y_k)
+$$
 
-PLS can be understood geometrically as searching for directions in predictor space that align with the response.
+<!-- - This is the key idea: maximize relevance to the response
+  - PCA: maximize $\Var(Xw)$
+  - PLS: maximize $\Cov(Xw, y)$ -->
 
-- PCR chooses directions with **largest variance in $X$**.
-- PLS chooses directions with **largest covariance between $X$ and $y$**.
+**Step 2**: Define the $k$-th component (also called the score vector):
+$$
+Z_k=X_kw_k\in\mathbb R^n
+$$
 
-Therefore PLS tends to find directions that are more useful for prediction.
+- This is a linear combination of predictors
+- Represents the direction in $X$ most aligned with $y_k$
 
----
+
+**Step 3**: Fit a simple regression of $y_k$ on $Z_k$:
+$$
+y_k=c_kZ_k+\resid
+$$
+This captures how strongly the component explains $y_k$.
+
+**Step 4**: Deflation: remove the variation explained by $Z_k$ from both $X_k$ and $y_k$.
+
+- Update response: $y_{k+1}=y_k-c_kZ_k$
+- Update predictors: $X_{k+1}=X_k-Z_kp_k^\top$, where $p_k=\frac{X_k^\top Z_k}{Z_k^\top Z_k}$.
+  - $p_k$ are the loadings for reconstructing $X$
+  - Deflation ensures the next components capture on new information
+
+**Step 5**: Repeat the process for $k = 1, 2, \dots, m$.
+
+
+### Key properties
+
+PLS has several important structural properties:
+
+- The components $\{Z_1, Z_2, \dots\}$ are constructed sequentially.  
+- Each component explains the remaining variation in $y$.  
+- After deflation, the components are orthogonal.  
+- The ordering reflects predictive importance.
+
+
+<!-- #### Roles of key quantities -->
+
+At each step, the main quantities have distinct roles:
+
+| Quantity | Interpretation |
+|--------|----------------|
+| $w_k$ | Direction in feature space used to combine predictors |
+| $Z_k = X_k w_k$ | Score (component), representing projected data |
+| $p_k$ | Loading, describing how the component explains $X$ |
+
+Together, these quantities describe how information is extracted from $X$ and transferred to explain $y$.
+
+
+### Comparison with PCA
+
+The key difference between PCA and PLS lies in how the directions are chosen:
+
+| Method | Criterion                            | Interpretation            |
+| ------ | ------------------------------------ | ------------------------- |
+| PCA    | maximize $\operatorname{Var}(Xw)$    | captures structure of $X$ |
+| PLS    | maximize $\operatorname{Cov}(Xw, y)$ | targets prediction of $y$ |
+
+
+PCA captures the internal structure of $X$, while PLS focuses on directions that are useful for predicting $y$.
+
+
+
+
+
+
+### Geometric meaning (Krylov Subspace)
+
+The matrix $X$ defines a cloud of points in $\mathbb{R}^p$ and the response $y$ defines a direction in $\mathbb{R}^n$. 
+
+PLS finds directions $w_k$ such that the projections $Z_k = X w_k$ are maximally aligned with $y$ in the observation space. In this sense, PLS can be understood geometrically as searching for directions in predictor space that align with the response.
+
+To be more precise, it can be explained using Krylov subspaces.
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+
+
+The Krylov subspace provides a structured way to generate directions for solving regression problems. Instead of searching the entire feature space $\mathbb{R}^p$, it builds a sequence of low-dimensional subspaces that are tailored to the problem.
+
+Given a matrix $A \in \mathbb{R}^{p \times p}$ and a vector $b \in \mathbb{R}^p$, the Krylov subspace of order $k$ is defined as
+$$
+\mathcal{K}_k(A, b)
+=
+\operatorname{span}\{b,\; Ab,\; A^2 b,\; \dots,\; A^{k-1} b\}.
+$$
+
+The subspaces are nested, meaning $\mathcal{K}_1 \subseteq \mathcal{K}_2 \subseteq \cdots$, and the dimension cannot exceed $\rank(A)$. Therefore, the sequence stabilizes after at most $\rank(A)$ steps.
+
+
+#### Krylov Subspace in Regression
+
+In linear regression, we take
+$$
+A = X^\top X, \qquad b = X^\top y.
+$$
+
+Then the Krylov subspace becomes
+$$
+\mathcal{K}_k(X^\top X, X^\top y)
+=
+\operatorname{span}\{X^\top y,\ (X^\top X)X^\top y,\ (X^\top X)^2 X^\top y,\dots\}.
+$$
+
+The vector $X^\top y$ represents directions in the predictor space that are most correlated with the response, while $X^\top X$ encodes the covariance structure of the predictors. As a result, the Krylov subspace captures directions that are both aligned with $y$ and consistent with the geometry of $X$.
+
+
+#### Connection to PLS
+
+Partial Least Squares constructs its directions sequentially within the Krylov subspace:
+$$
+w_k \in \mathcal{K}_k(X^\top X,\; X^\top y).
+$$
+
+This means that PLS does not search over all possible directions in $\mathbb{R}^p$. Instead, it expands a problem-dependent subspace step by step, starting from $X^\top y$ and incorporating higher-order interactions through $X^\top X$.
+
+The number of components is therefore bounded by
+$$
+m \le \dim(\mathcal{K}_k) \le \rank(X).
+$$
 
 ::: {.callout-note}
-## Comparison with PCR
 
-PCR constructs components using only the predictor matrix $X$.
 
-PLS uses both $X$ and $y$ to determine the directions.
+The Krylov subspace can be viewed as a guided search path inside $\operatorname{span}(X)$. The first direction is determined by $X^\top y$, and subsequent directions refine this information by incorporating the covariance structure of the predictors.
 
-As a result
+In this sense, the Krylov subspace represents the portion of the feature space that is relevant for predicting $y$. Methods such as PLS operate within this space, focusing on directions that carry predictive signal rather than exploring the entire feature space.
 
-- PCR may require many components before the response information is captured.
-- PLS often achieves good predictive performance with fewer components.
-:::
+::: 
 
----
 
-### Choosing the number of components
 
-Similar to PCR, the number of components is chosen using cross-validation.
+</details>
 
-Typical procedure:
 
-1. Fit PLS models with different numbers of components.
-2. Evaluate the validation error for each model.
-3. Choose the number of components that minimizes the validation error.
 
----
+
+
+
+
+
+
 
 ## PLS in Python
 
-`scikit-learn` provides the class `PLSRegression` for fitting partial least squares models.
+Although the algorithm is different, the code is very similar to PCR. PLS is implemented by `PLSRegression` from `sklearn.cross_decomposition`. The argument `scale=True` is by default so we don't need to attach standardizer to it.
 
-```python
+We choose the default number of componenets (which is 2) here. The specific hyperparameter will be tuned later by cross-validation.
+
+```{python}
+#| eval: false
 from sklearn.cross_decomposition import PLSRegression
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
 
-pls_pipe = Pipeline(
-    [
-        ("scaler", StandardScaler()),
-        ("model", PLSRegression(n_components=2))
-    ]
-)
+pls = PLSRegression()
 
-pls_pipe.fit(X, y)
-```
-
-The argument n_components specifies the number of PLS components.
-
-### Selecting the number of components
-
-We can choose the number of components using cross-validation.
-
-```{python}
-#| eval: false
-
-from sklearn.model_selection import GridSearchCV
-
-param_grid = {"model__n_components": list(range(1, X.shape[1] + 1))}
-
-grid = GridSearchCV(pls_pipe, param_grid, cv=5, scoring="neg_mean_squared_error")
-
-grid.fit(X, y)
-
-best_components = grid.best_params_["model__n_components"]
-best_components
+pls.fit(X_train, y_train)
 ```
 
 
-### PLS coefficient path
-
-We can also examine how the regression coefficients change as the number of components increases.
-
+We could use the following code to get access to the parameters.
 
 ```{python}
 #| eval: false
+W = pls.x_weights_    # weights, directions (W)
+Z = pls.x_scores_     # scores, components (Z)
+P = pls.x_loadings_   # loadings (P)
+```
 
+### Example
+
+We still use the old example.
+
+
+```{python}
+#| code-fold: true
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.cross_decomposition import PLSRegression
-from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 
-X_scaled = StandardScaler().fit_transform(X)
+rng = np.random.default_rng(0)
 
-coefs = []
+n = 150
+p = 100
+k = 12
 
-for m in range(1, X.shape[1] + 1):
-    pls = PLSRegression(n_components=m)
-    pls.fit(X_scaled, y)
-    coefs.append(pls.coef_.ravel())
+Z = rng.normal(size=(n, k))
+A = rng.normal(size=(k, p))
+X = Z @ A + 0.8 * rng.normal(size=(n, p))
 
-coefs = np.array(coefs)
+beta = np.zeros(p)
+beta[:10] = [8, 7, 6, 5, 4, 3, 2, 1.5, 1, 0.5]
 
-for j in range(coefs.shape[1]):
-    plt.plot(range(1, X.shape[1] + 1), coefs[:, j], label=f"x{j + 1}")
+y = X @ beta + 12 * rng.normal(size=n)
 
-plt.xlabel("Number of components")
-plt.ylabel("Coefficient")
-plt.title("PLS coefficient path")
-plt.legend()
-plt.show()
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=0
+)
 ```
 
 
-Summary
+Similar to PCR, the max number of components is again the minimum between the number of rows and the number of columns of `X_train`. 
 
-Partial least squares is a dimension reduction method designed for predictive modeling.
 
-It constructs components that maximize covariance between predictors and response.
-These components are used as predictors in a regression model.
-The number of components is typically selected using cross-validation.
+```{python}
+#| warning: false
+from sklearn.model_selection import GridSearchCV
+from sklearn.cross_decomposition import PLSRegression
 
-Compared with principal component regression:
+n_splits = 5
+n_train_fold = int(X_train.shape[0] * (n_splits - 1) / n_splits)
+max_components = min(n_train_fold, X_train.shape[1])
 
-PCR focuses on explaining predictor variation.
-PLS focuses on predicting the response.
+param_grid = {"n_components": list(range(1, max_components + 1))}
 
-As a result, PLS often requires fewer components to achieve strong predictive performance.
+grid = GridSearchCV(
+    PLSRegression(), param_grid, cv=n_splits, scoring="neg_mean_squared_error"
+)
+grid.fit(X_train, y_train)
+grid.best_params_["n_components"]
+```
+
+
+```{python}
+y_pred_pls = grid.predict(X_test)
+
+print(f"Test RMSE: {mean_squared_error(y_test, y_pred_pls)}")
+print(f"Test R^2 : {r2_score(y_test, y_pred_pls)}")
+```
+
+
+::: {.callout-note}
+Important Notes
+
+- PLSRegression automatically centers and scales (unless disabled)
+- Unlike PCA: uses both $X$ and $y$
+- Number of components: choose via cross-validation
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

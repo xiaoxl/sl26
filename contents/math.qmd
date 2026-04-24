@@ -11,13 +11,15 @@ $$
 $$
 \newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
 \newcommand{\me}{{\mathrm e}}
-\newcommand{\argmin}{\operatorname{argmin}}
+% \newcommand{\argmin}{\operatorname{argmin}}
 \newcommand{\rss}{\mathrm{RSS}}
 \newcommand{\ols}{\mathrm{OLS}}
 \newcommand{\ridge}{\mathrm{ridge}}
 \newcommand{\lasso}{\mathrm{lasso}}
 \newcommand{\mle}{\mathrm{MLE}}
 \newcommand{\constant}{\mathrm{constant}}
+\newcommand{\resid}{\mathrm{residual}}
+\newcommand{\span}{\mathrm{span}}
 $$
 
 <!-- Probability -->

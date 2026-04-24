@@ -394,7 +394,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pcr" id="toc-pcr" class="nav-link active" data-scroll-target="#pcr"><span class="header-section-number">3.1</span> PCR</a>
+  <li><a href="#principal-component-regression-pcr" id="toc-principal-component-regression-pcr" class="nav-link active" data-scroll-target="#principal-component-regression-pcr"><span class="header-section-number">3.1</span> Principal Component Regression (PCR)</a>
   <ul class="collapse">
   <li><a href="#data-matrix-and-its-geometric-views" id="toc-data-matrix-and-its-geometric-views" class="nav-link" data-scroll-target="#data-matrix-and-its-geometric-views"><span class="header-section-number">3.1.1</span> Data matrix and its geometric views</a></li>
   <li><a href="#singular-value-decomposition-svd" id="toc-singular-value-decomposition-svd" class="nav-link" data-scroll-target="#singular-value-decomposition-svd"><span class="header-section-number">3.1.2</span> Singular Value Decomposition (SVD)</a></li>
@@ -406,20 +406,19 @@ window.Quarto = {
   <li><a href="#pcr-in-python" id="toc-pcr-in-python" class="nav-link" data-scroll-target="#pcr-in-python"><span class="header-section-number">3.2</span> PCR in Python</a>
   <ul class="collapse">
   <li><a href="#pca" id="toc-pca" class="nav-link" data-scroll-target="#pca"><span class="header-section-number">3.2.1</span> PCA</a></li>
-  <li><a href="#pcr-1" id="toc-pcr-1" class="nav-link" data-scroll-target="#pcr-1"><span class="header-section-number">3.2.2</span> PCR</a></li>
+  <li><a href="#pcr" id="toc-pcr" class="nav-link" data-scroll-target="#pcr"><span class="header-section-number">3.2.2</span> PCR</a></li>
   <li><a href="#choosing-number-of-components-by-cross-validation" id="toc-choosing-number-of-components-by-cross-validation" class="nav-link" data-scroll-target="#choosing-number-of-components-by-cross-validation"><span class="header-section-number">3.2.3</span> Choosing number of components by cross-validation</a></li>
   </ul></li>
   <li><a href="#partial-least-squares-pls" id="toc-partial-least-squares-pls" class="nav-link" data-scroll-target="#partial-least-squares-pls"><span class="header-section-number">3.3</span> Partial Least Squares (PLS)</a>
   <ul class="collapse">
-  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea"><span class="header-section-number">3.3.1</span> Idea</a></li>
-  <li><a href="#algorithm-intuition" id="toc-algorithm-intuition" class="nav-link" data-scroll-target="#algorithm-intuition"><span class="header-section-number">3.3.2</span> Algorithm intuition</a></li>
-  <li><a href="#geometric-interpretation" id="toc-geometric-interpretation" class="nav-link" data-scroll-target="#geometric-interpretation"><span class="header-section-number">3.3.3</span> Geometric interpretation</a></li>
-  <li><a href="#choosing-the-number-of-components" id="toc-choosing-the-number-of-components" class="nav-link" data-scroll-target="#choosing-the-number-of-components"><span class="header-section-number">3.3.4</span> Choosing the number of components</a></li>
+  <li><a href="#algorithm-intuition" id="toc-algorithm-intuition" class="nav-link" data-scroll-target="#algorithm-intuition"><span class="header-section-number">3.3.1</span> Algorithm intuition</a></li>
+  <li><a href="#key-properties" id="toc-key-properties" class="nav-link" data-scroll-target="#key-properties"><span class="header-section-number">3.3.2</span> Key properties</a></li>
+  <li><a href="#comparison-with-pca" id="toc-comparison-with-pca" class="nav-link" data-scroll-target="#comparison-with-pca"><span class="header-section-number">3.3.3</span> Comparison with PCA</a></li>
+  <li><a href="#geometric-meaning-krylov-subspace" id="toc-geometric-meaning-krylov-subspace" class="nav-link" data-scroll-target="#geometric-meaning-krylov-subspace"><span class="header-section-number">3.3.4</span> Geometric meaning (Krylov Subspace)</a></li>
   </ul></li>
   <li><a href="#pls-in-python" id="toc-pls-in-python" class="nav-link" data-scroll-target="#pls-in-python"><span class="header-section-number">3.4</span> PLS in Python</a>
   <ul class="collapse">
-  <li><a href="#selecting-the-number-of-components" id="toc-selecting-the-number-of-components" class="nav-link" data-scroll-target="#selecting-the-number-of-components"><span class="header-section-number">3.4.1</span> Selecting the number of components</a></li>
-  <li><a href="#pls-coefficient-path" id="toc-pls-coefficient-path" class="nav-link" data-scroll-target="#pls-coefficient-path"><span class="header-section-number">3.4.2</span> PLS coefficient path</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">3.4.1</span> Example</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -456,13 +455,15 @@ window.Quarto = {
 <p><span class="math display">\[
 \newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
 \newcommand{\me}{{\mathrm e}}
-\newcommand{\argmin}{\operatorname{argmin}}
+% \newcommand{\argmin}{\operatorname{argmin}}
 \newcommand{\rss}{\mathrm{RSS}}
 \newcommand{\ols}{\mathrm{OLS}}
 \newcommand{\ridge}{\mathrm{ridge}}
 \newcommand{\lasso}{\mathrm{lasso}}
 \newcommand{\mle}{\mathrm{MLE}}
 \newcommand{\constant}{\mathrm{constant}}
+\newcommand{\resid}{\mathrm{residual}}
+\newcommand{\span}{\mathrm{span}}
 \]</span></p>
 <!-- Probability -->
 <p>$$ </p>
@@ -494,8 +495,8 @@ window.Quarto = {
 <li>Partial Least Squares (PLS)</li>
 </ul>
 <p>Both methods construct new variables that are linear combinations of the original predictors, but they differ in how those combinations are chosen.</p>
-<section id="pcr" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="pcr"><span class="header-section-number">3.1</span> PCR</h2>
+<section id="principal-component-regression-pcr" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="principal-component-regression-pcr"><span class="header-section-number">3.1</span> Principal Component Regression (PCR)</h2>
 <p>PCR first applies principal component analysis (PCA) to the predictor matrix <span class="math inline">\(X\)</span>, and then uses the leading principal components as predictors in a regression model.</p>
 <p>The key idea is that most of the variation in the predictors often lies in a lower-dimensional subspace.</p>
 <div id="def-pcr" class="theorem definition">
@@ -561,7 +562,7 @@ y = \theta_0 + \theta_1 Z_1 + \theta_2 Z_2 + \cdots + \theta_m Z_m + \varepsilon
 <strong>Click to expand.</strong>
 </summary>
 <p>To demonstrate the idea, we generate the following dataset. It contains 2 variables.</p>
-<div id="1ecf04f8" class="cell" data-execution_count="1">
+<div id="6a136c96" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -578,7 +579,7 @@ y = \theta_0 + \theta_1 Z_1 + \theta_2 Z_2 + \cdots + \theta_m Z_m + \varepsilon
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"x1"</span>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"x2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>Text(0, 0.5, 'x2')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -636,12 +637,12 @@ Z_j = X v_j=v_{1j}X_1+v_{2j}X_2+\ldots+v_{pj}X_p
 <strong>Click to expand.</strong>
 </summary>
 <p>We use the same previous dataset <code>X</code>, centering it as <code>Xc</code> and standarizing it as <code>Xs</code>.</p>
-<div id="0ceb9db1" class="cell" data-execution_count="2">
+<div id="c69bb6a0" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Xc <span class="op">=</span> X <span class="op">-</span> X.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Xs <span class="op">=</span> Xc <span class="op">/</span> Xc.std(axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we plot them together with the princial compoenent. <code>pca()</code> from <code>sklearn</code> will automatically centering columns. In order to show the sceanario, we use <code>svd()</code> from <code>numpy.linalg</code> to do the computation.</p>
-<div id="6039b7cd" class="cell" data-execution_count="3">
+<div id="12c32ef3" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -822,7 +823,7 @@ Z_m = X V_m = U_m D_m
 <section id="pca" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="pca"><span class="header-section-number">3.2.1</span> PCA</h3>
 <p><code>scikit-learn</code> provides <code>PCA</code> for computing principal components. To demonstrate the code we use the same dataset from lasso.</p>
-<div id="30e9e2c3" class="cell" data-execution_count="4">
+<div id="6fc12dd5" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -849,13 +850,13 @@ Z_m = X V_m = U_m D_m
 </details>
 </div>
 <p><code>pca</code> is an unsupervised learnning method. Therefore to perform it we only need <code>X</code>.</p>
-<div id="9b428a8e" class="cell" data-execution_count="5">
+<div id="e61f031f" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA().fit(X_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>All important information can be accessed from the returned object.</p>
-<div id="bf090185" class="cell" data-execution_count="6">
+<div id="2612a686" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> pca.components_.T                   <span class="co"># loadings (V)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> pca.transform(X_train)              <span class="co"># scores (Z)</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> pca.singular_values_                <span class="co"># singular values (D)</span></span>
@@ -863,7 +864,7 @@ Z_m = X V_m = U_m D_m
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>ratio <span class="op">=</span> pca.explained_variance_ratio_   <span class="co"># the ratio of variance that are explained</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>With <code>var</code> and <code>ratio</code>, we may plot the scree plot (although we won’t really use it to select the number of components).</p>
-<div id="48761af4" class="cell" data-execution_count="7">
+<div id="ae4730e0" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="bu">len</span>(var) <span class="op">+</span> <span class="dv">1</span>)</span>
@@ -893,7 +894,7 @@ Z_m = X V_m = U_m D_m
 </dd>
 </dl>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="45">
+<div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>Text(13.2, 0.005666697882320329, 'k=13\n0.002')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -905,11 +906,11 @@ Z_m = X V_m = U_m D_m
 </div>
 </div>
 </section>
-<section id="pcr-1" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="pcr-1"><span class="header-section-number">3.2.2</span> PCR</h3>
+<section id="pcr" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="pcr"><span class="header-section-number">3.2.2</span> PCR</h3>
 <p>Using PCA to do regression, we have to standarize the data. Therefore we set up the pipeline.</p>
 <p>We first use 13 components (which comes from the scree plot) as our starting point. We will tune it later using cross-validation.</p>
-<div id="bb066940" class="cell" data-execution_count="8">
+<div id="66bc6f61" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
@@ -938,7 +939,7 @@ Test R^2 : 0.8536528530700276</code></pre>
 <section id="choosing-number-of-components-by-cross-validation" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="choosing-number-of-components-by-cross-validation"><span class="header-section-number">3.2.3</span> Choosing number of components by cross-validation</h3>
 <p>We use <span class="math inline">\(K\)</span>-fold cross validation to find the best number of components. Our criterion is negative MSE.</p>
-<div id="c794db7a" class="cell" data-execution_count="9">
+<div id="b1500463" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
 <span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>n_splits <span class="op">=</span> <span class="dv">5</span></span>
@@ -960,12 +961,12 @@ Test R^2 : 0.8536528530700276</code></pre>
 </dd>
 </dl>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="47">
+<div class="cell-output cell-output-display" data-execution_count="33">
 <pre><code>19</code></pre>
 </div>
 </div>
 <p>It shows that 19 is the best number. Then we check the test result.</p>
-<div id="181784bf" class="cell" data-execution_count="10">
+<div id="dd8e837f" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>y_pred_pcr <span class="op">=</span> grid.predict(X_test)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test RMSE: </span><span class="sc">{</span>mean_squared_error(y_test, y_pred_pcr)<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -975,164 +976,280 @@ Test R^2 : 0.8536528530700276</code></pre>
 Test R^2 : 0.8652733542572647</code></pre>
 </div>
 </div>
-<p>It is slightly better than <code>13</code>, but not better than <code>ridge</code> and <code>lasso</code>.</p>
+<p>It is slightly better than <code>13</code>, but still worse than tuned <code>ridge</code> and <code>lasso</code>.</p>
 </section>
 </section>
 <section id="partial-least-squares-pls" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="partial-least-squares-pls"><span class="header-section-number">3.3</span> Partial Least Squares (PLS)</h2>
-<section id="idea" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="idea"><span class="header-section-number">3.3.1</span> Idea</h3>
-<p>Principal component regression constructs components that explain the variation in the predictor matrix <span class="math inline">\(X\)</span>. However, these directions are chosen <strong>without considering the response variable <span class="math inline">\(y\)</span></strong>.</p>
-<p>Partial least squares (PLS) addresses this limitation by constructing components that are most strongly related to the response.</p>
-<p>The key idea is to construct components that simultaneously</p>
+<p>One limitation of Principal Component Regression (PCR) is that it is unsupervised: the principal components depend only on <span class="math inline">\(X\)</span> and ignore the response <span class="math inline">\(y\)</span>. As a result, directions with large variance in <span class="math inline">\(X\)</span> may not be relevant for predicting <span class="math inline">\(y\)</span>.</p>
+<p>Partial Least Squares (PLS) addresses this by constructing components that are guided by the response. It seeks directions in the predictor space that are both:</p>
 <ul>
-<li>capture variation in the predictors, and<br>
-</li>
-<li>are strongly associated with the response.</li>
+<li>informative about <span class="math inline">\(X\)</span>, and</li>
+<li>strongly related to <span class="math inline">\(y\)</span></li>
 </ul>
-<hr>
 <div id="def-pls" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3.2 (Partial Least Squares)</strong></span> Partial least squares constructs a sequence of components</p>
 <p><span class="math display">\[
 Z_k = X w_k
 \]</span></p>
-<p>where the weight vector <span class="math inline">\(w_k\)</span> is chosen to maximize the covariance between the component and the response:</p>
-<p><span class="math display">\[
-w_k =
-\arg\max_w
-\operatorname{Cov}(Xw, y)^2
+<p>where the weight vector <span class="math inline">\(w_k\)</span> is chosen to maximize the covariance between the component and the response: <span class="math display">\[
+w_k =\arg\max_{\norm{w}=1}\operatorname{Cov}(Xw, y).
 \]</span></p>
-<p>subject to the normalization constraint</p>
-<p><span class="math display">\[
-\|w\|_2 = 1.
-\]</span></p>
-<p>After constructing the component <span class="math inline">\(Z_k\)</span>, both the predictor matrix and the response are deflated, and the procedure is repeated to construct additional components.</p>
+<p>After constructing the component <span class="math inline">\(Z_k\)</span>, both the predictor matrix <span class="math inline">\(X\)</span> and the response <span class="math inline">\(y\)</span> are deflated, and the procedure is repeated to construct additional components.</p>
 </div>
-<p>Thus PLS chooses directions in predictor space that are most predictive of the response.</p>
-<hr>
-</section>
-<section id="algorithm-intuition" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="algorithm-intuition"><span class="header-section-number">3.3.2</span> Algorithm intuition</h3>
-<p>PLS constructs components sequentially.</p>
-<p>At step <span class="math inline">\(k\)</span>:</p>
-<ol type="1">
-<li>Find a direction <span class="math inline">\(w_k\)</span> such that the component <span class="math inline">\(Z_k = X w_k\)</span> has maximal covariance with <span class="math inline">\(y\)</span>.</li>
-<li>Regress <span class="math inline">\(y\)</span> on the component <span class="math inline">\(Z_k\)</span>.</li>
-<li>Remove the variation explained by <span class="math inline">\(Z_k\)</span> from both <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span>.</li>
-<li>Repeat the process on the residual matrices.</li>
-</ol>
-<p>This produces components that are ordered by predictive importance.</p>
-<hr>
-</section>
-<section id="geometric-interpretation" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="geometric-interpretation"><span class="header-section-number">3.3.3</span> Geometric interpretation</h3>
-<p>PLS can be understood geometrically as searching for directions in predictor space that align with the response.</p>
+<section id="algorithm-intuition" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="algorithm-intuition"><span class="header-section-number">3.3.1</span> Algorithm intuition</h3>
+<p>PLS constructs components sequentially, with each step explicitly targeting predictive power for <span class="math inline">\(y\)</span>, rather than variance in <span class="math inline">\(X\)</span>.</p>
+<!-- At step $k$, we work with residual matrices:
+
+- $X_k$: predictor residuals  
+- $y_k$: response residuals   -->
+<!-- #### Sequential construction -->
+<p><strong>Step 1</strong>: Find the direction. Choose a direction <span class="math inline">\(w_k \in \mathbb{R}^p\)</span> such that the component <span class="math inline">\(Z_k = X_k w_k\)</span> maximizes covariance with <span class="math inline">\(y_k\)</span>. <span class="math display">\[
+w_k =\arg\max_{\norm{w}=1}\operatorname{Cov}(X_kw, y_k)
+\]</span></p>
+<!-- - This is the key idea: maximize relevance to the response
+  - PCA: maximize $\Var(Xw)$
+  - PLS: maximize $\Cov(Xw, y)$ -->
+<p><strong>Step 2</strong>: Define the <span class="math inline">\(k\)</span>-th component (also called the score vector): <span class="math display">\[
+Z_k=X_kw_k\in\mathbb R^n
+\]</span></p>
 <ul>
-<li>PCR chooses directions with <strong>largest variance in <span class="math inline">\(X\)</span></strong>.</li>
-<li>PLS chooses directions with <strong>largest covariance between <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span></strong>.</li>
+<li>This is a linear combination of predictors</li>
+<li>Represents the direction in <span class="math inline">\(X\)</span> most aligned with <span class="math inline">\(y_k\)</span></li>
 </ul>
-<p>Therefore PLS tends to find directions that are more useful for prediction.</p>
-<hr>
+<p><strong>Step 3</strong>: Fit a simple regression of <span class="math inline">\(y_k\)</span> on <span class="math inline">\(Z_k\)</span>: <span class="math display">\[
+y_k=c_kZ_k+\resid
+\]</span> This captures how strongly the component explains <span class="math inline">\(y_k\)</span>.</p>
+<p><strong>Step 4</strong>: Deflation: remove the variation explained by <span class="math inline">\(Z_k\)</span> from both <span class="math inline">\(X_k\)</span> and <span class="math inline">\(y_k\)</span>.</p>
+<ul>
+<li>Update response: <span class="math inline">\(y_{k+1}=y_k-c_kZ_k\)</span></li>
+<li>Update predictors: <span class="math inline">\(X_{k+1}=X_k-Z_kp_k^\top\)</span>, where <span class="math inline">\(p_k=\frac{X_k^\top Z_k}{Z_k^\top Z_k}\)</span>.
+<ul>
+<li><span class="math inline">\(p_k\)</span> are the loadings for reconstructing <span class="math inline">\(X\)</span></li>
+<li>Deflation ensures the next components capture on new information</li>
+</ul></li>
+</ul>
+<p><strong>Step 5</strong>: Repeat the process for <span class="math inline">\(k = 1, 2, \dots, m\)</span>.</p>
+</section>
+<section id="key-properties" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="key-properties"><span class="header-section-number">3.3.2</span> Key properties</h3>
+<p>PLS has several important structural properties:</p>
+<ul>
+<li>The components <span class="math inline">\(\{Z_1, Z_2, \dots\}\)</span> are constructed sequentially.<br>
+</li>
+<li>Each component explains the remaining variation in <span class="math inline">\(y\)</span>.<br>
+</li>
+<li>After deflation, the components are orthogonal.<br>
+</li>
+<li>The ordering reflects predictive importance.</li>
+</ul>
+<!-- #### Roles of key quantities -->
+<p>At each step, the main quantities have distinct roles:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(w_k\)</span></td>
+<td>Direction in feature space used to combine predictors</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(Z_k = X_k w_k\)</span></td>
+<td>Score (component), representing projected data</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(p_k\)</span></td>
+<td>Loading, describing how the component explains <span class="math inline">\(X\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Together, these quantities describe how information is extracted from <span class="math inline">\(X\)</span> and transferred to explain <span class="math inline">\(y\)</span>.</p>
+</section>
+<section id="comparison-with-pca" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="comparison-with-pca"><span class="header-section-number">3.3.3</span> Comparison with PCA</h3>
+<p>The key difference between PCA and PLS lies in how the directions are chosen:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 53%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Criterion</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PCA</td>
+<td>maximize <span class="math inline">\(\operatorname{Var}(Xw)\)</span></td>
+<td>captures structure of <span class="math inline">\(X\)</span></td>
+</tr>
+<tr class="even">
+<td>PLS</td>
+<td>maximize <span class="math inline">\(\operatorname{Cov}(Xw, y)\)</span></td>
+<td>targets prediction of <span class="math inline">\(y\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>PCA captures the internal structure of <span class="math inline">\(X\)</span>, while PLS focuses on directions that are useful for predicting <span class="math inline">\(y\)</span>.</p>
+</section>
+<section id="geometric-meaning-krylov-subspace" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="geometric-meaning-krylov-subspace"><span class="header-section-number">3.3.4</span> Geometric meaning (Krylov Subspace)</h3>
+<p>The matrix <span class="math inline">\(X\)</span> defines a cloud of points in <span class="math inline">\(\mathbb{R}^p\)</span> and the response <span class="math inline">\(y\)</span> defines a direction in <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+<p>PLS finds directions <span class="math inline">\(w_k\)</span> such that the projections <span class="math inline">\(Z_k = X w_k\)</span> are maximally aligned with <span class="math inline">\(y\)</span> in the observation space. In this sense, PLS can be understood geometrically as searching for directions in predictor space that align with the response.</p>
+<p>To be more precise, it can be explained using Krylov subspaces.</p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
+<p>The Krylov subspace provides a structured way to generate directions for solving regression problems. Instead of searching the entire feature space <span class="math inline">\(\mathbb{R}^p\)</span>, it builds a sequence of low-dimensional subspaces that are tailored to the problem.</p>
+<p>Given a matrix <span class="math inline">\(A \in \mathbb{R}^{p \times p}\)</span> and a vector <span class="math inline">\(b \in \mathbb{R}^p\)</span>, the Krylov subspace of order <span class="math inline">\(k\)</span> is defined as <span class="math display">\[
+\mathcal{K}_k(A, b)
+=
+\operatorname{span}\{b,\; Ab,\; A^2 b,\; \dots,\; A^{k-1} b\}.
+\]</span></p>
+<p>The subspaces are nested, meaning <span class="math inline">\(\mathcal{K}_1 \subseteq \mathcal{K}_2 \subseteq \cdots\)</span>, and the dimension cannot exceed <span class="math inline">\(\rank(A)\)</span>. Therefore, the sequence stabilizes after at most <span class="math inline">\(\rank(A)\)</span> steps.</p>
+<section id="krylov-subspace-in-regression" class="level4" data-number="3.3.4.1">
+<h4 data-number="3.3.4.1" class="anchored" data-anchor-id="krylov-subspace-in-regression"><span class="header-section-number">3.3.4.1</span> Krylov Subspace in Regression</h4>
+<p>In linear regression, we take <span class="math display">\[
+A = X^\top X, \qquad b = X^\top y.
+\]</span></p>
+<p>Then the Krylov subspace becomes <span class="math display">\[
+\mathcal{K}_k(X^\top X, X^\top y)
+=
+\operatorname{span}\{X^\top y,\ (X^\top X)X^\top y,\ (X^\top X)^2 X^\top y,\dots\}.
+\]</span></p>
+<p>The vector <span class="math inline">\(X^\top y\)</span> represents directions in the predictor space that are most correlated with the response, while <span class="math inline">\(X^\top X\)</span> encodes the covariance structure of the predictors. As a result, the Krylov subspace captures directions that are both aligned with <span class="math inline">\(y\)</span> and consistent with the geometry of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section id="connection-to-pls" class="level4" data-number="3.3.4.2">
+<h4 data-number="3.3.4.2" class="anchored" data-anchor-id="connection-to-pls"><span class="header-section-number">3.3.4.2</span> Connection to PLS</h4>
+<p>Partial Least Squares constructs its directions sequentially within the Krylov subspace: <span class="math display">\[
+w_k \in \mathcal{K}_k(X^\top X,\; X^\top y).
+\]</span></p>
+<p>This means that PLS does not search over all possible directions in <span class="math inline">\(\mathbb{R}^p\)</span>. Instead, it expands a problem-dependent subspace step by step, starting from <span class="math inline">\(X^\top y\)</span> and incorporating higher-order interactions through <span class="math inline">\(X^\top X\)</span>.</p>
+<p>The number of components is therefore bounded by <span class="math display">\[
+m \le \dim(\mathcal{K}_k) \le \rank(X).
+\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Comparison with PCR
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>PCR constructs components using only the predictor matrix <span class="math inline">\(X\)</span>.</p>
-<p>PLS uses both <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span> to determine the directions.</p>
-<p>As a result</p>
+<p>The Krylov subspace can be viewed as a guided search path inside <span class="math inline">\(\operatorname{span}(X)\)</span>. The first direction is determined by <span class="math inline">\(X^\top y\)</span>, and subsequent directions refine this information by incorporating the covariance structure of the predictors.</p>
+<p>In this sense, the Krylov subspace represents the portion of the feature space that is relevant for predicting <span class="math inline">\(y\)</span>. Methods such as PLS operate within this space, focusing on directions that carry predictive signal rather than exploring the entire feature space.</p>
+</div>
+</div>
+</section></details>
+</section>
+</section>
+
+<section id="pls-in-python" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="pls-in-python"><span class="header-section-number">3.4</span> PLS in Python</h2>
+<p>Although the algorithm is different, the code is very similar to PCR. PLS is implemented by <code>PLSRegression</code> from <code>sklearn.cross_decomposition</code>. The argument <code>scale=True</code> is by default so we don’t need to attach standardizer to it.</p>
+<p>We choose the default number of componenets (which is 2) here. The specific hyperparameter will be tuned later by cross-validation.</p>
+<div id="81f25b89" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>pls <span class="op">=</span> PLSRegression()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>pls.fit(X_train, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We could use the following code to get access to the parameters.</p>
+<div id="221c9042" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> pls.x_weights_    <span class="co"># weights, directions (W)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> pls.x_scores_     <span class="co"># scores, components (Z)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> pls.x_loadings_   <span class="co"># loadings (P)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="example" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="example"><span class="header-section-number">3.4.1</span> Example</h3>
+<p>We still use the old example.</p>
+<div id="2e78251b" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">150</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> rng.normal(size<span class="op">=</span>(n, k))</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> rng.normal(size<span class="op">=</span>(k, p))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> Z <span class="op">@</span> A <span class="op">+</span> <span class="fl">0.8</span> <span class="op">*</span> rng.normal(size<span class="op">=</span>(n, p))</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> np.zeros(p)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>beta[:<span class="dv">10</span>] <span class="op">=</span> [<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="dv">1</span>, <span class="fl">0.5</span>]</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> X <span class="op">@</span> beta <span class="op">+</span> <span class="dv">12</span> <span class="op">*</span> rng.normal(size<span class="op">=</span>n)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Similar to PCR, the max number of components is again the minimum between the number of rows and the number of columns of <code>X_train</code>.</p>
+<div id="2578be06" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>n_splits <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>n_train_fold <span class="op">=</span> <span class="bu">int</span>(X_train.shape[<span class="dv">0</span>] <span class="op">*</span> (n_splits <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> n_splits)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>max_components <span class="op">=</span> <span class="bu">min</span>(n_train_fold, X_train.shape[<span class="dv">1</span>])</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">"n_components"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, max_components <span class="op">+</span> <span class="dv">1</span>))}</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> GridSearchCV(</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    PLSRegression(), param_grid, cv<span class="op">=</span>n_splits, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>grid.fit(X_train, y_train)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>grid.best_params_[<span class="st">"n_components"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<pre><code>4</code></pre>
+</div>
+</div>
+<div id="c2339a5f" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>y_pred_pls <span class="op">=</span> grid.predict(X_test)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test RMSE: </span><span class="sc">{</span>mean_squared_error(y_test, y_pred_pls)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test R^2 : </span><span class="sc">{</span>r2_score(y_test, y_pred_pls)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test RMSE: 333.9484272722302
+Test R^2 : 0.8598720672844287</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Important Notes</p>
 <ul>
-<li>PCR may require many components before the response information is captured.</li>
-<li>PLS often achieves good predictive performance with fewer components.</li>
+<li>PLSRegression automatically centers and scales (unless disabled)</li>
+<li>Unlike PCA: uses both <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span></li>
+<li>Number of components: choose via cross-validation</li>
 </ul>
 </div>
 </div>
-<hr>
-</section>
-<section id="choosing-the-number-of-components" class="level3" data-number="3.3.4">
-<h3 data-number="3.3.4" class="anchored" data-anchor-id="choosing-the-number-of-components"><span class="header-section-number">3.3.4</span> Choosing the number of components</h3>
-<p>Similar to PCR, the number of components is chosen using cross-validation.</p>
-<p>Typical procedure:</p>
-<ol type="1">
-<li>Fit PLS models with different numbers of components.</li>
-<li>Evaluate the validation error for each model.</li>
-<li>Choose the number of components that minimizes the validation error.</li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="pls-in-python" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="pls-in-python"><span class="header-section-number">3.4</span> PLS in Python</h2>
-<p><code>scikit-learn</code> provides the class <code>PLSRegression</code> for fitting partial least squares models.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>pls_pipe <span class="op">=</span> Pipeline(</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    [</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"model"</span>, PLSRegression(n_components<span class="op">=</span><span class="dv">2</span>))</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>pls_pipe.fit(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The argument n_components specifies the number of PLS components.</p>
-<section id="selecting-the-number-of-components" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="selecting-the-number-of-components"><span class="header-section-number">3.4.1</span> Selecting the number of components</h3>
-<p>We can choose the number of components using cross-validation.</p>
-<div id="2d81face" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">"model__n_components"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>))}</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> GridSearchCV(pls_pipe, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>grid.fit(X, y)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>best_components <span class="op">=</span> grid.best_params_[<span class="st">"model__n_components"</span>]</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>best_components</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="pls-coefficient-path" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="pls-coefficient-path"><span class="header-section-number">3.4.2</span> PLS coefficient path</h3>
-<p>We can also examine how the regression coefficients change as the number of components increases.</p>
-<div id="00c783a4" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> StandardScaler().fit_transform(X)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> []</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    pls <span class="op">=</span> PLSRegression(n_components<span class="op">=</span>m)</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    pls.fit(X_scaled, y)</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    coefs.append(pls.coef_.ravel())</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> np.array(coefs)</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(coefs.shape[<span class="dv">1</span>]):</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="dv">1</span>, X.shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>), coefs[:, j], label<span class="op">=</span><span class="ss">f"x</span><span class="sc">{</span>j <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of components"</span>)</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Coefficient"</span>)</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"PLS coefficient path"</span>)</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Summary</p>
-<p>Partial least squares is a dimension reduction method designed for predictive modeling.</p>
-<p>It constructs components that maximize covariance between predictors and response. These components are used as predictors in a regression model. The number of components is typically selected using cross-validation.</p>
-<p>Compared with principal component regression:</p>
-<p>PCR focuses on explaining predictor variation. PLS focuses on predicting the response.</p>
-<p>As a result, PLS often requires fewer components to achieve strong predictive performance.</p>
 
 
 </section>

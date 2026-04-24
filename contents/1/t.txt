@@ -765,3 +765,182 @@ This provides the best rank-$m$ approximation to $X$ in terms of squared reconst
 
 
 
+
+### Geometric interpretation
+
+---
+
+::: {.callout-note}
+## Comparison with PCR
+
+PCR constructs components using only the predictor matrix $X$.
+
+PLS uses both $X$ and $y$ to determine the directions.
+
+As a result
+
+- PCR may require many components before the response information is captured.
+- PLS often achieves good predictive performance with fewer components.
+:::
+
+---
+
+### Choosing the number of components
+
+Similar to PCR, the number of components is chosen using cross-validation.
+
+Typical procedure:
+
+1. Fit PLS models with different numbers of components.
+2. Evaluate the validation error for each model.
+3. Choose the number of components that minimizes the validation error.
+
+---
+
+## PLS in Python
+
+`scikit-learn` provides the class `PLSRegression` for fitting partial least squares models.
+
+```python
+from sklearn.cross_decomposition import PLSRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+pls_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", PLSRegression(n_components=2))
+    ]
+)
+
+pls_pipe.fit(X, y)
+```
+
+The argument n_components specifies the number of PLS components.
+
+### Selecting the number of components
+
+We can choose the number of components using cross-validation.
+
+```{python}
+#| eval: false
+
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {"model__n_components": list(range(1, X.shape[1] + 1))}
+
+grid = GridSearchCV(pls_pipe, param_grid, cv=5, scoring="neg_mean_squared_error")
+
+grid.fit(X, y)
+
+best_components = grid.best_params_["model__n_components"]
+best_components
+```
+
+
+### PLS coefficient path
+
+We can also examine how the regression coefficients change as the number of components increases.
+
+
+```{python}
+#| eval: false
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cross_decomposition import PLSRegression
+from sklearn.preprocessing import StandardScaler
+
+X_scaled = StandardScaler().fit_transform(X)
+
+coefs = []
+
+for m in range(1, X.shape[1] + 1):
+    pls = PLSRegression(n_components=m)
+    pls.fit(X_scaled, y)
+    coefs.append(pls.coef_.ravel())
+
+coefs = np.array(coefs)
+
+for j in range(coefs.shape[1]):
+    plt.plot(range(1, X.shape[1] + 1), coefs[:, j], label=f"x{j + 1}")
+
+plt.xlabel("Number of components")
+plt.ylabel("Coefficient")
+plt.title("PLS coefficient path")
+plt.legend()
+plt.show()
+```
+
+
+Summary
+
+Partial least squares is a dimension reduction method designed for predictive modeling.
+
+It constructs components that maximize covariance between predictors and response.
+These components are used as predictors in a regression model.
+The number of components is typically selected using cross-validation.
+
+Compared with principal component regression:
+
+PCR focuses on explaining predictor variation.
+PLS focuses on predicting the response.
+
+As a result, PLS often requires fewer components to achieve strong predictive performance.
+
+
+
+
+
+
+
+
+
+<!-- Principal component regression constructs components that explain the variation in the predictor matrix $X$. However, these directions are chosen **without considering the response variable $y$**.
+
+Partial least squares (PLS) addresses this limitation by constructing components that are most strongly related to the response.
+
+The key idea is to construct components that simultaneously
+
+- capture variation in the predictors, and  
+- are strongly associated with the response. -->
+
+
+
+<!-- 5. Matrix Form (All Components)
+
+After $m$ steps:
+
+- $W = [w_1, \dots, w_m]$
+- $Z = XW$ (scores)
+- $P = [p_1, \dots, p_m]$
+
+PLS decomposition:
+$$
+X\approx ZP^\top
+$$
+
+Final regression:
+$$
+\hat y=Zc=XWc
+$$
+
+So:
+$$
+\hat\beta_{\mathrm PLS}=Wc.
+$$
+ -->
+
+
+
+<!-- **Final Model Representation**
+
+After $m$ components:
+$$
+\hat y=\sum_{k=1}^mc_kZ_k=\sum_{k=1}^mc_kXw_k.
+$$
+
+So the final coefficient vector is:
+$$
+\hat\beta_{\mathrm{PLS}}=\sum_{k=1}^mc_kw_k.
+$$ -->
