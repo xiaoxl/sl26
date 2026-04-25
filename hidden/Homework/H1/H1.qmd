@@ -2,11 +2,17 @@
 title: "Homework 1"
 # author: "Type Your Name Here"
 # date: today
-format: pdf
+format: html
 show_solution: true
 ---
 
 
+
+::: {.content-visible when-meta="show_solution"}
+::: {.solution}
+sfdfs
+:::
+:::
 
 
 

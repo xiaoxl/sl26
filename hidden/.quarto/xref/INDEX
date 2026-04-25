@@ -3,6 +3,11 @@
     "template.tex": "ce7f9814"
   },
   "Homework/H1/H1.qmd": {
-    "H1.tex": "ef3d5682"
+    "H1.tex": "ef3d5682",
+    "H1.typ": "d2d02c38",
+    "H1.html": "a08d7210"
+  },
+  "Homework/H2/H2.qmd": {
+    "H2.html": "ab08dfc8"
   }
 }

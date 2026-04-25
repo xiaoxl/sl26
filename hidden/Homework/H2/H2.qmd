@@ -1,4 +1,11 @@
-
+---
+title: "Homework 2"
+# author: "Type Your Name Here"
+# date: today
+jupyter: stats
+format: html
+show_solution: true
+---
 
 
 
@@ -20,7 +27,7 @@ dsf
 2. Write the ridge regression optimization problem
 
 $$
-\min_\beta \{ RSS + \lambda \sum_{j=1}^p \beta_j^2 \}
+\min_\beta \{ \rss + \lambda \sum_{j=1}^p \beta_j^2 \}
 $$
 
 Explain how $\lambda$ affects coefficient shrinkage.
