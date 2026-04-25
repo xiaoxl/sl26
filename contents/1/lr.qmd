@@ -78,9 +78,7 @@ The training error measures how well a model fits the training data.
 The test error measures prediction error on new observations not used to fit the model.
 :::
 
-<!-- $$
-\text{MSE}_{train}=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat y_i)^2 .
-$$ -->
+
 
 For example, for a fitted model, we can measure its performance using the mean squared error (MSE). The training MSE measures how well the model fits the training data. However, a model that fits the training data very well may perform poorly on new observations. The more relevant quantity is the test MSE, which measures prediction error on new data drawn from the same population.
 
@@ -678,6 +676,20 @@ gs.best_params_
 gs.best_score_
 ```
 
+`gs.cv_results_` stores the results for all folds. Itself is a `dict`. Usually we convert it into a DataFrame.
+
+
+```{python}
+import pandas as pd
+
+df_result = pd.DataFrame(gs.cv_results_)
+df_result
+```
+
+Then we could get access to the mean test score or other metrics to see how scores are changed along the parameters.
+```{python}
+df_result["mean_test_score"]
+```
 
 
 

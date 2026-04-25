@@ -37,11 +37,12 @@ book:
       - contents/1/lr.qmd
       - contents/1/shrinkage.qmd      
       - contents/1/dr.qmd
-      # - contents/1/logistic.qmd
+      # 
       # - contents/1/glm.qmd
       # - contents/1/gam.qmd
     # - part: "Part 2"
     #   chapters: 
+    #   - contents/2/logistic.qmd
     #   - contents/2/knn.qmd
     #   - contents/2/svm.qmd
     #   - contents/2/lda.qmd

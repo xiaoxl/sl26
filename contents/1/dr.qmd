@@ -461,23 +461,33 @@ max_components = min(n_train_fold, X_train.shape[1])  # <1>
 
 param_grid = {"pca__n_components": list(range(1, max_components + 1))}
 
-grid = GridSearchCV(
+gs_pcr = GridSearchCV(
     pcr_pipe, param_grid, cv=n_splits, scoring="neg_mean_squared_error"
 )
-grid.fit(X_train, y_train)
-grid.best_params_["pca__n_components"]
+gs_pcr.fit(X_train, y_train)
+gs_pcr.best_params_["pca__n_components"]
 ```
 1. The maximal possible number of components depends on the shape of X. However for cross-validation, the number of rows of X is reduced due to the split. Therefore we have to estimate this number in order to avoid "`n_components` out of bounds" warning.
 
-It shows that `{python} grid.best_params_["pca__n_components"]` is the best number. Then we check the test result.
+It shows that `{python} gs_pcr.best_params_["pca__n_components"]` is the best number. Then we check the test result.
 ```{python}
-y_pred_pcr = grid.predict(X_test)
+y_pred_pcr = gs_pcr.predict(X_test)
 
 print(f"Test RMSE: {mean_squared_error(y_test, y_pred_pcr)}")
 print(f"Test R^2 : {r2_score(y_test, y_pred_pcr)}")
 ```
 It is slightly better than `13`, but still worse than tuned `ridge` and `lasso`. 
 
+We could also look at the validation curve on the mean test score.
+
+```{python}
+import matplotlib.pyplot as plt
+
+plt.plot(param_grid["pca__n_components"], gs_pcr.cv_results_["mean_test_score"])
+plt.axvline(19, linestyle="--", color="red", label="best_gs")
+plt.axvline(13, linestyle="--", color="blue", label="best_elbow")
+plt.legend()
+```
 
 
 
@@ -516,13 +526,6 @@ After constructing the component $Z_k$, both the predictor matrix $X$ and the re
 
 PLS constructs components sequentially, with each step explicitly targeting predictive power for $y$, rather than variance in $X$.
 
-<!-- At step $k$, we work with residual matrices:
-
-- $X_k$: predictor residuals  
-- $y_k$: response residuals   -->
-
-
-<!-- #### Sequential construction -->
 
 **Step 1**: Find the direction. Choose a direction $w_k \in \mathbb{R}^p$ such that the component $Z_k = X_k w_k$ maximizes covariance with $y_k$.
 $$
@@ -704,7 +707,7 @@ P = pls.x_loadings_   # loadings (P)
 
 ### Example
 
-We still use the old example.
+We use the same simulated dataset as before.
 
 
 ```{python}
@@ -733,8 +736,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 ```
 
 
-Similar to PCR, the max number of components is again the minimum between the number of rows and the number of columns of `X_train`. 
-
+Similar to PCR, we need to choose the number of components. Since PLS is fit inside cross-validation, the maximum number of components should be no larger than the number of observations in each training fold.
 
 ```{python}
 #| warning: false
@@ -747,48 +749,256 @@ max_components = min(n_train_fold, X_train.shape[1])
 
 param_grid = {"n_components": list(range(1, max_components + 1))}
 
-grid = GridSearchCV(
+gs_pls = GridSearchCV(
     PLSRegression(), param_grid, cv=n_splits, scoring="neg_mean_squared_error"
 )
-grid.fit(X_train, y_train)
-grid.best_params_["n_components"]
+gs_pls.fit(X_train, y_train)
+gs_pls.best_params_["n_components"]
 ```
 
+After selecting the number of components by cross-validation, we evaluate the fitted model on the test set.
 
 ```{python}
-y_pred_pls = grid.predict(X_test)
+y_pred_pls = gs_pls.predict(X_test)
 
 print(f"Test RMSE: {mean_squared_error(y_test, y_pred_pls)}")
 print(f"Test R^2 : {r2_score(y_test, y_pred_pls)}")
 ```
 
+The validation curve shows how the cross-validation error changes as the number of PLS components increases.
+
+```{python}
+import matplotlib.pyplot as plt
+
+plt.plot(param_grid["n_components"], gs_pls.cv_results_["mean_test_score"])
+plt.axvline(
+    gs_pls.best_params_["n_components"],
+    linestyle="--",
+    color="red",
+    label="best_gs",
+)
+plt.legend()
+```
+
 
 ::: {.callout-note}
-Important Notes
+## Important Notes
 
-- PLSRegression automatically centers and scales (unless disabled)
-- Unlike PCA: uses both $X$ and $y$
-- Number of components: choose via cross-validation
+- `PLSRegression` automatically centers and scales the predictors by default.
+- Unlike PCR, PLS uses both $X$ and $y$ when constructing components.
+- The number of components should be chosen by cross-validation.
+- Very large numbers of components are usually unnecessary and may lead to numerical warnings.
 :::
 
 
 
 
+The results for this dataset are summarized in the following table.
+
+
+
+```{python}
+#| echo: false
+def run_comparison(X_train, X_test, y_train, y_test, n_splits=5, ols_in=True):
+    from sklearn.pipeline import Pipeline
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.decomposition import PCA
+    from sklearn.cross_decomposition import PLSRegression
+    from sklearn.linear_model import LinearRegression, LassoCV, RidgeCV
+    from sklearn.model_selection import GridSearchCV
+    from sklearn.metrics import mean_squared_error, r2_score
+    import numpy as np
+    import pandas as pd
+
+    n_train_fold = int(X_train.shape[0] * (n_splits - 1) / n_splits)
+    max_components = min(n_train_fold, X_train.shape[1])
+
+    # OLS
+    ols_pipe = Pipeline(
+        [("scaler", StandardScaler()), ("model", LinearRegression())]
+    )
+    ols_pipe.fit(X_train, y_train)
+
+    # Ridge
+    ridge_pipe = Pipeline([("scaler", StandardScaler()), ("model", RidgeCV())])
+    ridge_pipe.fit(X_train, y_train)
+
+    # Lasso
+    lasso_pipe = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("model", LassoCV(cv=n_splits, max_iter=10000, random_state=0)),
+        ]
+    )
+    lasso_pipe.fit(X_train, y_train)
+
+    # PCR
+    pcr_pipe = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("pca", PCA()),
+            ("model", LinearRegression()),
+        ]
+    )
+    gs_pcr = GridSearchCV(
+        pcr_pipe,
+        {"pca__n_components": list(range(1, max_components + 1))},
+        cv=n_splits,
+        scoring="neg_mean_squared_error",
+    )
+    gs_pcr.fit(X_train, y_train)
+
+    # PLS
+    pls_pipe = Pipeline(
+        [("scaler", StandardScaler()), ("pls", PLSRegression())]
+    )
+    gs_pls = GridSearchCV(
+        pls_pipe,
+        {"pls__n_components": list(range(1, max_components + 1))},
+        cv=n_splits,
+        scoring="neg_mean_squared_error",
+    )
+    gs_pls.fit(X_train, y_train)
+
+    rows = []
+    for name, model in [
+        ("OLS", ols_pipe),
+        ("RidgeCV", ridge_pipe),
+        ("LassoCV", lasso_pipe),
+        ("PCR", gs_pcr),
+        ("PLS", gs_pls),
+    ]:
+        y_pred = model.predict(X_test)
+        row = {
+            "Model": name,
+            "Test RMSE": round(mean_squared_error(y_test, y_pred), 4),
+            "Test R²": round(r2_score(y_test, y_pred), 6),
+        }
+        if name == "RidgeCV":
+            row["Best param"] = f"alpha={model.named_steps['model'].alpha_}"
+        elif name == "LassoCV":
+            row["Best param"] = f"alpha={model.named_steps['model'].alpha_}"
+        elif name == "PCR":
+            row["Best param"] = (
+                f"n_components={gs_pcr.best_params_['pca__n_components']}"
+            )
+        elif name == "PLS":
+            row["Best param"] = (
+                f"n_components={gs_pls.best_params_['pls__n_components']}"
+            )
+        else:
+            row["Best param"] = None
+        if (ols_in is True) or ((ols_in is False) and (name is not "OLS")):
+            rows.append(row)
+
+    return pd.DataFrame(rows).set_index("Model")
+```
+
+
+```{python}
+#| echo: false
+#| warning: false
+run_comparison(X_train, X_test, y_train, y_test)
+```
+
+
+Note that PCR and PLS do not perform as well as ridge and lasso in this example. A key reason lies in how the dataset is generated.
+
+- The coefficient vector $\beta$ is sparse: only a small number of predictors (10 out of 100) are truly relevant.
+- The noise level is relatively high, making signal recovery more difficult.
+- More importantly, the variation in $X$ is driven by a low-dimensional latent structure ($Z A$), while the true signal depends on a sparse set of original predictors. As a result, the directions of largest variance in $X$ are not necessarily aligned with the directions that predict $y$.
+
+Since PCR relies only on variance in $X$, and PLS is still influenced by this structure, both methods may fail to recover the true signal efficiently. In contrast, ridge and lasso operate directly on the original predictors, with lasso particularly well-suited for identifying sparse signals.
+
+
+
+### Another example
+
+
+Now let us look at another example. In this setting, we construct $X$ so that most of its variance comes from irrelevant noise, while the true signal has low variance but determines $y$. Specifically,
+$$
+y = Z_1 b + \varepsilon_Y, \quad
+X = Z_1 A_1 + Z_2 A_2 + \varepsilon_X.
+$$
+
+This setup has the following properties:
+
+- $Z_1$ (signal) has low variance, while $Z_2$ (noise) has high variance.
+- $y$ depends only on $Z_1$.
+- Therefore, the predictive signal lies in low-variance but structured (low-rank) directions of $X$.
+- For simplicity, we take $Z_1$ to be one-dimensional in the following example.
 
 
 
 
+```{python}
+#| warning: false
+import numpy as np
+
+rng = np.random.default_rng(42)
+
+n = 120
+p = 300
+
+Z_1 = rng.normal(size=(n, 1))
+A_1 = rng.normal(size=(1, p))
+X_signal = Z_1 @ A_1 * 0.15
+
+k_2 = 10
+Z_2 = rng.normal(size=(n, k_2))
+A_2 = rng.normal(size=(k_2, p))
+X_noise = Z_2 @ A_2 * 15
+
+X = X_noise + X_signal + 0.5 * rng.normal(size=(n, p))
+
+y = 12 * Z_1.ravel() + 0.5 * rng.normal(size=n)
+```
+
+
+```{python}
+#| echo: false
+#| warning: false
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=0
+)
+run_comparison(X_train, X_test, y_train, y_test, ols_in=False)
+```
 
 
 
 
+In this example, PCR and especially PLS tend to outperform ridge and lasso.
+
+- PCR can recover the signal if enough components are included, even though the signal lies in low-variance directions.
+- PLS performs particularly well because it uses $y$ when constructing components, allowing it to directly identify directions associated with the response.
+- Ridge and lasso shrink coefficients based on the observed predictors. Since the signal is weak (low variance) and spread across many features through $A_1$, it is harder for them to isolate and recover it.
 
 
+::: {.callout-caution}
+Important predictive directions do not have to correspond to directions of large variance.
+:::
 
 
+<!-- 
 
+::: {.callout-note}
+## Why does OLS still perform well?
 
+In this example, OLS achieves strong performance, even though $X$ is high-dimensional and largely driven by noise. This may seem surprising at first, but it can be explained by the structure of the data.
 
+- The response $y$ is driven by a low-dimensional latent factor $Z_1$.
+- This factor is embedded in $X$ through the term $Z_1 A_1$, so the signal lies in the column space of $X$.
+- As a result, there exists a linear combination of the predictors that can approximate $y$ well.
 
+Even when $p > n$ or $X$ is nearly singular, OLS (as implemented in `LinearRegression`) computes a minimum-norm least squares solution using the pseudo-inverse. This solution effectively restricts the fitted model to a low-complexity subspace, which can generalize well when the true signal is low-dimensional.
 
+In contrast:
 
+- Ridge and lasso operate in the original coordinate system and are influenced by the high-variance noise directions in $X$.
+- PCR relies on variance in $X$ and may require many components before reaching the predictive direction.
+- PLS performs better than PCR because it uses $y$ to guide the construction of components, allowing it to identify predictive directions more efficiently.
+
+This example illustrates that OLS does not necessarily fail in high-dimensional settings. When the signal lies in a well-represented low-dimensional subspace and the noise level is moderate, the minimum-norm solution can still achieve good predictive performance.
+::: -->

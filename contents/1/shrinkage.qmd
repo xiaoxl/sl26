@@ -987,7 +987,7 @@ train_scores, test_scores = validation_curve(
     param_range=alphas,
     cv=5,
     scoring="neg_mean_squared_error",
-)
+)  # <1>
 
 plt.plot(alphas, train_scores.mean(axis=1), label="train")
 plt.plot(alphas, test_scores.mean(axis=1), label="test")
@@ -1000,6 +1000,9 @@ plt.ylabel("score")
 plt.title("Validation curve for ridge regression")
 plt.legend()
 ```
+1. The validatiaon curve can also be drawn by `GridSearchCV.cv_results_`. There are no major difference between the two methods.
+
+
 
 Similarly, if we want to examine how the coefficients change with `alpha`, we fit ordinary `Ridge` repeatedly over a grid of `alpha` values and record the fitted coefficients. In this case, cross-validation is not needed, since the goal is only to visualize the coefficient path rather than to compare models.
 
