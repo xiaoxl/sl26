@@ -9,7 +9,6 @@ show_solution: true
 
 
 
-
 # Week 2: Regularization Methods
 
 ## Theory Problems
@@ -17,44 +16,558 @@ show_solution: true
 
 
 ::: {#exr-}
-## asdf
-dsf
+Suppose we estimate the regression coefficients in a linear regression model by minimizing
+$$
+\sum_{i=1}^n\qty(y_i-\beta_0-\sum_{j=1}^p\beta_jx_{ij})^2+\lambda\sum_{j=1}^p\beta_j^2
+$$
+for a particular value of $\lambda$. Answer the following questions and justify your answer.
+
+a. As we increase $\lambda$ from $0$, how will the training $\rss$ be changed?
+b. As we increase $\lambda$ from $0$, how will the test $\rss$ be changed?
+c. As we increase $\lambda$ from $0$, how will the variance be changed?
+d. As we increase $\lambda$ from $0$, how will the squared bias be changed?
+e. As we increase $\lambda$ from $0$, how will the irreducible error be changed?
+:::
+
+::: {.content-visible when-meta="show_solution"}
+
+::: {.solution}
+
+This is ridge regression. The tuning parameter $\lambda$ controls the strength of the penalty:
+
+$$
+\lambda \sum_{j=1}^p \beta_j^2.
+$$
+
+When $\lambda=0$, the method is ordinary least squares. As $\lambda$ increases, the penalty becomes stronger, so the coefficients are shrunk more toward zero.
+
+**a. Training RSS**
+
+As $\lambda$ increases from $0$, the training RSS will increase or stay the same.
+
+Reason: $\lambda=0$ gives the ordinary least squares solution, which minimizes the training RSS without penalty. Adding a penalty restricts the solution away from the unconstrained RSS minimizer, so the training RSS cannot improve.
+
+**b. Test RSS**
+
+As $\lambda$ increases from $0$, the test RSS will typically decrease at first and then increase.
+
+Reason: a small amount of shrinkage can reduce overfitting and lower variance, improving test performance. But if $\lambda$ becomes too large, the model becomes too constrained, leading to underfitting and larger bias.
+
+**c. Variance**
+
+As $\lambda$ increases from $0$, variance will decrease.
+
+Reason: larger $\lambda$ shrinks the coefficients more strongly toward zero, making the fitted model less sensitive to random variation in the training data.
+
+**d. Squared bias**
+
+As $\lambda$ increases from $0$, squared bias will increase.
+
+Reason: stronger shrinkage pulls the fitted model away from the least squares fit and may prevent it from capturing the true relationship fully.
+
+**e. Irreducible error**
+
+The irreducible error does not change.
+
+Reason: irreducible error is caused by the noise in the data-generating process, not by the choice of $\lambda$ or the regression method.
+:::
 :::
 
 
-1. Explain why multicollinearity leads to unstable OLS estimates.
 
-2. Write the ridge regression optimization problem
+::: {#exr-}
+Suppose we estimate the regression coefficients in a linear regression model by minimizing
+$$
+\sum_{i=1}^n\qty(y_i-\beta_0-\sum_{j=1}^p\beta_jx_{ij})^2\quad \text{ subject to }\sum_{j=1}^p\abs{\beta_j}\leq s
+$$
+for a particular value of $s$. Answer the following questions and justify your answer.
+
+a. As we increase $s$ from $0$, how will the training $\rss$ be changed?
+b. As we increase $s$ from $0$, how will the test $\rss$ be changed?
+c. As we increase $s$ from $0$, how will the variance be changed?
+d. As we increase $s$ from $0$, how will the squared bias be changed?
+e. As we increase $s$ from $0$, how will the irreducible error be changed?
+:::
+
+::: {.content-visible when-meta="show_solution"}
+
+::: {.solution}
+
+
+This is the lasso constraint form. The parameter $s$ controls how large the coefficients are allowed to be:
 
 $$
-\min_\beta \{ \rss + \lambda \sum_{j=1}^p \beta_j^2 \}
+\sum_{j=1}^p |\beta_j| \le s.
 $$
 
-Explain how $\lambda$ affects coefficient shrinkage.
+When $s=0$, all slope coefficients must be zero, so the model is the intercept-only model. As $s$ increases, the constraint becomes less restrictive, and the model becomes more flexible.
 
-3. Explain why ridge regression reduces variance but increases bias.
+**a. Training RSS**
 
-4. Explain why the lasso penalty
+As $s$ increases, the training RSS will decrease or stay the same.
 
-$$
-\sum_{j=1}^p |\beta_j|
-$$
+Reason: increasing $s$ enlarges the set of allowable coefficient values. Since the old solution is still feasible, the minimized training RSS cannot increase.
 
-can produce sparse solutions.
+**b. Test RSS**
 
-5. Compare ridge regression and lasso in terms of interpretability.
+As $s$ increases, the test RSS will typically decrease at first and then increase.
 
-6. Explain why predictors should be standardized before applying ridge or lasso.
+Reason: when $s$ is very small, the model is too simple and has high bias, so test error is large. Increasing $s$ allows the model to capture more signal, reducing test error. However, if $s$ becomes too large, the model may overfit the training data, increasing variance and therefore increasing test error.
 
-7. Describe how cross-validation selects $\lambda$.
+**c. Variance**
 
-8. Explain the geometric difference between $L_1$ and $L_2$ penalties.
+As $s$ increases, variance will increase.
 
-9. Suppose $\lambda=0$. What model is obtained?
+Reason: larger $s$ allows more flexible models with larger coefficients. The fitted model becomes more sensitive to the particular training sample, so its variance increases.
 
-10. Explain why lasso is useful when $p > n$.
+**d. Squared bias**
+
+As $s$ increases, squared bias will decrease.
+
+Reason: when $s$ is small, the model is heavily constrained and may underfit the true relationship. Increasing $s$ relaxes the constraint, allowing the model to better approximate the true regression function.
+
+**e. Irreducible error**
+
+The irreducible error does not change.
+
+Reason: irreducible error comes from the random noise in the data-generating process, not from the choice of model or the value of $s$.
+:::
+:::
+
+
+
+
+
+
+
+
+::: {#exm-}
+
+## PCR vs PLS
+
+Consider a regression problem with centered data matrix $X \in \mathbb{R}^{n \times p}$ and response $y \in \mathbb{R}^n$.
+
+**a. Bias–Variance Tradeoff**
+
+Discuss how PCR and PLS differ in terms of bias and variance.
+
+- When might PCR have higher bias than PLS?
+- When might PLS have higher variance than PCR?
+
+
+**b. When PCR Fails**
+
+Construct (or describe) a situation where PCR performs way worse than PLS. Explain why PCR may perform poorly in this setting.
+<!-- 
+**c. When PLS Fails**
+
+Construct (or describe) a situation where PLS performs way worse than PCR. Explain why PLS may perform poorly in this setting. -->
+
+**c. Code examples**
+
+Write Python code to generate the datasets to implement the above two cases. A dataset is a pair $(X,y)$ with both are `numpy.array`.
+
+Ensure there is a performance difference. You can get a bonus if there is at least 1% difference in $R^2$. You may fix random seeds or adjust noise levels to achieve this.
+
+You code should look like this.
+
+```{python}
+#| eval: false
+import numpy as np
+
+rng = np.random.default_rng(0)
+
+## Write your data generating code here to replace the code below
+n, p = 100, 100
+X = rng.normal(size=(n, p))
+y = rng.normal(size=n)
+```
+
+I will test the dataset using the following setting:
+
+1. Split the dataset into trainning and test set with `test_size=0.3`, `random_state=0`.
+2. Use `cv=5` and `neg_mean_squared_error` to pick `n_components`. You may set the maximal search cap to be `20` for simplicity.
+3. Train the model on the training set, and test the model on the test set.
+4. For performance I only look at `r2_score`.
+
+
+```{python}
+#| eval: false
+#| echo: false
+import numpy as np
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.cross_decomposition import PLSRegression
+from sklearn.decomposition import PCA
+from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error, r2_score
+
+
+def compare_pcr_pls(X, y, max_components=20):
+
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, random_state=0)
+
+    max_components = min(max_components, X_tr.shape[0], X_tr.shape[1])
+    param_range = list(range(1, max_components + 1))
+
+    pcr_pipe = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("pca", PCA()),
+            ("ols", LinearRegression()),
+        ]
+    )
+
+    pcr_grid = GridSearchCV(
+        pcr_pipe,
+        {"pca__n_components": param_range},
+        cv=5,
+        scoring="neg_mean_squared_error",
+    )
+
+    pls_pipe = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("pls", PLSRegression()),
+        ]
+    )
+
+    pls_grid = GridSearchCV(
+        pls_pipe,
+        {"pls__n_components": param_range},
+        cv=5,
+        scoring="neg_mean_squared_error",
+    )
+
+    pcr_grid.fit(X_tr, y_tr)
+    pls_grid.fit(X_tr, y_tr)
+
+    pcr_mse = mean_squared_error(y_te, pcr_grid.predict(X_te))
+    pls_mse = mean_squared_error(y_te, pls_grid.predict(X_te))
+    pcr_r2 = r2_score(y_te, pcr_grid.predict(X_te))
+    pls_r2 = r2_score(y_te, pls_grid.predict(X_te))
+
+    print(f"PCR test MSE: {pcr_mse}, PCR test R2: {pcr_r2}")
+    print(f"PLS test MSE: {pls_mse}, PLS test R2: {pls_r2}")
+
+
+compare_pcr_pls(X, y)
+
+```
+
+
+:::
+
+::: {.content-visible when-meta="show_solution"}
+
+::: {.solution}
+ **(a) Bias–Variance Tradeoff**
+
+PCR and PLS differ in how they construct components, which leads to different bias–variance behavior.
+
+- **PCR** selects components based only on the variance of $X$, ignoring $y$.
+- **PLS** selects components based on their covariance with $y$.
+
+**Bias**
+
+- PCR may have **higher bias** when the directions that are most predictive of $y$ correspond to **low-variance directions in $X$**.  
+  In this case, PCR may discard these directions when truncating components.
+
+- PLS tends to have **lower bias for prediction**, since it uses $y$ to identify directions that are directly relevant for predicting $y$.
+
+**Variance**
+
+- PLS may have **higher variance**, because it uses $y$ to construct components.  
+  This makes it more sensitive to noise in $y$, especially in small samples or low signal-to-noise settings.
+
+- PCR often has **lower variance**, since it relies only on the covariance structure of $X$, which is typically more stable than $X^\top y$.
+
+**Summary:**
+
+- PCR: potentially higher bias, lower variance  
+- PLS: potentially lower bias, higher variance  
+
+**(b) When PCR Fails**
+
+PCR performs poorly when the directions with large variance in $X$ are not predictive of $y$, while the predictive signal lies in low-variance directions.
+
+A typical construction is:
+
+- $X$ contains:
+  - high-variance noise directions
+  - low-variance signal directions
+- $y$ depends primarily on the low-variance signal
+
+In this case:
+
+- PCA identifies the high-variance directions (noise-dominated)
+- PCR keeps these directions and may discard the low-variance signal
+- As a result, PCR fails to capture the relationship between $X$ and $y$
+
+**(c) code example**
+```{python}
+#| eval: false
+import numpy as np
+
+rng = np.random.default_rng(0)
+
+n, p = 200, 100
+
+Z_noise = rng.normal(size=(n, 5))
+A_noise = rng.normal(size=(5, p))
+X_noise = Z_noise @ A_noise * 10
+
+z_signal = rng.normal(size=(n, 1))
+a_signal = rng.normal(size=(1, p))
+X_signal = z_signal @ a_signal * 0.2
+
+X = X_noise + X_signal +rng.normal(size=(n, p))
+y = z_signal.ravel() + 0.5*rng.normal(size=n)
+
+```
+
+
+:::
+:::
+
+
+
+
+
+::: {#exm-}
+## Exercise: Ridge vs Lasso
+
+Consider a regression problem with centered data matrix $X \in \mathbb{R}^{n \times p}$ and response $y \in \mathbb{R}^n$.
 
 ---
+
+### (a) Bias–Variance Tradeoff
+
+Discuss how ridge regression and lasso differ in terms of bias and variance.
+
+- When might lasso have higher bias than ridge?
+- When might ridge have higher variance than lasso?
+
+---
+
+### (b) When Ridge Fails
+
+Construct (or describe) a situation where ridge regression performs much worse than lasso.
+
+Explain your reasoning.
+
+Hint: Consider the case where only a small number of predictors are truly relevant.
+
+---
+
+### (c) Code Examples
+
+Write Python code to generate datasets $(X, y)$ illustrating:
+
+- a case where ridge performs much worse than lasso
+- a case where lasso performs worse than ridge
+
+Use cross-validation to tune the regularization parameter.
+
+Ensure there is a performance difference. You can get a bonus if there is at least 1% difference in $R^2$. You may fix random seeds or adjust noise levels to achieve this.
+
+Your code should look like this:
+
+```{python}
+#| eval: false
+import numpy as np
+
+rng = np.random.default_rng(0)
+
+## Write your data generating code here to replace the code below
+n, p = 100, 100
+X = rng.normal(size=(n, p))
+y = rng.normal(size=n)
+```
+
+I will test the dataset using the following setting:
+
+1. Split the dataset into training and test set with `test_size=0.3`, `random_state=0`.
+2. Use `cv=5` and `neg_mean_squared_error` to pick $\lambda$.
+3. The range for `alpha` is `alphas = np.logspace(-4, 3, 50)`.
+4. Train the model on the training set, and test the model on the test set.
+5. For performance I only look at `r2_score`.
+
+
+```{python}
+#| eval: false
+#| echo: false
+
+import numpy as np
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.linear_model import Ridge, Lasso
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error, r2_score
+
+
+def compare_ridge_lasso(X, y, alphas=None):
+
+    if alphas is None:
+        alphas = np.logspace(-4, 3, 50)
+
+    X_tr, X_te, y_tr, y_te = train_test_split(
+        X, y, test_size=0.3, random_state=0
+    )
+
+    ridge_pipe = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("ridge", Ridge()),
+        ]
+    )
+
+    ridge_grid = GridSearchCV(
+        ridge_pipe,
+        {"ridge__alpha": alphas},
+        cv=5,
+        scoring="neg_mean_squared_error",
+    )
+
+    lasso_pipe = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("lasso", Lasso(max_iter=10000)),
+        ]
+    )
+
+    lasso_grid = GridSearchCV(
+        lasso_pipe,
+        {"lasso__alpha": alphas},
+        cv=5,
+        scoring="neg_mean_squared_error",
+    )
+
+    ridge_grid.fit(X_tr, y_tr)
+    lasso_grid.fit(X_tr, y_tr)
+
+    ridge_pred = ridge_grid.predict(X_te)
+    lasso_pred = lasso_grid.predict(X_te)
+
+    ridge_mse = mean_squared_error(y_te, ridge_pred)
+    lasso_mse = mean_squared_error(y_te, lasso_pred)
+
+    ridge_r2 = r2_score(y_te, ridge_pred)
+    lasso_r2 = r2_score(y_te, lasso_pred)
+
+    print(f"Ridge test MSE: {ridge_mse}, Ridge test R2: {ridge_r2}")
+    print(f"Lasso test MSE: {lasso_mse}, Lasso test R2: {lasso_r2}")
+```
+
+
+:::
+
+
+
+
+::: {.content-visible when-meta="show_solution"}
+
+::: {.solution}
+**(a) Bias–Variance Tradeoff**
+
+Ridge and lasso differ in how they regularize the model:
+
+- Ridge uses an $\ell_2$ penalty and shrinks all coefficients continuously.
+- Lasso uses an $\ell_1$ penalty and can set some coefficients exactly to zero.
+
+Bias
+
+- Lasso may have higher bias when the true signal is dense (many small nonzero coefficients), since it tends to eliminate weaker predictors.
+- Ridge generally has lower bias in dense settings, as it retains all predictors.
+
+Variance
+
+- Ridge tends to have lower variance, especially when predictors are highly correlated, since it stabilizes all coefficients.
+- Lasso may have higher variance, because variable selection introduces instability (small changes in data can change which variables are selected).
+
+Summary
+
+- Ridge: lower variance, better for dense signals
+- Lasso: higher bias in dense settings, better for sparse signals
+
+**(b) When Ridge Fails**
+
+Ridge performs poorly when the true model is sparse:
+
+- Only a small number of predictors are relevant
+- Many predictors are pure noise
+
+In this case:
+
+- Ridge keeps all variables with small coefficients
+- Noise variables remain and increase prediction error
+
+In contrast:
+
+- Lasso sets many coefficients to zero
+- Removes noise variables and improves prediction
+
+Therefore, ridge fails when sparsity is important, while lasso succeeds by performing variable selection.
+
+**(c) Code example**
+
+
+```{python}
+#| eval: false
+rng = np.random.default_rng(0)
+
+n, p = 120, 100
+X = rng.normal(size=(n, p))
+
+beta = np.zeros(p)
+beta[:5] = [10, 8, 6, 4, 2]
+
+y = X @ beta + rng.normal(size=n)
+```
+
+
+```{python}
+#| eval: false
+#| warning: false
+
+import numpy as np
+
+rng = np.random.default_rng(4)
+n = 200
+p = 500  
+k = 50  
+
+Z = rng.normal(size=(n, k))
+A = rng.normal(size=(k, p))
+X = Z @ A + 0.01 * rng.normal(size=(n, p))  
+
+gamma = rng.normal(1, 0.1, size=k)
+y = Z @ gamma + 3 * rng.normal(size=n)
+```
+
+
+
+:::
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -210,3 +723,9 @@ Using the same dataset:
 set.seed(432)
 # Your code here
 ```
+
+
+
+
+ISlR 8
+9

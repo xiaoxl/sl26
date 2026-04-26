@@ -100,14 +100,164 @@ window.Quarto = {
 <section id="theory-problems" class="level2">
 <h2 class="anchored" data-anchor-id="theory-problems">Theory Problems</h2>
 <div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1 (asdf)</strong></span> dsf</p>
+<p><span class="theorem-title"><strong>Exercise 1</strong></span> Suppose we estimate the regression coefficients in a linear regression model by minimizing <span class="math display">\[
+\sum_{i=1}^n\qty(y_i-\beta_0-\sum_{j=1}^p\beta_jx_{ij})^2+\lambda\sum_{j=1}^p\beta_j^2
+\]</span> for a particular value of <span class="math inline">\(\lambda\)</span>. Answer the following questions and justify your answer.</p>
+<ol type="a">
+<li>As we increase <span class="math inline">\(\lambda\)</span> from <span class="math inline">\(0\)</span>, how will the training <span class="math inline">\(\rss\)</span> be changed?</li>
+<li>As we increase <span class="math inline">\(\lambda\)</span> from <span class="math inline">\(0\)</span>, how will the test <span class="math inline">\(\rss\)</span> be changed?</li>
+<li>As we increase <span class="math inline">\(\lambda\)</span> from <span class="math inline">\(0\)</span>, how will the variance be changed?</li>
+<li>As we increase <span class="math inline">\(\lambda\)</span> from <span class="math inline">\(0\)</span>, how will the squared bias be changed?</li>
+<li>As we increase <span class="math inline">\(\lambda\)</span> from <span class="math inline">\(0\)</span>, how will the irreducible error be changed?</li>
+</ol>
 </div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>This is ridge regression. The tuning parameter <span class="math inline">\(\lambda\)</span> controls the strength of the penalty:</p>
+<p><span class="math display">\[
+\lambda \sum_{j=1}^p \beta_j^2.
+\]</span></p>
+<p>When <span class="math inline">\(\lambda=0\)</span>, the method is ordinary least squares. As <span class="math inline">\(\lambda\)</span> increases, the penalty becomes stronger, so the coefficients are shrunk more toward zero.</p>
+<p><strong>a. Training RSS</strong></p>
+<p>As <span class="math inline">\(\lambda\)</span> increases from <span class="math inline">\(0\)</span>, the training RSS will increase or stay the same.</p>
+<p>Reason: <span class="math inline">\(\lambda=0\)</span> gives the ordinary least squares solution, which minimizes the training RSS without penalty. Adding a penalty restricts the solution away from the unconstrained RSS minimizer, so the training RSS cannot improve.</p>
+<p><strong>b. Test RSS</strong></p>
+<p>As <span class="math inline">\(\lambda\)</span> increases from <span class="math inline">\(0\)</span>, the test RSS will typically decrease at first and then increase.</p>
+<p>Reason: a small amount of shrinkage can reduce overfitting and lower variance, improving test performance. But if <span class="math inline">\(\lambda\)</span> becomes too large, the model becomes too constrained, leading to underfitting and larger bias.</p>
+<p><strong>c.&nbsp;Variance</strong></p>
+<p>As <span class="math inline">\(\lambda\)</span> increases from <span class="math inline">\(0\)</span>, variance will decrease.</p>
+<p>Reason: larger <span class="math inline">\(\lambda\)</span> shrinks the coefficients more strongly toward zero, making the fitted model less sensitive to random variation in the training data.</p>
+<p><strong>d.&nbsp;Squared bias</strong></p>
+<p>As <span class="math inline">\(\lambda\)</span> increases from <span class="math inline">\(0\)</span>, squared bias will increase.</p>
+<p>Reason: stronger shrinkage pulls the fitted model away from the least squares fit and may prevent it from capturing the true relationship fully.</p>
+<p><strong>e. Irreducible error</strong></p>
+<p>The irreducible error does not change.</p>
+<p>Reason: irreducible error is caused by the noise in the data-generating process, not by the choice of <span class="math inline">\(\lambda\)</span> or the regression method.</p>
+</div>
+<div id="exr-" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2</strong></span> Suppose we estimate the regression coefficients in a linear regression model by minimizing <span class="math display">\[
+\sum_{i=1}^n\qty(y_i-\beta_0-\sum_{j=1}^p\beta_jx_{ij})^2\quad \text{ subject to }\sum_{j=1}^p\abs{\beta_j}\leq s
+\]</span> for a particular value of <span class="math inline">\(s\)</span>. Answer the following questions and justify your answer.</p>
+<ol type="a">
+<li>As we increase <span class="math inline">\(s\)</span> from <span class="math inline">\(0\)</span>, how will the training <span class="math inline">\(\rss\)</span> be changed?</li>
+<li>As we increase <span class="math inline">\(s\)</span> from <span class="math inline">\(0\)</span>, how will the test <span class="math inline">\(\rss\)</span> be changed?</li>
+<li>As we increase <span class="math inline">\(s\)</span> from <span class="math inline">\(0\)</span>, how will the variance be changed?</li>
+<li>As we increase <span class="math inline">\(s\)</span> from <span class="math inline">\(0\)</span>, how will the squared bias be changed?</li>
+<li>As we increase <span class="math inline">\(s\)</span> from <span class="math inline">\(0\)</span>, how will the irreducible error be changed?</li>
+</ol>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>This is the lasso constraint form. The parameter <span class="math inline">\(s\)</span> controls how large the coefficients are allowed to be:</p>
+<p><span class="math display">\[
+\sum_{j=1}^p |\beta_j| \le s.
+\]</span></p>
+<p>When <span class="math inline">\(s=0\)</span>, all slope coefficients must be zero, so the model is the intercept-only model. As <span class="math inline">\(s\)</span> increases, the constraint becomes less restrictive, and the model becomes more flexible.</p>
+<p><strong>a. Training RSS</strong></p>
+<p>As <span class="math inline">\(s\)</span> increases, the training RSS will decrease or stay the same.</p>
+<p>Reason: increasing <span class="math inline">\(s\)</span> enlarges the set of allowable coefficient values. Since the old solution is still feasible, the minimized training RSS cannot increase.</p>
+<p><strong>b. Test RSS</strong></p>
+<p>As <span class="math inline">\(s\)</span> increases, the test RSS will typically decrease at first and then increase.</p>
+<p>Reason: when <span class="math inline">\(s\)</span> is very small, the model is too simple and has high bias, so test error is large. Increasing <span class="math inline">\(s\)</span> allows the model to capture more signal, reducing test error. However, if <span class="math inline">\(s\)</span> becomes too large, the model may overfit the training data, increasing variance and therefore increasing test error.</p>
+<p><strong>c.&nbsp;Variance</strong></p>
+<p>As <span class="math inline">\(s\)</span> increases, variance will increase.</p>
+<p>Reason: larger <span class="math inline">\(s\)</span> allows more flexible models with larger coefficients. The fitted model becomes more sensitive to the particular training sample, so its variance increases.</p>
+<p><strong>d.&nbsp;Squared bias</strong></p>
+<p>As <span class="math inline">\(s\)</span> increases, squared bias will decrease.</p>
+<p>Reason: when <span class="math inline">\(s\)</span> is small, the model is heavily constrained and may underfit the true relationship. Increasing <span class="math inline">\(s\)</span> relaxes the constraint, allowing the model to better approximate the true regression function.</p>
+<p><strong>e. Irreducible error</strong></p>
+<p>The irreducible error does not change.</p>
+<p>Reason: irreducible error comes from the random noise in the data-generating process, not from the choice of model or the value of <span class="math inline">\(s\)</span>.</p>
+</div>
+</section>
+<section id="exercise-pcr-vs-pls" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-pcr-vs-pls">Exercise: PCR vs PLS</h2>
+<p>Consider a regression problem with centered data matrix <span class="math inline">\(X \in \mathbb{R}^{n \times p}\)</span> and response <span class="math inline">\(y \in \mathbb{R}^n\)</span>.</p>
+<hr>
+<section id="a-pca-vs-pls-directions" class="level3">
+<h3 class="anchored" data-anchor-id="a-pca-vs-pls-directions">(a) PCA vs PLS Directions</h3>
+<p>Let <span class="math inline">\(w \in \mathbb{R}^p\)</span> be a unit vector.</p>
+<ol type="1">
+<li><p>Show that the first principal component direction in PCA solves: <span class="math display">\[
+\max_{\|w\|=1} \Var(Xw)
+\]</span></p></li>
+<li><p>Show that the first PLS direction solves: <span class="math display">\[
+\max_{\|w\|=1} \Cov(Xw, y)
+\]</span></p></li>
+<li><p>Explain in words the difference between these two objectives.</p></li>
+</ol>
+<hr>
+</section>
+<section id="b-when-pcr-fails" class="level3">
+<h3 class="anchored" data-anchor-id="b-when-pcr-fails">(b) When PCR Fails</h3>
+<p>Construct (or describe) a situation where:</p>
+<ul>
+<li>The first principal component explains most of the variance in <span class="math inline">\(X\)</span>,</li>
+<li>But is <strong>not predictive of <span class="math inline">\(y\)</span></strong>.</li>
+</ul>
+<p>Explain why PCR may perform poorly in this setting.</p>
+<hr>
+</section>
+<section id="c-why-pls-can-do-better" class="level3">
+<h3 class="anchored" data-anchor-id="c-why-pls-can-do-better">(c) Why PLS Can Do Better</h3>
+<p>Explain why PLS may outperform PCR in the setting from part (b).</p>
+<p>In particular:</p>
+<ul>
+<li>What kind of directions does PLS favor?</li>
+<li>Why are these directions more useful for prediction?</li>
+</ul>
+<hr>
+</section>
+<section id="d-biasvariance-tradeoff" class="level3">
+<h3 class="anchored" data-anchor-id="d-biasvariance-tradeoff">(d) Bias–Variance Tradeoff</h3>
+<p>Compare PCR and PLS in terms of bias and variance:</p>
+<ol type="1">
+<li>Which method is more likely to have higher bias?</li>
+<li>Which method is more likely to have higher variance?</li>
+<li>Explain your reasoning.</li>
+</ol>
+<hr>
+</section>
+<section id="e-relation-to-ols" class="level3">
+<h3 class="anchored" data-anchor-id="e-relation-to-ols">(e) Relation to OLS</h3>
+<p>Suppose <span class="math inline">\(X\)</span> has full column rank and we use all <span class="math inline">\(p\)</span> components.</p>
+<ol type="1">
+<li>Show that PCR with all components recovers the OLS solution.</li>
+<li>Show that PLS with sufficiently many components also recovers OLS.</li>
+</ol>
+<hr>
+</section>
+<section id="f-interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="f-interpretation">(f) Interpretation</h3>
+<p>Consider the following statements. Indicate whether they are true or false, and justify:</p>
+<ol type="1">
+<li>PCR always selects the most predictive directions.</li>
+<li>PLS always produces orthogonal components.</li>
+<li>PLS uses information from <span class="math inline">\(y\)</span> when constructing components.</li>
+<li>PCR is invariant to the response <span class="math inline">\(y\)</span>.</li>
+</ol>
+<hr>
+</section>
+<section id="g-extension-optional" class="level3">
+<h3 class="anchored" data-anchor-id="g-extension-optional">(g) Extension (Optional)</h3>
+<p>Explain how PCR and PLS relate to ridge regression:</p>
+<ul>
+<li>In what sense are they all forms of <strong>regularization</strong>?</li>
+<li>How do their mechanisms differ?</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="hint" class="level2">
+<h2 class="anchored" data-anchor-id="hint">Hint</h2>
+<ul>
+<li>Recall that <span class="math inline">\(\Var(Xw) = w^\top X^\top X w\)</span></li>
+<li>Recall that <span class="math inline">\(\Cov(Xw, y) = w^\top X^\top y\)</span></li>
+</ul>
 <ol type="1">
 <li><p>Explain why multicollinearity leads to unstable OLS estimates.</p></li>
 <li><p>Write the ridge regression optimization problem</p></li>
 </ol>
 <p><span class="math display">\[
-\min_\beta \{ RSS + \lambda \sum_{j=1}^p \beta_j^2 \}
+\min_\beta \{ \rss + \lambda \sum_{j=1}^p \beta_j^2 \}
 \]</span></p>
 <p>Explain how <span class="math inline">\(\lambda\)</span> affects coefficient shrinkage.</p>
 <ol start="3" type="1">
