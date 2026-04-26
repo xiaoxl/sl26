@@ -1,3 +1,17 @@
+---
+title: "Homework 5"
+# author: "Type Your Name Here"
+# date: today
+jupyter: stats
+format: pdf
+show_solution: true
+---
+
+
+
+knn kernel
+
+
 
 # Week 5: Ensemble Methods
 

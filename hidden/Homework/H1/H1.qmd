@@ -14,9 +14,15 @@ sfdfs
 :::
 :::
 
+1. set up python qmd env
+2. run a full example pipeline ols cv on a dataset (islr 2.8 college)
+3. 3.14 collinearity
 
 
 
+
+
+<!-- 
 # Week 1: Introduction and Foundations
 
 ## Theory Problems
@@ -373,4 +379,4 @@ Compare:
 - a nonparametric smoother of your choice.
 
 Summarize which method gives the best prediction performance and why.
-
+ -->

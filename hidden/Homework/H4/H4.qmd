@@ -1,5 +1,14 @@
+---
+title: "Homework 4"
+# author: "Type Your Name Here"
+# date: today
+jupyter: stats
+format: pdf
+show_solution: true
+---
 
 
+logistic lda
 
 
 

@@ -194,5 +194,775 @@
       "Linear models",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Dimension reduction</span>"
     ]
+  },
+  {
+    "objectID": "contents/2/logistic.html",
+    "href": "contents/2/logistic.html",
+    "title": "4  Logistic Regression",
+    "section": "",
+    "text": "4.1 Modeling Binary Outcomes\nIn linear regression, we model a continuous response by \\[\nY = \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p + \\varepsilon.\n\\]\nThis framework is not appropriate when the response is binary, for example \\(Y \\in \\{0,1\\}\\).\nFor a binary response, the main target is the conditional probability \\[\nP(Y=1 \\mid X=\\mathbf{x}).\n\\]\nA logistic regression models this probability by \\[\nP(Y=1 \\mid X=\\mathbf{x}) = \\pi(\\mathbf{x})\n= \\frac{\\exp(\\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p)}\n{1+\\exp(\\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p)}.\n\\]\nEquivalently, if we write the linear predictor as \\[\n\\eta(\\mathbf{x}) = \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p,\n\\] then \\[\n\\pi(\\mathbf{x}) = \\frac{e^{\\eta(\\mathbf{x})}}{1+e^{\\eta(\\mathbf{x})}}.\n\\]\nThis guarantees that the fitted probability always stays between \\(0\\) and \\(1\\).",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#modeling-binary-outcomes",
+    "href": "contents/2/logistic.html#modeling-binary-outcomes",
+    "title": "4  Logistic Regression",
+    "section": "",
+    "text": "NoteLogistic regression is a GLM\n\n\n\nLogistic regression is a special case of a generalized linear model.\n\nThe response distribution is Bernoulli (or Binomial).\nThe mean is the probability \\(\\pi(\\mathbf{x}) = P(Y=1\\mid X=\\mathbf{x})\\).\nThe link function is the logit link.\n\nSo the model is linear in the log-odds, not in the probability itself.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#the-logit-link-and-odds",
+    "href": "contents/2/logistic.html#the-logit-link-and-odds",
+    "title": "4  Logistic Regression",
+    "section": "4.2 The Logit Link and Odds",
+    "text": "4.2 The Logit Link and Odds\nStarting from \\[\n\\pi(\\mathbf{x}) = \\frac{e^{\\eta(\\mathbf{x})}}{1+e^{\\eta(\\mathbf{x})}},\n\\] we obtain \\[\n1-\\pi(\\mathbf{x}) = \\frac{1}{1+e^{\\eta(\\mathbf{x})}}.\n\\]\nTherefore the odds are \\[\n\\frac{\\pi(\\mathbf{x})}{1-\\pi(\\mathbf{x})} = e^{\\eta(\\mathbf{x})},\n\\] and taking logarithm gives \\[\n\\log\\left(\\frac{\\pi(\\mathbf{x})}{1-\\pi(\\mathbf{x})}\\right)\n= \\eta(\\mathbf{x})\n= \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p.\n\\]\nHence logistic regression can be written as \\[\n\\log\\left(\\frac{P(Y=1\\mid X=\\mathbf{x})}{P(Y=0\\mid X=\\mathbf{x})}\\right)\n=\n\\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p.\n\\]\nThis is why the coefficients are interpreted through log-odds and odds ratios.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#interpreting-the-coefficients",
+    "href": "contents/2/logistic.html#interpreting-the-coefficients",
+    "title": "4  Logistic Regression",
+    "section": "4.3 Interpreting the Coefficients",
+    "text": "4.3 Interpreting the Coefficients\nSuppose all predictors except \\(x_j\\) are fixed, and \\(x_j\\) increases by one unit. Then the linear predictor increases by \\(\\beta_j\\), so the log-odds increase by \\(\\beta_j\\): \\[\n\\Delta \\log(\\text{odds}) = \\beta_j.\n\\]\nExponentiating both sides, we get \\[\n\\text{odds ratio} = e^{\\beta_j}.\n\\]\nTherefore:\n\n\\(\\beta_j\\) is the change in log-odds associated with a one-unit increase in \\(x_j\\).\n\\(e^{\\beta_j}\\) is the corresponding odds ratio.\n\n\n\n\n\n\n\nNoteInterpretation of a coefficient\n\n\n\nIn logistic regression, the coefficient \\(\\beta_j\\) does not represent the change in probability.\nInstead:\n\n\\(\\beta_j\\) is the change in log-odds\n\\(e^{\\beta_j}\\) is the multiplicative change in odds\n\nfor a one-unit increase in \\(x_j\\), with all other variables held fixed.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#why-not-use-linear-regression",
+    "href": "contents/2/logistic.html#why-not-use-linear-regression",
+    "title": "4  Logistic Regression",
+    "section": "4.4 Why Not Use Linear Regression?",
+    "text": "4.4 Why Not Use Linear Regression?\nIf we fit a linear regression model to a binary response, several problems arise.\nFirst, the fitted values are not restricted to the interval \\([0,1]\\), so they cannot always be interpreted as probabilities.\nSecond, the variance of a binary response depends on the mean: \\[\n\\Var(Y\\mid X=\\mathbf{x}) = \\pi(\\mathbf{x})(1-\\pi(\\mathbf{x})),\n\\] which violates the constant-variance assumption of ordinary linear regression.\nThird, the relationship between predictors and probability is often nonlinear, especially near probability \\(0\\) or \\(1\\). Logistic regression addresses these issues by modeling the log-odds linearly instead of the probability directly.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#prediction-and-classification",
+    "href": "contents/2/logistic.html#prediction-and-classification",
+    "title": "4  Logistic Regression",
+    "section": "4.5 Prediction and Classification",
+    "text": "4.5 Prediction and Classification\nAfter fitting the model, we may compute the estimated probability \\[\n\\hat{\\pi}(\\mathbf{x}) = P(Y=1\\mid X=\\mathbf{x}).\n\\]\nIf we want a class prediction, a common rule is\n\\[\n\\hat{Y} =\n\\begin{cases}\n1, & \\hat{\\pi}(\\mathbf{x}) &gt; 0.5,\\\\\n0, & \\hat{\\pi}(\\mathbf{x}) \\le 0.5.\n\\end{cases}\n\\]\nThe cutoff \\(0.5\\) is common, but it is not mandatory. In practice, the threshold may be adjusted depending on the application and the relative cost of false positives and false negatives.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#estimation-by-maximum-likelihood",
+    "href": "contents/2/logistic.html#estimation-by-maximum-likelihood",
+    "title": "4  Logistic Regression",
+    "section": "4.6 Estimation by Maximum Likelihood",
+    "text": "4.6 Estimation by Maximum Likelihood\nFor binary data, each \\(Y_i\\) follows a Bernoulli distribution with parameter \\(\\pi_i\\): \\[\nY_i \\mid X_i \\sim \\text{Bernoulli}(\\pi_i).\n\\]\nThus \\[\nP(Y_i = y_i \\mid X_i)\n=\n\\pi_i^{y_i}(1-\\pi_i)^{1-y_i},\n\\qquad y_i \\in \\{0,1\\}.\n\\]\nFor \\(n\\) independent observations, the likelihood is \\[\nL(\\boldsymbol\\beta)\n=\n\\prod_{i=1}^n\n\\pi_i^{y_i}(1-\\pi_i)^{1-y_i}.\n\\]\nTaking logarithm, the log-likelihood is \\[\n\\ell(\\boldsymbol\\beta)\n=\n\\sum_{i=1}^n\n\\left[\ny_i \\log(\\pi_i) + (1-y_i)\\log(1-\\pi_i)\n\\right].\n\\]\nUsing the logistic form of \\(\\pi_i\\), this becomes \\[\n\\ell(\\boldsymbol\\beta)\n=\n\\sum_{i=1}^n\n\\left[\ny_i \\mathbf{x}_i^\\top \\boldsymbol\\beta\n-\n\\log\\bigl(1+\\exp(\\mathbf{x}_i^\\top \\boldsymbol\\beta)\\bigr)\n\\right].\n\\]\nUnlike OLS, logistic regression does not have a closed-form solution.\nThe coefficients are obtained numerically by maximizing the log-likelihood.\n\n\n\n\n\n\nNoteDeviance\n\n\n\nIn generalized linear models, model fit is often summarized by the deviance. For logistic regression, a smaller deviance indicates a better fit.\nTwo common quantities are\n\nNull deviance: the deviance from a model with only an intercept\nResidual deviance: the deviance from the fitted model\n\nA large reduction from null deviance to residual deviance suggests that the predictors provide useful information about the response.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#a-simple-one-variable-example",
+    "href": "contents/2/logistic.html#a-simple-one-variable-example",
+    "title": "4  Logistic Regression",
+    "section": "4.7 A Simple One-Variable Example",
+    "text": "4.7 A Simple One-Variable Example\nSuppose the fitted model is \\[\n\\log\\left(\\frac{\\pi(x)}{1-\\pi(x)}\\right)\n=\n-3.006 + 0.052x.\n\\]\nFor a subject with \\(x=55\\), the linear predictor is \\[\n-3.006 + 0.052(55) = -0.146.\n\\]\nHence the estimated probability is \\[\n\\pi(55)\n=\n\\frac{e^{-0.146}}{1+e^{-0.146}}\n\\approx 0.463.\n\\]\nSo the model predicts a probability of about \\(46.3\\%\\) for class \\(1\\).",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#python-implementation-with-statsmodels",
+    "href": "contents/2/logistic.html#python-implementation-with-statsmodels",
+    "title": "4  Logistic Regression",
+    "section": "4.8 Python Implementation with statsmodels",
+    "text": "4.8 Python Implementation with statsmodels\nFor classical logistic regression, statsmodels is often the most natural Python choice.\n\nimport pandas as pd\nimport statsmodels.api as sm\n\nheart = pd.read_csv(\"processed_cleveland.csv\")\n\n# create a binary response:\n# 1 = presence of heart disease, 0 = no heart disease\nheart[\"Y\"] = (heart[\"num\"] &gt; 0).astype(int)\n\nX = sm.add_constant(heart[[\"age\"]])\ny = heart[\"Y\"]\n\nmodel = sm.GLM(y, X, family=sm.families.Binomial())\nresult = model.fit()\n\nprint(result.summary())\n\nTo predict at age = 55:\n\nnewX = pd.DataFrame({\"const\": [1], \"age\": [55]})\nresult.predict(newX)\n\nThe returned value is the estimated probability \\(P(Y=1\\mid X)\\).\n\n\n\n\n\n\nNotestatsmodels and the intercept\n\n\n\nWhen using matrix input with statsmodels.GLM, an intercept is not added automatically.\nTherefore we usually add it explicitly by sm.add_constant().\nIf a formula interface is used, the intercept is included by default unless we remove it explicitly.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#python-implementation-with-sklearn",
+    "href": "contents/2/logistic.html#python-implementation-with-sklearn",
+    "title": "4  Logistic Regression",
+    "section": "4.9 Python Implementation with sklearn",
+    "text": "4.9 Python Implementation with sklearn\nIn sklearn, logistic regression is treated mainly as a classification method.\n\nimport pandas as pd\nfrom sklearn.linear_model import LogisticRegression\n\nheart = pd.read_csv(\"processed_cleveland.csv\")\nheart[\"Y\"] = (heart[\"num\"] &gt; 0).astype(int)\n\nX = heart[[\"age\"]]\ny = heart[\"Y\"]\n\nclf = LogisticRegression(penalty=None, max_iter=1000)\nclf.fit(X, y)\n\n# predicted probability of class 1\nclf.predict_proba(pd.DataFrame({\"age\": [55]}))\n\nThe second column of predict_proba() is the estimated probability of class \\(1\\).\nTo generate class predictions:\n\nclf.predict(pd.DataFrame({\"age\": [55]}))\n\n\n\n\n\n\n\nWarningA practical difference between statsmodels and sklearn\n\n\n\nIn sklearn, logistic regression is regularized by default.\nSo if you want a model closer to the classical unpenalized logistic regression from statistics, you should explicitly remove the penalty, for example by using penalty=None.\nIn contrast, statsmodels fits the usual likelihood-based GLM by default.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#example-multiple-predictors",
+    "href": "contents/2/logistic.html#example-multiple-predictors",
+    "title": "4  Logistic Regression",
+    "section": "4.10 Example: Multiple Predictors",
+    "text": "4.10 Example: Multiple Predictors\nA multivariable logistic regression has the form \\[\n\\log\\left(\\frac{\\pi(\\mathbf{x})}{1-\\pi(\\mathbf{x})}\\right)\n=\n\\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p.\n\\]\nFor example, we may fit\n\nimport pandas as pd\nimport statsmodels.api as sm\n\nheart = pd.read_csv(\"SAheart.csv\")\n\n# suppose famhist is coded as a string category such as Present / Absent\nheart[\"famhist\"] = (heart[\"famhist\"] == \"Present\").astype(int)\n\nX = heart[[\"sbp\", \"tobacco\", \"ldl\", \"adiposity\", \"famhist\", \"typea\", \"obesity\", \"alcohol\", \"age\"]]\nX = sm.add_constant(X)\ny = heart[\"chd\"]\n\nmodel = sm.GLM(y, X, family=sm.families.Binomial())\nresult = model.fit()\n\nprint(result.summary())\n\nFor a coefficient such as age, if the estimate is \\(\\hat\\beta_{\\text{age}} = 0.045\\), then \\[\ne^{0.045} \\approx 1.046.\n\\]\nThis means that, holding all other predictors fixed, a one-year increase in age multiplies the odds of coronary heart disease by about \\(1.046\\), or increases the odds by about \\(4.6\\%\\).",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#logistic-regression-with-a-pipeline",
+    "href": "contents/2/logistic.html#logistic-regression-with-a-pipeline",
+    "title": "4  Logistic Regression",
+    "section": "4.11 Logistic Regression with a Pipeline",
+    "text": "4.11 Logistic Regression with a Pipeline\nIn statistical learning, logistic regression is often used together with preprocessing inside a pipeline.\n\nfrom sklearn.compose import ColumnTransformer\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler, OneHotEncoder\nfrom sklearn.linear_model import LogisticRegression\n\nnum_features = [\"age\", \"chol\", \"thalach\"]\ncat_features = [\"sex\", \"cp\"]\n\npre = ColumnTransformer(\n    transformers=[\n        (\"num\", StandardScaler(), num_features),\n        (\"cat\", OneHotEncoder(drop=\"first\", handle_unknown=\"ignore\"), cat_features),\n    ]\n)\n\npipe = Pipeline([\n    (\"preprocessor\", pre),\n    (\"model\", LogisticRegression(max_iter=1000))\n])\n\npipe.fit(X_train, y_train)\npipe.predict(X_test)\npipe.predict_proba(X_test)\n\nThis is usually the preferred workflow in sklearn, because the preprocessing steps and the model are trained together inside a single object.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#writing-the-log-likelihood-directly",
+    "href": "contents/2/logistic.html#writing-the-log-likelihood-directly",
+    "title": "4  Logistic Regression",
+    "section": "4.12 Writing the Log-Likelihood Directly",
+    "text": "4.12 Writing the Log-Likelihood Directly\nIt is also possible to write the log-likelihood directly and optimize it numerically.\n\nimport numpy as np\nfrom scipy.optimize import minimize\n\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\n\ndef neg_loglik(beta, X, y):\n    z = X @ beta\n    p = sigmoid(z)\n\n    # small clipping for numerical stability\n    eps = 1e-12\n    p = np.clip(p, eps, 1 - eps)\n\n    return -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))\n\n\n# Example usage:\n# X should already include a constant column\n# beta0 = np.zeros(X.shape[1])\n# out = minimize(neg_loglik, beta0, args=(X, y), method=\"BFGS\")\n# out.x\n\nThis reproduces the same optimization idea behind logistic regression: maximize the log-likelihood, or equivalently minimize the negative log-likelihood.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/2/logistic.html#summary",
+    "href": "contents/2/logistic.html#summary",
+    "title": "4  Logistic Regression",
+    "section": "4.13 Summary",
+    "text": "4.13 Summary\n\n\n\n\n\n\nTipKey points\n\n\n\n\nLogistic regression is used for binary outcomes.\nIt models the log-odds as a linear function of the predictors.\nThe fitted probabilities are always between \\(0\\) and \\(1\\).\nA coefficient \\(\\beta_j\\) is interpreted through the odds ratio \\(e^{\\beta_j}\\).\nThe model is estimated by maximum likelihood rather than least squares.\nIn Python, statsmodels is convenient for classical statistical output, while sklearn is convenient for prediction pipelines and classification workflows.",
+    "crumbs": [
+      "Classification",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression</span>"
+    ]
+  },
+  {
+    "objectID": "contents/4/tree.html",
+    "href": "contents/4/tree.html",
+    "title": "7  Tree",
+    "section": "",
+    "text": "7.1 分段常数模型（partition）",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Tree</span>"
+    ]
+  },
+  {
+    "objectID": "contents/4/tree.html#cart",
+    "href": "contents/4/tree.html#cart",
+    "title": "7  Tree",
+    "section": "7.2 CART",
+    "text": "7.2 CART",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Tree</span>"
+    ]
+  },
+  {
+    "objectID": "contents/4/tree.html#overfitting",
+    "href": "contents/4/tree.html#overfitting",
+    "title": "7  Tree",
+    "section": "7.3 overfitting",
+    "text": "7.3 overfitting",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Tree</span>"
+    ]
+  },
+  {
+    "objectID": "contents/4/tree.html#pruning",
+    "href": "contents/4/tree.html#pruning",
+    "title": "7  Tree",
+    "section": "7.4 pruning",
+    "text": "7.4 pruning",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Tree</span>"
+    ]
+  },
+  {
+    "objectID": "contents/4/tree.html#tree-in-python",
+    "href": "contents/4/tree.html#tree-in-python",
+    "title": "7  Tree",
+    "section": "7.5 Tree in Python",
+    "text": "7.5 Tree in Python",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Tree</span>"
+    ]
+  },
+  {
+    "objectID": "contents/4/ensemble.html",
+    "href": "contents/4/ensemble.html",
+    "title": "8  Ensemble methods",
+    "section": "",
+    "text": "8.1 Bagging Bagging = 降方差",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/4/ensemble.html#random-forest-decorrelation",
+    "href": "contents/4/ensemble.html#random-forest-decorrelation",
+    "title": "8  Ensemble methods",
+    "section": "8.2 Random Forest decorrelation",
+    "text": "8.2 Random Forest decorrelation",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/4/ensemble.html#boosting-reduce-bias",
+    "href": "contents/4/ensemble.html#boosting-reduce-bias",
+    "title": "8  Ensemble methods",
+    "section": "8.3 Boosting reduce bias",
+    "text": "8.3 Boosting reduce bias\nLinear → high bias Tree → high variance RF → reduce variance Boosting → reduce bias\n🎯 你可以这样总结整门课 Part 1: simple models + regularization Part 2: flexible models + aggregation\n👉 我会改成：\n上半最重要是 “regularization（ridge + lasso）”\n因为：\nRidge → 稳定性 Lasso → 稀疏性\n👉 两个一起才完整\nweek 1: ols+ridge week 2: lasso+pcr/pls week 3 logistic/lda + knn week 4 tree+ bagging week 5 boosting week 6 clustering\nWeek 1：bias–variance Week 2：sparsity vs latent Week 5：RF vs boosting",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html",
+    "href": "contents/3/tree.html",
+    "title": "7  Regression Trees",
+    "section": "",
+    "text": "7.1 1. Why trees?\nA regression tree is a nonparametric regression method. Instead of assuming a linear form such as \\[\nf(x)=\\beta_0+\\beta_1x_1+\\cdots+\\beta_px_p,\n\\] a tree learns a set of simple splitting rules and partitions the feature space into rectangular regions.\nThe basic idea is:\nSo a regression tree is an adaptive local averaging method.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#why-trees",
+    "href": "contents/3/tree.html#why-trees",
+    "title": "7  Regression Trees",
+    "section": "",
+    "text": "Split the data into two groups using one predictor and one threshold.\nContinue splitting each group recursively.\nPredict by the average response in the terminal node.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#model-form",
+    "href": "contents/3/tree.html#model-form",
+    "title": "7  Regression Trees",
+    "section": "7.2 2. Model form",
+    "text": "7.2 2. Model form\nSuppose the tree divides the feature space into \\(M\\) terminal regions: \\[\nR_1,R_2,\\ldots,R_M.\n\\]\nFor a new observation \\(x\\), the fitted regression tree has the form \\[\n\\hat f(x)=\\sum_{m=1}^M c_m I(x\\in R_m),\n\\] where \\(c_m\\) is the prediction assigned to region \\(R_m\\).\nFor squared error loss, the best constant in each region is the sample mean: \\[\n\\hat c_m=\\frac{1}{N_m}\\sum_{x_i\\in R_m}y_i.\n\\]\nTherefore, \\[\n\\hat f(x)=\\sum_{m=1}^M \\bar y_{R_m} I(x\\in R_m).\n\\]\n\n\n\n\n\n\nNoteInterpretation\n\n\n\nA regression tree is a piecewise constant approximation to the unknown regression function \\(f(x)\\).\nEach leaf gives one local average.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#a-single-split",
+    "href": "contents/3/tree.html#a-single-split",
+    "title": "7  Regression Trees",
+    "section": "7.3 3. A single split",
+    "text": "7.3 3. A single split\nAt a node \\(\\mathcal A\\), a binary split is determined by:\n\na variable index \\(j\\)\na cutoff value \\(c\\)\n\nThe split creates two child nodes: \\[\n\\mathcal A_L(j,c)=\\{x\\in \\mathcal A: x_j\\le c\\},\n\\] and \\[\n\\mathcal A_R(j,c)=\\{x\\in \\mathcal A: x_j&gt;c\\}.\n\\]\nFor regression, the quality of a split is measured by the reduction in within-node variation.\nThe weighted post-split variance is \\[\n\\frac{N_L}{N_{\\mathcal A}}\\operatorname{Var}(\\mathcal A_L)\n+\n\\frac{N_R}{N_{\\mathcal A}}\\operatorname{Var}(\\mathcal A_R).\n\\]\nEquivalently, we can maximize the variance reduction: \\[\n\\operatorname{score}(j,c)\n=\n\\operatorname{Var}(\\mathcal A)\n-\n\\left[\n\\frac{N_L}{N_{\\mathcal A}}\\operatorname{Var}(\\mathcal A_L)\n+\n\\frac{N_R}{N_{\\mathcal A}}\\operatorname{Var}(\\mathcal A_R)\n\\right].\n\\]\nThe best split is \\[\n(\\hat j,\\hat c)=\n\\arg\\max_{j,c}\\operatorname{score}(j,c).\n\\]\nEquivalently, we can minimize the residual sum of squares: \\[\n\\sum_{x_i\\in \\mathcal A_L}(y_i-\\bar y_L)^2\n+\n\\sum_{x_i\\in \\mathcal A_R}(y_i-\\bar y_R)^2.\n\\]\n\n\n\n\n\n\nNoteClassification vs regression\n\n\n\nFor classification trees, common splitting criteria include Gini impurity and entropy.\nFor regression trees, the corresponding idea is to reduce within-node variation, usually measured by variance or RSS.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#recursive-binary-splitting",
+    "href": "contents/3/tree.html#recursive-binary-splitting",
+    "title": "7  Regression Trees",
+    "section": "7.4 4. Recursive binary splitting",
+    "text": "7.4 4. Recursive binary splitting\nA regression tree is built greedily.\nAt each node:\n\nTry each predictor \\(x_j\\).\nTry candidate cutoffs \\(c\\).\nCompute the split criterion.\nChoose the split with the largest variance reduction.\nRepeat the same procedure on the two child nodes.\n\nThis is called recursive binary splitting.\nThe procedure is greedy because the best split is chosen locally at each step. The algorithm does not search over all possible trees globally.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#prediction",
+    "href": "contents/3/tree.html#prediction",
+    "title": "7  Regression Trees",
+    "section": "7.5 5. Prediction",
+    "text": "7.5 5. Prediction\nOnce the tree is fitted, prediction is simple.\nFor a new point \\(x_0\\):\n\nStart at the root node.\nFollow the splitting rules.\nDrop \\(x_0\\) into a terminal node \\(R_m\\).\nPredict by the average response in that leaf: \\[\n\\hat f(x_0)=\\bar y_{R_m}.\n\\]\n\nEquivalently, \\[\n\\hat f(x_0)\n=\n\\sum_{m=1}^M\n\\left(\n\\frac{\\sum_{i=1}^n y_i I(x_i\\in R_m)}\n{\\sum_{i=1}^n I(x_i\\in R_m)}\n\\right)\nI(x_0\\in R_m).\n\\]\nThis shows that a regression tree is a local averaging estimator.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#adaptive-kernel-view",
+    "href": "contents/3/tree.html#adaptive-kernel-view",
+    "title": "7  Regression Trees",
+    "section": "7.6 6. Adaptive kernel view",
+    "text": "7.6 6. Adaptive kernel view\nKNN also predicts by local averaging, but its neighborhood is usually determined by distance.\nA tree also predicts by averaging nearby training responses, but the neighborhood is defined by the learned terminal node.\nFor a point \\(x_0\\), the tree gives positive weight only to observations that fall in the same terminal node as \\(x_0\\): \\[\nw_i(x_0)\n=\n\\frac{I(x_i\\in R(x_0))}\n{\\sum_{l=1}^n I(x_l\\in R(x_0))}.\n\\]\nThen \\[\n\\hat f(x_0)=\\sum_{i=1}^n w_i(x_0)y_i.\n\\]\nThe important difference is that the tree neighborhood is adaptive.\nIf only \\(x_1\\) is important, the tree may split mostly on \\(x_1\\) and ignore irrelevant directions. This helps trees avoid some problems of ordinary distance-based local methods.\n\n\n\n\n\n\nNoteKey idea\n\n\n\nKNN uses a fixed notion of distance.\nA tree learns the neighborhood from the data.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#geometry",
+    "href": "contents/3/tree.html#geometry",
+    "title": "7  Regression Trees",
+    "section": "7.7 7. Geometry",
+    "text": "7.7 7. Geometry\nA regression tree partitions the feature space into axis-aligned rectangles.\nFor example, in two dimensions, a split such as \\[\nx_1\\le c\n\\] creates a vertical boundary, and a split such as \\[\nx_2\\le c\n\\] creates a horizontal boundary.\nTherefore, trees can model nonlinear patterns and interactions, but the fitted function is not smooth. It is constant inside each region and jumps across split boundaries.\nThis is why a single tree often looks rough.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#tree-complexity",
+    "href": "contents/3/tree.html#tree-complexity",
+    "title": "7  Regression Trees",
+    "section": "7.8 8. Tree complexity",
+    "text": "7.8 8. Tree complexity\nA fully grown tree can fit the training data very closely, but it often overfits.\nImportant complexity controls include:\n\nmax_depth: maximum tree depth\nmin_samples_split: minimum number of observations required to split a node\nmin_samples_leaf: minimum number of observations in a terminal node\nmax_leaf_nodes: maximum number of leaves\nccp_alpha: cost-complexity pruning parameter\n\nSmall trees are more stable but may underfit.\nLarge trees are flexible but may overfit.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#cost-complexity-pruning",
+    "href": "contents/3/tree.html#cost-complexity-pruning",
+    "title": "7  Regression Trees",
+    "section": "7.9 9. Cost-complexity pruning",
+    "text": "7.9 9. Cost-complexity pruning\nInstead of directly choosing a small tree, a common approach is:\n\nGrow a large tree.\nPrune it back.\nUse validation or cross-validation to choose the best tree size.\n\nLet \\(T\\) be a subtree, and let \\(|T|\\) be the number of terminal nodes.\nFor regression, the cost-complexity criterion is \\[\nC_\\alpha(T)\n=\n\\sum_{m=1}^{|T|}\n\\sum_{x_i\\in R_m}\n(y_i-\\bar y_{R_m})^2\n+\n\\alpha |T|.\n\\]\nThe first term measures training error. The second term penalizes tree complexity.\n\n\\(\\alpha=0\\): prefer a large tree\nlarger \\(\\alpha\\): prefer a smaller tree\n\nThis is similar in spirit to ridge and lasso: \\[\n\\text{loss}+\\text{penalty}.\n\\]\n\n\n\n\n\n\nNoteInterpretation of \\(\\alpha\\)\n\n\n\nThe pruning parameter \\(\\alpha\\) controls the tradeoff between fit and complexity.\nIt plays the same conceptual role as a tuning parameter in regularized regression.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#bias-variance-tradeoff",
+    "href": "contents/3/tree.html#bias-variance-tradeoff",
+    "title": "7  Regression Trees",
+    "section": "7.10 10. Bias-variance tradeoff",
+    "text": "7.10 10. Bias-variance tradeoff\nRegression trees have a clear bias-variance tradeoff.\nA shallow tree:\n\nhas fewer leaves\ngives smoother, more stable predictions\nhas higher bias\nhas lower variance\n\nA deep tree:\n\nhas many leaves\nadapts strongly to the training data\nhas lower bias\nhas higher variance\n\nThis is one reason a single tree is usually not the final model for high-performance prediction.\nRandom forests and boosting improve on trees by combining many trees.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#strengths",
+    "href": "contents/3/tree.html#strengths",
+    "title": "7  Regression Trees",
+    "section": "7.11 11. Strengths",
+    "text": "7.11 11. Strengths\nRegression trees are useful because they:\n\nare easy to interpret\nautomatically handle nonlinear relationships\nautomatically capture interactions\ndo not require feature scaling\ncan handle mixed variable types\nare easy to visualize\nprovide a natural basis for random forests and boosting",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#weaknesses",
+    "href": "contents/3/tree.html#weaknesses",
+    "title": "7  Regression Trees",
+    "section": "7.12 12. Weaknesses",
+    "text": "7.12 12. Weaknesses\nA single regression tree also has important limitations:\n\nprediction is piecewise constant\nfitted function is not smooth\nsmall changes in data can change the tree\nhigh variance\noften weaker predictive performance than ensembles\npoor extrapolation outside the training range\n\n\n\n\n\n\n\nCautionImportant\n\n\n\nA single tree is usually better as an interpretable model or as a building block.\nFor prediction, ensembles of trees are usually much stronger.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#minimal-python-example",
+    "href": "contents/3/tree.html#minimal-python-example",
+    "title": "7  Regression Trees",
+    "section": "7.13 13. Minimal Python example",
+    "text": "7.13 13. Minimal Python example\nfrom sklearn.tree import DecisionTreeRegressor\nfrom sklearn.model_selection import train_test_split, GridSearchCV\nfrom sklearn.metrics import mean_squared_error\nimport numpy as np\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.3, random_state=0\n)\n\ntree = DecisionTreeRegressor(random_state=0)\n\nparam_grid = {\n    \"max_depth\": [2, 3, 4, 5, None],\n    \"min_samples_leaf\": [1, 5, 10, 20],\n    \"ccp_alpha\": [0.0, 0.001, 0.01, 0.1],\n}\n\ngrid = GridSearchCV(\n    tree,\n    param_grid=param_grid,\n    cv=5,\n    scoring=\"neg_mean_squared_error\",\n)\n\ngrid.fit(X_train, y_train)\n\nbest_tree = grid.best_estimator_\n\ny_pred = best_tree.predict(X_test)\ntest_mse = mean_squared_error(y_test, y_pred)\n\nprint(grid.best_params_)\nprint(test_mse)",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#cost-complexity-pruning-path-in-sklearn",
+    "href": "contents/3/tree.html#cost-complexity-pruning-path-in-sklearn",
+    "title": "7  Regression Trees",
+    "section": "7.14 14. Cost-complexity pruning path in sklearn",
+    "text": "7.14 14. Cost-complexity pruning path in sklearn\nfrom sklearn.tree import DecisionTreeRegressor\nfrom sklearn.model_selection import cross_val_score\nimport numpy as np\n\ntree = DecisionTreeRegressor(random_state=0)\npath = tree.cost_complexity_pruning_path(X_train, y_train)\n\nccp_alphas = path.ccp_alphas\n\ncv_mse = []\n\nfor alpha in ccp_alphas:\n    model = DecisionTreeRegressor(random_state=0, ccp_alpha=alpha)\n    scores = cross_val_score(\n        model,\n        X_train,\n        y_train,\n        cv=5,\n        scoring=\"neg_mean_squared_error\",\n    )\n    cv_mse.append(-scores.mean())\n\nbest_alpha = ccp_alphas[np.argmin(cv_mse)]\n\npruned_tree = DecisionTreeRegressor(\n    random_state=0,\n    ccp_alpha=best_alpha,\n)\n\npruned_tree.fit(X_train, y_train)",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/tree.html#summary",
+    "href": "contents/3/tree.html#summary",
+    "title": "7  Regression Trees",
+    "section": "7.15 15. Summary",
+    "text": "7.15 15. Summary\nA regression tree is an adaptive partitioning method.\nIts fitted model is \\[\n\\hat f(x)=\\sum_{m=1}^M \\bar y_{R_m} I(x\\in R_m).\n\\]\nThe algorithm chooses splits to reduce within-node variation, usually measured by RSS or variance.\nThe main tuning problem is controlling tree size.\nA single tree is interpretable, flexible, and useful for discovering structure, but it is often unstable. This motivates ensemble methods such as bagging, random forests, and boosting.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Regression Trees</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html",
+    "href": "contents/3/knn.html",
+    "title": "6  KNN Regression Notes",
+    "section": "",
+    "text": "6.1 Idea\nK-nearest neighbors (KNN) is a nonparametric method that predicts the response at a query point by averaging nearby observations.\nGiven a query point \\(x\\), find its \\(K\\) nearest neighbors in the training data.\nPrediction: \\[\n\\hat f(x) = \\frac{1}{K} \\sum_{i \\in N_K(x)} y_i\n\\]",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#key-properties",
+    "href": "contents/3/knn.html#key-properties",
+    "title": "6  KNN Regression Notes",
+    "section": "6.2 Key Properties",
+    "text": "6.2 Key Properties\n\nNonparametric: no explicit model form\nLocal method: uses nearby points only\nHighly flexible\nNo training phase (lazy learning)",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#distance",
+    "href": "contents/3/knn.html#distance",
+    "title": "6  KNN Regression Notes",
+    "section": "6.3 Distance",
+    "text": "6.3 Distance\nTypically Euclidean: \\[\nd(x, x') = \\sqrt{\\sum_{j=1}^p (x_j - x'_j)^2}\n\\]\nRequires feature scaling.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#bias-variance-tradeoff",
+    "href": "contents/3/knn.html#bias-variance-tradeoff",
+    "title": "6  KNN Regression Notes",
+    "section": "6.4 Bias-Variance Tradeoff",
+    "text": "6.4 Bias-Variance Tradeoff\n\nSmall \\(K\\): low bias, high variance\nLarge \\(K\\): high bias, low variance",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#curse-of-dimensionality",
+    "href": "contents/3/knn.html#curse-of-dimensionality",
+    "title": "6  KNN Regression Notes",
+    "section": "6.5 Curse of Dimensionality",
+    "text": "6.5 Curse of Dimensionality\nAs \\(p\\) increases: - Distances become less meaningful - Neighborhoods become sparse",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#pros",
+    "href": "contents/3/knn.html#pros",
+    "title": "6  KNN Regression Notes",
+    "section": "6.6 Pros",
+    "text": "6.6 Pros\n\nSimple\nFlexible\nWorks well with low-dimensional smooth data",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#cons",
+    "href": "contents/3/knn.html#cons",
+    "title": "6  KNN Regression Notes",
+    "section": "6.7 Cons",
+    "text": "6.7 Cons\n\nSlow prediction\nSensitive to scaling\nPoor in high dimensions",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#model-form",
+    "href": "contents/3/knn.html#model-form",
+    "title": "6  KNN Regression Notes",
+    "section": "7.1 1. Model form",
+    "text": "7.1 1. Model form\nKNN is a local averaging estimator.\nFor a query point \\(x\\), \\[\n\\hat f(x) = \\frac{1}{K} \\sum_{i \\in N_K(x)} y_i\n\\]\n\n\\(N_K(x)\\): K nearest neighbors\nNonparametric (no explicit model)",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#geometry",
+    "href": "contents/3/knn.html#geometry",
+    "title": "6  KNN Regression Notes",
+    "section": "7.2 2. Geometry",
+    "text": "7.2 2. Geometry\n\nPiecewise constant estimator\nPrediction determined by local neighborhood",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#distance-1",
+    "href": "contents/3/knn.html#distance-1",
+    "title": "6  KNN Regression Notes",
+    "section": "7.3 3. Distance",
+    "text": "7.3 3. Distance\n\\[\nd(x,x') = \\sqrt{\\sum_{j=1}^p (x_j-x'_j)^2}\n\\]\n\nMust scale features",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#biasvariance",
+    "href": "contents/3/knn.html#biasvariance",
+    "title": "6  KNN Regression Notes",
+    "section": "7.4 4. Bias–variance",
+    "text": "7.4 4. Bias–variance\n\nsmall \\(K\\): low bias, high variance\nlarge \\(K\\): high bias, low variance",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#curse-of-dimensionality-1",
+    "href": "contents/3/knn.html#curse-of-dimensionality-1",
+    "title": "6  KNN Regression Notes",
+    "section": "7.5 5. Curse of dimensionality",
+    "text": "7.5 5. Curse of dimensionality\n\ndistances lose meaning in high \\(p\\)\nrequires large \\(n\\)",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#key-takeaway",
+    "href": "contents/3/knn.html#key-takeaway",
+    "title": "6  KNN Regression Notes",
+    "section": "7.6 6. Key takeaway",
+    "text": "7.6 6. Key takeaway\nKNN = local averaging, no extrapolation",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html",
+    "href": "contents/3/ensemble.html",
+    "title": "8  Ensemble Methods",
+    "section": "",
+    "text": "8.1 1. Basic idea\nAn ensemble method combines many relatively simple models into one stronger model.\nA general ensemble has the form \\[\nF_T(x)=\\sum_{t=1}^T \\alpha_t f_t(x),\n\\] where\nFor tree-based ensembles, each \\(f_t\\) is usually a decision tree.\nThe main motivation is that a single tree is often unstable. A small change in the data can lead to a different tree. Ensemble methods reduce this instability by combining many trees.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#basic-idea",
+    "href": "contents/3/ensemble.html#basic-idea",
+    "title": "8  Ensemble Methods",
+    "section": "",
+    "text": "\\(f_t(x)\\) is the \\(t\\)-th base learner,\n\\(\\alpha_t\\) is its weight,\n\\(T\\) is the number of learners.\n\n\n\n\n\n\n\n\n\nNoteMain idea\n\n\n\nA single tree is easy to interpret but has high variance.\nAn ensemble sacrifices some interpretability to improve prediction.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#two-main-strategies",
+    "href": "contents/3/ensemble.html#two-main-strategies",
+    "title": "8  Ensemble Methods",
+    "section": "8.2 2. Two main strategies",
+    "text": "8.2 2. Two main strategies\nThere are two major ways to build tree ensembles.\n\n\n\n\n\n\n\n\nMethod\nHow trees are built\nMain effect\n\n\n\n\nBagging\nindependently and in parallel\nreduce variance\n\n\nRandom forest\nbagging + random feature selection\nreduce variance and decorrelate trees\n\n\nBoosting\nsequentially, each tree corrects previous errors\nreduce bias, often also variance\n\n\n\nThe key distinction is whether the trees are built independently or sequentially.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#bagging",
+    "href": "contents/3/ensemble.html#bagging",
+    "title": "8  Ensemble Methods",
+    "section": "8.3 3. Bagging",
+    "text": "8.3 3. Bagging\nBagging means bootstrap aggregating.\nThe algorithm is:\n\nDraw \\(B\\) bootstrap samples from the training data.\nFit one tree to each bootstrap sample.\nAverage the predictions for regression.\n\nFor regression, \\[\n\\hat f_{\\text{bag}}(x)\n=\n\\frac{1}{B}\\sum_{b=1}^B \\hat f_b(x).\n\\]\nFor classification, we usually use majority vote.\n\n8.3.1 Why bagging works\nBagging mainly reduces variance.\nIf \\(\\hat f_1(x),\\ldots,\\hat f_B(x)\\) are noisy but approximately unbiased estimators, then averaging them stabilizes the prediction.\nIf the base learners were independent and each had variance \\(\\sigma^2\\), then \\[\n\\operatorname{Var}\\left(\n\\frac{1}{B}\\sum_{b=1}^B \\hat f_b(x)\n\\right)\n=\n\\frac{\\sigma^2}{B}.\n\\]\nIn practice, trees are not independent. If the correlation between tree predictions is \\(\\rho\\), then approximately \\[\n\\operatorname{Var}\\left(\n\\frac{1}{B}\\sum_{b=1}^B \\hat f_b(x)\n\\right)\n=\n\\rho\\sigma^2+\\frac{1-\\rho}{B}\\sigma^2.\n\\]\nAs \\(B\\) becomes large, the second term goes to zero, but the first term remains. Therefore, reducing correlation between trees is important.\nThis is the motivation for random forests.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#random-forests",
+    "href": "contents/3/ensemble.html#random-forests",
+    "title": "8  Ensemble Methods",
+    "section": "8.4 4. Random forests",
+    "text": "8.4 4. Random forests\nA random forest improves bagging by adding randomness to the splitting process.\nFor each tree:\n\nDraw a bootstrap sample.\nGrow a large tree.\nAt each split, randomly select only \\(m_{\\text{try}}\\) predictors.\nFind the best split only among those selected predictors.\nDo not prune the tree.\n\nFor regression, the final prediction is \\[\n\\hat f_{\\text{RF}}(x)\n=\n\\frac{1}{B}\\sum_{b=1}^B \\hat f_b(x).\n\\]\n\n8.4.1 Role of mtry\nThe parameter mtry controls how many variables are considered at each split.\n\nLarge mtry:\n\neach tree is stronger\nsplits are more greedy\ntrees become more correlated\n\nSmall mtry:\n\ntrees are less correlated\nindividual trees may be weaker\nmay miss important variables at some splits\n\n\nThus mtry controls a bias-variance tradeoff.\n\n\n8.4.2 Other tuning parameters\nImportant tuning parameters include:\n\nn_estimators: number of trees\nmax_features: number of predictors considered at each split\nmax_samples: sample size for each bootstrap sample\nmin_samples_leaf: minimum leaf size\nmax_depth: maximum depth of each tree\n\nFor random forests, trees are usually grown deep. The ensemble controls variance by averaging, rather than by pruning each tree.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#random-forest-as-adaptive-local-averaging",
+    "href": "contents/3/ensemble.html#random-forest-as-adaptive-local-averaging",
+    "title": "8  Ensemble Methods",
+    "section": "8.5 5. Random forest as adaptive local averaging",
+    "text": "8.5 5. Random forest as adaptive local averaging\nA random forest can also be viewed as an adaptive kernel estimator.\nFor one tree, two points are close if they fall in the same terminal node.\nLet \\(K_{\\mathcal T_b}(x,x_i)\\) indicate whether \\(x\\) and \\(x_i\\) fall in the same leaf of tree \\(b\\).\nThen a random forest induces a similarity measure: \\[\nK_{\\text{RF}}(x,x_i)\n=\n\\sum_{b=1}^B K_{\\mathcal T_b}(x,x_i).\n\\]\nThis counts how many trees place \\(x\\) and \\(x_i\\) in the same terminal node.\nThus, a random forest prediction can be viewed as a weighted average: \\[\n\\hat f_{\\text{RF}}(x)\n=\n\\sum_{i=1}^n w_i(x)y_i,\n\\] where observations that often share leaves with \\(x\\) receive larger weights.\n\n\n\n\n\n\nNoteAdaptive neighborhood\n\n\n\nKNN defines neighborhoods by Euclidean distance.\nA random forest defines neighborhoods by tree leaves.\nTherefore, the neighborhood is learned from the response and can adapt to important variables.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#variable-importance",
+    "href": "contents/3/ensemble.html#variable-importance",
+    "title": "8  Ensemble Methods",
+    "section": "8.6 6. Variable importance",
+    "text": "8.6 6. Variable importance\nRandom forests provide measures of variable importance.\nTwo common ideas are:\n\nImpurity-based importance\nMeasures how much a variable reduces node impurity or RSS across the forest.\nPermutation importance\nRandomly permute one variable and measure how much prediction performance decreases.\n\nPermutation importance is often easier to interpret:\n\nif permuting \\(x_j\\) greatly worsens prediction, then \\(x_j\\) is important;\nif performance barely changes, then \\(x_j\\) may not be useful.\n\n\n\n\n\n\n\nCautionCaution\n\n\n\nImpurity-based importance can be biased toward variables with many possible split points.\nPermutation importance is usually more directly connected to predictive performance.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#extra-trees",
+    "href": "contents/3/ensemble.html#extra-trees",
+    "title": "8  Ensemble Methods",
+    "section": "8.7 7. Extra-trees",
+    "text": "8.7 7. Extra-trees\nExtremely randomized trees, or extra-trees, add even more randomness.\nCompared with random forests:\n\nrandom forest chooses the best split among random features;\nextra-trees often choose split thresholds more randomly.\n\nThis usually increases bias but can reduce variance and speed up computation.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#boosting",
+    "href": "contents/3/ensemble.html#boosting",
+    "title": "8  Ensemble Methods",
+    "section": "8.8 8. Boosting",
+    "text": "8.8 8. Boosting\nBoosting builds an additive model sequentially: \\[\nF_T(x)=\\sum_{t=1}^T \\alpha_t f_t(x).\n\\]\nUnlike random forests, the models are not built independently. Each new learner is chosen to improve the current ensemble.\nThe general idea is:\n\nStart with a simple model \\(F_0(x)\\).\nFind what the current model is doing wrong.\nFit a weak learner to correct those errors.\nAdd it to the model with a small step size.\nRepeat.\n\nFor tree boosting, each \\(f_t(x)\\) is usually a small regression tree.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#gradient-boosting-for-regression",
+    "href": "contents/3/ensemble.html#gradient-boosting-for-regression",
+    "title": "8  Ensemble Methods",
+    "section": "8.9 9. Gradient boosting for regression",
+    "text": "8.9 9. Gradient boosting for regression\nFor squared error loss, \\[\nL(y,F(x))=(y-F(x))^2.\n\\]\nThe derivative with respect to \\(F(x)\\) is \\[\n\\frac{\\partial L(y,F(x))}{\\partial F(x)}\n=\n-2(y-F(x)).\n\\]\nTherefore, the negative gradient is proportional to the residual: \\[\nr_i\n=\ny_i-F_{t-1}(x_i).\n\\]\nThe gradient boosting algorithm for regression is:\n\nInitialize \\[\nF_0(x)=\\bar y.\n\\]\nFor \\(t=1,\\ldots,T\\):\nFit a regression tree \\(h_t(x)\\) to the residuals \\[\nr_i^{(t)}=y_i-F_{t-1}(x_i).\n\\]\nUpdate \\[\nF_t(x)=F_{t-1}(x)+\\eta h_t(x).\n\\]\n\nHere \\(\\eta\\) is the learning rate, also called shrinkage.\n\n\n\n\n\n\nNoteKey point\n\n\n\nFor squared-error regression, gradient boosting fits trees to residuals.\nMore generally, it fits trees to negative gradients of the loss function.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#learning-rate-and-number-of-trees",
+    "href": "contents/3/ensemble.html#learning-rate-and-number-of-trees",
+    "title": "8  Ensemble Methods",
+    "section": "8.10 10. Learning rate and number of trees",
+    "text": "8.10 10. Learning rate and number of trees\nThe learning rate \\(\\eta\\) controls how much each tree contributes.\n\nSmall \\(\\eta\\):\n\nslower learning\nusually needs more trees\noften better generalization\n\nLarge \\(\\eta\\):\n\nfaster learning\nhigher risk of overfitting\n\n\nThe number of trees \\(T\\) is also a tuning parameter.\nThe pair \\((\\eta,T)\\) must be considered together.\nA common practical strategy is:\n\nuse a small learning rate;\ntune the number of trees by validation or cross-validation.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#tree-depth-in-boosting",
+    "href": "contents/3/ensemble.html#tree-depth-in-boosting",
+    "title": "8  Ensemble Methods",
+    "section": "8.11 11. Tree depth in boosting",
+    "text": "8.11 11. Tree depth in boosting\nIn boosting, each tree is often shallow.\n\ndepth 1: decision stump, captures main effects\ndepth 2 or 3: captures simple interactions\nlarger depth: more complex interactions\n\nUnlike random forests, boosting does not need each tree to be strong. It builds strength by adding many weak learners sequentially.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#stochastic-gradient-boosting",
+    "href": "contents/3/ensemble.html#stochastic-gradient-boosting",
+    "title": "8  Ensemble Methods",
+    "section": "8.12 12. Stochastic gradient boosting",
+    "text": "8.12 12. Stochastic gradient boosting\nMany implementations also use subsampling.\nAt each iteration, fit the next tree using only a random subset of observations.\nThis adds randomness and can improve generalization.\nImportant parameters include:\n\nsubsample\nlearning_rate\nn_estimators\nmax_depth\nmin_samples_leaf",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#adaboost",
+    "href": "contents/3/ensemble.html#adaboost",
+    "title": "8  Ensemble Methods",
+    "section": "8.13 13. AdaBoost",
+    "text": "8.13 13. AdaBoost\nAdaBoost is a classical boosting method for binary classification.\nHere the response is coded as \\[\ny_i\\in\\{-1,+1\\}.\n\\]\nAdaBoost builds \\[\nF_T(x)=\\sum_{t=1}^T \\alpha_t f_t(x),\n\\] and classifies by \\[\n\\operatorname{sign}(F_T(x)).\n\\]\nThe algorithm is:\n\nInitialize observation weights: \\[\nw_i^{(1)}=\\frac{1}{n}.\n\\]\nFor \\(t=1,\\ldots,T\\):\nFit a classifier \\(f_t(x)\\in\\{-1,+1\\}\\) using weights \\(w_i^{(t)}\\).\nCompute weighted error: \\[\n\\epsilon_t\n=\n\\sum_{i=1}^n w_i^{(t)}\nI(y_i\\neq f_t(x_i)).\n\\]\nCompute learner weight: \\[\n\\alpha_t\n=\n\\frac{1}{2}\\log\\frac{1-\\epsilon_t}{\\epsilon_t}.\n\\]\nUpdate observation weights: \\[\nw_i^{(t+1)}\n=\n\\frac{1}{Z_t}\nw_i^{(t)}\n\\exp\\{-\\alpha_t y_i f_t(x_i)\\}.\n\\]\nOutput: \\[\nF_T(x)=\\sum_{t=1}^T \\alpha_t f_t(x).\n\\]\n\n\n8.13.1 Interpretation\nIf observation \\(i\\) is correctly classified, then \\[\ny_i f_t(x_i)=1,\n\\] and its weight decreases.\nIf it is misclassified, then \\[\ny_i f_t(x_i)=-1,\n\\] and its weight increases.\nSo AdaBoost forces later learners to focus more on difficult observations.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#gradient-boosting-for-classification",
+    "href": "contents/3/ensemble.html#gradient-boosting-for-classification",
+    "title": "8  Ensemble Methods",
+    "section": "8.14 14. Gradient boosting for classification",
+    "text": "8.14 14. Gradient boosting for classification\nFor classification, there is no ordinary residual \\(y-\\hat y\\) in the same sense as squared-error regression.\nInstead, boosting uses the negative gradient of a classification loss.\nFor binary logistic boosting, we model \\[\np(x)=P(Y=1\\mid X=x)\n=\n\\frac{1}{1+\\exp\\{-F(x)\\}}.\n\\]\nUsing negative log-likelihood loss, the pseudo-residual becomes \\[\nr_i=y_i-p_i.\n\\]\nThus classification boosting can be understood as fitting the next learner to the current probability errors.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#xgboost-and-modern-boosting",
+    "href": "contents/3/ensemble.html#xgboost-and-modern-boosting",
+    "title": "8  Ensemble Methods",
+    "section": "8.15 15. XGBoost and modern boosting",
+    "text": "8.15 15. XGBoost and modern boosting\nXGBoost is not a fundamentally different statistical idea from gradient boosting.\nIt is a powerful engineering implementation of gradient boosted trees, with many practical improvements such as:\n\nregularization on tree complexity\nefficient split search\nshrinkage\nsubsampling\ncolumn subsampling\nhandling sparse data\nfast implementation\n\nFor a statistical learning course, the core idea is still gradient boosting:\n\\[\n\\text{add weak learners sequentially to reduce a loss function}.\n\\]\n\n\n\n\n\n\nNoteTeaching point\n\n\n\nXGBoost is best understood as an optimized implementation of gradient boosted trees.\nThe central statistical concept is boosting, not XGBoost itself.",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#bagging-vs-boosting",
+    "href": "contents/3/ensemble.html#bagging-vs-boosting",
+    "title": "8  Ensemble Methods",
+    "section": "8.16 16. Bagging vs boosting",
+    "text": "8.16 16. Bagging vs boosting\n\n\n\n\n\n\n\n\nFeature\nBagging / Random Forest\nBoosting\n\n\n\n\nConstruction\nparallel\nsequential\n\n\nMain purpose\nreduce variance\nreduce bias, often variance\n\n\nBase trees\nusually deep\nusually shallow\n\n\nTree dependence\nindependent\neach depends on previous model\n\n\nOverfitting risk\nrelatively robust\nsensitive to tuning\n\n\nKey parameters\nnumber of trees, mtry, leaf size\nlearning rate, number of trees, depth",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#minimal-python-examples",
+    "href": "contents/3/ensemble.html#minimal-python-examples",
+    "title": "8  Ensemble Methods",
+    "section": "8.17 17. Minimal Python examples",
+    "text": "8.17 17. Minimal Python examples\n\n8.17.1 Random forest regression\nfrom sklearn.ensemble import RandomForestRegressor\nfrom sklearn.model_selection import GridSearchCV\nfrom sklearn.metrics import mean_squared_error\n\nrf = RandomForestRegressor(\n    random_state=0,\n    n_estimators=500,\n)\n\nparam_grid = {\n    \"max_features\": [\"sqrt\", 0.5, 1.0],\n    \"min_samples_leaf\": [1, 5, 10],\n    \"max_depth\": [None, 5, 10],\n}\n\ngrid = GridSearchCV(\n    rf,\n    param_grid=param_grid,\n    cv=5,\n    scoring=\"neg_mean_squared_error\",\n)\n\ngrid.fit(X_train, y_train)\n\nbest_rf = grid.best_estimator_\ny_pred = best_rf.predict(X_test)\n\ntest_mse = mean_squared_error(y_test, y_pred)\n\nprint(grid.best_params_)\nprint(test_mse)\n\n\n8.17.2 Gradient boosting regression\nfrom sklearn.ensemble import GradientBoostingRegressor\nfrom sklearn.model_selection import GridSearchCV\nfrom sklearn.metrics import mean_squared_error\n\ngbr = GradientBoostingRegressor(random_state=0)\n\nparam_grid = {\n    \"n_estimators\": [100, 300, 500],\n    \"learning_rate\": [0.01, 0.05, 0.1],\n    \"max_depth\": [1, 2, 3],\n    \"subsample\": [0.8, 1.0],\n}\n\ngrid = GridSearchCV(\n    gbr,\n    param_grid=param_grid,\n    cv=5,\n    scoring=\"neg_mean_squared_error\",\n)\n\ngrid.fit(X_train, y_train)\n\nbest_gbr = grid.best_estimator_\ny_pred = best_gbr.predict(X_test)\n\ntest_mse = mean_squared_error(y_test, y_pred)\n\nprint(grid.best_params_)\nprint(test_mse)\n\n\n8.17.3 AdaBoost classification\nfrom sklearn.ensemble import AdaBoostClassifier\nfrom sklearn.tree import DecisionTreeClassifier\n\nbase_tree = DecisionTreeClassifier(max_depth=1, random_state=0)\n\nada = AdaBoostClassifier(\n    estimator=base_tree,\n    n_estimators=200,\n    learning_rate=0.1,\n    random_state=0,\n)\n\nada.fit(X_train, y_train)",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/ensemble.html#summary",
+    "href": "contents/3/ensemble.html#summary",
+    "title": "8  Ensemble Methods",
+    "section": "8.18 18. Summary",
+    "text": "8.18 18. Summary\nEnsemble methods improve prediction by combining many weak or unstable learners.\nBagging averages many independently fitted trees and mainly reduces variance.\nRandom forests improve bagging by selecting random subsets of variables at each split, which reduces correlation among trees.\nBoosting builds an additive model sequentially. Each new learner corrects the current model, often by fitting residuals or negative gradients.\nThe main conceptual summary is:\n\\[\n\\text{single tree}\n\\quad\\longrightarrow\\quad\n\\text{high variance}\n\\quad\\longrightarrow\\quad\n\\text{ensemble trees}\n\\quad\\longrightarrow\\quad\n\\text{strong prediction}.\n\\]",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
+    ]
   }
 ]

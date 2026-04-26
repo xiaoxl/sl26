@@ -4,6 +4,40 @@
 {{< include ../math.qmd >}}
 
 
+
+
+week 1: ols + ridge
+week 2: lasso+pcr+pls
+week 3: logistic/lad+knn
+week 4: tree+bagging
+week 5: boosting+etc
+week 6: clustering
+
+H1: pls
+H2: ridge/lasso
+H3: pcr/pls
+H4: logistic/lda
+H5: knn+tree
+H6: ensemble
+H7: clustering
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## What Is Statistical Learning?
 
 Statistical learning studies how to use data to understand relationships and make predictions. In most applications, we observe a response variable $Y$ and a set of predictors $X = (X_1, \dots, X_p)$, and we want to learn how $Y$ depends on $X$.

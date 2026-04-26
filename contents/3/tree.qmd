@@ -1,0 +1,421 @@
+# Regression Trees
+
+
+
+
+<!-- 
+# Tree
+
+
+## 分段常数模型（partition）
+
+## CART
+
+
+## overfitting
+
+## pruning
+
+
+
+## Tree in Python
+ -->
+
+
+
+
+
+## 1. Why trees?
+
+A regression tree is a nonparametric regression method. Instead of assuming a linear form such as
+$$
+f(x)=\beta_0+\beta_1x_1+\cdots+\beta_px_p,
+$$
+a tree learns a set of simple splitting rules and partitions the feature space into rectangular regions.
+
+The basic idea is:
+
+1. Split the data into two groups using one predictor and one threshold.
+2. Continue splitting each group recursively.
+3. Predict by the average response in the terminal node.
+
+So a regression tree is an adaptive local averaging method.
+
+## 2. Model form
+
+Suppose the tree divides the feature space into $M$ terminal regions:
+$$
+R_1,R_2,\ldots,R_M.
+$$
+
+For a new observation $x$, the fitted regression tree has the form
+$$
+\hat f(x)=\sum_{m=1}^M c_m I(x\in R_m),
+$$
+where $c_m$ is the prediction assigned to region $R_m$.
+
+For squared error loss, the best constant in each region is the sample mean:
+$$
+\hat c_m=\frac{1}{N_m}\sum_{x_i\in R_m}y_i.
+$$
+
+Therefore,
+$$
+\hat f(x)=\sum_{m=1}^M \bar y_{R_m} I(x\in R_m).
+$$
+
+::: {.callout-note}
+## Interpretation
+
+A regression tree is a piecewise constant approximation to the unknown regression function $f(x)$.
+
+Each leaf gives one local average.
+:::
+
+## 3. A single split
+
+At a node $\mathcal A$, a binary split is determined by:
+
+- a variable index $j$
+- a cutoff value $c$
+
+The split creates two child nodes:
+$$
+\mathcal A_L(j,c)=\{x\in \mathcal A: x_j\le c\},
+$$
+and
+$$
+\mathcal A_R(j,c)=\{x\in \mathcal A: x_j>c\}.
+$$
+
+For regression, the quality of a split is measured by the reduction in within-node variation.
+
+The weighted post-split variance is
+$$
+\frac{N_L}{N_{\mathcal A}}\operatorname{Var}(\mathcal A_L)
++
+\frac{N_R}{N_{\mathcal A}}\operatorname{Var}(\mathcal A_R).
+$$
+
+Equivalently, we can maximize the variance reduction:
+$$
+\operatorname{score}(j,c)
+=
+\operatorname{Var}(\mathcal A)
+-
+\left[
+\frac{N_L}{N_{\mathcal A}}\operatorname{Var}(\mathcal A_L)
++
+\frac{N_R}{N_{\mathcal A}}\operatorname{Var}(\mathcal A_R)
+\right].
+$$
+
+The best split is
+$$
+(\hat j,\hat c)=
+\arg\max_{j,c}\operatorname{score}(j,c).
+$$
+
+Equivalently, we can minimize the residual sum of squares:
+$$
+\sum_{x_i\in \mathcal A_L}(y_i-\bar y_L)^2
++
+\sum_{x_i\in \mathcal A_R}(y_i-\bar y_R)^2.
+$$
+
+::: {.callout-note}
+## Classification vs regression
+
+For classification trees, common splitting criteria include Gini impurity and entropy.
+
+For regression trees, the corresponding idea is to reduce within-node variation, usually measured by variance or RSS.
+:::
+
+## 4. Recursive binary splitting
+
+A regression tree is built greedily.
+
+At each node:
+
+1. Try each predictor $x_j$.
+2. Try candidate cutoffs $c$.
+3. Compute the split criterion.
+4. Choose the split with the largest variance reduction.
+5. Repeat the same procedure on the two child nodes.
+
+This is called recursive binary splitting.
+
+The procedure is greedy because the best split is chosen locally at each step. The algorithm does not search over all possible trees globally.
+
+## 5. Prediction
+
+Once the tree is fitted, prediction is simple.
+
+For a new point $x_0$:
+
+1. Start at the root node.
+2. Follow the splitting rules.
+3. Drop $x_0$ into a terminal node $R_m$.
+4. Predict by the average response in that leaf:
+$$
+\hat f(x_0)=\bar y_{R_m}.
+$$
+
+Equivalently,
+$$
+\hat f(x_0)
+=
+\sum_{m=1}^M
+\left(
+\frac{\sum_{i=1}^n y_i I(x_i\in R_m)}
+{\sum_{i=1}^n I(x_i\in R_m)}
+\right)
+I(x_0\in R_m).
+$$
+
+This shows that a regression tree is a local averaging estimator.
+
+## 6. Adaptive kernel view
+
+KNN also predicts by local averaging, but its neighborhood is usually determined by distance.
+
+A tree also predicts by averaging nearby training responses, but the neighborhood is defined by the learned terminal node.
+
+For a point $x_0$, the tree gives positive weight only to observations that fall in the same terminal node as $x_0$:
+$$
+w_i(x_0)
+=
+\frac{I(x_i\in R(x_0))}
+{\sum_{l=1}^n I(x_l\in R(x_0))}.
+$$
+
+Then
+$$
+\hat f(x_0)=\sum_{i=1}^n w_i(x_0)y_i.
+$$
+
+The important difference is that the tree neighborhood is adaptive.
+
+If only $x_1$ is important, the tree may split mostly on $x_1$ and ignore irrelevant directions. This helps trees avoid some problems of ordinary distance-based local methods.
+
+::: {.callout-note}
+## Key idea
+
+KNN uses a fixed notion of distance.
+
+A tree learns the neighborhood from the data.
+:::
+
+## 7. Geometry
+
+A regression tree partitions the feature space into axis-aligned rectangles.
+
+For example, in two dimensions, a split such as
+$$
+x_1\le c
+$$
+creates a vertical boundary, and a split such as
+$$
+x_2\le c
+$$
+creates a horizontal boundary.
+
+Therefore, trees can model nonlinear patterns and interactions, but the fitted function is not smooth. It is constant inside each region and jumps across split boundaries.
+
+This is why a single tree often looks rough.
+
+## 8. Tree complexity
+
+A fully grown tree can fit the training data very closely, but it often overfits.
+
+Important complexity controls include:
+
+- `max_depth`: maximum tree depth
+- `min_samples_split`: minimum number of observations required to split a node
+- `min_samples_leaf`: minimum number of observations in a terminal node
+- `max_leaf_nodes`: maximum number of leaves
+- `ccp_alpha`: cost-complexity pruning parameter
+
+Small trees are more stable but may underfit.
+
+Large trees are flexible but may overfit.
+
+## 9. Cost-complexity pruning
+
+Instead of directly choosing a small tree, a common approach is:
+
+1. Grow a large tree.
+2. Prune it back.
+3. Use validation or cross-validation to choose the best tree size.
+
+Let $T$ be a subtree, and let $|T|$ be the number of terminal nodes.
+
+For regression, the cost-complexity criterion is
+$$
+C_\alpha(T)
+=
+\sum_{m=1}^{|T|}
+\sum_{x_i\in R_m}
+(y_i-\bar y_{R_m})^2
++
+\alpha |T|.
+$$
+
+The first term measures training error. The second term penalizes tree complexity.
+
+- $\alpha=0$: prefer a large tree
+- larger $\alpha$: prefer a smaller tree
+
+This is similar in spirit to ridge and lasso:
+$$
+\text{loss}+\text{penalty}.
+$$
+
+::: {.callout-note}
+## Interpretation of $\alpha$
+
+The pruning parameter $\alpha$ controls the tradeoff between fit and complexity.
+
+It plays the same conceptual role as a tuning parameter in regularized regression.
+:::
+
+## 10. Bias-variance tradeoff
+
+Regression trees have a clear bias-variance tradeoff.
+
+A shallow tree:
+
+- has fewer leaves
+- gives smoother, more stable predictions
+- has higher bias
+- has lower variance
+
+A deep tree:
+
+- has many leaves
+- adapts strongly to the training data
+- has lower bias
+- has higher variance
+
+This is one reason a single tree is usually not the final model for high-performance prediction.
+
+Random forests and boosting improve on trees by combining many trees.
+
+## 11. Strengths
+
+Regression trees are useful because they:
+
+- are easy to interpret
+- automatically handle nonlinear relationships
+- automatically capture interactions
+- do not require feature scaling
+- can handle mixed variable types
+- are easy to visualize
+- provide a natural basis for random forests and boosting
+
+## 12. Weaknesses
+
+A single regression tree also has important limitations:
+
+- prediction is piecewise constant
+- fitted function is not smooth
+- small changes in data can change the tree
+- high variance
+- often weaker predictive performance than ensembles
+- poor extrapolation outside the training range
+
+::: {.callout-caution}
+## Important
+
+A single tree is usually better as an interpretable model or as a building block.
+
+For prediction, ensembles of trees are usually much stronger.
+:::
+
+## 13. Minimal Python example
+
+```python
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import mean_squared_error
+import numpy as np
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=0
+)
+
+tree = DecisionTreeRegressor(random_state=0)
+
+param_grid = {
+    "max_depth": [2, 3, 4, 5, None],
+    "min_samples_leaf": [1, 5, 10, 20],
+    "ccp_alpha": [0.0, 0.001, 0.01, 0.1],
+}
+
+grid = GridSearchCV(
+    tree,
+    param_grid=param_grid,
+    cv=5,
+    scoring="neg_mean_squared_error",
+)
+
+grid.fit(X_train, y_train)
+
+best_tree = grid.best_estimator_
+
+y_pred = best_tree.predict(X_test)
+test_mse = mean_squared_error(y_test, y_pred)
+
+print(grid.best_params_)
+print(test_mse)
+```
+
+## 14. Cost-complexity pruning path in sklearn
+
+```python
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import cross_val_score
+import numpy as np
+
+tree = DecisionTreeRegressor(random_state=0)
+path = tree.cost_complexity_pruning_path(X_train, y_train)
+
+ccp_alphas = path.ccp_alphas
+
+cv_mse = []
+
+for alpha in ccp_alphas:
+    model = DecisionTreeRegressor(random_state=0, ccp_alpha=alpha)
+    scores = cross_val_score(
+        model,
+        X_train,
+        y_train,
+        cv=5,
+        scoring="neg_mean_squared_error",
+    )
+    cv_mse.append(-scores.mean())
+
+best_alpha = ccp_alphas[np.argmin(cv_mse)]
+
+pruned_tree = DecisionTreeRegressor(
+    random_state=0,
+    ccp_alpha=best_alpha,
+)
+
+pruned_tree.fit(X_train, y_train)
+```
+
+## 15. Summary
+
+A regression tree is an adaptive partitioning method.
+
+Its fitted model is
+$$
+\hat f(x)=\sum_{m=1}^M \bar y_{R_m} I(x\in R_m).
+$$
+
+The algorithm chooses splits to reduce within-node variation, usually measured by RSS or variance.
+
+The main tuning problem is controlling tree size.
+
+A single tree is interpretable, flexible, and useful for discovering structure, but it is often unstable. This motivates ensemble methods such as bagging, random forests, and boosting.
