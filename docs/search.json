@@ -964,5 +964,49 @@
       "Nonlinear Methods",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ensemble Methods</span>"
     ]
+  },
+  {
+    "objectID": "contents/3/knn.html#problem-setup",
+    "href": "contents/3/knn.html#problem-setup",
+    "title": "6  KNN Regression Notes",
+    "section": "7.1 1. Problem setup",
+    "text": "7.1 1. Problem setup\nGiven training data \\[\n\\{(x_i,y_i)\\}_{i=1}^n,\\quad x_i\\in\\mathbb R^p,\\; y_i\\in\\mathbb R,\n\\]\nwe estimate \\[\nf(x)=\\mathbb E[Y\\mid X=x].\n\\]",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#geometry-view",
+    "href": "contents/3/knn.html#geometry-view",
+    "title": "6  KNN Regression Notes",
+    "section": "7.3 3. Geometry view",
+    "text": "7.3 3. Geometry view\n\nlocal neighborhood\nadaptive region size",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#weight-form",
+    "href": "contents/3/knn.html#weight-form",
+    "title": "6  KNN Regression Notes",
+    "section": "7.4 4. Weight form",
+    "text": "7.4 4. Weight form\n\\[\n\\hat f(x_0)=\\sum_{i=1}^n w_i(x_0)y_i\n\\]",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
+  },
+  {
+    "objectID": "contents/3/knn.html#comparison",
+    "href": "contents/3/knn.html#comparison",
+    "title": "6  KNN Regression Notes",
+    "section": "7.8 8. Comparison",
+    "text": "7.8 8. Comparison\n\nlinear model: global\n\nKNN: local",
+    "crumbs": [
+      "Nonlinear Methods",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>KNN Regression Notes</span>"
+    ]
   }
 ]

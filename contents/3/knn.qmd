@@ -1,107 +1,76 @@
-# KNN Regression Notes
-
-## Idea
-
-K-nearest neighbors (KNN) is a nonparametric method that predicts the
-response at a query point by averaging nearby observations.
-
-Given a query point $x$, find its $K$ nearest neighbors in the training
-data.
-
-Prediction: $$
-\hat f(x) = \frac{1}{K} \sum_{i \in N_K(x)} y_i
-$$
-
-## Key Properties
-
--   Nonparametric: no explicit model form
--   Local method: uses nearby points only
--   Highly flexible
--   No training phase (lazy learning)
-
-## Distance
-
-Typically Euclidean: $$
-d(x, x') = \sqrt{\sum_{j=1}^p (x_j - x'_j)^2}
-$$
-
-Requires feature scaling.
-
-## Bias-Variance Tradeoff
-
--   Small $K$: low bias, high variance
--   Large $K$: high bias, low variance
-
-## Curse of Dimensionality
-
-As $p$ increases: - Distances become less meaningful - Neighborhoods
-become sparse
-
-## Pros
-
--   Simple
--   Flexible
--   Works well with low-dimensional smooth data
-
-## Cons
-
--   Slow prediction
--   Sensitive to scaling
--   Poor in high dimensions
-
-
-
-
-
-
-
+---
+format: html
+title: KNN Regression Notes
+---
 
 # KNN Regression
 
-## 1. Model form
+## 1. Problem setup
 
-KNN is a local averaging estimator.
-
-For a query point $x$, $$
-\hat f(x) = \frac{1}{K} \sum_{i \in N_K(x)} y_i
+Given training data $$
+\{(x_i,y_i)\}_{i=1}^n,\quad x_i\in\mathbb R^p,\; y_i\in\mathbb R,
 $$
 
--   $N_K(x)$: K nearest neighbors
--   Nonparametric (no explicit model)
+we estimate $$
+f(x)=\mathbb E[Y\mid X=x].
+$$
 
 ------------------------------------------------------------------------
 
-## 2. Geometry
+## 2. Model form
 
--   Piecewise constant estimator
--   Prediction determined by local neighborhood
+$$
+\hat f(x_0)
+=
+\frac{1}{K}\sum_{i\in N_K(x_0)} y_i
+$$
 
 ------------------------------------------------------------------------
 
-## 3. Distance
+## 3. Geometry view
 
-$$
-d(x,x') = \sqrt{\sum_{j=1}^p (x_j-x'_j)^2}
-$$
-
--   Must scale features
+-   local neighborhood
+-   adaptive region size
 
 ------------------------------------------------------------------------
 
-## 4. Bias--variance
+## 4. Weight form
 
--   small $K$: low bias, high variance
+$$
+\hat f(x_0)=\sum_{i=1}^n w_i(x_0)y_i
+$$
+
+------------------------------------------------------------------------
+
+## 5. Distance
+
+$$
+d(x,x')=\sqrt{\sum_{j=1}^p (x_j-x'_j)^2}
+$$
+
+------------------------------------------------------------------------
+
+## 6. Bias--variance
+
+-   small $K$: low bias, high variance\
 -   large $K$: high bias, low variance
 
 ------------------------------------------------------------------------
 
-## 5. Curse of dimensionality
+## 7. Curse of dimensionality
 
--   distances lose meaning in high $p$
--   requires large $n$
+-   high $p$ → sparse neighbors\
+-   performance degrades
 
 ------------------------------------------------------------------------
 
-## 6. Key takeaway
+## 8. Comparison
 
-KNN = local averaging, no extrapolation
+-   linear model: global\
+-   KNN: local
+
+------------------------------------------------------------------------
+
+## 9. Key takeaway
+
+KNN = adaptive local averaging
