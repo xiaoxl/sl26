@@ -25,7 +25,7 @@
 
 
 
-## 1. Why trees?
+## Why trees?
 
 A regression tree is a nonparametric regression method. Instead of assuming a linear form such as
 $$

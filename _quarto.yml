@@ -43,15 +43,16 @@ book:
       chapters: 
       - contents/2/logistic.qmd
       - contents/2/lda.qmd
-    - part: "Nonlinear Methods"
+    - part: "Tree Based Methods"
       chapters: 
       - contents/3/knn.qmd
       - contents/3/tree.qmd
       - contents/3/ensemble.qmd
-    - part: "Unsupervised"
-      chapters: 
+    - part: "Distance Based Methods"
+      chapters:
+      - contents/4/knn.qmd
+      - contents/4/kernel.qmd
       - contents/4/cluster.qmd
-      # - contents/5/kernel.qmd
     #   - contents/2/svm.qmd
     #   - contents/2/lda.qmd
     #   - contents/2/tree.qmd
